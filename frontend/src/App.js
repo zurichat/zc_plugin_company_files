@@ -6,7 +6,7 @@ function App() {
       <header className="App-header">
         <img src="/zurichatlogo.svg" />
         <h2>
-          Team: GALILOE
+          Team: GALILEO
         </h2>
         <h4>
           Plug-in: COMPANY FILES
