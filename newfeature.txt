@@ -1,0 +1,1 @@
+As a user, I want a feature that warns me about large file sizes before downloading on mobile data then a page that has my download preferences like whatsapp, it shows you a page where you can set to download some things automattically when on wifi and on data or even both
