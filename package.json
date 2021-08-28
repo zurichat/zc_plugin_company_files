@@ -1,0 +1,30 @@
+{
+  "name": "zc_plugin_company_files",
+  "version": "1.0.0",
+  "description": "Zuri chat company files management plug-in",
+  "main": "server.js",
+  "scripts": {
+    "start": "cd frontend && yarn build && yarn start && node server.js",
+    "server": "nodemon server.js",
+    "client": "cd frontend && yarn build && yarn start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install": "npm install && npm install --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwardoboh/zc_plugin_company_files.git"
+  },
+  "author": "team-galileo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edwardoboh/zc_plugin_company_files/issues"
+  },
+  "homepage": "https://github.com/edwardoboh/zc_plugin_company_files#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^6.2.1",
+    "nodemon": "^2.0.12"
+  }
+}
