@@ -4,8 +4,10 @@
   "description": "Zuri chat company files management plug-in",
   "main": "server.js",
   "scripts": {
-    "start": "cd frontend && yarn build && cd .. && node server.js",
-    "dev": "nodemon server.js",
+    "start": "node /server",
+    "server": "nodemon /server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "install-setup": "npm install && cd frontend && yarn install"
   },
   "repository": {
