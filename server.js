@@ -55,7 +55,7 @@ app.use(ErrorHandler);
   } else {
     // Workers can share any TCP connection
     // In this case, it is an HTTP server
-    const port = process.env.PORT || 10101;
+    const port = process.env.PORT || 5000;
     const server = app.listen(port, () => {
       console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold)
     });
