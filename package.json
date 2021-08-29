@@ -1,28 +1,39 @@
 {
-  "name": "zc_plugin_company_files",
+  "name": "zc-plugin-company-files",
   "version": "1.0.0",
-  "description": "Zuri chat company files management plug-in",
+  "description": "Zuri Chat ~ Company Files Management Plug-In",
   "main": "server.js",
   "scripts": {
-    "start": "cd frontend && yarn build && cd .. && node server.js",
-    "dev": "nodemon server.js",
-    "install-setup": "npm install && cd frontend && yarn install"
+    "build": "cd frontend && npm run build",
+    "dev": "nodemon .",
+    "install-setup": "npm install && cd frontend && npm install",
+    "start": "npm run build && node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edwardoboh/zc_plugin_company_files.git"
+    "url": "git+https://github.com/zurichat/zc_plugin_company_files.git"
   },
-  "author": "team-galileo",
+  "author": "Team Galileo devs",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/edwardoboh/zc_plugin_company_files/issues"
+    "url": "https://github.com/zurichat/zc_plugin_company_files/issues"
   },
-  "homepage": "https://github.com/edwardoboh/zc_plugin_company_files#readme",
+  "homepage": "https://github.com/zurichat/zc_plugin_company_files#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "colors": "^1.4.0",
+    "compression": "^1.7.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.2.1",
+    "joi": "^17.4.2",
+    "mongoose": "^5.13.7"
   },
   "devDependencies": {
-    "concurrently": "^6.2.1",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

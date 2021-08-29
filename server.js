@@ -1,16 +1,72 @@
-const express = require("express");
+require('colors');
+require('dotenv').config();
+require('express-async-errors');
+
+const path = require('path');
+const cpus = require('os').cpus();
+const cluster = require('cluster');
+const express = require('express');
+const compression = require('compression');
+const fileUpload = require('express-fileupload');
+
+
 const app = express();
-const path = require("path");
-app.use(express.json());
+const router = express.Router();
 
+const connectToDatabase = require('./src/utils/db');
+const rootRouter = require('./src/routes/index')(router);
+const isProduction = process.env.NODE_ENV === 'production';
+const ErrorHandler = require('./src/middlewares/errorHandler');
 
-// if (process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-  });
-// }
+app.use(compression()); // Node.js compression middleware
+app.use(express.json()); // For parsing application/json
+app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
+app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
 
-const port = process.env.PORT || 5000;
+app.use(express.static(path.resolve(__dirname, './frontend/build')));
 
-app.listen(port, () => console.log(`Server Running on port ${port}`));
+if (isProduction) {
+  app.set('trust proxy', 1); // Trust first proxy
+} else {
+  app.use(require('morgan')('dev')); // Dev logging middleware
+}
+
+app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
+
+// All other GET requests not handled before will return our React app
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
+});
+
+// For handling server errors and all other errors that might occur
+app.use(ErrorHandler);
+
+(async () => {
+  // await connectToDatabase();
+
+  if (cluster.isMaster) {
+    // Fork workers
+    cpus.forEach(() => cluster.fork());
+    
+    cluster.on('exit', () => cluster.fork());
+  } else {
+    // Workers can share any TCP connection
+    // In this case, it is an HTTP server
+    const port = process.env.PORT || 10101;
+    const server = app.listen(port, () => {
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold)
+    });
+
+    // Handle unhandled promise rejections
+    process.on('unhandledRejection', error => {
+      // console.log(error);
+      console.log(`✖ | Unhandled Rejection: ${error.message}`.red.bold);
+      server.close(() => process.exit(1));
+    })
+  }
+})().catch(error => {
+  console.log(`✖ | Error: ${error.message}`.red.bold);
+});

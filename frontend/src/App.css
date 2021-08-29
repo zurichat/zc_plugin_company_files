@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: "Jost", serif;
 }
 
 .App-logo {
@@ -14,25 +15,32 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #261D45;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h2 {
+  color: cornflowerblue;
+  text-shadow: 0 0 #dc1aa3;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-header h2,
+.App-header h4 {
+  font-weight: 200;
+  letter-spacing: 1px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container span {
+  margin-left: 10px;
 }
