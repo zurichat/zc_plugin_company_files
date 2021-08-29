@@ -1,7 +1,7 @@
 ## Zuri Chat Company Files Plugin
 
 ### Overview
-Company files management plugin for Zuri Chat.
+Company Files Management Plugin for Zuri Chat.
 
 
 ### Local Setup Instruction
