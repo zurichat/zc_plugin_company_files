@@ -9,8 +9,8 @@ Company Files Management Plugin for Zuri Chat.
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
 4. Run setup script to install all packages using `npm run install-setup`
-5. Now run server in delelopment mode with `npm run dev`
-PS: You may need to have yarn already install
+5. Now run server in development mode with `npm run dev`
+
 
 ### Dev Contribution Guide
 1. Fork the repository
