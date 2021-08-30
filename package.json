@@ -1,5 +1,5 @@
 {
-  "name": "zc-plugin-company-files",
+  "name": "zc-company-files",
   "version": "1.0.0",
   "description": "Zuri Chat ~ Company Files Management Plug-In",
   "main": "server.js",
@@ -7,7 +7,9 @@
     "build": "cd frontend && npm run build",
     "dev": "nodemon .",
     "install-setup": "npm install && cd frontend && npm install",
-    "start": "npm run build && node server.js"
+    "lint:backend": "eslint -c .eslintrc.js backend/** --ext .js",
+    "lint:backend:fix": "npm run lint:backend -- --fix",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -30,10 +32,16 @@
     "mongoose": "^5.13.7"
   },
   "devDependencies": {
+    "@commitlint/config-conventional": "^13.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.12"
-  },
-  "engines": {
-    "node": "16.x"
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2"
   }
 }

@@ -12,6 +12,12 @@ Company Files Management Plugin for Zuri Chat.
 5. Now run server in development mode with `npm run dev`
 
 
+### Linting
+
+
+### Commit Guide
+This repo uses Commitlint & the conventional config to ensure commits messages follow a particular pattern
+
 ### Dev Contribution Guide
 1. Fork the repository
 2. Clone and then open it up on your prefered code editor
