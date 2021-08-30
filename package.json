@@ -32,6 +32,7 @@
     "mongoose": "^5.13.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
@@ -43,5 +44,11 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
