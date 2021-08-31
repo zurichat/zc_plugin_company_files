@@ -1,3 +1,4 @@
+import React from "react"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faShoppingCart,  faChevronDown, faPhone, faFileAlt, faEnvelopeOpen, faChevronLeft, faChevronRight} from '@fortawesome/free-solid-svg-icons';
 import { faFacebook, faWhatsapp, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons' ;

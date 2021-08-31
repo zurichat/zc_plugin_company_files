@@ -1,3 +1,4 @@
+import React from "react"
 import FilesCard from "../FilesCard/FilesCard";
 
 function Files() {
