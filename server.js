@@ -18,7 +18,6 @@ const rootRouter = require('./backend/routes/index')(router);
 const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
-const { sidebar } = require('./backend/controllers/home.controller');
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -33,7 +32,6 @@ if (isProduction) {
   app.use(require('morgan')('dev')); // Dev logging middleware
 }
 
-app.get('/sidebar', sidebar); // For providing the sidebar static list on the /sidebar endpoint
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
