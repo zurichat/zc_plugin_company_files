@@ -18,4 +18,4 @@ jobs:
             cd /var/www/zc_plugin_company_files
             git pull
             npm run install-setup
-            Pm2 restart
+            pm2 restart
