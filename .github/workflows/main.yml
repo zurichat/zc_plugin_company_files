@@ -15,7 +15,6 @@ jobs:
           username: ${{ secrets.USERNAME }} # User of the server you want to ssh into
      
           script: |
-
             cd /var/www/zc_plugin_company_files
             git pull
             npm run install-setup
