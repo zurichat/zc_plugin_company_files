@@ -15,6 +15,7 @@ Company Files Management Plugin for Zuri Chat.
 
 <br>
 
+
 ### **Linting**
 Linting is the automated checking of a source code for programmatic and stylistic errors. This is done by using a lint tool (otherwise known as linter). A lint tool is a basic static code analyzer. Linting is important to reduce errors and improve the overall quality of our code.
 
