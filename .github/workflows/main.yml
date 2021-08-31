@@ -18,4 +18,5 @@ jobs:
             cd /var/www/zc_plugin_company_files
             git pull
             npm run install-setup
+            npm run build
             pm2 restart server.js
