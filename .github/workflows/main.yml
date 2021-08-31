@@ -10,7 +10,7 @@ jobs:
       - name: Deploy Companyfiles.zuri
         uses: appleboy/ssh-action@v0.1.2
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.IP_ADDRESS }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
