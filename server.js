@@ -15,6 +15,7 @@ const router = express.Router();
 
 const connectToDatabase = require('./backend/utils/db');
 const rootRouter = require('./backend/routes/index')(router);
+const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
@@ -32,6 +33,7 @@ if (isProduction) {
 }
 
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
+app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
 // All other GET requests not handled before will return our React app
 app.use((req, res, next) => {

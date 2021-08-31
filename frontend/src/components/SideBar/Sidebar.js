@@ -1,4 +1,3 @@
-import React from "react"
 import {useState} from 'react';
 import './sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +26,7 @@ function Sidebar() {
     return (
         <div className="bg-white w-72 p-5 main">
             <div className= "flex items-center flex-wrap">
-                <img className="h-6 w-6 object-cover" src="/zurichat-logo.svg" alt=""/>
+                <img className="h-6 w-6 object-cover" src="/zurichat-logo.svg"/>
                 <h1 className="m-1 text-lg uppercase tracking-wider font-semibold lato">Zuri</h1>
             </div>
             <div>
