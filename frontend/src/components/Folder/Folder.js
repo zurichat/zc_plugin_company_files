@@ -1,3 +1,4 @@
+import React from "react"
 import FolderCard from "../FolderCard/FolderCard";
 
 function Folder() {

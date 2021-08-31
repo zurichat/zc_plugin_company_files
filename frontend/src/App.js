@@ -1,3 +1,4 @@
+import React from "react"
 import './App.css';
 import Sidebar from './components/SideBar/Sidebar';
 import RecentlyViewed from './components/RecentlyViewed/RecentlyViewed';
