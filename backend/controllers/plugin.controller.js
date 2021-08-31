@@ -33,31 +33,31 @@ exports.sidebar = (req,res) => {
   const sidebarListObject = {
       pluginId,
       pluginName,
-      organisationId: 'jd93-ene82-rt92-df',
+      organisationId: '10f82718-672e-48c2-8fb2-ae26db5980e6',
       menuLink:{
         title: 'Company Files',
-        icon: '<URL to image>',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
         action: 'Open Plugin'
         },
       subItems:[{
         title: 'All Files',
-        icon: '<URL to image>',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630443342/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/all-files_onxhs8.svg',
         action: 'View All Files'
       },{
         title: 'Shared',
-        icon: '<URL to image>',
-        action: 'View All Files'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442796/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/users_wykbon.svg',
+        action: 'View Shared Files'
       },{
         title: 'Starred Files',
-        icon: '<URL to image>',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441865/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Vector_qdcc3i.svg',
         action: 'View Starred Files'
       },{
         title: 'Trash',
-        icon: '<URL to image>',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442567/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/active_xqcxkl.svg',
         action: 'View Trash'
       },{
         title: 'Help',
-        icon: '<URL to image>',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442662/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/help-circle_hzmom4.svg',
         action: 'View Help'
       }]
   };
