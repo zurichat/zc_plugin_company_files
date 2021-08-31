@@ -9,6 +9,7 @@
     "install-setup": "npm install && cd frontend && npm install",
     "lint:backend": "eslint -c .eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "npm run lint:backend -- --fix",
+    "prepare": "husky install",
     "start": "node server.js"
   },
   "repository": {
@@ -50,5 +51,8 @@
       "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "lint-staged": {
+    "*.js": "npm run lint:backend:fix"
   }
 }

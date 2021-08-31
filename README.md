@@ -1,10 +1,9 @@
-## Zuri Chat Company Files Plugin
+### **Zuri Chat Company Files Plugin**
 ---
 
 ### **Overview**
 Company Files Management Plugin for Zuri Chat.
 
-<br>
 
 ### **Local Setup Instruction**
 1. Ensure nodejs and git are installed in machine
@@ -13,7 +12,10 @@ Company Files Management Plugin for Zuri Chat.
 4. Run setup script to install all packages using `npm run install-setup`
 5. Now run server in development mode with `npm run dev`
 
-<br>
+
+### **Project Structure**
+For the BackEnd structure of this project, please refer to this [document](BACKEND_DOC.md).
+
 
 
 ### **Linting**
@@ -21,12 +23,10 @@ Linting is the automated checking of a source code for programmatic and stylisti
 
 For the backend part of this project, the Google code style is used with some minor modifications. A code style is set of conventions (sometimes arbitrary) about how to write code for that project. It is much easier to understand a large codebase when all the code in it is in a consistent style.
 
-<br>
 
 ### **Commit Guide**
 This plugin uses Commitlint to ensure commits messages follow a particular convention using the conventional config. If you're totally new to this convention, that's totally fine.
 
-<br>
 
 > *Commit CheatSheet*
 
@@ -50,9 +50,8 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 - `chore: Updated README file` := `chore` is used because the commit didn't make any changes to the backend, frontend or test folders in any way.
 - `feat: Added plugin info endpoints` := `feat` is used here because the feature was non-existent before the commit.
 
-<br>
 
-### Dev Contribution Guide
+### **Dev Contribution Guide**
 1. Fork the repository
 2. Clone and then open it up on your prefered code editor
 3. Open your terminal & set the upstream branch: `git remote add upstream https://github.com/zurichat/zc_plugin_company_files.git`
