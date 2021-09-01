@@ -15,7 +15,7 @@ export default function TotalSpace(props) {
     ringWidth: 50,
     guageSectionColors: ["#5388E4", "#FEA162", "#00B87C", "#BBD8FD"],
     cornerRadius: 8,
-    tickData: ["0", "0.3", "0.66", "0.8"]
+    tickData: ["0", "0.3", "0.66", "0.8"] // Data from backend goes here 
   };
 
   const guage = useRef(null);
