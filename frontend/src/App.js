@@ -10,10 +10,12 @@ import Upload from './components/Upload/Upload';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App font-lato">
       <Sidebar/> 
       <div className="main">
           <div >Top items and Search Component <SearchBar/></div>
+          <div className="capitalize text-error">recently viewed</div>
+          <button className="bg-success p-2">test</button>
           <div>
             <RecentlyViewed/>
             <Folder/>
