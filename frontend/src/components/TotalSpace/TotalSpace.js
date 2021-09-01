@@ -22,6 +22,7 @@ export default function TotalSpace(props) {
   const r = 300;
   const range = config.maxAngle - config.minAngle;
 
+  // d3.js arc using the config object
   const arc = d3
     .arc()
     .innerRadius(r - config.ringWidth - config.ringInset)
@@ -40,8 +41,6 @@ export default function TotalSpace(props) {
     .range([0, 1])
     .domain([config.minValue, config.maxValue]);
 
-  scale.ticks(config.majorTicks);
-
   useEffect(() => {
     const svg = d3
       .select(guage.current)
@@ -56,7 +55,8 @@ export default function TotalSpace(props) {
       .attr("class", "arc")
       .attr("transform", `translate(${r}, 300)`);
 
-    const text2 = svg
+    // Add and center text "20 GB"
+    const text = svg
       .append("g")
       .attr("transform", `translate(${r}, 270)`)
       .append("text")
@@ -65,11 +65,12 @@ export default function TotalSpace(props) {
       .attr("stroke", "#4A4A4A")
       .style("font-size", "28px");
 
-    text2
+    text
       .append("tspan")
       .attr("y", "0")
       .text((d) => "20 GB");
 
+    // divide the arc into separate colored sections
     arcs
       .selectAll("path")
       .data(config.tickData)
