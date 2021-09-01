@@ -44,15 +44,15 @@ exports.sidebar = (req,res) => {
         icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472654/sidebarplugin/all-files_ewrlii.svg',
         action: 'View All Files',
         badge:{
-          number: 10,
-          type: 'Info'
+          number: 50,
+          type: 'Primary'
         }
       },{
         title: 'Shared',
         icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472833/sidebarplugin/users_ovn4oc.svg',
         action: 'View Shared Files',
         badge:{
-          number: 1,
+          number: 2,
           type: 'Info'
         }
       },{
@@ -68,17 +68,13 @@ exports.sidebar = (req,res) => {
         icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472955/sidebarplugin/trash_ms7mit.svg',
         action: 'View Trash',
         badge:{
-          count: 2,
-          type: 'Info'
+          count: 6,
+          type: 'Warning'
         }
       },{
         title: 'Help',
         icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472990/sidebarplugin/help-circle_zlzd4p.svg',
         action: 'View Help',
-        badge:{
-          number: 10,
-          type: 'Info'
-        }
       }]
   };
 
