@@ -9,6 +9,7 @@ module.exports = {
         secondary: '#1A61DB',
         accent: '#B8003C',
         error: '#F40101',
+        light: '#E5E5E5',
         bg: {
           lightGrey: '#F6F6F6',
           white: '#FFFFFF'

@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import { Link } from "react-router-dom";
 import './sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown, faChevronRight, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
@@ -39,11 +40,11 @@ function Sidebar() {
                     {
                         showFiles &&
                         <ul>
-                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Vector.png" alt="icon" />All Files</li>
-                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/default.png" alt="icon" />Shared</li>
-                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Star.png" alt="icon" />Favourites</li>
-                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Bin.png" alt="icon" />Trash</li>
-                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Question.png" alt="icon" />Help</li>
+                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Vector.png" alt="icon" /><Link to= "Allfiles">All Files</Link></li>
+                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/default.png" alt="icon" /><Link to= "Shared">Shared</Link></li>
+                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Star.png" alt="icon" /><Link to= "Favourites">Favourites</Link></li>
+                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Bin.png" alt="icon" /><Link to= "Trash">Trash</Link></li>
+                            <li className="text-base mx-5 font-normal flex items-center"><img src="/Icons/Question.png" alt="icon" /><Link to= "Help">Help</Link></li>
                         </ul>
                     }
                     <li className="text-base font-normal flex items-center"> <img src="/Icons/Integrate.png" alt="icon" />Integrate</li>

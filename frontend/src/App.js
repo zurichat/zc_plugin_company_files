@@ -1,30 +1,38 @@
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Sidebar from './components/SideBar/Sidebar';
-import RecentlyViewed from './components/RecentlyViewed/RecentlyViewed';
-import Files from './components/Files/Files';
-import Folder from './components/Folder/Folder';
-import SearchBar from './components/SearchBar/SearchBar';
+import AllFiles from './components/All files/AllFiles';
+import Favourites from './components/Favourites/Favourites';
+import Shared from './components/Shared/Shared';
+import Trash from './components/Trash/Trash';
+import Help from './components/Help/Help';
 import Activities from './components/Activities/Activities';
-import TotalSpace from './components/TotalSpace/TotalSpace';
-import Upload from './components/Upload/Upload';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <Router>
-      <div className="flex font-lato bg-bg-lightGrey">
+      <div className="App">
         <Sidebar />
-        <div className="main">
-          <div className="">Top items and Search Component <SearchBar /></div>
-          <Switch>
-            <Route path="/activities" component={Activities} />
-            <Route path="/recently-viewed" component={RecentlyViewed} />
-            <Route path="/files" component={Files} />
-            <Route path="/folder" component={Folder} />
-            <Route path="/total-space" component={TotalSpace} />
-            <Route path="/upload" component={Upload} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route exact path="/">
+            <AllFiles />
+          </Route>
+          <Route path='/shared'>
+            <Shared />
+          </Route>
+          <Route path='/favourites'>
+            <Favourites />
+          </Route>
+          <Route path='/Trash'>
+            <Trash />
+          </Route>
+          <Route path='/Help'>
+            <Help />
+          </Route>
+          <Route path='/activities'>
+            <Activities />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );
