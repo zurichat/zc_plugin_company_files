@@ -5,15 +5,16 @@ const pluginName = 'Company Files Management Plug-In';
 
 exports.info = async (req, res) => {
   const repoInfo = await axios.get('https://api.github.com/repos/zurichat/zc_plugin_company_files');
+  const baseUrl = `${req.protocol}://${req.get('host')}`;
 
   res.status(200).json({
     status: 'success',
     pluginId,
     pluginName,
-    pluginUrl: 'http://companyfiles.zuri.chat',
-    sidebarUrl: 'http://companyfiles.zuri.chat/sidebar',
-    infoUrl: 'http://companyfiles.zuri.chat/info',
-    pingUrl: 'http://companyfiles.zuri.chat/ping',
+    pluginUrl: `${baseUrl}`,
+    sidebarUrl: `${baseUrl}/sidebar`,
+    infoUrl: `${baseUrl}/info`,
+    pingUrl: `${baseUrl}/ping`,
     description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
     author,
     version,
@@ -36,7 +37,7 @@ exports.info = async (req, res) => {
   });
 }
 
-exports.sidebar = (req,res) => {
+exports.sidebar = (req, res) => {
   const sidebarListObject = {
       status: 'success',
       pluginId,
@@ -87,4 +88,8 @@ exports.sidebar = (req,res) => {
   };
 
   res.status(200).json(sidebarListObject);
+}
+
+exports.ping = (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Server is up & running...' });
 }
