@@ -36,29 +36,49 @@ exports.sidebar = (req,res) => {
       organisationId: '10f82718-672e-48c2-8fb2-ae26db5980e6',
       menuLink:{
         title: 'Company Files',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630473101/sidebarplugin/files_mq3woy.svg',
         action: 'Open Plugin'
         },
       subItems:[{
         title: 'All Files',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630443342/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/all-files_onxhs8.svg',
-        action: 'View All Files'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472654/sidebarplugin/all-files_ewrlii.svg',
+        action: 'View All Files',
+        badge:{
+          number: 10,
+          type: 'Info'
+        }
       },{
         title: 'Shared',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442796/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/users_wykbon.svg',
-        action: 'View Shared Files'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472833/sidebarplugin/users_ovn4oc.svg',
+        action: 'View Shared Files',
+        badge:{
+          number: 1,
+          type: 'Info'
+        }
       },{
         title: 'Starred Files',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441865/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Vector_qdcc3i.svg',
-        action: 'View Starred Files'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472904/sidebarplugin/starred_japone.svg',
+        action: 'View Starred Files',
+        badge:{
+          number: 4,
+          type: 'Info'
+        }
       },{
         title: 'Trash',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442567/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/active_xqcxkl.svg',
-        action: 'View Trash'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472955/sidebarplugin/trash_ms7mit.svg',
+        action: 'View Trash',
+        badge:{
+          count: 2,
+          type: 'Info'
+        }
       },{
         title: 'Help',
-        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630442662/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/help-circle_hzmom4.svg',
-        action: 'View Help'
+        icon: 'https://res.cloudinary.com/eyiajd/image/upload/v1630472990/sidebarplugin/help-circle_zlzd4p.svg',
+        action: 'View Help',
+        badge:{
+          number: 10,
+          type: 'Info'
+        }
       }]
   };
 
