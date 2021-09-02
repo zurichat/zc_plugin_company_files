@@ -4,19 +4,19 @@ exports.fileCreate = async (req, res) => {
   //used this for testing
   const { fileName } = req.body;
 
-  try {
-    const exists = await File.findOne({ fileName: fileName });
-    if (!exists) {
-      const file = await File.create({
-        fileName,
-      });
-      res.status(200).json(file);
-    } else {
-      res.status(403).json("already exists");
-    }
-  } catch (error) {
-    res.status(500).json(error);
-  }
+//   try {
+//     const exists = await File.findOne({ fileName: fileName });
+//     if (!exists) {
+//       const file = await File.create({
+//         fileName,
+//       });
+//       res.status(200).json(file);
+//     } else {
+//       res.status(403).json("already exists");
+//     }
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
 };
 
 exports.fileDetails = async (req, res) => {};
