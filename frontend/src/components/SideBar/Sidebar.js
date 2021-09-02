@@ -1,184 +1,263 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import "./sidebar.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faChevronDown,
   faChevronRight,
-  faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
-function Sidebar() {
-  const [showFiles, setshowFiles] = useState(false);
-  const [showChannels, setshowChannels] = useState(false);
-  const [showDMs, setshowDMs] = useState(false);
-  const [lounge, setlounge] = useState(false);
-  const handleShowFiles = () => {
-    setshowFiles(!showFiles);
-  };
 
-  const handleShowChannels = () => {
-    setshowChannels(!showChannels);
-  };
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
-  const handleShowDMs = () => {
-    setshowDMs(!showDMs);
-  };
+const INSIGHT_ICON = "/Icons/Insight.png";
+const THREADS_ICON = "/Icons/Group1.png";
+const MESSAGE_ICON = "/Icons/message.png";
+const DRAFT_ICON = "/Icons/Group.png";
+const INTEGRATE_ICON = "/Icons/Integrate.png";
+const HASH_ICON = "/Icons/hash.svg";
+const PLUS_ICON = "/Icons/carbon_add-alt.svg";
 
-  const handleLounge = () => {
-    setlounge(!lounge);
-  };
+const SIDEBAR_ITEMS = [
+  {
+    iconLink: INSIGHT_ICON,
+    title: "Insight",
+  },
+  {
+    iconLink: THREADS_ICON,
+    title: "Threads",
+  },
+  {
+    iconLink: MESSAGE_ICON,
+    title: "All DMs",
+  },
+  {
+    iconLink: DRAFT_ICON,
+    title: "Draft",
+  },
+];
+
+const FILES_SUB = {
+  title: "Files",
+  iconLink: INSIGHT_ICON,
+  subitems: [
+    {
+      title: "All Files",
+      iconLink: "/Icons/Vector.png",
+    },
+    {
+      title: "Shared",
+      iconLink: "/Icons/default.png",
+    },
+    {
+      title: "Favourites",
+      iconLink: "/Icons/Star.png",
+    },
+    {
+      title: "Trash",
+      iconLink: "/Icons/Bin.png",
+    },
+    {
+      title: "Help",
+      iconLink: "/Icons/Question.png",
+    },
+  ],
+};
+const LOUNGES_SUB = {
+  title: "Lounge",
+  subitems: [
+    {
+      title: "Lounge 1",
+    },
+  ],
+};
+const CHANNELS_SUB = {
+  title: "Channels",
+  subitems: [
+    {
+      title: "announcements",
+    },
+    {
+      title: "games",
+    },
+    {
+      title: "designers",
+    },
+    {
+      title: "developers",
+    },
+  ],
+};
+const MSG_SUB = {
+  title: "Direct Messages",
+  subitems: [
+    {
+      title: "John Doe",
+    },
+    {
+      title: "Jane Doe",
+    },
+    {
+      title: "James Bond",
+    },
+  ],
+};
+
+const SidebarItem = ({ title, iconLink, sub = false }) => {
+  return (
+    <li
+      className={`text-base font-normal flex items-center justify-start gap-2 ${
+        !sub ? "" : "ml-5"
+      }`}
+    >
+      <img
+        {...{ src: iconLink, alt: !!title ? title + "icon" : "icon" }}
+        className=""
+      />
+      <span>{title}</span>
+    </li>
+  );
+};
+const SidebarItemWithSubitems = ({ title, iconLink, subitems }) => {
+  const [showSubitems, setShowSubitems] = useState(false);
+  const handleShowSubitems = () => setShowSubitems((prevState) => !prevState);
 
   return (
-    <div className="bg-white w-72 p-5 main">
-      <div className="flex items-center flex-wrap">
-        <img className="h-6 w-6 object-cover" src="/zurichat-logo.svg" />
-        <h1 className="m-1 text-lg uppercase tracking-wider font-semibold lato">
+    <>
+      <li
+        className="text-base font-normal flex items-center justify-between"
+        onClick={handleShowSubitems}
+      >
+        <div className="flex items-center justify-start gap-2">
+          <img src={iconLink} alt="icon" /> {title}
+        </div>
+        <FontAwesomeIcon
+          className="icon"
+          icon={showSubitems ? faChevronDown : faChevronRight}
+        />
+      </li>
+      {showSubitems && (
+        <ul>
+          {subitems?.map((elem, ind) => (
+            <SidebarItem {...{ key: ind, sub: true, ...elem }} />
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
+const SidebarItemWithSubitems2 = ({ title, subitems }) => {
+  const [showSubitems, setShowSubitems] = useState(false);
+  const handleShowSubitems = () => setShowSubitems((prevState) => !prevState);
+
+  return (
+    <>
+      <li
+        className="text-base font-normal flex items-center justify-between"
+        onClick={handleShowSubitems}
+      >
+        <div className="flex items-center justify-start gap-2">
+          <FontAwesomeIcon
+            className="icon"
+            icon={showSubitems ? faChevronDown : faChevronRight}
+          />
+          {title}
+        </div>
+        <button>
+          <img src={PLUS_ICON} alt="add icon" />
+        </button>
+      </li>
+      {showSubitems && (
+        <ul>
+          {subitems?.map((elem, ind) => (
+            <SidebarItem
+              {...{ key: ind, sub: true, ...elem, iconLink: HASH_ICON }}
+            />
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
+const SidebarItemWithSubitems3 = ({ title, subitems }) => {
+  const [showSubitems, setShowSubitems] = useState(false);
+  const handleShowSubitems = () => setShowSubitems((prevState) => !prevState);
+
+  return (
+    <>
+      <li
+        className="text-base font-normal flex items-center justify-between"
+        onClick={handleShowSubitems}
+      >
+        <div className="flex items-center justify-start gap-2">
+          <FontAwesomeIcon
+            className="icon"
+            icon={showSubitems ? faChevronDown : faChevronRight}
+          />
+          {title}
+        </div>
+        <button>
+          <img src={PLUS_ICON} alt="add icon" />
+        </button>
+      </li>
+      {showSubitems && (
+        <ul>
+          {subitems?.map((elem, ind) => (
+            <li key={ind} className="text-base mx-5 flex items-center m-1">
+              <div className="h-10 w-10 pic-image relative">
+                <img className="object-cover" src="" alt="" />
+                <span className="h-2 w-2 bg-white absolute right"></span>
+              </div>
+              <p className="mx-1 font-normal">{elem?.title}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
+
+function Sidebar() {
+  return (
+    <div className="bg-gray-50 w-72 2xl:w-80 p-7 flex flex-col gap-7">
+      <div className="flex items-center gap-2">
+        <img className="h-7 w-7" alt="Zuri logo" src="/zurichat-logo.svg" />
+        <h1 className="text-2xl uppercase tracking-wider font-bold lato">
           Zuri
         </h1>
       </div>
-      <div>
-        <ul>
-          <li className="text-base font-normal flex items-center">
-            {" "}
-            <img src="/Icons/Insight.png" alt="icon" /> Insight
-          </li>
-          <li className="text-base font-normal flex items-center">
-            <img src="/Icons/Group1.png" alt="icon" />
-            Threads
-          </li>
-          <li className="text-base font-normal flex items-center">
-            <img src="/Icons/message.png" alt="icon" /> All DMs
-          </li>
-          <li className="text-base font-normal flex items-center">
-            <img src="/Icons/Group.png" alt="icon" />
-            Draft
-          </li>
-          <li
-            className="text-base font-normal flex items-center justify-between"
-            onClick={handleShowFiles}
-          >
-            {" "}
-            <div className="flex">
-              <img src="/Icons/Insight.png" alt="icon" /> Files
-            </div>{" "}
-            <FontAwesomeIcon
-              className="icon"
-              icon={showFiles ? faChevronDown : faChevronRight}
-            />
-          </li>
-          {showFiles && (
-            <ul>
-              <li className="text-base mx-5 font-normal flex items-center">
-                <img src="/Icons/Vector.png" alt="icon" />
-                <Link to="/Activities">All Files</Link>
-              </li>
-              <li className="text-base mx-5 font-normal flex items-center">
-                <img src="/Icons/default.png" alt="icon" />
-                <Link to="Shared">Shared</Link>
-              </li>
-              <li className="text-base mx-5 font-normal flex items-center">
-                <img src="/Icons/Star.png" alt="icon" />
-                <Link to="Favourites">Favourites</Link>
-              </li>
-              <li className="text-base mx-5 font-normal flex items-center">
-                <img src="/Icons/Bin.png" alt="icon" />
-                <Link to="Trash">Trash</Link>
-              </li>
-              <li className="text-base mx-5 font-normal flex items-center">
-                <img src="/Icons/Question.png" alt="icon" />
-                <Link to="Help">Help</Link>
-              </li>
-            </ul>
-          )}
-          <li className="text-base font-normal flex items-center">
-            {" "}
-            <img src="/Icons/Integrate.png" alt="icon" />
-            Integrate
-          </li>
-          <li className="text-base font-normal" onClick={handleLounge}>
-            <FontAwesomeIcon
-              className="icon"
-              icon={lounge ? faChevronDown : faChevronRight}
-            />{" "}
-            Lounge
-          </li>
-          {lounge && (
-            <ul>
-              <li className="text-base mx-5 font-normal">Lounge 1</li>
-              <li className="text-base mx-5 font-normal">Lounge 2</li>
-              <li className="text-base mx-5 font-normal">Lounge 3</li>
-              <li className="text-base mx-5 font-normal">Lounge 4</li>
-            </ul>
-          )}
-          <li
-            className="text-base flex justify-between"
-            onClick={handleShowChannels}
-          >
-            {" "}
-            <div className="flex">
-              <FontAwesomeIcon
-                className="icon"
-                icon={showChannels ? faChevronDown : faChevronRight}
-              />{" "}
-              <p className="mx-1">Channels</p>
-            </div>{" "}
-            <button>
-              <FontAwesomeIcon className="icon" icon={faPlusCircle} />
-            </button>
-          </li>
-          {showChannels && (
-            <ul>
-              <li className="text-base mx-5 font-bold"># annonucement</li>
-              <li className="text-base mx-5 font-bold"># Games</li>
-              <li className="text-base mx-5 font-bold"># Designers</li>
-              <li className="text-base mx-5 font-bold"># Developers</li>
-            </ul>
-          )}
+      <ul className="flex flex-col gap-4">
+        {SIDEBAR_ITEMS.map((elm, ind) => (
+          <SidebarItem {...{ key: ind, ...elm }} />
+        ))}
+        <SidebarItem
+          {...{
+            iconLink: INSIGHT_ICON,
+            title: "Insight",
+          }}
+        />
+        <SidebarItem
+          {...{
+            iconLink: MESSAGE_ICON,
+            title: "All DMs",
+          }}
+        />
 
-          <li
-            className="text-base flex justify-between"
-            onClick={handleShowDMs}
-          >
-            {" "}
-            <div className="flex">
-              <FontAwesomeIcon
-                className="icon"
-                icon={showDMs ? faChevronDown : faChevronRight}
-              />{" "}
-              <p className="mx-1">Direct Messages</p>
-            </div>{" "}
-            <button>
-              <FontAwesomeIcon className="icon" icon={faPlusCircle} />
-            </button>
-          </li>
-          {showDMs && (
-            <ul>
-              <li className="text-base mx-5 flex items-center m-1">
-                <div className="h-10 w-10 pic-image relative">
-                  <img className="object-cover" src="" alt="" />
-                  <span className="h-2 w-2 bg-white absolute right"></span>
-                </div>
-                <p className="mx-1 font-normal">John Doe</p>
-              </li>
-
-              <li className="text-base mx-5 flex items-center m-1">
-                <div className="h-10 w-10 pic-image relative">
-                  <img className="object-cover" src="" alt="" />
-                  <span className="h-2 w-2 bg-white absolute right"></span>
-                </div>
-                <p className="mx-1 font-normal">John Doe</p>
-              </li>
-              <li className="text-base mx-5 flex items-center m-1">
-                <div className="h-10 w-10 pic-image relative">
-                  <img className="object-cover" src="" alt="" />
-                  <span className="h-2 w-2 bg-white absolute right"></span>
-                </div>
-                <p className="mx-1 font-normal">John Doe</p>
-              </li>
-            </ul>
-          )}
-        </ul>
-      </div>
+        <SidebarItem
+          {...{
+            iconLink: DRAFT_ICON,
+            title: "Draft",
+          }}
+        />
+        <SidebarItemWithSubitems {...FILES_SUB} />
+        <SidebarItem
+          {...{
+            iconLink: INTEGRATE_ICON,
+            title: "Integrate",
+          }}
+        />
+        <SidebarItemWithSubitems2 {...LOUNGES_SUB} />
+        <SidebarItemWithSubitems2 {...CHANNELS_SUB} />
+        <SidebarItemWithSubitems3 {...MSG_SUB} />
+      </ul>
     </div>
   );
 }
