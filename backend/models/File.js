@@ -5,6 +5,9 @@ const FileSchema = new Schema({
     type: String,
     trim: true,
     required: true
+  }, 
+  isStarred: {
+    type: Boolean
   }
 }, { timestamps: true });
 

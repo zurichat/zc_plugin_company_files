@@ -17,7 +17,7 @@ exports.fileDelete = async (req, res) => {
 }
 
 exports.fileSearchByIsStarred = async (req, res) => {
-  // seacrch the database for files that are starred
+  // search the database for files that are starred
   const { stars } = req.query;
 
   try {
