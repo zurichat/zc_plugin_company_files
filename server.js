@@ -13,7 +13,7 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const router = express.Router();
 
-const connectToDatabase = require('./backend/utils/db');
+ const connectToDatabase = require('./backend/utils/db');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
