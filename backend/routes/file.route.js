@@ -1,12 +1,16 @@
 const router = require('express').Router();
-const { fileCreate, fileUpdate, fileDetails, fileDelete, fileSearchByDate  } = require('../controllers/file.controller');
+const { fileCreate, fileUpdate, fileDetails, fileDelete, getAllFiles } = require('../controllers/file.controller');
 
-router.post('/', fileCreate);
-router.get("/searchByDate", fileSearchByDate)
+// CREATE A NEW FILE
+router.post('/file/write', fileCreate);
 
+// GET ALL THE FILES FROM THE ENDPOINT
+router.get('/file/read', getAllFiles);
 
-router.route('/:id')
-  .get(fileDetails)
+// GET A SINGLE FILE DETAILS
+router.get('/file/read/:id', fileDetails);
+
+router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 

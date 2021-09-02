@@ -1,13 +1,21 @@
 const File = require("../models/File")
 
+const ApiConnection = require('./helpers/api.helper');
+const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
-  
-  
-};
+    const response = await API.create( req.body );
+    res.send({ response })
+}
+
+exports.getAllFiles = async (req, res) => {
+    const response = await API.fetchAll();
+    res.send({ response })
+}
 
 exports.fileDetails = async (req, res) => {
-
+    const response = await API.fetchOne( req.params.id );
+    res.send({ response })
 }
 
 exports.fileUpdate = async (req, res) => {
