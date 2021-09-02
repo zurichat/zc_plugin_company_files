@@ -1,7 +1,7 @@
 name: Continuous deployment
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 jobs:
   deploy:
