@@ -6,7 +6,7 @@ router.get('/searchByDate', fileSearchByDate)
 
 
 // route to search for files if its starred
-router.get('/searchByStar', fileSearchByIsStarred);
+router.get('/searchByStar/:star', fileSearchByIsStarred);
 
 router.route('/:id')
   .get(fileDetails)
