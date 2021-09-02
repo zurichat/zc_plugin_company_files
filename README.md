@@ -1,5 +1,5 @@
 ### **Zuri Chat Company Files Plugin**
-----
+---
 
 ### **Overview**
 Company Files Management Plugin for Zuri Chat.
