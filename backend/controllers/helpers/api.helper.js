@@ -1,8 +1,8 @@
 const axios = require('axios');
 const uuid = require("uuid").v4;
 
-// const { name } = require('../../package.json');
-// const pluginId = name;
+const { name } = require('../../../package.json');
+const pluginId = name;
 
 const apiWriteUrl = "https://zccore.herokuapp.com/data/write";
 const apiReadUrl = "https://zccore.herokuapp.com/data/read";
@@ -10,7 +10,7 @@ const apiReadUrl = "https://zccore.herokuapp.com/data/read";
 class ApiConnection {
     constructor (collection_name) {
         this.data = {
-            plugin_id: '612e0c38a560ba3687c9ae4b',
+            plugin_id: '613125166e7d00b82b78b815',
             organization_id: '612a3a914acf115e685df8e3',
             collection_name: collection_name,
             bulk_write: false,
@@ -57,7 +57,7 @@ class ApiConnection {
         try {
 
             const response = await axios
-                .get(`${apiReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?id=${id}`);
+                .get(`${apiReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?object_id=${id}`);
         
             return response.data;
 
