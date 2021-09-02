@@ -1,9 +1,11 @@
+import GaugeSpeed from "./GaugeSpeed";
+
 function Activities() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return (
+    <div>
+      <GaugeSpeed />
+    </div>
+  );
 }
 
-export default Activities
+export default Activities;

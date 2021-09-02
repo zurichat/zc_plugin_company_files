@@ -29,7 +29,7 @@ FolderSchema.methods.joiValidate = data => {
 		folderName: Joi.string().required(),
     description: Joi.string(),
     permissions: Joi.string(),
-
+    isPinned: Joi.boolean(),
     lastAccessed: Joi.date(),
     dateModified: Joi.date(),
     dateAdded: Joi.date()
