@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
 const INSIGHT_ICON = "/Icons/Insight.png";
@@ -42,22 +43,27 @@ const FILES_SUB = {
     {
       title: "All Files",
       iconLink: "/Icons/Vector.png",
+      path: "/",
     },
     {
       title: "Shared",
       iconLink: "/Icons/default.png",
+      path: "/shared",
     },
     {
       title: "Favourites",
       iconLink: "/Icons/Star.png",
+      path: "favourites",
     },
     {
       title: "Trash",
       iconLink: "/Icons/Bin.png",
+      path: "/trash",
     },
     {
       title: "Help",
       iconLink: "/Icons/Question.png",
+      path: "/help",
     },
   ],
 };
@@ -101,12 +107,18 @@ const MSG_SUB = {
   ],
 };
 
-const SidebarItem = ({ title, iconLink, sub = false }) => {
+const SidebarItem = ({ title, iconLink, sub = false, path = null }) => {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push(path);
+  };
+
   return (
     <li
       className={`text-base font-normal flex items-center justify-start gap-2 ${
         !sub ? "" : "ml-5"
       }`}
+      {...{ ...(!!path && { onClick: handleClick }) }}
     >
       <img
         {...{ src: iconLink, alt: !!title ? title + "icon" : "icon" }}
@@ -117,6 +129,7 @@ const SidebarItem = ({ title, iconLink, sub = false }) => {
   );
 };
 const SidebarItemWithSubitems = ({ title, iconLink, subitems }) => {
+  // const history = useHistory();
   const [showSubitems, setShowSubitems] = useState(false);
   const handleShowSubitems = () => setShowSubitems((prevState) => !prevState);
 
@@ -247,6 +260,7 @@ function Sidebar() {
             title: "Draft",
           }}
         />
+        {/* Files Categories */}
         <SidebarItemWithSubitems {...FILES_SUB} />
         <SidebarItem
           {...{
