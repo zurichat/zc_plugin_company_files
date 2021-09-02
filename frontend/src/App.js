@@ -1,36 +1,40 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Sidebar from './components/SideBar/Sidebar';
 import AllFiles from './components/All files/AllFiles';
 import Favourites from './components/Favourites/Favourites';
 import Shared from './components/Shared/Shared';
 import Trash from './components/Trash/Trash';
 import Help from './components/Help/Help';
+import Activities from './components/Activities/Activities';
 
 function App() {
   return (
     <Router>
-    <div className="App">
-    <Sidebar/> 
+      <div className="App font-lato flex">
+        <Sidebar />
         <Switch>
-          <Route exact path = "/">
-            <AllFiles/>
+          <Route exact path="/">
+            <AllFiles />
           </Route>
-          <Route path = '/shared'>
-            <Shared/>
+          <Route path='/shared'>
+            <Shared />
           </Route>
-          <Route path = '/favourites'>
-            <Favourites/>
+          <Route path='/favourites'>
+            <Favourites />
           </Route>
-          <Route path = '/Trash'>
-            <Trash/>
+          <Route path='/Trash'>
+            <Trash />
           </Route>
-          <Route path = '/Help'>
-           <Help/>
+          <Route path='/Help'>
+            <Help />
+          </Route>
+          <Route path='/activities'>
+            <Activities />
           </Route>
         </Switch>
-    </div>
-</Router>
+      </div>
+    </Router>
   );
 }
 
