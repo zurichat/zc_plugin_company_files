@@ -9,7 +9,7 @@ function CollaboratorsList() {
         </div>
         <div>
           <p className='capitalize font-bold text-sm text-text-body'>damilola emmanuel</p>
-          <p className='text-gray-400 text-xs'>damilolaemmanuel@hotmail.com</p>
+          <p className='text-gray-400 text-xs truncate'>damilolaemmanuel@hotmail.com</p>
         </div>
       </div>
   )
