@@ -1,7 +1,9 @@
 const router = require('express').Router();
-const { fileCreate, fileUpdate, fileDetails, fileDelete } = require('../controllers/file.controller');
+const { fileCreate, fileUpdate, fileDetails, fileDelete, fileSearchByDate  } = require('../controllers/file.controller');
 
 router.post('/', fileCreate);
+router.get("/searchByDate", fileSearchByDate)
+
 
 router.route('/:id')
   .get(fileDetails)
