@@ -1,5 +1,6 @@
 import React from 'react';
-import "./FolderCardOption.css";
+import axios from 'axios';
+import './FolderCardOption.css';
 
 import EyeIcon from '../../../public/Icons/eye.svg';
 import CopyIcon from '../../../public/Icons/copy.svg';
@@ -15,7 +16,7 @@ import ChainIcon from '../../../public/Icons/chain.svg';
 
 function FolderCardOption() {
 
-    /* File Download */
+    //  File Download
     const downloadFile = () => {
       axios({
             url: `/folderAPIurl/thefiles/${this.props.file.id}`,
