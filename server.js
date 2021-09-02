@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 app.use(ErrorHandler);
 
 (async () => {
-  await connectToDatabase();
+  // await connectToDatabase();
 
   if (cluster.isMaster) {
     // Fork workers
