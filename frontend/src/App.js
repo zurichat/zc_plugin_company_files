@@ -11,7 +11,7 @@ import Activities from './components/Activities/Activities';
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App font-lato flex">
         <Sidebar />
         <Switch>
           <Route exact path="/">

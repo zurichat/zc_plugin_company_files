@@ -9,7 +9,8 @@ module.exports = {
         secondary: '#1A61DB',
         accent: '#B8003C',
         error: '#F40101',
-        light: '#E5E5E5',
+        bgLight: '#E5E5E5',
+        border: '#BEBEBE',
         bg: {
           lightGrey: '#F6F6F6',
           white: '#FFFFFF'
@@ -19,6 +20,7 @@ module.exports = {
           header: '#242424',
           body: '#3A3A3A',
           navbar: '#999999',
+          grey: '#4A4A4A',
           time: '#C1C1C1',
           lightIcon: '#BEBEBE'
         },
