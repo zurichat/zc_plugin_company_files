@@ -72,7 +72,7 @@ exports.getArchivedFiles = async (req, res) => {
   try {
     const allFiles = await API.fetchAll();
 
-    //   Validate response status
+    //   Validate Response Status
     if (allFiles.status === 200) {
       const archives = [];
       allFiles.data.map((file) => {
