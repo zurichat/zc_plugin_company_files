@@ -1,5 +1,5 @@
 import React from 'react'
-import User from '../Activities/guest-user.jpg'
+import User from './guest-user.jpg'
 
 function CollaboratorsList() {
   return (

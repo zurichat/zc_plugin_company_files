@@ -1,15 +1,16 @@
 const router = require('express').Router();
-const { fileCreate, fileUpdate, fileDetails, fileDelete, fileSearchByDate, fileSearchByIsStarred  } = require('../controllers/file.controller');
+const { fileCreate, fileUpdate, fileDetails, fileDelete, getAllFiles } = require('../controllers/file.controller');
 
-router.post('/', fileCreate);
-router.get('/searchByDate', fileSearchByDate)
+// CREATE A NEW FILE
+router.post('/file/write', fileCreate);
 
+// GET ALL THE FILES FROM THE ENDPOINT
+router.get('/file/read', getAllFiles);
 
-// route to search for files if its starred
-router.get('/searchByStar/:star', fileSearchByIsStarred);
+// GET A SINGLE FILE DETAILS
+router.get('/file/read/:id', fileDetails);
 
-router.route('/:id')
-  .get(fileDetails)
+router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 
