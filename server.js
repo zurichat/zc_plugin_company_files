@@ -9,6 +9,7 @@ const express = require('express');
 const compression = require('compression');
 const fileUpload = require('express-fileupload');
 
+
 const app = express();
 const router = express.Router();
 
@@ -24,7 +25,6 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
 
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
-connectToDatabase();
 if (isProduction) {
   app.set('trust proxy', 1); // Trust first proxy
 } else {
@@ -46,34 +46,28 @@ app.use((req, res, next) => {
 app.use(ErrorHandler);
 
 (async () => {
-  // await connectToDatabase();
+  await connectToDatabase();
 
   if (cluster.isMaster) {
     // Fork workers
     cpus.forEach(() => cluster.fork());
-
+    
     cluster.on('exit', () => cluster.fork());
   } else {
     // Workers can share any TCP connection
     // In this case, it is an HTTP server
     const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
-      console.log(
-        ':>>'.green.bold,
-        'Server running in'.yellow.bold,
-        (process.env.NODE_ENV || 'production').toUpperCase().blue.bold,
-        'mode, on port'.yellow.bold,
-        `${port}`.blue.bold
-      );
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, (process.env.NODE_ENV || 'production').toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold)
     });
 
     // Handle unhandled promise rejections
-    process.on('unhandledRejection', (error) => {
+    process.on('unhandledRejection', error => {
       // console.log(error);
       console.log(`✖ | Unhandled Rejection: ${error.message}`.red.bold);
       server.close(() => process.exit(1));
-    });
+    })
   }
-})().catch((error) => {
+})().catch(error => {
   console.log(`✖ | Error: ${error.message}`.red.bold);
 });
