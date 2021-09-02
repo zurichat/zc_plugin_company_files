@@ -12,10 +12,10 @@ const fileUpload = require("express-fileupload");
 const app = express();
 const router = express.Router();
 
-const connectToDatabase = require("./src/utils/db");
-const rootRouter = require("./src/routes/index")(router);
+const connectToDatabase = require("./backend/utils/db");
+const rootRouter = require("./backend/routes/index")(router);
 const isProduction = process.env.NODE_ENV === "production";
-const ErrorHandler = require("./src/middlewares/errorHandler");
+const ErrorHandler = require("./backend/middlewares/errorHandler");
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
 
 app.use(express.static(path.resolve(__dirname, "./frontend/build")));
-
+connectToDatabase()
 if (isProduction) {
   app.set("trust proxy", 1); // Trust first proxy
 } else {
@@ -54,7 +54,7 @@ app.use(ErrorHandler);
   } else {
     // Workers can share any TCP connection
     // In this case, it is an HTTP server
-    const port = process.env.PORT || 5000;
+    const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
       console.log(
         ":>>".green.bold,

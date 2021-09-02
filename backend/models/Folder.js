@@ -1,18 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const FileSchema = new Schema({
-  fileName: {
+const FolderSchema = new Schema({
+  folderName: {
     type: String,
     trim: true,
     required: true
   }
 }, { timestamps: true });
 
-
-FileSchema.methods.joiValidate = data => {
+FolderSchema.methods.joiValidate = data => {
 	const Joi = require('joi');
 	const schema = Joi.object().keys({
-		fileName: Joi.string().required()
+		folderName: Joi.string().required()
   }).unknown(true);
   
   return new Promise((resolve, reject) => {
@@ -22,4 +21,4 @@ FileSchema.methods.joiValidate = data => {
   })
 }
 
-module.exports = model('File', FileSchema);
+module.exports = model('Folder', FolderSchema);
