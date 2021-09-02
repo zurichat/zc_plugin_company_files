@@ -2,6 +2,9 @@ import {useState} from 'react';
 import './sidebar.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown, faChevronRight, faPlusCircle} from '@fortawesome/free-solid-svg-icons'
+import ChannelList from './ChannelList';
+import LoungeList from './LoungeList';
+import DmessageList from './DmessageList';
 function Sidebar() {
     const [showFiles, setshowFiles] = useState(false);
     const [showChannels, setshowChannels] = useState(false);
@@ -51,49 +54,24 @@ function Sidebar() {
                     {
                         lounge &&
                         <ul>
-                            <li className="text-base mx-5 font-normal">Lounge 1</li>
-                            <li className="text-base mx-5 font-normal">Lounge 2</li>
-                            <li className="text-base mx-5 font-normal">Lounge 3</li>
-                            <li className="text-base mx-5 font-normal">Lounge 4</li>
+                            <LoungeList />
+                          
                         </ul>
                     }
                     <li className="text-base flex justify-between" onClick ={handleShowChannels}> <div className="flex"><FontAwesomeIcon className= "icon" icon={showChannels ? faChevronDown : faChevronRight} />  <p className="mx-1">Channels</p></div> <button><FontAwesomeIcon className="icon" icon={faPlusCircle} /></button></li>
                     {
                         showChannels &&
                         <ul>
-                            <li className="text-base mx-5 font-bold"># annonucement</li>
-                            <li className="text-base mx-5 font-bold"># Games</li>
-                            <li className="text-base mx-5 font-bold"># Designers</li>
-                            <li className="text-base mx-5 font-bold"># Developers</li>
+                            <ChannelList />
+                      
                         </ul>
                     }
 
-                    <li className="text-base flex justify-between" onClick ={handleShowDMs}> <div className="flex"><FontAwesomeIcon className="icon" icon={showDMs ? faChevronDown : faChevronRight} /> <p className="mx-1">Direct Messages</p></div> <button><FontAwesomeIcon className="icon" icon={faPlusCircle} /></button></li>
+                    <li className="text-base flex justify-between items-center" onClick ={handleShowDMs}> <div className="flex"><FontAwesomeIcon className="icon" icon={showDMs ? faChevronDown : faChevronRight} /> <p className="mx-1">Direct Messages</p></div> <button><FontAwesomeIcon className="icon" icon={faPlusCircle} /></button></li>
                     {
                         showDMs &&
                         <ul>
-                            <li className="text-base mx-5 flex items-center m-1">
-                                <div className="h-10 w-10 pic-image relative">
-                                    <img className="object-cover" src="" alt="" />
-                                    <span className="h-2 w-2 bg-white absolute right"></span>
-                                </div>
-                                <p className="mx-1 font-normal">John Doe</p>
-                            </li>
-
-                            <li className="text-base mx-5 flex items-center m-1">
-                                <div className="h-10 w-10 pic-image relative">
-                                    <img className="object-cover" src="" alt="" />
-                                    <span className="h-2 w-2 bg-white absolute right"></span>
-                                </div>
-                                <p className="mx-1 font-normal">John Doe</p>
-                            </li>
-                            <li className="text-base mx-5 flex items-center m-1">
-                                <div className="h-10 w-10 pic-image relative">
-                                    <img className="object-cover" src="" alt="" />
-                                    <span className="h-2 w-2 bg-white absolute right"></span>
-                                </div>
-                                <p className="mx-1 font-normal">John Doe</p>
-                            </li>
+                           <DmessageList />
                             
                         </ul>
                     }

@@ -13,6 +13,7 @@ li {
     font-family: 'Lato', sans-serif;
     color: #999999;
     cursor: pointer;
+    padding: .3rem 0;
 }
 
 li img {
