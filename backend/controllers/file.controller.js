@@ -1,25 +1,22 @@
-const File = require("../models/File");
+const File = require("../models/File")
+
+const ApiConnection = require('./helpers/api.helper');
+const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
-  //used this for testing
-  const { fileName } = req.body;
+    const response = await API.create( req.body );
+    res.send({ response })
+}
 
-//   try {
-//     const exists = await File.findOne({ fileName: fileName });
-//     if (!exists) {
-//       const file = await File.create({
-//         fileName,
-//       });
-//       res.status(200).json(file);
-//     } else {
-//       res.status(403).json("already exists");
-//     }
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-};
+exports.getAllFiles = async (req, res) => {
+    const response = await API.fetchAll();
+    res.send({ response })
+}
 
-exports.fileDetails = async (req, res) => {};
+exports.fileDetails = async (req, res) => {
+    const response = await API.fetchOne( req.params.id );
+    res.send({ response })
+}
 
 exports.fileUpdate = async (req, res) => {};
 
