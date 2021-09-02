@@ -1,4 +1,7 @@
 const File = require("../models/File");
+const axios = require("axios");
+
+const readApi = "https://zccore.herokuapp.com/data/read";
 
 exports.fileCreate = async (req, res) => {
   //used this for testing
@@ -67,5 +70,25 @@ exports.fileSearchByDate = async (req, res) => {
     //to get files for the only one day end and start date should be the same
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+// Retrieves all the files that has been archived by a user
+exports.getArchivedFiles = async (req, res) => {
+  try {
+    const allFiles = await axios.get(
+      `${readApi}/613125166e7d00b82b78b815/File/612a3a914acf115e685df8e3`
+    );
+
+    if (allFiles.data.status === 200) {
+      const archives = [];
+      allFiles.data.data.map((file) => {
+        file.isArchived ? archives.push(file) : null;
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "success", archives: archives });
+    }
+  } catch (error) {
+    return error.response.data;
   }
 };
