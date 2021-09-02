@@ -3,23 +3,6 @@ const File = require("../models/File")
 
 exports.fileCreate = async (req, res) => {
   
-    //used this for testing
-    const { fileName } = req.body;
-
-  try {
-    const exists = await File.findOne({ fileName: fileName });
-    if (!exists) {
-      const file = await File.create({
-        fileName,
-      });
-      res.status(200).json(file);
-    } else {
-      res.status(403).json("already exists");
-    }
-  } catch (error) {
-    res.status(500).json(error);
-  }
-
   
 };
 
@@ -67,5 +50,6 @@ exports.fileSearchByDate = async (req, res) => {
         res.status(500).json(error)
     }
    
+
  
 }
