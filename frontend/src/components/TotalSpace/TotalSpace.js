@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import styles from "./TotalSpace.module.css"
+import { style } from "d3";
 
 function deg2rad(deg) {
     return (deg * Math.PI) / 180;
@@ -63,11 +65,11 @@ export default function TotalSpace(props) {
       .attr("text-anchor", "middle")
       .attr("fill", "#4A4A4A")
       .attr("stroke", "#4A4A4A")
-      .style("font-size", "28px");
+      .style("font-size", "45px");
 
     text
       .append("tspan")
-      .attr("y", "0")
+      .attr("y", "-22")
       .text((d) => "20 GB");
 
     // divide the arc into separate colored sections
@@ -83,9 +85,9 @@ export default function TotalSpace(props) {
   });
 
   return (
-    <div id="total-space">
+    <div id="total-space" className={styles.totalSpaceContainer}>
       <svg ref={guage}></svg>
-      <p style={{ fontSize: "21px", color: "#C4C4C4" }}>Used Out of 40 GB</p>
+      <p className={styles.totalStorageText}>Used Out of 40 GB</p>
     </div>
   );
 }

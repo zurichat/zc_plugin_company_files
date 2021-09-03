@@ -1,0 +1,19 @@
+
+.totalSpaceContainer {
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    padding: 35px;
+    background-color: #fff;
+}
+
+.guage {
+    margin-bottom: 30px;
+}
+
+.totalStorageText {
+    font-size: 12px;
+    color:#C4C4C4;
+    text-align: center;
+    margin-top: 22px;
+}
