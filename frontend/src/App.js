@@ -1,31 +1,42 @@
-import './App.css';
-import Sidebar from './components/SideBar/Sidebar';
-import RecentlyViewed from './components/RecentlyViewed/RecentlyViewed';
-import Files from './components/Files/Files';
-import Folder from './components/Folder/Folder';
-import SearchBar from './components/SearchBar/SearchBar';
-import Activities from './components/Activities/Activities';
-import TotalSpace from './components/TotalSpace/TotalSpace';
-import Upload from './components/Upload/Upload';
+import "./App.css";
+
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+
+import Activities from "./components/Activities/Activities";
+import AllFiles from "./components/All files/AllFiles";
+import Favourites from "./components/Favourites/Favourites";
+import Help from "./components/Help/Help";
+import Shared from "./components/Shared/Shared";
+import Sidebar from "./components/SideBar/Sidebar";
+import Trash from "./components/Trash/Trash";
 
 function App() {
   return (
-    <div className="App">
-      <Sidebar/> 
-      <div className="main">
-          <div >Top items and Search Component <SearchBar/></div>
-          <div>
-            <RecentlyViewed/>
-            <Folder/>
-            <Files/>
-          </div>
-          <div>
-            <TotalSpace/>
-            <Activities/>
-            <Upload/>
-         </div>
+    <Router>
+      <div className="App font-lato flex">
+        <Sidebar />
+        <Switch>
+          <Route exact path="/">
+            <AllFiles />
+          </Route>
+          <Route path="/shared">
+            <Shared />
+          </Route>
+          <Route path="/favourites">
+            <Favourites />
+          </Route>
+          <Route path="/trash">
+            <Trash />
+          </Route>
+          <Route path="/help">
+            <Help />
+          </Route>
+          <Route path="/Activities">
+            <Activities />
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 
