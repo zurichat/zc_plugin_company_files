@@ -1,9 +1,11 @@
 import React from 'react'
+import TrashListDisplay from './TrashListDisplay'
+import "./trash.css";
 
 function Trash() {
     return (
-        <div>
-            trash here
+        <div className="trash">
+            <TrashListDisplay/>
         </div>
     )
 }
