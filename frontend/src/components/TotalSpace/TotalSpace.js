@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import styles from "./TotalSpace.module.css"
-import { style } from "d3";
 
 function deg2rad(deg) {
     return (deg * Math.PI) / 180;
@@ -38,7 +37,7 @@ export default function TotalSpace(props) {
       return deg2rad(config.minAngle + ratio * range);
     });
 
-  const scale = d3
+  d3
     .scaleLinear()
     .range([0, 1])
     .domain([config.minValue, config.maxValue]);

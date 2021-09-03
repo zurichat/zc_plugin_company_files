@@ -5,10 +5,12 @@
     font-weight: 400;
     padding: 35px;
     background-color: #fff;
+    width: 20%;
+    min-width: 200px;
 }
 
 .totalStorageText {
-    font-size: 12px;
+    font-size: 14px;
     color:#C4C4C4;
     text-align: center;
     margin-top: 22px;
