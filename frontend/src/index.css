@@ -4,10 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.border-collaborators {
-  border: 1px solid #999;
-}
-
 .border-separator {
   border-left: 1px solid #E5E5E5;
+}
+
+.border-collaborators {
+  border: 1px solid #999;
 }

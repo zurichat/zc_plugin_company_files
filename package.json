@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/zurichat/zc_plugin_company_files.git"
   },
-  "author": "Team Galileo devs ~ HNGi8",
+  "author": "Team Galileo / HNGi8",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zurichat/zc_plugin_company_files/issues"
