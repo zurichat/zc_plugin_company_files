@@ -60,9 +60,7 @@ exports.fileSearchByDate = async (req, res) => {
           return true;
         } else return false;
       });
-      rd
-        ? res.status(200).json(rd)
-        : res.status(404).json("no data found on this day");
+      rd.length === 0 ? res.status(404).json(`no files found on ${pickDate}`) : res.status(200).json(rd)
       console.log(rd);
     }
   } catch (error) {
