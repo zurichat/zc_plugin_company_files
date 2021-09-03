@@ -52,7 +52,7 @@ exports.searchStarredFiles = async (req, res) => {
   }
 }
 
-exports.fileSearchByDate = async (req, res) => {
+exports.searchByDate = async (req, res) => {
   try {
     const { data } = await API.fetchAll();
     let { pickDate } = req.query;
