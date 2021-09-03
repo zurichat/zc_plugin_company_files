@@ -8,14 +8,12 @@ import AllFiles from "./components/All files/AllFiles";
 import Favourites from "./components/Favourites/Favourites";
 import Help from "./components/Help/Help";
 import Shared from "./components/Shared/Shared";
-import Sidebar from "./components/SideBar/Sidebar";
 import Trash from "./components/Trash/Trash";
 
 function App() {
 	return (
 		<Router>
-			<div className="App">
-				<Sidebar />
+			<div className="App overflow-auto">
 				<Switch>
 					<Route exact path="/">
 						<Home />
