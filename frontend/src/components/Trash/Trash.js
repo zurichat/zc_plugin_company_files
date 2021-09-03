@@ -2,9 +2,8 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import "./trash.css"
-import TrashListDisplay from './TrashListDisplay';
-
+import TrashListDisplay from "./TrashListDisplay.js";
+import "./trash.css";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -80,10 +79,8 @@ function Trash() {
                     items moved to the trash will appear here
                 </div>
             </Grid>
-            <Grid item xs={12} style={{marginTop:"4rem"}}>
-                <TrashListDisplay/>
-            </Grid>
           </Grid>
+        <TrashListDisplay/>
       </div>
     );
 }
