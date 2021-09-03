@@ -93,7 +93,7 @@ function NormalUser() {
         <span
           className={`${
             show ? 'flex' : 'hidden'
-          } justify-start  w-[20rem] sm:w-44 left-2/4 translate-y-[70%] translate-x-[-50%]  h-12 absolute `}
+          } justify-start w-[20rem] sm:w-44  translate-y-[70%]   h-12 absolute  `}
         >
           <ul className="inline-flex rounded-[0.3rem] flex-col text-center items-center  space-x-1 space-y-2 bg-gray-300 h-[10.5rem] w-full min-h-full  relative">
             <li className="py-2">Admin</li>
