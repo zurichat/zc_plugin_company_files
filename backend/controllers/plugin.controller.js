@@ -1,10 +1,8 @@
-const axios = require('axios');
-const { name, version, author, license, bugs } = require('../../package.json');
+const { name, version, author } = require('../../package.json');
 const pluginId = name;
 const pluginName = 'Company Files Management Plug-In';
 
-exports.info = async (req, res) => {
-  const repoInfo = await axios.get('https://api.github.com/repos/zurichat/zc_plugin_company_files');
+exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
 
   res.status(200).json({
@@ -17,23 +15,7 @@ exports.info = async (req, res) => {
     pingUrl: `${baseUrl}/ping`,
     description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
     author,
-    version,
-    repo: {
-      type: 'git',
-      url: repoInfo.data.html_url,
-      gitUrl: repoInfo.data.git_url,
-      license,
-      issues: {
-        ...bugs,
-        hasIssues: repoInfo.data.has_issues,
-        hasOpenIssues: repoInfo.data.open_issues > 0,
-        openIssuesCount: repoInfo.data.open_issues
-      },
-      starsCount: repoInfo.data.stargazers_count,
-      forksCount: repoInfo.data.forks,
-      createdAt: repoInfo.data.created_at,
-      lastUpdated: repoInfo.data.updated_at
-    }
+    version
   });
 }
 

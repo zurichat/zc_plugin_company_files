@@ -4,7 +4,8 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+yarn.lock
+package-lock.json
 # Runtime data
 pids
 *.pid
@@ -38,6 +39,8 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
+
+frontend/package-lock.json
 
 # Optional npm cache directory
 .npm
