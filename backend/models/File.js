@@ -11,6 +11,9 @@ const FileSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    isStarred: {
+      type: Boolean,
+    }
   },
   { timestamps: true }
 );
