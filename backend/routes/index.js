@@ -1,9 +1,9 @@
-const fileRouter = require('./file.route');
-const folderRouter = require('./folder.route');
+const fileRouter = require("./file.route");
+const folderRouter = require("./folder.route");
 
-module.exports = router => {
-  router.use('/files', fileRouter);
-  router.use('/folders', folderRouter);
+module.exports = (router) => {
+  router.use("/file", fileRouter);
+  router.use("/folders", folderRouter);
 
   return router;
-}
+};
