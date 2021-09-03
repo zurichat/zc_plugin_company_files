@@ -8,6 +8,7 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
+  restoreFile,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -31,5 +32,8 @@ router.get('/searchStarredFiles', searchStarredFiles)
 router.route('/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
+
+// RESTORE FILE
+router.put('/restoreFile/:id', restoreFile)
 
 module.exports = router;
