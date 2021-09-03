@@ -6,26 +6,29 @@ const {
   fileDelete,
   getAllFiles,
   getArchivedFiles,
-  fileSearchByIsStarred,
+  searchByDate,
+  searchStarredFiles,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
-
-router.post('/file/write', fileCreate);
+router.post('/write', fileCreate);
 
 // GET ALL THE FILES FROM THE ENDPOINT
-router.get('/file/read', getAllFiles);
+router.get('/read', getAllFiles);
 
 // GET A SINGLE FILE DETAILS
-router.get('/file/read/:id', fileDetails);
+router.get('/read/:id', fileDetails);
 
 // GET ARCHIVED FILES
 router.get('/archive', getArchivedFiles);
 
+// SEARCH FILES BY DATE ADDED
+router.get('/searchByDate', searchByDate);
 
-router.get('/searchByIsStarred', fileSearchByIsStarred)
+// SEARCH STARRED FILES
+router.get('/searchStarredFiles', searchStarredFiles)
 
-router.route('/file/write/:id')
+router.route('/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 
