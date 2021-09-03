@@ -1,4 +1,127 @@
-.flex-2 {
-    display: flex;
-    justify-content: space-evenly;
+#recently-viewed-header {
+    position: absolute;
+    width: 147px;
+    height: 24px;
+    left: 321.42px;
+    top: 114.5px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px
+}
+
+#image-name {
+    position: absolute;
+    width: 56px;
+    height: 22px;
+    left: 329.42px;
+    top: 406.38px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    height: 22px;
+    width: 56px;
+    left: 329.421875px;
+    top: 406.37890625px;
+}
+
+#image-date {
+    position: absolute;
+    width: 123px;
+    height: 17px;
+    left: 329.42px;
+    top: 435.38px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #999999;
+}
+
+#video-name {
+    position: absolute;
+    width: 55px;
+    height: 22px;
+    left: 600.28px;
+    top: 406.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #000000;
+}
+
+#video-date {
+    position: absolute;
+    width: 123px;
+    height: 17px;
+    left: 600.28px;
+    top: 435.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #999999;
+}
+
+#document-name {
+    position: absolute;
+    width: 92px;
+    height: 22px;
+    left: 877.58px;
+    top: 406.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #4A4A4A;
+}
+
+#document-date {
+    position: absolute;
+    width: 123px;
+    height: 17px;
+    left: 877.58px;
+    top: 435.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #999999;
+}
+
+#compressed-name {
+    position: absolute;
+    width: 99px;
+    height: 22px;
+    left: 1155.89px;
+    top: 406.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #4A4A4A;
+}
+
+#compressed-date {
+    position: absolute;
+    width: 123px;
+    height: 17px;
+    left: 1155.89px;
+    top: 435.21px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #999999;
 }
