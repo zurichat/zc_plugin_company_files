@@ -7,14 +7,15 @@ import AllFiles from "./components/All files/AllFiles";
 import Favourites from "./components/Favourites/Favourites";
 import Help from "./components/Help/Help";
 import Shared from "./components/Shared/Shared";
-import Sidebar from "./components/SideBar/Sidebar";
+// import Sidebar from "./components/SideBar/Sidebar";
 import Trash from "./components/Trash/Trash";
+import Upload from "./components/Upload/Upload";
 
 function App() {
   return (
     <Router>
       <div className="App font-lato flex">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Switch>
           <Route exact path="/">
             <AllFiles />
@@ -33,6 +34,9 @@ function App() {
           </Route>
           <Route path="/Activities">
             <Activities />
+          </Route>
+          <Route path="/upload">
+            <Upload />
           </Route>
         </Switch>
       </div>

@@ -1,0 +1,80 @@
+.upload--component {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  button {
+    margin: 10px;
+    padding: 8px 14px;
+    border: 1px solid #cadcf4;
+    color: #cadcf4;
+    font-size: 12px;
+  }
+
+  .btn--dropdown {
+    position: absolute;
+    top: 8%;
+    left: 10%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 233px;
+    height: 149px;
+    color: #606060;
+    // filter: drop-shadow(0 6 0.75rem #A5A5A566);
+    // box-shadow: 0 6 20 -5 #A5A5A566;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+
+    & span,
+    label {
+      margin-left: 5px;
+    }
+  }
+  .upload-progress-bar {
+    height: 200px;
+    width: 250px;
+    position: absolute;
+    border: 1px solid #f3f3f3;
+    top: 100%;
+    //right: 5%;
+    left: 98%;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+    box-shadow: 0 10px 6px -6px #777;
+
+    & > progress {
+      margin-right: 8px;
+    }
+
+    & > progress[value] {
+      width: 100px;
+
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    & > progress[value]::-webkit-progress-bar {
+      height: 10px;
+      border-radius: 20px;
+      background-color: #eee;
+    }
+
+    & > progress[value]::-webkit-progress-value {
+      height: 10px;
+      border-radius: 20px;
+      background-color: green;
+    }
+  }
+}

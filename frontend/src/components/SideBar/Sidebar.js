@@ -108,9 +108,9 @@ const MSG_SUB = {
 };
 
 const SidebarItem = ({ title, iconLink, sub = false, path = null }) => {
-  const history = useHistory();
+  // const history = useHistory();
   const handleClick = () => {
-    history.push(path);
+    //   history.push(path);
   };
 
   return (
