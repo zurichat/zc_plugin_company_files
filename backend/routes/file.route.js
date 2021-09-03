@@ -6,6 +6,7 @@ const {
   fileDelete,
   getAllFiles,
   getArchivedFiles,
+  searchByDate,
   searchStarredFiles,
   getAllDeletedFiles,
 } = require('../controllers/file.controller');
@@ -21,6 +22,9 @@ router.get('/read/:id', fileDetails);
 
 // GET ARCHIVED FILES
 router.get('/archive', getArchivedFiles);
+
+// SEARCH FILES BY DATE ADDED
+router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
