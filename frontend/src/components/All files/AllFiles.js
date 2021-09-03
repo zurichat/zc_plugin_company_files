@@ -1,16 +1,5 @@
-import Files from "../Files/Files";
-import Folder from "../Folder/Folder";
-import RecentlyViewed from "../RecentlyViewed/RecentlyViewed";
-
-
 function AllFiles() {
-    return (
-        <div>
-            <RecentlyViewed/>
-            <Folder/>
-            <Files/>
-        </div>
-    )
+	return <div className="w-full">All Files go here</div>;
 }
 
 export default AllFiles;
