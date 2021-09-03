@@ -3,10 +3,11 @@
     font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: 400;
-    padding: 35px;
+    padding: 1rem;
     background-color: #fff;
     width: 20%;
     min-width: 200px;
+    margin-left: auto;
 }
 
 .totalStorageText {

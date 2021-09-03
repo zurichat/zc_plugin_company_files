@@ -9,6 +9,7 @@ import Help from "./components/Help/Help";
 import Shared from "./components/Shared/Shared";
 import Sidebar from "./components/SideBar/Sidebar";
 import Trash from "./components/Trash/Trash";
+import TotalSpace from "./components/TotalSpace/TotalSpace";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllFiles />
+            <TotalSpace />
           </Route>
           <Route path="/shared">
             <Shared />
