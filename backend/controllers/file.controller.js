@@ -18,9 +18,32 @@ exports.fileDetails = async (req, res) => {
   res.send({ response });
 };
 
-exports.fileUpdate = async (req, res) => {};
+exports.fileUpdate = async (req, res) => { };
 
-exports.fileDelete = async (req, res) => {};
+exports.fileDelete = async (req, res) => { };
+
+// handle file searching by is starred is true
+exports.fileSearchByIsStarred = async (req, res) => {
+  try {
+    const { data } = await API.fetchAll();
+    // loop through response object and check if isStarred is true
+    const starredFiles = [];
+    data.map(({ isStarred, file_type, name, _id, isArchived }) => {
+      if (isStarred) {
+        starredFiles.push({ _id, isStarred, file_type, name, isArchived });
+      }
+    })
+    return res.status(200).json({
+      response: {
+        status: 200,
+        message: "success",
+        data: starredFiles,
+      }
+    });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+}
 
 exports.fileSearchByDate = async (req, res) => {
   let { startDate, endDate } = req.query;
@@ -42,8 +65,8 @@ exports.fileSearchByDate = async (req, res) => {
 
       file.length === 0
         ? res
-            .status(404)
-            .json(`No files found between ${startDate} and ${endDate}`)
+          .status(404)
+          .json(`No files found between ${startDate} and ${endDate}`)
         : res.status(200).json(file);
     }
 
