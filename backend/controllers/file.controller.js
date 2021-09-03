@@ -123,3 +123,24 @@ exports.getArchivedFiles = async (req, res) => {
     return error.response.data;
   }
 };
+//get sall deleted files
+exports.getAllDeletedFiles = async (req, res) => {
+  try {
+    const response = await Files.fetchAll({})
+    const response_data = response.data
+    const resposne_array = []
+    for (const iterator of response_data) {
+      if (!iterator.isDeleted) {
+        continue
+      }
+      resposne_array.push(iterator)
+    }
+    if (!resposne_array.length) {
+      res.status(404).send('no data found')
+      return
+    }
+    res.send(resposne)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+}
