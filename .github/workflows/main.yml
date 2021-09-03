@@ -1,7 +1,7 @@
 name: Continuous deployment
 on:
   push:
-    branches: [main]
+    branches: [dev]
 
 jobs:
   deploy:
@@ -16,6 +16,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/zc_plugin_company_files
+            git restore .
             git pull
             npm run install-setup
             npm run build

@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git+https://github.com/zurichat/zc_plugin_company_files.git"
   },
-  "author": "Team Galileo devs ~ HNGi8",
+  "author": "Team Galileo / HNGi8",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zurichat/zc_plugin_company_files/issues"
@@ -31,7 +31,9 @@
     "express-async-errors": "^3.1.1",
     "express-fileupload": "^1.2.1",
     "joi": "^17.4.2",
-    "mongoose": "^5.13.7"
+    "mongoose": "^5.13.7",
+    "react-router-dom": "^5.2.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
