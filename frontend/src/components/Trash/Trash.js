@@ -85,6 +85,7 @@ function Trash() {
             </Grid>
                 <TrashListDisplay/>
             </Grid>
+          </Grid>
       </div>
     );
 }

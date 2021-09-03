@@ -1,9 +1,5 @@
 function FolderCard() {
-    return (
-        <div>
-            
-        </div>
-    )
+  return <div></div>
 }
 
-export default FolderCard;
+export default FolderCard
