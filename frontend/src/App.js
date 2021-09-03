@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <div className="App font-lato flex">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Switch>
           <Route exact path="/">
             <AllFiles />
