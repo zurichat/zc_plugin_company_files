@@ -17,7 +17,6 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllFiles />
-            <TotalSpace />
           </Route>
           <Route path="/shared">
             <Shared />
