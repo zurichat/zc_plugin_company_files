@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { fileCreate, fileUpdate, fileDetails, fileDelete, getAllFiles } = require('../controllers/file.controller');
+const { fileCreate, fileUpdate, fileDetails, fileDelete, getAllFiles, fileSearchByIsStarred } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
 router.post('/file/write', fileCreate);
@@ -9,6 +9,8 @@ router.get('/file/read', getAllFiles);
 
 // GET A SINGLE FILE DETAILS
 router.get('/file/read/:id', fileDetails);
+
+router.get('/searchByIsStarred', fileSearchByIsStarred)
 
 router.route('/file/write/:id')
   .put(fileUpdate)

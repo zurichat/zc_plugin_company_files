@@ -4,31 +4,41 @@ const ApiConnection = require('./helpers/api.helper');
 const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
-    const response = await API.create( req.body );
-    res.send({ response })
+  const response = await API.create(req.body);
+  res.send({ response })
 }
 
 exports.getAllFiles = async (req, res) => {
-    const response = await API.fetchAll();
-    res.send({ response })
+  const response = await API.fetchAll();
+  res.send({ response })
 }
 
 exports.fileDetails = async (req, res) => {
-    const response = await API.fetchOne( req.params.id );
-    res.send({ response })
+  const response = await API.fetchOne(req.params.id);
+  res.send({ response })
 }
 
-exports.fileUpdate = async (req, res) => {};
+exports.fileUpdate = async (req, res) => { };
 
-exports.fileDelete = async (req, res) => {};
+exports.fileDelete = async (req, res) => { };
 
 // handle file searching by is starred is true
 exports.fileSearchByIsStarred = async (req, res) => {
-  const response = await API.fetchAll();
+  const { data } = await API.fetchAll();
   // loop through response object and check if isStarred is true
-  for (const [key, value] of Object.entries(response)) {
-    
-  }
+  const starredFiles = [];
+  data.map(({ isStarred, file_type, name, _id, isArchived }) => {
+    if (isStarred) {
+      starredFiles.push({ _id, isStarred, file_type, name, isArchived });
+    }
+  })
+  return res.status(200).json({
+    response: {
+      status: 200,
+      message: "success",
+      data: starredFiles,
+    }
+  });
 }
 
 exports.fileSearchByDate = async (req, res) => {
@@ -51,8 +61,8 @@ exports.fileSearchByDate = async (req, res) => {
 
       file.length === 0
         ? res
-            .status(404)
-            .json(`No files found between ${startDate} and ${endDate}`)
+          .status(404)
+          .json(`No files found between ${startDate} and ${endDate}`)
         : res.status(200).json(file);
     }
 
