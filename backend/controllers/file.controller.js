@@ -1,14 +1,42 @@
 const File = require("../models/File");
 
-exports.fileCreate = async (req, res) => {
+const ApiConnection = require("./helpers/api.helper");
+const API = new ApiConnection("File");
 
+exports.fileCreate = async (req, res) => {
 };
 
-exports.fileDetails = async (req, res) => {};
+exports.fileDetails = async (req, res) => {
+  const response = await API.fetchOne(req.params.id);
+  res.send({ response });
+};
 
-exports.fileUpdate = async (req, res) => {};
+exports.fileUpdate = async (req, res) => { };
 
-exports.fileDelete = async (req, res) => {};
+exports.fileDelete = async (req, res) => { };
+
+// handle file searching by is starred is true
+exports.fileSearchByIsStarred = async (req, res) => {
+  try {
+    const { data } = await API.fetchAll();
+    // loop through response object and check if isStarred is true
+    const starredFiles = [];
+    data.map(({ isStarred, file_type, name, _id, isArchived }) => {
+      if (isStarred) {
+        starredFiles.push({ _id, isStarred, file_type, name, isArchived });
+      }
+    })
+    return res.status(200).json({
+      response: {
+        status: 200,
+        message: "success",
+        data: starredFiles,
+      }
+    });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+}
 
 exports.fileSearchByDate = async (req, res) => {
   let { startDate, endDate } = req.query;
@@ -30,8 +58,8 @@ exports.fileSearchByDate = async (req, res) => {
 
       file.length === 0
         ? res
-            .status(404)
-            .json(`No files found between ${startDate} and ${endDate}`)
+          .status(404)
+          .json(`No files found between ${startDate} and ${endDate}`)
         : res.status(200).json(file);
     }
 
@@ -52,5 +80,25 @@ exports.fileSearchByDate = async (req, res) => {
     //to get files for the only one day end and start date should be the same
   } catch (error) {
     res.status(500).json(error);
+  }
+};
+
+// Retrieves all the files that has been archived by a user
+exports.getArchivedFiles = async (req, res) => {
+  try {
+    const allFiles = await API.fetchAll();
+
+    //   Validate Response Status
+    if (allFiles.status === 200) {
+      const archives = [];
+      allFiles.data.map((file) => {
+        file.isArchived ? archives.push(file) : null;
+      });
+      return res
+        .status(200)
+        .json({ status: 200, message: "success", archives: archives });
+    }
+  } catch (error) {
+    return error.response.data;
   }
 };
