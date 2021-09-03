@@ -93,3 +93,36 @@ exports.getArchivedFiles = async (req, res) => {
     return error.response.data;
   }
 }
+
+// restore deleted file
+exports.restoreFile = async (req, res) =>{
+  
+  try{
+    //validate query
+    if(!req.params.fileName){
+      res.send("You did not specify a file")
+    }
+
+    //get file name from user query
+    const file = req.query.id
+    const response = await Files.fetchOne(file)
+
+    if(response != 200){
+      res.send("File not found")
+    }
+    const response_data = response.data
+
+    if(response_data.isDeleted === 'true'){
+      response_data.isDeleted = 'false'
+      res.send("File restored")
+    }
+
+    if(response_data.isDeleted === 'false'){
+      res.send("File not in recycle bin")
+    }
+    
+  }catch(err){
+    return res.status(500).json(err)
+  }
+
+}
