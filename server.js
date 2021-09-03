@@ -28,7 +28,6 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
 
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
-
 if (isProduction) {
   app.set('trust proxy', 1); // Trust first proxy
 } else {
