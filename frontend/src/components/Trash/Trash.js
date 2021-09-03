@@ -81,8 +81,6 @@ function Trash() {
                 </div>
             </Grid>
             <Grid item xs={12} style={{marginTop:"4rem"}}>
-                
-            </Grid>
                 <TrashListDisplay/>
             </Grid>
           </Grid>
@@ -90,4 +88,4 @@ function Trash() {
     );
 }
 
-export default Trash
+export default Trash;
