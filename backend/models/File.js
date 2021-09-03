@@ -13,7 +13,7 @@ const FileSchema = new Schema(
     },
     isStarred: {
       type: Boolean,
-    }
+    },
   },
   { timestamps: true }
 );

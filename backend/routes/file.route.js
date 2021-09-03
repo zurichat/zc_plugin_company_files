@@ -7,6 +7,7 @@ const {
   getAllFiles,
   fileSearchByDate,
   fileSearchByIsStarred,
+  getArchivedFiles,
 } = require("../controllers/file.controller");
 
 // CREATE A NEW FILE

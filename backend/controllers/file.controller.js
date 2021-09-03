@@ -1,9 +1,17 @@
-const File = require("../models/File");
-
 const ApiConnection = require("./helpers/api.helper");
 const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
+  //   const { name, isArchived, isStarred } = req.body;
+  //   const today = new Date();
+  //   const date =
+  //     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  //   try {
+  //     const file = API.create({ name, isArchived, isStarred, createdAt: date });
+  //     res.status(200).json(file);
+  //   } catch (error) {
+  //     res.status(500).json(error);
+  //   }
 };
 
 exports.fileDetails = async (req, res) => {
@@ -11,9 +19,11 @@ exports.fileDetails = async (req, res) => {
   res.send({ response });
 };
 
-exports.fileUpdate = async (req, res) => { };
+exports.getAllFiles = async (req, res) => {};
 
-exports.fileDelete = async (req, res) => { };
+exports.fileUpdate = async (req, res) => {};
+
+exports.fileDelete = async (req, res) => {};
 
 // handle file searching by is starred is true
 exports.fileSearchByIsStarred = async (req, res) => {
@@ -25,59 +35,36 @@ exports.fileSearchByIsStarred = async (req, res) => {
       if (isStarred) {
         starredFiles.push({ _id, isStarred, file_type, name, isArchived });
       }
-    })
+    });
     return res.status(200).json({
       response: {
         status: 200,
         message: "success",
         data: starredFiles,
-      }
+      },
     });
   } catch (err) {
     return res.status(500).json(err);
   }
-}
+};
 
 exports.fileSearchByDate = async (req, res) => {
-  let { startDate, endDate } = req.query;
-
   try {
-    if (startDate === "") {
-      return res.status(400).json("pick a date");
+    const { data } = await API.fetchAll();
+    let { pickDate } = req.query;
+
+    //date format yyyy-m-d
+    if (pickDate) {
+      const rd = data.filter((d) => {
+        if (d.createdAt === pickDate) {
+          return true;
+        } else return false;
+      });
+      rd
+        ? res.status(200).json(rd)
+        : res.status(404).json("no data found on this day");
+      console.log(rd);
     }
-
-    //use this to search for files from your input date till present
-
-    if (startDate && endDate) {
-      const file = await File.find({
-        createdAt: {
-          $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-          $lt: new Date(new Date(endDate).setHours(23, 59, 59)),
-        },
-      }).sort({ createdAt: "asc" });
-
-      file.length === 0
-        ? res
-          .status(404)
-          .json(`No files found between ${startDate} and ${endDate}`)
-        : res.status(200).json(file);
-    }
-
-    //use this to search for files from your input date till present
-
-    if (startDate && !endDate) {
-      const file = await File.find({
-        createdAt: {
-          $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-        },
-      }).sort({ createdAt: "asc" });
-
-      file.length === 0
-        ? res.status(404).json(`No files found from ${startDate} till date`)
-        : res.status(200).json(file);
-    }
-
-    //to get files for the only one day end and start date should be the same
   } catch (error) {
     res.status(500).json(error);
   }
