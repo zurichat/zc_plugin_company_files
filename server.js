@@ -36,6 +36,10 @@ if (isProduction) {
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
+// USING FILE AND FOLDER ROUTER
+app.use(fileRouter);
+app.use(folderRouter);
+
 // All other GET requests not handled before will return our React app
 app.use((req, res, next) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -43,6 +47,7 @@ app.use((req, res, next) => {
   res.header('Pragma', 'no-cache');
   res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
 });
+
 
 // For handling server errors and all other errors that might occur
 app.use(ErrorHandler);

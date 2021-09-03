@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const FileSchema = new Schema(
+const FileSchema = Joi.object(
   {
     fileName: {
       type: String,
