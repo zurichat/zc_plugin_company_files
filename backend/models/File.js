@@ -5,7 +5,7 @@ const FileSchema = new Schema({
     type: String,
     trim: true,
     required: true
-  }
+  },
 }, { timestamps: true });
 
 FileSchema.methods.joiValidate = data => {

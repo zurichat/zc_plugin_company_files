@@ -3,6 +3,7 @@ const { fileCreate, fileUpdate, fileDetails, fileDelete } = require('../controll
 
 router.post('/', fileCreate);
 
+
 router.route('/:id')
   .get(fileDetails)
   .put(fileUpdate)
