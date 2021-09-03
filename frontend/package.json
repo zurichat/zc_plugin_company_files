@@ -10,8 +10,9 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "d3": "^7.0.1",
+    "chartist": "^0.10.1",
     "react": "^17.0.2",
+    "react-chartist": "^0.14.4",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.1",
     "react-scripts": "4.0.3",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.36",
+    "prettier": "^2.3.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
   }
 }
