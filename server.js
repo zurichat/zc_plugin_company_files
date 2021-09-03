@@ -13,10 +13,9 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const router = express.Router();
 
-const connectToDatabase = require('./backend/utils/db');
+const isProduction = process.env.NODE_ENV === 'production';
 const rootRouter = require('./backend/routes/index')(router);
 const pluginInfoRouter = require('./backend/routes/plugin.router');
-const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
 const fileRouter = require('./backend/routes/file.route'); // File Read and Write route
@@ -36,10 +35,6 @@ if (isProduction) {
 
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
-
-// Using the File and Folder routes
-app.use(fileRouter);
-app.use(folderRouter);
 
 // All other GET requests not handled before will return our React app
 app.use((req, res, next) => {
