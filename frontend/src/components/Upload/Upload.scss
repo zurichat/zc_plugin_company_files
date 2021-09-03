@@ -1,6 +1,6 @@
 .upload--component {
   position: relative;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 
   button {
@@ -41,38 +41,59 @@
       margin-left: 5px;
     }
   }
+  .hide {
+    display: none;
+  }
   .upload-progress-bar {
     height: 200px;
     width: 250px;
+
     position: absolute;
     border: 1px solid #f3f3f3;
-    top: 100%;
-    //right: 5%;
-    left: 98%;
+    bottom: 3%;
+    right: 5%;
+    background: white;
     border-radius: 10px;
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -6px #777;
+
+    & > .upload-file-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 10px 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #777;
+    }
+    .upload-cancel {
+      padding: 6px 10px;
+      font-size: 12px;
+      border: 1px solid steelblue;
+      width: 30%;
+      text-align: center;
+      display: block;
+    }
 
     & > progress {
       margin-right: 8px;
     }
 
     & > progress[value] {
-      width: 100px;
-
+      width: 70%;
       -webkit-appearance: none;
       appearance: none;
     }
 
     & > progress[value]::-webkit-progress-bar {
-      height: 10px;
-      border-radius: 20px;
+      height: 6px;
+      border-radius: 10px;
       background-color: #eee;
     }
 
     & > progress[value]::-webkit-progress-value {
-      height: 10px;
+      height: 6px;
       border-radius: 20px;
       background-color: green;
     }

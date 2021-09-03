@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // import PropTypes from "prop-types";
 
 const ProgressBar = ({ value, max, color, width }) => {
   return (
-    <div className="upload-progress-bar">
+    <div>
+      <h3>Upload 1 file</h3> <span>{(value / max) * 100}%</span>
       <progress value={value} max={max} />
-      <span>{(value / max) * 100}%</span>
     </div>
   );
 };

@@ -1,9 +1,10 @@
-import ProgressBar from "./ProgressBar";
+import ProgressBarContainer from "./ProgressBarContainer";
 import React, { useState, useRef, useEffect } from "react";
 import "./Upload.scss";
 
 function Upload() {
   const [visible, setVisible] = useState(false);
+
   const triggerInputDocument = useRef();
   const triggerInputFile = useRef();
   const triggerInputFolder = useRef();
@@ -190,7 +191,7 @@ function Upload() {
           </div>
         </div>
       )}
-      <ProgressBar color={"#ff7979"} width={"150px"} value={value} max={100} />
+      <ProgressBarContainer color={"#ff7979"} value={value} max={100} />
     </div>
   );
 }
