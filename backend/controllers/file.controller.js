@@ -1,4 +1,4 @@
-const ApiConnection = require("./helpers/api.helper");
+const ApiConnection = require("../utils/database.helper");
 const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
@@ -15,8 +15,9 @@ exports.fileCreate = async (req, res) => {
 };
 
 exports.fileDetails = async (req, res) => {
-  const response = await API.fetchOne(req.params.id);
-  res.send({ response });
+  const response = await Files.fetchOne(req.params.id);
+
+  res.status(200).send(appResponse(null, response, true));
 };
 
 exports.getAllFiles = async (req, res) => {};
@@ -26,9 +27,9 @@ exports.fileUpdate = async (req, res) => {};
 exports.fileDelete = async (req, res) => {};
 
 // handle file searching by is starred is true
-exports.fileSearchByIsStarred = async (req, res) => {
+exports.searchStarredFiles = async (req, res) => {
   try {
-    const { data } = await API.fetchAll();
+    const { data } = await Files.fetchAll();
     // loop through response object and check if isStarred is true
     const starredFiles = [];
     data.map(({ isStarred, file_type, name, _id, isArchived }) => {
@@ -60,7 +61,9 @@ exports.fileSearchByDate = async (req, res) => {
           return true;
         } else return false;
       });
-      rd.length === 0 ? res.status(404).json(`no files found on ${pickDate}`) : res.status(200).json(rd)
+      rd.length === 0
+        ? res.status(404).json(`no files found on ${pickDate}`)
+        : res.status(200).json(rd);
       console.log(rd);
     }
   } catch (error) {
@@ -71,7 +74,7 @@ exports.fileSearchByDate = async (req, res) => {
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
   try {
-    const allFiles = await API.fetchAll();
+    const allFiles = await Files.fetchAll();
 
     //   Validate Response Status
     if (allFiles.status === 200) {

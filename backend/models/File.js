@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const Joi = require('joi');
 
 const FileSchema = new Schema(
   {
@@ -18,20 +18,4 @@ const FileSchema = new Schema(
   { timestamps: true }
 );
 
-FileSchema.methods.joiValidate = (data) => {
-  const Joi = require("joi");
-  const schema = Joi.object()
-    .keys({
-      fileName: Joi.string().required(),
-    })
-    .unknown(true);
-
-  return new Promise((resolve, reject) => {
-    schema
-      .validateAsync(data)
-      .then((result) => resolve(result))
-      .catch((error) => reject(error));
-  });
-};
-
-module.exports = model("File", FileSchema);
+module.exports = FileSchema;
