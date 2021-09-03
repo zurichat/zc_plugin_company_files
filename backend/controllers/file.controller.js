@@ -2,29 +2,36 @@ const ApiConnection = require("../utils/database.helper");
 const API = new ApiConnection("File");
 
 exports.fileCreate = async (req, res) => {
-  //   const { name, isArchived, isStarred } = req.body;
-  //   const today = new Date();
-  //   const date =
-  //     today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  //   try {
-  //     const file = API.create({ name, isArchived, isStarred, createdAt: date });
-  //     res.status(200).json(file);
-  //   } catch (error) {
-  //     res.status(500).json(error);
-  //   }
-};
+  const { body } = req;
+  body.id = uuid.v4();
+
+  const file = await FileSchema.validateAsync(body);
+  const response = await Files.create(file);
+
+  res.status(200).send(appResponse(null, response, true));
+}
+
+
+exports.getAllFiles = async (req, res) => {
+  const response = await Files.fetchAll();
+
+  res.status(200).send(appResponse(null, response, true, { count: response.length }));
+}
+
 
 exports.fileDetails = async (req, res) => {
   const response = await Files.fetchOne(req.params.id);
 
   res.status(200).send(appResponse(null, response, true));
-};
+}
 
-exports.getAllFiles = async (req, res) => {};
+exports.fileUpdate = async (req, res) => {
 
-exports.fileUpdate = async (req, res) => {};
+}
 
-exports.fileDelete = async (req, res) => {};
+exports.fileDelete = async (req, res) => {
+
+}
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
@@ -38,16 +45,12 @@ exports.searchStarredFiles = async (req, res) => {
       }
     });
     return res.status(200).json({
-      response: {
-        status: 200,
-        message: "success",
-        data: starredFiles,
-      },
+      response: { status: 200, message: "success", data: starredFiles }
     });
   } catch (err) {
     return res.status(500).json(err);
   }
-};
+}
 
 exports.fileSearchByDate = async (req, res) => {
   try {
@@ -69,7 +72,7 @@ exports.fileSearchByDate = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
-};
+}
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
@@ -89,4 +92,4 @@ exports.getArchivedFiles = async (req, res) => {
   } catch (error) {
     return error.response.data;
   }
-};
+}
