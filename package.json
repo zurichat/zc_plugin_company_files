@@ -45,6 +45,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
+    "md5-file": "^5.0.0",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
     "prettier": "^2.3.2"

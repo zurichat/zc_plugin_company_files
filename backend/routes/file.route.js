@@ -8,6 +8,7 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
+  isDuplicate,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -27,6 +28,9 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
+// CHECK FOR DUPLICATES
+router.post('/is-duplicate', isDuplicate);
 
 router.route('/write/:id')
   .put(fileUpdate)

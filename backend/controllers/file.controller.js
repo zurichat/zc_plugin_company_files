@@ -90,3 +90,27 @@ exports.getArchivedFiles = async (req, res) => {
     return error.response.data;
   }
 }
+
+// check for duplicate files with md5 values
+exports.isDuplicate = async (req, res) => {
+  try {
+    const { md5Hash } = req.body;
+    const { data } = await API.fetchAll();
+    let fileExists = false;
+    // loop through response object and check if md5Hash value exist
+    data.forEach(fileObject => {
+      if (fileObject.md5Hash === md5Hash) fileExists = true;
+    });
+    if (fileExists) {
+      return res
+        .status(200)
+        .json({ status: 200, message: "This is a duplicate file", duplicate: fileExists, });
+    } else {
+      return res
+        .status(200)
+        .json({ status: 200, message: "This is a new file", duplicate: fileExists, });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
