@@ -2,6 +2,29 @@ const ApiConnection = require("../utils/database.helper");
 const File = new ApiConnection("File");
 // const FileSchema = require('../models/File');
 
+// add file to folder
+exports.addFileToFolder = async (req, res) => {
+  // file id and folder id should be sent as part of the axios request
+  // const {fileId, folderId} = req.query
+  // if (fileId === null || folderId === null) {
+  //   return res.status(400).json({
+  //     response: { status: 400, message: 'fileId and folderId are required' }
+  //   });
+  // }
+  const folderId = '6709cf29-3180-41bf-8b40-5f7449a14f3a';
+  const fileId = '6132211c569dbbb7ce5b4fd7';
+  const { data } = await File.fetchAll();
+  // find the file by its id
+  const file = data.filter((file) => {
+    return file._id === fileId
+  })
+  file.folderId = folderId;
+  // update the file
+  // const response = await File.update(fileId, file);
+  // console.log(response);
+  res.json({ file, message: 'File added to folder' })
+}
+
 exports.fileCreate = async (req, res) => {
   const { body } = req;
 
@@ -120,7 +143,7 @@ exports.getArchivedFiles = async (req, res) => {
     return error;
   }
 };
-//get sall deleted files
+// get sall deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {
     const response = await Files.fetchAll({})

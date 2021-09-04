@@ -11,7 +11,11 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  addFileToFolder
 } = require('../controllers/file.controller');
+
+// ADD FILE TO FOLDER
+router.get('/addFileToFolder', addFileToFolder);
 
 // CREATE A NEW FILE
 router.post('/write', fileCreate);
@@ -20,7 +24,7 @@ router.post('/write', fileCreate);
 router.get('/read', getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get("/file/searchByisDeleted", searchFileByIsDeleted);
+router.get('/file/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
