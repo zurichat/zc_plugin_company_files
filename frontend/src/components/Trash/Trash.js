@@ -142,9 +142,10 @@ const TbodyRow = ({
   owner = "",
   deletionDate = "",
   fileSize = "",
+  openModal
 }) => {
   return (
-    <tr className="border-none hover:bg-gray-50">
+    <tr onClick={ () => openModal() } className="border-none hover:bg-gray-50">
       <TbodyItemWithIcon
         {...{
           value: name,
@@ -171,8 +172,21 @@ const TbodyRow = ({
 };
 
 const TrashTable = () => {
+
+  const [ reveal, setReveal ] = useState(false);
+
+  const showModal = () => {
+      setReveal(true)
+  }
+
+  const closeModal = () => {
+      setReveal(false)
+  }
+
   return (
+    
     <div className="flex flex-col">
+      <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden sm:rounded-lg">
@@ -192,7 +206,7 @@ const TrashTable = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {TABLE_ITEMS?.map((elem, ind) => (
-                  <TbodyRow {...{ key: ind, ...elem }} />
+                  <TbodyRow openModal={showModal} {...{ key: ind, ...elem }} />
                 ))}
               </tbody>
             </table>
@@ -206,24 +220,12 @@ const TrashTable = () => {
 function Trash() {
   const classes = useStyles();
 
-  const [ reveal, setReveal ] = useState(false);
-
-  const showModal = () => {
-      setReveal(true)
-  }
-
-  const closeModal = () => {
-      setReveal(false)
-  }
-
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const trashIsEmpty = urlParams?.get("empty");
 
   return !trashIsEmpty ? (
     <div className={classes.root}>
-      
-      <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
 
       <Grid
         container
@@ -233,7 +235,7 @@ function Trash() {
         <Grid item xs={12}>
           <Grid container style={{ display: "flex" }}>
             <Grid xs={6}>
-              <Typography onClick={ () => showModal() } variant="h6" style={{ color: "black" }}>
+              <Typography variant="h6" style={{ color: "black" }}>
                 Items In My Trash
               </Typography>
             </Grid>
@@ -366,7 +368,7 @@ function Trash() {
     </div>
   ) : (
     <div className="container p-7 bg-white">
-      <h2 className="text-lg my-5" onClick={ () => showModal() }>Items In My Trash</h2>
+      <h2 className="text-lg my-5">Items In My Trash</h2>
       <div className="bg-green-50 p-6 flex items-center justify-between mb-3">
         <span>Items in trash are deleted forever after 30 days</span>
         <span>Empty Trash</span>
