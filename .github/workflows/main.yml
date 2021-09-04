@@ -43,12 +43,6 @@ jobs:
             npm run install-setup
             npm run build
             pm2 restart server.js
-      - name: Deploying to main port
-        if: env.OUTPUT != '200'
-        uses: actions/github-script@v3
-        with:
-           script: |
-             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
       - name: Send email
         if: env.OUTPUT != '200'
         uses: dawidd6/action-send-mail@v3
@@ -71,5 +65,12 @@ jobs:
               secure: true
               # Optional plain body:
               body: Your recent merge broke the code and so was deployed check github actions log for detail
+
+      - name: Deploying to main port
+        if: env.OUTPUT != '200'
+        uses: actions/github-script@v3
+        with:
+           script: |
+             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
 
 
