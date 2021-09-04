@@ -29,3 +29,4 @@ return (
 
 export default ListViewTable;
 
+export default ListViewTable;
