@@ -23,11 +23,11 @@ function SearchIcon() {
 
 function SearchUserForm() {
   return (
-    <div className="h-14 w-full my-auto border-gray-primary  border-b-[2px] px-5">
-      <form className="flex w-full justify-between items-center py-2 h-full">
-        <span className="flex items-center justify-between px-4 h-full w-9/12 max border-2  border-black-light rounded-sm">
+    <div className="h-12 w-full my-auto border-gray-primary   border-b-[2px] px-5">
+      <form className="flex w-full justify-between items-center h-10">
+        <span className="flex items-center justify-between px-4 w-9/12 max-w-[48rem]  border-2  border-black-light ">
           <input
-            className="appearance-none outline-none w-full h-full o border-0"
+            className="appearance-none outline-none w-full h-9 o border-0"
             type="text"
             placeholder="search email, name or status"
           />
@@ -97,16 +97,12 @@ function NormalUser() {
         <span
           className={`${
             show ? 'flex' : 'hidden'
-          } justify-start  w-[20rem] sm:w-44  translate-y-[70%]   h-12 absolute `}
+          } justify-start  w-44  z-30 bg-gray-600 mt-48   h-44 absolute `}
         >
-          <ul className="inline-flex rounded-[0.3rem] flex-col text-center items-center  space-x-1 space-y-2 bg-gray-300 h-[10.5rem] w-full min-h-full  relative">
-            <li className="py-2">Admin</li>
-            <li className="inline-flex justify-center w-full py-1 ">
-              Can Edit
-            </li>
-            <li className="inline-flex justify-center w-full py-1 ">
-              Can View
-            </li>
+          <ul className="inline-flex  rounded-[0.3rem] flex-col text-center items-center  space-x-1 space-y-2 bg-gray-300 h-[10.5rem] w-full min-h-full  ">
+            <li className="py-2 bg-">Admin</li>
+            <li className=" py-1 ">Can Edit</li>
+            <li className=" py-1 ">Can View</li>
             <li className="inline-flex justify-center w-full py-1 border-t-2">
               Remove
             </li>
@@ -133,7 +129,10 @@ function InvitedUserList() {
 }
 function InviteUserToFolder() {
   return (
-    <div className="rounded-md shadow-lg min-w-[370px] h-full  w-6/12 ">
+    <div
+      className="absolute top-32
+     z-10 bg-white rounded-md shadow-lg h-96  w-96  "
+    >
       <SearchUserForm />
       <InvitedUserList />
     </div>

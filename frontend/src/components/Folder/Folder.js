@@ -1,11 +1,12 @@
-import FolderCard from "../FolderCard/FolderCard";
+import FolderCard from './FolderCard/FolderCard'
 
 function Folder() {
-    return (
-        <div>
-            <FolderCard/>
-        </div>
-    )
+  return (
+    <div className="flex space-x-14">
+      <FolderCard />
+      <FolderCard /> <FolderCard />
+    </div>
+  )
 }
 
 export default Folder
