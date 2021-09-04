@@ -8,6 +8,7 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
+  getAllDeletedFiles,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -27,8 +28,9 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
-
-router.route('/write/:id')
+// GET DELETED FILES
+router.get('/Deletedfiles', getAllDeletedFiles)
+router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 
