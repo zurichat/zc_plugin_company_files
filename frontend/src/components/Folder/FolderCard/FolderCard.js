@@ -5,7 +5,7 @@ import {
   faFolder,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons'
-import FolderCardOptions from '../../FolderCardOption/FolderCardOption.js'
+import FolderCardOptions from './../../FolderCardOption/FolderCardOption'
 import InviteUserToFolder from './InviteUserToFolder'
 import profile from './images/profile-pic.jpg'
 import classes from './FolderCard.module.css'
