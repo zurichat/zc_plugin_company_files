@@ -1,16 +1,15 @@
-import React from 'react';
+import React from "react";
 import RecentlyViewed from "../RecentlyViewed/RecentlyViewed";
-import Files from "../Files/Files";
 import Folder from "../Folder/Folder";
-
+import Files from "../Files/Files";
 function Home() {
-    return (
-        <div>
-            <RecentlyViewed/>
-            <Folder/>
-            <Files/>
-        </div>
-    )
+	return (
+		<div>
+			<RecentlyViewed />
+			<Folder />
+			<Files />
+		</div>
+	);
 }
 
-export default Home
+export default Home;
