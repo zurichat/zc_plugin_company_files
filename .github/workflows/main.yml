@@ -27,7 +27,7 @@ jobs:
           OUTPUT= $(curl -Is $ip:$port| head -n 1| cut -c 10-13) && echo "::set-output name=OUTPUT::$OUTPUT"
         env:
           ip: ${{ secrets.IP_ADDRESS }}
-          port: ${{ secrets.PORT1 }             
+          port: ${{ secrets.PORT1 }}             
       - name: Deploying to main port
         if: env.OUTPUT == '200'
         uses: appleboy/ssh-action@v0.1.2
@@ -48,7 +48,7 @@ jobs:
         uses: actions/github-script@v3
         with:
            script: |
-             core.setFailed('Your merge broke the code and so was not deployed onthe main port)
+             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
          
          
 
