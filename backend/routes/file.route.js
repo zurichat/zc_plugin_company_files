@@ -20,7 +20,7 @@ router.post('/write', fileCreate);
 router.get('/read', getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get("/file/searchByisDeleted", searchFileByIsDeleted);
+router.get('/file/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
