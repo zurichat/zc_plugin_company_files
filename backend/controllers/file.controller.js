@@ -64,25 +64,27 @@ exports.searchStarredFiles = async (req, res) => {
     const { data } = await File.fetchAll();
     // loop through response object and check if isStarred is true
     const starredFiles = [];
-    data.map(({ isStarred, file_type, name, _id, isArchived }) => {
-      if (isStarred) {
-        starredFiles.push({ _id, isStarred, file_type, name, isArchived });
+    data.map((data) => {
+      if (data.isStarred) {
+        return starredFiles.push(data);
       }
     });
     return res.status(200).json({
-      response: { status: 200, message: "success", data: starredFiles }
+      response: { status: 200, message: 'success', data: starredFiles }
     });
-  } catch (err) {
-    return res.status(500).json(err);
+  }
+  catch (error) {
+    return res.send({ error })
   }
 }
 
-exports.fileSearchByDate = async (req, res) => {
+exports.searchByDate = async (req, res) => {
+
   try {
     const { data } = await File.fetchAll();
     let { pickDate } = req.query;
 
-    //date format yyyy-m-d
+    // date format yyyy-m-d
     if (pickDate) {
       const rd = data.filter((d) => {
         if (d.createdAt === pickDate) {
@@ -95,7 +97,7 @@ exports.fileSearchByDate = async (req, res) => {
       console.log(rd);
     }
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }
 
@@ -112,7 +114,7 @@ exports.getArchivedFiles = async (req, res) => {
       });
       return res
         .status(200)
-        .json({ status: 200, message: "success", archives: archives });
+        .json({ status: 200, message: 'success', archives });
     }
   } catch (error) {
     return error;

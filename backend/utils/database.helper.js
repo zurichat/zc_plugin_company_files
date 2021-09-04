@@ -10,14 +10,14 @@ const databaseReadUrl = "https://zccore.herokuapp.com/data/read";
 class DatabaseConnection {
   constructor(collection_name) {
     this.data = {
-      plugin_id: "613125166e7d00b82b78b815",
-      organization_id: "612a3a914acf115e685df8e3",
+      plugin_id: '613125166e7d00b82b78b815',
+      organization_id: '612a3a914acf115e685df8e3',
       collection_name: collection_name,
       bulk_write: false,
-      object_id: "",
+      object_id: '',
       filter: {},
-      payload: {},
-    };
+      payload: {}
+    }
   }
 
   create = async (payload) => {
@@ -35,7 +35,7 @@ class DatabaseConnection {
 
     } catch (error) {
       
-      return error.response.data;
+      return error.response;
 
     }
   };
