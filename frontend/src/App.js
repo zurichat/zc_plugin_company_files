@@ -8,16 +8,15 @@ import Favourites from './components/Favourites/Favourites'
 import Help from './components/Help/Help'
 import Shared from './components/Shared/Shared'
 import Trash from './components/Trash/Trash'
-import FilePreviewDemo from './FilePreview/Demo'
 import Folder from './components/Folder/Folder'
+import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from "./components/SideBar/Sidebar";
 import Home from './components/Home/Home'
 
 function App() {
   return (
     <Router>
-      <div className="App font-lato">
-        {/* <Sidebar /> */}
+      <div className="App font-lato flex">
         <Switch>
           <Route exact path="/">
             <Home />
@@ -31,11 +30,11 @@ function App() {
           <Route path="/favourites">
             <Favourites />
           </Route>
-          <Route path="/folder">
-            <Folder />
-          </Route>
           <Route path="/trash">
             <Trash />
+          </Route>
+          <Route path="/folder">
+            <Folder />
           </Route>
           <Route path="/help">
             <Help />

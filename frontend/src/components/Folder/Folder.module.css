@@ -1,9 +1,0 @@
-.folder__wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  justify-items: center;
-  align-items: center;
-  gap: 1rem;
-  width: 100%;
-  padding: 2rem;
-}

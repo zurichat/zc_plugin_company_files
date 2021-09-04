@@ -1,15 +1,11 @@
-import FolderCard from './FolderCard/FolderCard';
-import classes from './Folder.module.css';
+import FolderCard from "../FolderCard/FolderCard";
 
-const Folder = () => {
-  return (
-    <div className={classes.folder__wrapper}>
-      <FolderCard />
-      <FolderCard />
-      <FolderCard />
-      <FolderCard />
-    </div>
-  );
-};
+function Folder() {
+    return (
+        <div>
+            <FolderCard/>
+        </div>
+    )
+}
 
-export default Folder;
+export default Folder
