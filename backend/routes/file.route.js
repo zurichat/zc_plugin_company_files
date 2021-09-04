@@ -36,7 +36,7 @@ router.get('/searchByDate', searchByDate);
 router.get('/searchStarredFiles', searchStarredFiles)
 
 // SEARCH FILES BY SIZE
-router.get('/fileSize/:size', searchBySize)
+router.get('/searchBySize/:size', searchBySize)
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
