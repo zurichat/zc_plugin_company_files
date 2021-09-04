@@ -264,9 +264,6 @@ function Trash() {
             >
               <span style={{ cursor: "pointer" }}>Empty Trash</span>
             </Grid>
-<<<<<<< HEAD
-         
-=======
           </Grid>
         </Grid>
         <Grid
@@ -358,7 +355,6 @@ function Trash() {
       <div className="bg-green-50 p-6 flex items-center justify-between mb-3">
         <span>Items in trash are deleted forever after 30 days</span>
         <span>Empty Trash</span>
->>>>>>> 31506af84d4c11419a82cb625552b9e97ef885b4
       </div>
 
       <TrashTable />

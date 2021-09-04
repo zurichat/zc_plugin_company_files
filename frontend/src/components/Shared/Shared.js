@@ -1,7 +1,6 @@
 import React from 'react'
 import SharedFiles from './SharedFiles'
 import fixImg from './fix.png'
-import './SharedFiles.css'
 
 function Shared() {
     return (

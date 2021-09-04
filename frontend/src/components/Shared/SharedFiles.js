@@ -1,7 +1,6 @@
 import React from 'react'
 import doc from './doc-icon.png'
 import fuser from './fuser.png'
-import './SharedFiles.css'
 
 function SharedFiles() {
     const details = [
