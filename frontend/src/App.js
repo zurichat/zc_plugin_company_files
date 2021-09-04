@@ -10,10 +10,9 @@ import Shared from './components/Shared/Shared'
 import Trash from './components/Trash/Trash'
 import Folder from './components/Folder/Folder'
 import FilePreviewDemo from './FilePreview/Demo'
-// import Sidebar from "./components/SideBar/Sidebar"//
-import Home from "./components/Home/Home";
-import FolderListView from "./components/FolderAllFileListView/FolderTableList/FolderAllFileListView";
-import Home from './components/Home/Home'
+// import Sidebar from './components/SideBar/Sidebar'//
+import Home from './components/Home/Home';
+import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
 
 
 function App() {
