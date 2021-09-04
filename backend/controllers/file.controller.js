@@ -146,7 +146,7 @@ exports.getArchivedFiles = async (req, res) => {
 // get sall deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {
-    const response = await Files.fetchAll({})
+    const response = await File.fetchAll()
     const response_data = response.data
     const resposne_array = []
     for (const iterator of response_data) {
@@ -159,8 +159,9 @@ exports.getAllDeletedFiles = async (req, res) => {
       res.status(404).send('no data found')
       return
     }
-    res.send(resposne)
+    res.send(resposne_array)
   } catch (error) {
+    console.log(error)
     res.status(500).send(error)
   }
 }

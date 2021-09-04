@@ -10,8 +10,10 @@ import Shared from './components/Shared/Shared'
 import Trash from './components/Trash/Trash'
 import Folder from './components/Folder/Folder'
 import FilePreviewDemo from './FilePreview/Demo'
-// import Sidebar from "./components/SideBar/Sidebar";
-import Home from './components/Home/Home'
+// import Sidebar from './components/SideBar/Sidebar'//
+import Home from './components/Home/Home';
+import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+
 
 function App() {
   return (
@@ -45,6 +47,9 @@ function App() {
           <Route path="/fileviewer">
             <FilePreviewDemo />
           </Route>
+          <Route path="/folder-list-view">
+          <FolderListView />
+            </Route>
         </Switch>
       </div>
     </Router>

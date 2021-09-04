@@ -1,25 +1,29 @@
-import React from 'react';
-import './FolderAllFileListView.css';
-import ListViewTable from './ListViewTable/ListViewTable';
+import React from "react";
+import "./FolderAllFileListView.css";
+import ListViewTable from "../ListViewTable/ListViewTable";
 
-import settingsIcon from '../../../public/Icons/settingsIcon.svg';
-import myAvater from '../../../public/Icons/myAvater.jpg';
-import leftArrow from '../../../public/Icons/arrowleft.svg';
-import sortIcon from '../../../public/Icons/listviewIcon.svg';
+import SettingsIcon from "./settingsIcon.svg";
+import myAvater from "./myAvater.jpg";
+import sortIcon from "./listviewIcon.svg";
+import leftArrow from "./arrowleft.svg";
 
 function FolderAllFileListView() {
   return (
     <div className="folder_list_view">
       <div className="flv_header flex">
         <div className="flv_left">
-          <button onClick={} className="add_new_folder">Add New</button>
+          <button className="add_new_folder">Add New</button>
         </div>
 
         <div className="flv_right">
           <input type="search" placeholder="searchComponent will be here" />
-          <img className="settingIcon" src={settingsIcon} onClick={} />
-          <img className="settingAvater" src={myAvater} onclick={} />
-
+          <img className="settingIcon" src={SettingsIcon} alt="settings" />
+          <img
+            className="settingAvater"
+            alt="setting"
+            src={myAvater}
+            alt="avater"
+          />
         </div>
       </div>
 
@@ -27,13 +31,13 @@ function FolderAllFileListView() {
 
       <div className="sorting_col flex">
         <div className="left_sorting">
-          <img class="left_arrow" onClick={} src={leftArrow} />
+          <img class="left_arrow" src={leftArrow} alt="arrow" />
           <h4>All Files</h4>
         </div>
 
         <div className="right_sorting">
-          <img className="sort_folder" onClick={} src={sortIcon} />
-          <button onClick={} className="folder_activities">See Activities</button>
+          <img className="sort_folder" src={sortIcon} alt="sorting" />
+          <button className="folder_activities">See Activities</button>
         </div>
       </div>
 
@@ -41,7 +45,6 @@ function FolderAllFileListView() {
 
       <ListViewTable />
     </div>
-   
   );
 }
 
