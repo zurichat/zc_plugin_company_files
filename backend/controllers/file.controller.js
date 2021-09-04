@@ -141,3 +141,19 @@ exports.getAllDeletedFiles = async (req, res) => {
     res.status(500).send(error)
   }
 }
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+  const size = req.params.size;
+  try {
+    const files = await File.find({size : size}).limit(5);
+    console.log(files)
+    if(files.length > 0){
+      res.status(200).json(files);    
+    }else{
+      res.status(500).json("No match")
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
