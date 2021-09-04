@@ -16,7 +16,6 @@ function App() {
   return (
     <Router>
       <div className="App font-lato flex">
-        {/* <Sidebar /> */}
         <Switch>
           <Route exact path="/">
             <Home />

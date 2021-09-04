@@ -1,5 +1,5 @@
-const ApiConnection = require("../utils/database.helper");
-const API = new ApiConnection("File");
+const ApiConnection = require('../utils/database.helper');
+const API = new ApiConnection('File');
 
 exports.fileCreate = async (req, res) => {
   const { body } = req;
@@ -35,29 +35,26 @@ exports.fileDelete = async (req, res) => {
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
-  try {
-    const { data } = await Files.fetchAll();
+    const { data } = await API.fetchAll();
+    console.log(data);
     // loop through response object and check if isStarred is true
     const starredFiles = [];
-    data.map(({ isStarred, file_type, name, _id, isArchived }) => {
-      if (isStarred) {
-        starredFiles.push({ _id, isStarred, file_type, name, isArchived });
+    data.map((data) => {
+      if (data.isStarred) {
+        return starredFiles.push(data);
       }
     });
     return res.status(200).json({
-      response: { status: 200, message: "success", data: starredFiles }
+      response: { status: 200, message: 'success', data: starredFiles }
     });
-  } catch (err) {
-    return res.status(500).json(err);
-  }
 }
 
 exports.searchByDate = async (req, res) => {
   try {
     const { data } = await API.fetchAll();
-    let { pickDate } = req.query;
+    const { pickDate } = req.query;
 
-    //date format yyyy-m-d
+    // date format yyyy-m-d
     if (pickDate) {
       const rd = data.filter((d) => {
         if (d.createdAt === pickDate) {
@@ -87,7 +84,7 @@ exports.getArchivedFiles = async (req, res) => {
       });
       return res
         .status(200)
-        .json({ status: 200, message: "success", archives: archives });
+        .json({ status: 200, message: 'success', archives });
     }
   } catch (error) {
     return error.response.data;
