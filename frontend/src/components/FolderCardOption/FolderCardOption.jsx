@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import './FolderCardOption.css';
 
 import EyeIcon from '../../../public/Icons/eye.svg';
@@ -16,26 +15,6 @@ import ChainIcon from '../../../public/Icons/chain.svg';
 
 function FolderCardOption() {
 
-    //  File Download
-    const downloadFile = () => {
-      axios({
-            url: `/folderAPIurl/thefiles/${this.props.file.id}`,
-            method: "GET",
-            headers: headers,
-            responseType: "blob" 
-        }).then(response => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement("a");
-            link.href = url;
-            link.setAttribute(
-                "download",
-                `${this.props.file.name}.${this.props.file.mime}`
-            );
-            document.body.appendChild(link);
-            link.click();
-        });
-    }
-  
       return (
           <div className="folderOptions">
               <ul>
