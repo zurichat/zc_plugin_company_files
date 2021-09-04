@@ -1,14 +1,40 @@
 const ApiConnection = require("../utils/database.helper");
 const API = new ApiConnection("File");
+const cypto = require('crypto');
 
 exports.fileCreate = async (req, res) => {
+
   const { body } = req;
   body.id = uuid.v4();
 
   const file = await FileSchema.validateAsync(body);
-  const response = await Files.create(file);
 
-  res.status(200).send(appResponse(null, response, true));
+  try{
+    // Checks for already existing file
+    const allFiles = await Files.fetchAll();
+
+    var alreadyExists = false;
+    const newFileHash = crypto.createHash('md5').update(body.toString()).digest('hex');
+    
+    // loops through the file and compares the md5hashes to detetmine of the files are the same
+    if(allFiles.status === 200) {
+      allFiles.data.map(file => {
+        file.md5Hash === newFileHash ? alreadyExists = true : null;
+      })
+    }
+
+    if (alreadyExists) {
+      return res.status(400).json({ status: 400, message: "File already exists"});
+    } else {
+      const response = await Files.create(file);
+
+      return res.status(200).send(appResponse(null, response, true));
+    }
+
+  } catch (error) {
+    return error.response.data;
+  }
+
 }
 
 
@@ -76,7 +102,9 @@ exports.searchByDate = async (req, res) => {
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
+
   try {
+
     const allFiles = await Files.fetchAll();
 
     //   Validate Response Status
