@@ -35,7 +35,6 @@ exports.fileDelete = async (req, res) => {
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
-  try {
     const { data } = await API.fetchAll();
     console.log(data);
     // loop through response object and check if isStarred is true
@@ -48,9 +47,6 @@ exports.searchStarredFiles = async (req, res) => {
     return res.status(200).json({
       response: { status: 200, message: 'success', data: starredFiles }
     });
-  } catch (err) {
-    return res.status(500).json(err);
-  }
 }
 
 exports.searchByDate = async (req, res) => {
