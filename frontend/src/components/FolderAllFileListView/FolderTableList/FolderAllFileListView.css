@@ -1,0 +1,200 @@
+body {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 15px 20px auto 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.folder_list_view {
+  background-color: #fff;
+  overflow: hidden;
+}
+
+@media (min-width: 300px) and (max-width: 900px) {
+  .folder_list_view {
+    overflow-x: scroll;
+  }
+}
+
+.folder_list_view .flv_header .flv_left button {
+  background-color: #fff;
+  outline: none;
+  border: 1px solid #2F80ED;
+  padding: 10px 14px;
+  color: #2F80ED;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.folder_list_view .flv_header .flv_left button:hover {
+  background-color: #2F80ED;
+  color: #fff;
+}
+
+.flv_right {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.flv_right input {
+  outline: none;
+  border: 1px solid rgba(153, 153, 153, 0.2);
+  padding: 10px 15px;
+}
+
+.flv_right img {
+  -o-object-fit: contain;
+     object-fit: contain;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.flv_right .settingIcon {
+  height: 24px;
+  width: 24px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.flv_right .settingAvater {
+  background-color: #fff;
+  border: 0.8px solid rgba(153, 153, 153, 0.2);
+  border-radius: 50%;
+}
+
+.sorting_col .left_sorting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.sorting_col .left_sorting img {
+  width: 24px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  cursor: pointer;
+}
+
+.sorting_col .left_sorting h4 {
+  font-size: 20px;
+  line-height: 24px;
+  color: #4A4A4A;
+  font-weight: 600;
+  margin-left: 3px;
+}
+
+.sorting_col .right_sorting {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.sorting_col .right_sorting img {
+  height: 22px;
+  width: 22px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  cursor: pointer;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin-right: 5px;
+}
+
+.sorting_col .right_sorting button {
+  background-color: #2F80ED;
+  outline: none;
+  border: 1px solid #2F80ED;
+  padding: 8px 10px;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.sorting_col .right_sorting button:hover {
+  background-color: #fff;
+  color: #2F80ED;
+}
+
+table {
+  width: 100%;
+  margin: 5px 50px 20px;
+}
+
+table th {
+  text-align: left;
+  font-size: 15px;
+  line-height: 18px;
+  color: #4A4A4A;
+  font-weight: 600;
+}
+
+table .folder_name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+table .folder_name img {
+  margin-right: 10px;
+}
+
+table .folder_name h3 {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-size: 13px;
+  line-height: 15.6px;
+  color: #4A4A4A;
+  font-weight: 600;
+}
+
+table .folder_owner, table .folder_date, table .folder_size {
+  font-size: 13px;
+  line-height: 15.6px;
+  color: #999999;
+  font-weight: 400;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+table .center {
+  text-align: center;
+}
+/*# sourceMappingURL=FolderAllFileListView.css.map */
