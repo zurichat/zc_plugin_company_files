@@ -8,18 +8,17 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
+  toggleStarred,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
 router.post('/write', fileCreate);
 
-<<<<<<< HEAD
-
-router.route('/:id')
-  .get(fileDetails)
-=======
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/read', getAllFiles);
+
+//star a particular file
+router.patch('/star/:id', toggleStarred);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
@@ -34,7 +33,6 @@ router.get('/searchByDate', searchByDate);
 router.get('/searchStarredFiles', searchStarredFiles)
 
 router.route('/write/:id')
->>>>>>> f3e8523aa4bc81df36b4047bc1046b0cf82f8c44
   .put(fileUpdate)
   .delete(fileDelete)
 

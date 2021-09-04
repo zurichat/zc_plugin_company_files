@@ -34,6 +34,12 @@ exports.fileDelete = async (req, res) => {
 
 }
 
+//star a file
+exports.toggleStarred = async(req, res) => {
+    let file = await Files.findByIdAndUpdate(params.id, {isStarred: req.body.isStarred});
+    res.status(200).json({message: "file star update", file})
+}
+
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
   try {

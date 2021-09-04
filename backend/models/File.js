@@ -1,14 +1,5 @@
 const Joi = require('joi');
 
-<<<<<<< HEAD
-const FileSchema = new Schema({
-  fileName: {
-    type: String,
-    trim: true,
-    required: true
-  },
-}, { timestamps: true });
-=======
 const FileSchema = Joi.object({
   id: Joi.string().guid({ version: 'uuidv4' }).required(),
   fileName: Joi.string().required(),
@@ -28,6 +19,5 @@ const FileSchema = Joi.object({
   dateModified: Joi.date().default(new Date().toISOString()),
   lastAccessed: Joi.date().default(new Date().toISOString())
 })
->>>>>>> f3e8523aa4bc81df36b4047bc1046b0cf82f8c44
 
 module.exports = FileSchema;
