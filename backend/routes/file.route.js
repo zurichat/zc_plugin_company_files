@@ -11,6 +11,7 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  setEditPermission,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -35,8 +36,10 @@ router.get('/searchByDate', searchByDate);
 router.get('/searchStarredFiles', searchStarredFiles)
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
-router.route('/file/write/:id')
-  .put(fileUpdate)
-  .delete(fileDelete)
+router.route('/file/write/:admin')
+.put(fileUpdate)
+.delete(fileDelete)
+// SET EDIT PERMISSION
+router.get('/setedit/:admin', setEditPermission)
 
 module.exports = router;

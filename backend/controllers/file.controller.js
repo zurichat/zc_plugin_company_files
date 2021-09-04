@@ -120,7 +120,7 @@ exports.getArchivedFiles = async (req, res) => {
     return error;
   }
 };
-//get sall deleted files
+//get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {
     const response = await Files.fetchAll({})
@@ -138,6 +138,26 @@ exports.getAllDeletedFiles = async (req, res) => {
     }
     res.send(resposne)
   } catch (error) {
+    res.status(500).send(error)
+  }
+}
+
+// set edit permission
+exports.setEditPermission = async (req, res) => {
+  try{
+    const files = await File.fetchAll()
+    const fileData = files.data
+    const { admin } = req.params;
+    if( admin == 'true'){
+      res.send(fileData.map((files) => {
+        return files.permission = 'edit'
+      }))
+    }else{
+      res.send(fileData.map((files) => {
+        return files.permission = 'view'
+      }))
+    }
+  } catch (error){
     res.status(500).send(error)
   }
 }
