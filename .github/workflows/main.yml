@@ -1,4 +1,4 @@
-name: Continuous deployment
+name: Continuous integration
 on:
   push:
     branches: [dev]
@@ -7,7 +7,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Companyfiles.zuri
+      - name: Pulling changes for testing
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ secrets.IP_ADDRESS }}
@@ -15,9 +15,41 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/zc_plugin_company_files
+            cd /var/www/staging-company-files
+            git restore .
+            git pull
+            npm run install-setup
+            npm run build
+            pm2 restart staging.js
+            
+      - name: Obtaining response from server
+        run: |
+          OUTPUT= $(curl -Is $ip:$port| head -n 1| cut -c 10-13) && echo "::set-output name=OUTPUT::$OUTPUT"
+        env:
+          ip: ${{ secrets.IP_ADDRESS }}
+          port: ${{ secrets.PORT1 }}             
+      - name: Deploying to main port
+        if: env.OUTPUT == '200'
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{ secrets.IP_ADDRESS }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/staging-company-files
             git restore .
             git pull
             npm run install-setup
             npm run build
             pm2 restart server.js
+      - name: Deploying to main port
+        if: env.OUTPUT != '200'
+        uses: actions/github-script@v3
+        with:
+           script: |
+             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
+         
+         
+
+        
