@@ -8,6 +8,7 @@ import Favourites from './components/Favourites/Favourites';
 import Help from './components/Help/Help';
 import Shared from './components/Shared/Shared';
 import Sidebar from './components/SideBar/Sidebar';
+import Home from './components/Home/Home';
 import Folder from './components/Folder/Folder';
 import Trash from './components/Trash/Trash';
 
@@ -18,6 +19,9 @@ function App() {
         {/* <Sidebar /> */}
         <Switch>
           <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route exact path='/files'>
             <AllFiles />
           </Route>
           <Route path='/shared'>
