@@ -49,7 +49,27 @@ jobs:
         with:
            script: |
              core.setFailed('Your merge broke the code and so was not deployed onthe main port')
-         
-         
+      - name: Send email
+        if: env.OUTPUT != '200'
+        uses: dawidd6/action-send-mail@v3
+        with:
+              # Required mail server address:
+              server_address: ${{ secrets.SMTP_SERVER }}
+              # Required mail server port:
+              server_port: ${{ secrets.SMTP_SERVER_PORT }}
+              # Optional (recommended): mail server username:
+              username: ${{ secrets.AUTH_USER }}
+              # Optional (recommended) mail server password:
+              password: ${{secrets.EMAIL_PASSWORD }}
+              # Required mail subject:
+              subject: Team galileo build fail report
+              # Required recipients' addresses:
+              to: ${{ secrets.EMAIL_RECIVER }}
+              # Required sender full name (address can be skipped):
+              from: ${{ secrets.EMAIL_FROM }}
+              # Optional whether this connection use TLS (default is true if server_port is 465)
+              secure: true
+              # Optional plain body:
+              body: Your recent merge broke the code and so was deployed check github actions log for detail
 
-        
+
