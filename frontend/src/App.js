@@ -10,6 +10,7 @@ import Shared from "./components/Shared/Shared";
 // import Sidebar from "./components/SideBar/Sidebar";
 import Trash from "./components/Trash/Trash";
 import Home from "./components/Home/Home";
+import AddNewTextDoc from "./components/AddNewTextDoc/AddNewTextDoc";
 
 function App() {
   return (
@@ -37,6 +38,9 @@ function App() {
           </Route>
           <Route path="/Activities">
             <Activities />
+          </Route>
+          <Route path="/add-new">
+            <AddNewTextDoc />
           </Route>
         </Switch>
       </div>
