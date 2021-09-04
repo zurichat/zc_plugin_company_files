@@ -10,8 +10,11 @@ router.get('/read', getAllFolders);
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
 router.get('/read/:id', folderDetails);
 
+// UPDATE A SINGLE FOLDER DATA FROM THE ENDPOINT
+router.put('/write/:id', folderUpdate)
+
 router.route('/write/:id')
-  .put(folderUpdate)
   .delete(folderDelete)
+
 
 module.exports = router;
