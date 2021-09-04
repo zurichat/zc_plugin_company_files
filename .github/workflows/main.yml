@@ -24,9 +24,13 @@ jobs:
       - name: Obtaining response from server
         run: |
           OUTPUT= $(curl -Is $ip:$port| head -n 1| cut -c 10-13) && echo "::set-output name=OUTPUT::$OUTPUT"
+          echo $ip
+          echo $port
+          echo $OUTPUT
         env:
           ip: ${{ secrets.IP_ADDRESS }}
-          port: ${{ secrets.PORT1 }}             
+          port: ${{ secrets.PORT1 }} 
+          OUTPUT: ${{ env.OUTPUT }}
       - name: Deploying to main port
         if: env.OUTPUT == 200
         uses: appleboy/ssh-action@v0.1.2
