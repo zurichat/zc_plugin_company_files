@@ -11,6 +11,8 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  isDuplicate,
+  getAllDuplicates,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -33,8 +35,15 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
+
+// CHECK IF FILE IS A DUPLICATE
+router.post('/isDuplicate', isDuplicate);
+
+// GET DUPLICATE FILES
+router.get('/duplicateFiles', getAllDuplicates);
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
