@@ -93,3 +93,15 @@ exports.getArchivedFiles = async (req, res) => {
     return error.response.data;
   }
 }
+
+// paste a file
+exports.filePaste = async (req, res) => {
+  res.on('data', (chunk) => {
+    body += chunk
+  })
+  res.on('end', () => {
+    const writeStream = fs.createWriteStream('output.*')
+    writeStream.write()
+  })
+  res.status(200).send(appResponse(null, response, true))
+}

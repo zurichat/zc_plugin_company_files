@@ -28,6 +28,9 @@ router.get('/searchByDate', searchByDate);
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
 
+// PASTE A FILE
+router.put('/paste/:id', filePaste)
+
 router.route('/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
