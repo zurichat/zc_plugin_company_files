@@ -1,7 +1,8 @@
-import Grid from "@material-ui/core/Grid";
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import ConfirmDeleteFile from './ConfirmDelete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -204,12 +205,26 @@ const TrashTable = () => {
 
 function Trash() {
   const classes = useStyles();
+
+  const [ reveal, setReveal ] = useState(false);
+
+  const showModal = () => {
+      setReveal(true)
+  }
+
+  const closeModal = () => {
+      setReveal(false)
+  }
+
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const trashIsEmpty = urlParams?.get("empty");
 
   return !trashIsEmpty ? (
     <div className={classes.root}>
+      
+      <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
+
       <Grid
         container
         spacing={3}
@@ -218,7 +233,7 @@ function Trash() {
         <Grid item xs={12}>
           <Grid container style={{ display: "flex" }}>
             <Grid xs={6}>
-              <Typography variant="h6" style={{ color: "black" }}>
+              <Typography onClick={ () => showModal() } variant="h6" style={{ color: "black" }}>
                 Items In My Trash
               </Typography>
             </Grid>
@@ -351,7 +366,7 @@ function Trash() {
     </div>
   ) : (
     <div className="container p-7 bg-white">
-      <h2 className="text-lg my-5">Items In My Trash</h2>
+      <h2 className="text-lg my-5" onClick={ () => showModal() }>Items In My Trash</h2>
       <div className="bg-green-50 p-6 flex items-center justify-between mb-3">
         <span>Items in trash are deleted forever after 30 days</span>
         <span>Empty Trash</span>
