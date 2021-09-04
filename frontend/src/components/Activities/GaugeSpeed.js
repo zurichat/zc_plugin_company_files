@@ -18,15 +18,15 @@ const GaugeSpeed = () => {
 
   const type = "Pie";
   return (
-    <div class="mt-20">
+    <div className="mt-20">
       <ChartistGraph data={data} options={options} type={type} />
-      <p class="text-center text-lg font-semibold used-space -mt-36">20 GB</p>
-      <div class="pt-16">
-        <p class="text-center text-sm font-semibold total-space">
+      <p className="text-center text-lg font-semibold used-space -mt-36">20 GB</p>
+      <div className="pt-16">
+        <p className="text-center text-sm font-semibold total-space">
           Used Out of 40 GB
         </p>
       </div>
-      <hr class="mx-8 mt-10" />
+      <hr className="mx-8 mt-10" />
     </div>
   );
 };

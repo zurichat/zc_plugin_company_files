@@ -1,5 +1,6 @@
 import GaugeSpeed from "./GaugeSpeed";
 import Collaborators from "./Collaborators";
+import ActivitiesComponents from "./ActivitiesComponent";
 
 function Activities() {
   return (
@@ -7,6 +8,7 @@ function Activities() {
       <div className="flex ">
         <div className=" w-3/4">
           activities
+          <ActivitiesComponents />
         </div>
         <div className="w-1/4 h-full">
           <div className="h-2/5">
@@ -16,6 +18,7 @@ function Activities() {
           <Collaborators />
         </div>
       </div>
+      <script src="ActivityComponent.js"></script>
     </div>
   );
 }
