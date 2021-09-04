@@ -9,6 +9,7 @@ import Help from "./components/Help/Help";
 import Shared from "./components/Shared/Shared";
 // import Sidebar from "./components/SideBar/Sidebar";
 import Trash from "./components/Trash/Trash";
+import Home from "./components/Home/Home";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         {/* <Sidebar /> */}
         <Switch>
           <Route exact path="/">
+            <Home />
+          </Route>
+          <Route exact path="/files">
             <AllFiles />
           </Route>
           <Route path="/shared">
