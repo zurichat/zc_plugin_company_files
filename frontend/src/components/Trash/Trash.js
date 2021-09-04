@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import ConfirmDeleteFile from './ConfirmDelete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     color: "#616161",
-    fontFamily: "Lato"
+    fontFamily: "Lato",
+    
   },
   paper: {
     padding: theme.spacing(2),
@@ -22,14 +24,26 @@ const useStyles = makeStyles((theme) => ({
 
 function Trash() {
     const classes = useStyles();
+
+    const [ reveal, setReveal ] = useState(false);
+
+    const showModal = () => {
+        setReveal(true)
+    }
+
+    const closeModal = () => {
+        setReveal(false)
+    }
     
     return (
       <div className={classes.root}>
+
+          <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
           <Grid container spacing={3} style={{paddingLeft: "2rem", paddingRight: "1rem", marginTop: "4rem"}}>
             <Grid item xs={12}>
                 <Grid container style={{display:"flex"}}>
                     <Grid xs={6}>
-                        <Typography variant="h6" style={{color: "black"}}>
+                        <Typography variant="h6" style={{color: "black"}} onClick={() => showModal()}>
                             Items In My Trash
                         </Typography>
                     </Grid>
