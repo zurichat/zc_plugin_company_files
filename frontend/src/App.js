@@ -7,10 +7,10 @@ import AllFiles from './components/All files/AllFiles';
 import Favourites from './components/Favourites/Favourites';
 import Help from './components/Help/Help';
 import Shared from './components/Shared/Shared';
-import Sidebar from './components/SideBar/Sidebar';
-import Home from './components/Home/Home';
-import Folder from './components/Folder/Folder';
 import Trash from './components/Trash/Trash';
+import FilePreviewDemo from './FilePreview/Demo';
+// import Sidebar from "./components/SideBar/Sidebar";
+import Home from './components/Home/Home';
 
 function App() {
   return (
@@ -41,6 +41,9 @@ function App() {
           </Route>
           <Route path='/Activities'>
             <Activities />
+          </Route>
+          <Route path='/fileviewer'>
+            <FilePreviewDemo />
           </Route>
         </Switch>
       </div>
