@@ -13,12 +13,14 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+import NavBar from './components/NavBar/NavBar'
 
 
 function App() {
   return (
     <Router>
       <div className="App font-lato flex">
+        <NavBar/>
         <Switch>
           <Route exact path="/">
             <Home />

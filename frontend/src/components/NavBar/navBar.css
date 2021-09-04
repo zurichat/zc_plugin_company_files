@@ -1,0 +1,25 @@
+.nav-bar__container {
+    padding: 24px 31px;
+
+    width: 100%;
+    height: 100px;
+
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.nav-bar__container > * {
+    /* border: 2px dashed green; */
+    margin: 0 18px;
+}
+
+.nav-bar__container > *:first-child {
+    /* border: 2px dashed yellow; */
+    margin-right: auto;
+}
+
+.nav-bar__search-bar-container, .nav-bar__files {
+    display: flex;
+    flex-flow: row nowrap; 
+}
