@@ -147,10 +147,16 @@ exports.searchBySize = async (req, res) => {
 try {
   const { data } = await File.fetchAll();
   let { size } = req.params;
+  let sizeRangePlus = Number(size) + 500;
+  let sizeRangeMinus = Number(size) - 500;
   const files = [];
   for(i=0; i<data.length; i++){
-    if((data[i].size) && (data[i].size == size)){
+    if(data[i].size){
+      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
+          files.push(data[i])      
+      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
         files.push(data[i])      
+      }
     }
   }
   files.length > 0 ?  
