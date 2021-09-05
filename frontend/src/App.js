@@ -1,19 +1,21 @@
-import './App.css'
+import "./App.css";
 
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-import Activities from './components/Activities/Activities'
-import AllFiles from './components/All files/AllFiles'
-import Favourites from './components/Favourites/Favourites'
-import FilePreviewDemo from './FilePreview/Demo'
-import Folder from './components/Folder/Folder'
-import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
-import Help from './components/Help/Help'
+import Activities from "./components/Activities/Activities";
+import AddNewTextDoc from "./components/AddNewTextDoc/AddNewTextDoc";
+import AllFiles from "./components/All files/AllFiles";
+import Favourites from "./components/Favourites/Favourites";
+import FilePreviewDemo from "./FilePreview/Demo";
+import Folder from "./components/Folder/Folder";
+import FolderListView from "./components/FolderAllFileListView/FolderTableList/FolderAllFileListView";
+import Help from "./components/Help/Help";
 // import Sidebar from './components/SideBar/Sidebar'//
-import Home from './components/Home/Home';
-import Shared from './components/Shared/Shared'
-import Trash from './components/Trash/Trash'
-import Upload from './components/Upload/Upload'
+import Home from "./components/Home/Home";
+import Shared from "./components/Shared/Shared";
+import Trash from "./components/Trash/Trash";
+import Upload from "./components/Upload/Upload";
+import VideoPreview from "./components/VideoPreview/VideoPreview";
 
 function App() {
   return (
@@ -38,6 +40,9 @@ function App() {
           <Route path="/folder">
             <Folder />
           </Route>
+          <Route path="/add-new">
+            <AddNewTextDoc />
+          </Route>
           <Route path="/help">
             <Help />
           </Route>
@@ -48,15 +53,18 @@ function App() {
             <FilePreviewDemo />
           </Route>
           <Route path="/folder-list-view">
-          <FolderListView />
-            </Route>
-            <Route path="/upload">
+            <FolderListView />
+          </Route>
+          <Route path="/videopreview">
+            <VideoPreview />
+          </Route>
+          <Route path="/upload">
             <Upload />
           </Route>
         </Switch>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
