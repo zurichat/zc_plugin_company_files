@@ -26,7 +26,7 @@ const GaugeSpeed = () => {
           Used Out of 40 GB
         </p>
       </div>
-      <hr className="mx-8 mt-10" />
+      {/* <hr className="mx-8 mt-10" /> */}
     </div>
   );
 };

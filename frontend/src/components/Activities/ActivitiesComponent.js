@@ -6,8 +6,26 @@ function ActivitiesComponents() {
     <div className='mt-10 overflow-auto'>
       <div className='flex justify-between mb-8'>
         <p className='text-text-grey capitalize font-bold text-2xl'>&lt;- All Activities</p>
-        <div className="rounded-full h-2 w-2 p-3 flex items-center justify-center border-collaborators border-solid border-text-navbar text-text-navbar mr-8">5</div>
       </div>
+      <div className="ellipsis-box">
+      <ul>
+        <li>
+          <span class="icon"><i class="fa fa-thumb-tack" aria-hidden="true"></i>
+          </span>
+          <span class="text">Pin</span>
+        </li>
+        <li>
+          <span class="icon"><i class="fa fa-check" aria-hidden="true"></i>
+          </span>
+          <span class="text">Mark as read</span>
+        </li>
+        <li>
+          <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i>
+          </span>
+          <span class="text">Delete</span>
+        </li>
+      </ul>
+    </div>
       <ActivitiesComponent />
       <ActivitiesComponent />
       <ActivitiesComponent />
