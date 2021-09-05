@@ -5,5 +5,4 @@ router.get('/ping', ping);
 router.get('/info', info);
 router.get('/sidebar', sidebar);
 
-
 module.exports = router;
