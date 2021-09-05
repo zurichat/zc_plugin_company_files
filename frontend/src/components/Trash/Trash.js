@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import ConfirmDeleteFile from './ConfirmDelete';
+import React, { useState } from "react";
+
+import ConfirmDeleteFile from "./ConfirmDelete";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,8 +103,8 @@ const TheadItem = ({ value = "", last = false }) => {
   return (
     <th
       scope="col"
-      className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-        !last ? "" : "text-right"
+      className={`originScreen:px-6 originScreen:py-3 originScreen:text-left originScreen:text-xs originScreen:font-medium originScreen:uppercase originScreen:tracking-wider ${
+        !last ? "" : "originScreen:text-right"
       }`}
     >
       {value}
@@ -113,8 +114,8 @@ const TheadItem = ({ value = "", last = false }) => {
 const TbodyItem = ({ value = "", last = false }) => {
   return (
     <td
-      className={`px-6 py-4 whitespace-nowrap text-sm text-gray-500 ${
-        !last ? "" : "text-right"
+      className={`originScreen:px-6 originScreen:py-4 originScreen:whitespace-nowrap originScreen:text-sm originScreen:text-gray-500 ${
+        !last ? "" : "originScreen:text-right"
       }`}
     >
       {value}
@@ -128,11 +129,14 @@ const TbodyItemWithIcon = ({
 }) => {
   return (
     <td
-      className={`px-6 py-4 whitespace-nowrap text-sm flex items-center text-gray-500 ${
-        !last ? "" : "text-right"
+      className={`originScreen:px-6 originScreen:py-4 originScreen:whitespace-nowrap originScreen:text-sm originScreen:flex originScreen:items-center originScreen:text-gray-500 ${
+        !last ? "" : "originScreen:text-right"
       }`}
     >
-      <img {...{ src: iconPath, alt: "file icon" }} className="w-6 h-6 mr-2" />
+      <img
+        {...{ src: iconPath, alt: "file icon" }}
+        className="originScreen:w-6 originScreen:h-6 originScreen:mr-2"
+      />
       {value}
     </td>
   );
@@ -142,10 +146,13 @@ const TbodyRow = ({
   owner = "",
   deletionDate = "",
   fileSize = "",
-  openModal
+  openModal,
 }) => {
   return (
-    <tr onClick={ () => openModal() } className="border-none hover:bg-gray-50">
+    <tr
+      onClick={() => openModal()}
+      className="originScreen:border-none hover:bg-gray-50"
+    >
       <TbodyItemWithIcon
         {...{
           value: name,
@@ -172,26 +179,24 @@ const TbodyRow = ({
 };
 
 const TrashTable = () => {
-
-  const [ reveal, setReveal ] = useState(false);
+  const [reveal, setReveal] = useState(false);
 
   const showModal = () => {
-      setReveal(true)
-  }
+    setReveal(true);
+  };
 
   const closeModal = () => {
-      setReveal(false)
-  }
+    setReveal(false);
+  };
 
   return (
-    
-    <div className="flex flex-col">
+    <div className="originScreen:flex originScreen:flex-col">
       <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="shadow overflow-hidden sm:rounded-lg">
-            <table className="min-w-full">
-              <thead className="font-bold text-black">
+      <div className="originScreen:-my-2 originScreen:overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div className="originScreen:py-2 originScreen:align-middle originScreen:inline-block originScreen:min-w-full sm:px-6 lg:px-8">
+          <div className="originScreen:shadow originScreen:overflow-hidden sm:rounded-lg">
+            <table className="originScreen:min-w-full originScreen:p-0 originScreen:m-0">
+              <thead className="originScreen:font-bold originScreen:text-black">
                 <tr>
                   {TABLE_COLUMNS?.map((elem, ind, selfArr) => (
                     <TheadItem
@@ -204,7 +209,7 @@ const TrashTable = () => {
                   ))}
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="originScreen:bg-white originScreen:divide-y originScreen:divide-gray-200">
                 {TABLE_ITEMS?.map((elem, ind) => (
                   <TbodyRow openModal={showModal} {...{ key: ind, ...elem }} />
                 ))}
@@ -226,7 +231,6 @@ function Trash() {
 
   return !trashIsEmpty ? (
     <div className={classes.root}>
-
       <Grid
         container
         spacing={3}
@@ -367,10 +371,12 @@ function Trash() {
       </Grid>
     </div>
   ) : (
-    <div className="container p-7 bg-white">
-      <h2 className="text-lg my-5">Items In My Trash</h2>
-      <div className="bg-green-50 p-6 flex items-center justify-between mb-3">
-        <span>Items in trash are deleted forever after 30 days</span>
+    <div className="originScreen:container originScreen:p-7 originScreen:bg-white">
+      <h2 className="originScreen:text-lg originScreen:my-5">
+        Items In My Trash
+      </h2>
+      <div className="originScreen:bg-green-50 originScreen:p-6 originScreen:flex originScreen:items-center originScreen:justify-between originScreen:mb-3">
+        <span>Items in trash are deleted forever after 30 days </span>
         <span>Empty Trash</span>
       </div>
 

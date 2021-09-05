@@ -1,11 +1,11 @@
-import React from "react";
 import "./FolderAllFileListView.css";
-import ListViewTable from "../ListViewTable/ListViewTable";
 
+import ListViewTable from "../ListViewTable/ListViewTable";
+import React from "react";
 import SettingsIcon from "./settingsIcon.svg";
+import leftArrow from "./arrowleft.svg";
 import myAvater from "./myAvater.jpg";
 import sortIcon from "./listviewIcon.svg";
-import leftArrow from "./arrowleft.svg";
 
 function FolderAllFileListView() {
   return (

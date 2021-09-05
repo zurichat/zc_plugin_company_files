@@ -5,21 +5,20 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Activities from './components/Activities/Activities'
 import AllFiles from './components/All files/AllFiles'
 import Favourites from './components/Favourites/Favourites'
-import Help from './components/Help/Help'
-import Shared from './components/Shared/Shared'
-import Trash from './components/Trash/Trash'
-import Folder from './components/Folder/Folder'
 import FilePreviewDemo from './FilePreview/Demo'
+import Folder from './components/Folder/Folder'
+import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+import Help from './components/Help/Help'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
-import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+import Shared from './components/Shared/Shared'
+import Trash from './components/Trash/Trash'
 import Upload from './components/Upload/Upload'
-
 
 function App() {
   return (
     <Router>
-      <div className="App font-lato flex">
+      <div className="App font-lato">
         <Switch>
           <Route exact path="/">
             <Home />
