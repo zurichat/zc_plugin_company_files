@@ -13,7 +13,11 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+<<<<<<< HEAD
 import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
+=======
+import Upload from './components/Upload/Upload'
+>>>>>>> acd4e967c57e55394a540c5d79f46e576dc4b7cd
 
 
 function App() {
@@ -54,6 +58,9 @@ function App() {
           <Route path="/folder-list-view">
           <FolderListView />
             </Route>
+            <Route path="/upload">
+            <Upload />
+          </Route>
         </Switch>
       </div>
     </Router>
