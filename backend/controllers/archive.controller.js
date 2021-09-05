@@ -8,5 +8,4 @@ exports.archiveFile = async (req, res) => {
         res.send({obj})
         //  generateZip({obj});
             
-
     };
