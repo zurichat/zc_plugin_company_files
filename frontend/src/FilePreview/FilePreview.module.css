@@ -1,0 +1,77 @@
+.sliderContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    width: 80%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.file {
+    display: inline-flex;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+
+.fileIcon {
+    background: #E3EEFF;
+    padding: 1rem;
+    box-shadow: 0px 18px 30px -5px rgba(255, 193, 237, 0.2);
+    border-radius: 6px;
+    margin-right: 1rem;
+}
+
+.fileDetails > p:first-child {
+    font-weight: bold;
+}
+
+.fileDetails > p:last-child {
+    font-weight: light;
+}
+
+.backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    min-height: 100vh;
+}
+
+.back {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+}
+
+.imageItem {
+    max-height: 80vh;
+    margin: 0 auto;
+}
+
+.zoom {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem 2rem;
+    display: inline-flex;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.zoom svg {
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.zoom svg:last-child {
+    margin-right: 0;
+}
+
+.demoContainer {
+    width: 100%;
+    max-width: 1200px;
+    padding: 4rem 1rem 0;
+    margin: 0 auto;
+    min-height: 100vh;
+}

@@ -1,7 +1,8 @@
-import Grid from "@material-ui/core/Grid";
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState } from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import ConfirmDeleteFile from './ConfirmDelete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -141,9 +142,10 @@ const TbodyRow = ({
   owner = "",
   deletionDate = "",
   fileSize = "",
+  openModal
 }) => {
   return (
-    <tr className="border-none hover:bg-gray-50">
+    <tr onClick={ () => openModal() } className="border-none hover:bg-gray-50">
       <TbodyItemWithIcon
         {...{
           value: name,
@@ -170,8 +172,21 @@ const TbodyRow = ({
 };
 
 const TrashTable = () => {
+
+  const [ reveal, setReveal ] = useState(false);
+
+  const showModal = () => {
+      setReveal(true)
+  }
+
+  const closeModal = () => {
+      setReveal(false)
+  }
+
   return (
+    
     <div className="flex flex-col">
+      <ConfirmDeleteFile collapse={closeModal} reveal={reveal} />
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden sm:rounded-lg">
@@ -191,7 +206,7 @@ const TrashTable = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {TABLE_ITEMS?.map((elem, ind) => (
-                  <TbodyRow {...{ key: ind, ...elem }} />
+                  <TbodyRow openModal={showModal} {...{ key: ind, ...elem }} />
                 ))}
               </tbody>
             </table>
@@ -204,12 +219,14 @@ const TrashTable = () => {
 
 function Trash() {
   const classes = useStyles();
+
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const trashIsEmpty = urlParams?.get("empty");
 
   return !trashIsEmpty ? (
     <div className={classes.root}>
+
       <Grid
         container
         spacing={3}
