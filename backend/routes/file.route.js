@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const {
   fileCreate,
+  fileRename,
   fileUpdate,
   fileDetails,
   fileDelete,
@@ -24,6 +25,9 @@ router.get('/file/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
+
+// Renames file
+router.post('/rename/:id', fileRename);
 
 // GET ARCHIVED FILES
 router.get('/archive', getArchivedFiles);
