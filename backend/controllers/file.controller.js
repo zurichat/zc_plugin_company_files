@@ -164,6 +164,7 @@ exports.searchByType = async (req, res) => {
     return res.status(500).json(error);
   }
 }
+  
 // Search Files By Size
 exports.searchBySize = async (req, res) => {
 try {

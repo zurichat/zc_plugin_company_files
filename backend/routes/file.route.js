@@ -12,7 +12,7 @@ const {
   searchFileByIsDeleted,
   getAllDeletedFiles,
   searchByType,
-  searchBySize,
+  searchBySize
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
