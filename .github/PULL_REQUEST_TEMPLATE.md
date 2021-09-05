@@ -7,7 +7,7 @@ I created a system to archive a file. Dependencies required: fs-module and archi
 #59
 # How Has This Been Tested?
 
-Able to ping "https://api.zuri.chat" endpoint.
+Can currently ping endpoints("https://api.zuri.chat" ).
 @ https://companyfiles.zuri.chat/api/v1/archive/download
 
 # Checklist:
