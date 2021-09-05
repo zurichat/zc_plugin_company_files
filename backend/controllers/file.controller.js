@@ -142,4 +142,22 @@ exports.getAllDeletedFiles = async (req, res) => {
   }
 }
 
-
+//Renames a file
+exports.fileRename = async (req, res) => {
+  const { body } = req;
+  //Get single file
+  const data = await File.fetchAll();
+  var fileDetails={};
+  
+  //gets file details
+  files=await data.data;
+  files.forEach(function (file) {
+    if(file._id == req.params.id){
+      fileDetails=file;
+    }
+  });
+  fileDetails.name=body.name;
+  //updates file name
+  const response = await File.update(req.params.id, fileDetails);
+  res.send({ response });
+}
