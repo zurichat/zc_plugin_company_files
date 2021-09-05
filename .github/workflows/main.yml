@@ -40,7 +40,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/staging-company-files
+            cd /var/www/zc_plugin_company_files
             git restore .
             git pull
             npm run install-setup
@@ -69,7 +69,7 @@ jobs:
               # Optional plain body:
               body: Your recent merge broke the code and so was deployed check github actions log for detail
 
-      - name: Deploying to main port
+      - name: Failing build when response code is not 200
         if: ${{ steps.version.outputs.OUTPUT }} != 200
         uses: actions/github-script@v3
         with:
