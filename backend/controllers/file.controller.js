@@ -1,28 +1,30 @@
 const ApiConnection = require('../utils/database.helper');
-const API = new ApiConnection('File');
+const File = new ApiConnection('File');
+// const FileSchema = require('../models/File');
 
 exports.fileCreate = async (req, res) => {
   const { body } = req;
-  body.id = uuid.v4();
 
-  const file = await FileSchema.validateAsync(body);
-  const response = await Files.create(file);
+  // const file = await FileSchema.validateAsync(body);
+  const response = await File.create(body);
 
-  res.status(200).send(appResponse(null, response, true));
+  res.send({ response });
 }
 
 
 exports.getAllFiles = async (req, res) => {
-  const response = await Files.fetchAll();
+  
+  const response = await File.fetchAll();
 
-  res.status(200).send(appResponse(null, response, true, { count: response.length }));
+  res.send({ response });
+  
 }
 
 
 exports.fileDetails = async (req, res) => {
-  const response = await Files.fetchOne(req.params.id);
+  const response = await File.fetchOne(req.params.id);
 
-  res.status(200).send(appResponse(null, response, true));
+  res.send({ response });
 }
 
 exports.fileUpdate = async (req, res) => {
@@ -33,25 +35,50 @@ exports.fileDelete = async (req, res) => {
 
 }
 
+exports.searchFileByIsDeleted = async (req, res) => {
+  
+  try {
+
+    const isDeleted = true;
+    const response = await File.fetchAll();
+
+    const deletedFiles = response.data.filter ( (file) => {
+      return file.isDeleted === isDeleted;
+    })
+
+    console.log(deletedFiles)
+    res.status(200).send({ deletedFiles })
+
+  } catch (error) {
+
+    console.log(error)
+    res.send({ error })
+    
+  }
+
+}
+
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
-    const { data } = await API.fetchAll();
-    console.log(data);
+  try {
+    const { data } = await File.fetchAll();
     // loop through response object and check if isStarred is true
     const starredFiles = [];
     data.map((data) => {
-      if (data.isStarred) {
-        return starredFiles.push(data);
-      }
+      return data.isStarred ? starredFiles.push(data) : null;
     });
     return res.status(200).json({
       response: { status: 200, message: 'success', data: starredFiles }
     });
+  } catch (error) {
+    return res.send({ error })
+  }
 }
 
 exports.searchByDate = async (req, res) => {
+
   try {
-    const { data } = await API.fetchAll();
+    const { data } = await File.fetchAll();
     const { pickDate } = req.query;
 
     // date format yyyy-m-d
@@ -67,26 +94,48 @@ exports.searchByDate = async (req, res) => {
       console.log(rd);
     }
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
 }
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
   try {
-    const allFiles = await Files.fetchAll();
+    const allFiles = await File.fetchAll();
 
     //   Validate Response Status
     if (allFiles.status === 200) {
       const archives = [];
       allFiles.data.map((file) => {
-        file.isArchived ? archives.push(file) : null;
+        return file.isArchived ? archives.push(file) : null;
       });
       return res
         .status(200)
         .json({ status: 200, message: 'success', archives });
     }
   } catch (error) {
-    return error.response.data;
+    return error;
+  }
+};
+// get sall deleted files
+exports.getAllDeletedFiles = async (req, res) => {
+  try {
+    const response = await File.fetchAll()
+    const responseData = response.data
+    const resposneArray = []
+    for (const iterator of responseData) {
+      if (!iterator.isDeleted) {
+        continue
+      }
+      resposneArray.push(iterator)
+    }
+    if (!resposneArray.length) {
+      res.status(404).send('no data found')
+      return
+    }
+    res.send(resposneArray)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
   }
 }
