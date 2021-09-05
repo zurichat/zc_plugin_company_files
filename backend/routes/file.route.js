@@ -20,7 +20,7 @@ router.post('/write', fileCreate);
 router.get('/read', getAllFiles);
 
 //star a particular file
-router.patch('/star', toggleStarred);
+router.patch('/star/:id', toggleStarred);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
