@@ -21,7 +21,7 @@ const ErrorHandler = require('./backend/middlewares/errorHandler');
 
 const fileRouter = require('./backend/routes/file.route'); // File Read and Write route
 const folderRouter = require('./backend/routes/folder.route'); // Folder Read and Write route
-const archiveRouter = require('./backend/routes/archive.route'); 
+const archiveRouter = require('./backend/routes/archive.route');
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
