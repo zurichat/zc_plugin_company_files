@@ -19,8 +19,8 @@ import NavBar from './components/NavBar/NavBar'
 function App() {
   return (
     <Router>
+      <NavBar/>
       <div className="App font-lato flex">
-        <NavBar/>
         <Switch>
           <Route exact path="/">
             <Home />

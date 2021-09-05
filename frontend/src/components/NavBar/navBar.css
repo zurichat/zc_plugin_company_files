@@ -5,17 +5,14 @@
     height: 100px;
 
     display: flex;
-    /* justify-content: center; */
     align-items: center;
 }
 
 .nav-bar__container > * {
-    /* border: 2px dashed green; */
     margin: 0 18px;
 }
 
 .nav-bar__container > *:first-child {
-    /* border: 2px dashed yellow; */
     margin-right: auto;
 }
 
