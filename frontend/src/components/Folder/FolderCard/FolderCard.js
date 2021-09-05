@@ -37,8 +37,9 @@ const FolderCard = () => {
             <h6>140 files</h6>
           </div>
           <div className={classes.fileAccess}>
-            <img src={profile} alt="Profile" />
-            <img src={profile} alt="Profile" />
+
+            <img className={classes.folderCardImg} src={profile} alt="Profile" />
+            <img className={classes.folderCardImg} src={profile} alt="Profile" />
             <div
               onClick={() => setShowInvite((prev) => !prev)}
               className={classes.add}
