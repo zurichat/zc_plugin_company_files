@@ -145,7 +145,6 @@ exports.getAllDeletedFiles = async (req, res) => {
 //Renames a file
 exports.fileRename = async (req, res) => {
   const { body } = req;
-  console.log(req.params.id);
   //Get single file
   const data = await File.fetchAll();
   var fileDetails={};
