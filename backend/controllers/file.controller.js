@@ -35,6 +35,8 @@ exports.fileDelete = async (req, res) => {
 
 }
 
+
+
 exports.searchFileByIsDeleted = async (req, res) => {
   
   try {
@@ -138,4 +140,51 @@ exports.getAllDeletedFiles = async (req, res) => {
     console.log(error)
     res.status(500).send(error)
   }
+}
+
+//Renames a file
+exports.fileRename = async (req, res) => {
+  const { body } = req;
+  //Get single file
+  const data = await File.fetchAll();
+  var fileDetails={};
+  
+  //gets file details
+  files=await data.data;
+  files.forEach(function (file) {
+    if(file._id == req.params.id){
+      fileDetails=file;
+    }
+  });
+  fileDetails.name=body.name;
+  //updates file name
+  const response = await File.update(req.params.id, fileDetails);
+  res.send({ response });
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+try {
+  const { data } = await File.fetchAll();
+  let { size } = req.params;
+  let sizeRangePlus = Number(size) + 500;
+  let sizeRangeMinus = Number(size) - 500;
+  const files = [];
+  for(i=0; i<data.length; i++){
+    if(data[i].size){
+      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
+          files.push(data[i])      
+      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+        files.push(data[i])      
+      }
+    }
+  }
+  files.length > 0 ?  
+  res.status(200).json(files) : 
+  res.status(404).json("No matches")
+
+} 
+catch (err) {
+  res.status(500).json(err);
+}
 }
