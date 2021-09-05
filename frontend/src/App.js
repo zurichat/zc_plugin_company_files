@@ -14,6 +14,7 @@ import FilePreviewDemo from './FilePreview/Demo'
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
 import NavBar from './components/NavBar/NavBar'
+import Upload from './components/Upload/Upload'
 
 
 function App() {
@@ -52,6 +53,9 @@ function App() {
           <Route path="/folder-list-view">
           <FolderListView />
             </Route>
+            <Route path="/upload">
+            <Upload />
+          </Route>
         </Switch>
       </div>
     </Router>
