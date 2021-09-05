@@ -1,9 +1,12 @@
+import "./gridListView.css"
+import React from 'react'
 import {Link} from "react-router-dom"
 
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function FilesCard() {
+const FilesCard = () => {
+
     return (
         <div className="w-full px-10 bg-white">
             <div className="top flex justify-between">
@@ -11,8 +14,12 @@ function FilesCard() {
                 <Link to="/files" className="text-gray-400 hover:text-green-400">
                     <span>View All</span>
                 </Link>
+
+                   
             </div>
-            <div className="w-full py-5 flex flex-wrap justify-between">
+
+            <div className='project-box-wrapper'>
+            <div className='project-box w-full py-5 flex flex-wrap justify-between'>
                 <div className="file flex items-center mr-3 my-5">
                     <div className="fileIcon w-14 h-14 flex justify-around  bg-blue-100 rounded-md">
                         <img src="/Icons/docfile.svg" alt="" className="" />
@@ -134,6 +141,8 @@ function FilesCard() {
                     </div>
                 </div>
             </div>
+            </div>
+            
         </div>
     )
 }

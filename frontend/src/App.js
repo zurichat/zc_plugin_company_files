@@ -25,7 +25,10 @@ function App() {
             <Home />
           </Route>
           <Route exact path="/files">
+            <div className='app-container'>
             <AllFiles />
+            </div>
+           
           </Route>
           <Route path="/shared">
             <Shared />
