@@ -3,15 +3,15 @@ const uuid = require('uuid');
 const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders } = require('../controllers/folder.controller');
 
 // CREATE A NEW FOLDER
-router.post('/write', folderCreate);
+router.post('/folder/write', folderCreate);
 
 // FETCH ALL THE FOLDERS FROM THE ENDPOINT
-router.get('/read', getAllFolders);
+router.get('/folder/read', getAllFolders);
 
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
-router.get('/read/:id', folderDetails);
+router.get('/folder/read/:id', folderDetails);
 
-router.route('/write/:id')
+router.route('/folder/write/:id')
   .put(folderUpdate)
   .delete(folderDelete)
 

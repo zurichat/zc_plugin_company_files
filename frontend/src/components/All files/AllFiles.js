@@ -6,9 +6,7 @@ import RecentlyViewed from "../RecentlyViewed/RecentlyViewed";
 function AllFiles() {
     return (
         <div>
-            <RecentlyViewed/>
-            <Folder/>
-            <Files/>
+            All files will be rendered here in list/grid view
         </div>
     )
 }

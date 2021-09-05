@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const {
   fileCreate,
   fileUpdate,
@@ -6,6 +7,7 @@ const {
   fileDelete,
   getAllFiles,
   getArchivedFiles,
+  getAllDeletedFiles,
   searchByDate,
   searchStarredFiles,
   toggleStarred,
@@ -31,8 +33,10 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+// GET DELETED FILES
+router.get('/deletedFiles', getAllDeletedFiles)
 
-router.route('/write/:id')
+router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 

@@ -19,6 +19,9 @@ const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
+const fileRouter = require('./backend/routes/file.route');
+const folderRouter = require('./backend/routes/folder.route');
+
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
@@ -35,6 +38,10 @@ if (isProduction) {
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
+// USING FILE AND FOLDER ROUTER
+app.use(fileRouter);
+app.use(folderRouter);
+
 // All other GET requests not handled before will return our React app
 app.use((req, res, next) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
@@ -42,6 +49,7 @@ app.use((req, res, next) => {
   res.header('Pragma', 'no-cache');
   res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
 });
+
 
 // For handling server errors and all other errors that might occur
 app.use(ErrorHandler);
