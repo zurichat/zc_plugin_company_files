@@ -18,14 +18,9 @@ const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
-<<<<<<< HEAD
-const fileRouter = require('./backend/routes/file.route'); // File Read and Write route
-const folderRouter = require('./backend/routes/folder.route'); // Folder Read and Write route
-const archiveRouter = require('./backend/routes/archive.route');
-=======
 const fileRouter = require('./backend/routes/file.route');
 const folderRouter = require('./backend/routes/folder.route');
->>>>>>> 0db2e2af806f1ef3ff0751647f548a6bca685049
+const archiveRouter = require('./backend/routes/archive.route'); 
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
