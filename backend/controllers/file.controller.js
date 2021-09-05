@@ -29,9 +29,26 @@ exports.fileDetails = async (req, res) => {
 
 exports.fileUpdate = async (req, res) => {
 
+  const { body } = req;
+
+  const response = await File.update(req.params.id, body);
+  const allFiles = await File.fetchAll();
+
+  const updatedFile = allFiles.data.filter(file => {
+
+    return file._id === req.params.id;
+
+  })
+
+  res.send({ message: "File details updated!", updatedFile })
+
 }
 
 exports.fileDelete = async (req, res) => {
+
+  const response = await File.delete(req.params.id);
+
+  res.send({ message: "File details deleted!", response })
 
 }
 
