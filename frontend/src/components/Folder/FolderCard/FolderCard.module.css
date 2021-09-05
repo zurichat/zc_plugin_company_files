@@ -35,7 +35,7 @@
   place-content: center;
   border: 2px dashed #999999;
 }
-img {
+.folderCardImg {
   border: 1px solid #fff;
   width: 2rem;
   height: 2rem;
