@@ -13,6 +13,7 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+import VideoPreview from './components/VideoPreview/VideoPreview'
 import Upload from './components/Upload/Upload'
 
 
@@ -50,6 +51,9 @@ function App() {
           </Route>
           <Route path="/folder-list-view">
           <FolderListView />
+            </Route>
+            <Route path="/videopreview">
+            <VideoPreview/>
             </Route>
             <Route path="/upload">
             <Upload />
