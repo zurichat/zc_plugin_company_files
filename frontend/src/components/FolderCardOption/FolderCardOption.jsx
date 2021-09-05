@@ -14,6 +14,10 @@ import TrashIcon from '../../../public/Icons/trash.svg'
 import ChainIcon from '../../../public/Icons/chain.svg'
 
 function FolderCardOption() {
+  function downloadFile() {
+
+  }
+  
   return (
     <div className="folderOptions">
       <ul>
