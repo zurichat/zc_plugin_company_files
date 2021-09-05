@@ -29,11 +29,30 @@ exports.fileDetails = async (req, res) => {
 
 exports.fileUpdate = async (req, res) => {
 
+  const { body } = req;
+
+  const response = await File.update(req.params.id, body);
+  const allFiles = await File.fetchAll();
+
+  const updatedFile = allFiles.data.filter(file => {
+
+    return file._id === req.params.id;
+
+  })
+
+  res.send({ message: "File details updated!", updatedFile })
+
 }
 
 exports.fileDelete = async (req, res) => {
 
+  const response = await File.delete(req.params.id);
+
+  res.send({ message: "File details deleted!", response })
+
 }
+
+
 
 exports.searchFileByIsDeleted = async (req, res) => {
   
@@ -138,4 +157,95 @@ exports.getAllDeletedFiles = async (req, res) => {
     console.log(error)
     res.status(500).send(error)
   }
+}
+
+
+// set edit permission
+exports.setEditPermission = async (req, res) => {
+  try{
+    const files = await File.fetchAll()
+    const fileData = files.data
+    const { admin } = req.params;
+    if( admin == 'true'){
+      res.send(fileData.map((files) => {
+        return files.permission = 'edit'
+      }))
+    }else{
+      res.send(fileData.map((files) => {
+        return files.permission = 'view'
+      }))
+    }
+  } catch (error){
+    res.status(500).send(error)
+  }
+}
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+          return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
+      }
+
+      return res.status(200).json(fileSearch);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
+
+exports.fileRename = async (req, res) => {
+  const { body } = req;
+  //Get single file
+  const data = await File.fetchAll();
+  var fileDetails={};
+  
+  //gets file details
+  files=await data.data;
+  files.forEach(function (file) {
+    if(file._id == req.params.id){
+      fileDetails=file;
+    }
+  });
+  fileDetails.name=body.name;
+  //updates file name
+  const response = await File.update(req.params.id, fileDetails);
+  res.send({ response });
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+try {
+  const { data } = await File.fetchAll();
+  let { size } = req.params;
+  let sizeRangePlus = Number(size) + 500;
+  let sizeRangeMinus = Number(size) - 500;
+  const files = [];
+  for(i=0; i<data.length; i++){
+    if(data[i].size){
+      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
+          files.push(data[i])      
+      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+        files.push(data[i])      
+      }
+    }
+  }
+  files.length > 0 ?  
+  res.status(200).json(files) : 
+  res.status(404).json("No matches")
+
+} 
+catch (err) {
+  res.status(500).json(err);
+}
 }

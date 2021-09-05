@@ -1,6 +1,6 @@
-import "./gridListView.css"
 import React from 'react'
 import {Link} from "react-router-dom"
+import "./gridListView.css"
 
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -147,4 +147,4 @@ const FilesCard = () => {
     )
 }
 
-export default FilesCard
+export default FilesCard;
