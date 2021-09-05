@@ -69,11 +69,11 @@ jobs:
               # Optional plain body:
               body: Your recent merge broke the code and so was deployed check github actions log for detail
 
-      - name: Failing build when response code is not 200
-        if: ${{ steps.version.outputs.OUTPUT }} != 200
-        uses: actions/github-script@v3
-        with:
-           script: |
-             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
+#       - name: Failing build when response code is not 200
+#         if: ${{ steps.version.outputs.OUTPUT }} != 200
+#         uses: actions/github-script@v3
+#         with:
+#            script: |
+#              core.setFailed('Your merge broke the code and so was not deployed onthe main port')
 
 
