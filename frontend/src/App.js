@@ -13,12 +13,8 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
-<<<<<<< HEAD
-import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
-=======
 import Upload from './components/Upload/Upload'
->>>>>>> acd4e967c57e55394a540c5d79f46e576dc4b7cd
-
+import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
 
 function App() {
   return (
