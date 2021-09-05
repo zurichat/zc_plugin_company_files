@@ -19,7 +19,7 @@ function Activities() {
   }, []);
 
   return (
-    <div className="bg-bg-white ml-5 flex-auto px-7 py-5">
+    <div className="bg-bg-white ml-5 flex-auto">
       <div className="flex divide-x2 divide-gray-50">
         <div className=" w-3/4">
           <ActivitiesComponents />
