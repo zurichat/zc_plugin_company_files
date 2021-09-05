@@ -15,7 +15,7 @@ import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
 import VideoPreview from './components/VideoPreview/VideoPreview'
 import Upload from './components/Upload/Upload'
-
+import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
 
 function App() {
   return (
@@ -39,6 +39,9 @@ function App() {
           </Route>
           <Route path="/folder">
             <Folder />
+          </Route>
+          <Route path="/add-new">
+            <AddNewTextDoc />
           </Route>
           <Route path="/help">
             <Help />

@@ -52,6 +52,8 @@ exports.fileDelete = async (req, res) => {
 
 }
 
+
+
 exports.searchFileByIsDeleted = async (req, res) => {
   
   try {
@@ -155,6 +157,26 @@ exports.getAllDeletedFiles = async (req, res) => {
     console.log(error)
     res.status(500).send(error)
   }
+}
+
+//Renames a file
+exports.fileRename = async (req, res) => {
+  const { body } = req;
+  //Get single file
+  const data = await File.fetchAll();
+  var fileDetails={};
+  
+  //gets file details
+  files=await data.data;
+  files.forEach(function (file) {
+    if(file._id == req.params.id){
+      fileDetails=file;
+    }
+  });
+  fileDetails.name=body.name;
+  //updates file name
+  const response = await File.update(req.params.id, fileDetails);
+  res.send({ response });
 }
 
 // Search Files By Size

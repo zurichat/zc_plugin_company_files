@@ -1,0 +1,49 @@
+.rounded-full.mr-2,
+.rounded-full.mr-2 p {
+  background: #FAFAFA;
+  cursor: pointer;
+}
+
+.overflow-auto {
+  overflow: auto;
+  display: flow-root;
+}
+
+.ellipsis {
+    position: relative;
+    /* left: 1.87%; */
+    right: 2%;
+    top: 21.58%;
+    bottom: 1.47%;
+    max-width: 2.08px;
+    max-height: 8.42px;
+    margin-left: auto;
+}
+.ellipsis i {
+    color: #B4B4B4;
+}
+
+.period {
+  width: 76px;
+  height: 31px;
+  margin-left: auto;
+  color: #B4B4B4;
+}
+.ellipsis-box {
+  max-width: 172px;
+  background: white;
+  position: absolute;
+  /* margin-left: auto; */
+  right: 29%;
+  z-index: 2;
+  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+.ellipsis-box ul li {
+  color: #606060;
+}
+
+#activity.clicked-mode p {
+  color: #AEAEAE;
+}
