@@ -37,6 +37,7 @@ const FolderCard = () => {
             <h6>140 files</h6>
           </div>
           <div className={classes.fileAccess}>
+
             <img className={classes.folderCardImg} src={profile} alt="Profile" />
             <img className={classes.folderCardImg} src={profile} alt="Profile" />
             <div
