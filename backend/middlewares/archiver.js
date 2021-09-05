@@ -26,7 +26,7 @@ const path = require('path');
     archive.glob('file*.txt', {cwd:'/archives' }, { prefix: 'zip' });
 
     // eslint-disable-next-line no-console
-    console.info( 'Generating zip file, please wait.....' )
+    console.info( 'Generating zip file, please wait....' )
     archive.finalize();
 
 }
