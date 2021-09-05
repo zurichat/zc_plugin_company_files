@@ -29,9 +29,26 @@ exports.fileDetails = async (req, res) => {
 
 exports.fileUpdate = async (req, res) => {
 
+  const { body } = req;
+
+  const response = await File.update(req.params.id, body);
+  const allFiles = await File.fetchAll();
+
+  const updatedFile = allFiles.data.filter(file => {
+
+    return file._id === req.params.id;
+
+  })
+
+  res.send({ message: "File details updated!", updatedFile })
+
 }
 
 exports.fileDelete = async (req, res) => {
+
+  const response = await File.delete(req.params.id);
+
+  res.send({ message: "File details deleted!", response })
 
 }
 
@@ -142,7 +159,7 @@ exports.getAllDeletedFiles = async (req, res) => {
   }
 }
 
-<<<<<<< HEAD
+
 // set edit permission
 exports.setEditPermission = async (req, res) => {
   try{
@@ -162,8 +179,31 @@ exports.setEditPermission = async (req, res) => {
     res.status(500).send(error)
   }
 }
-=======
-//Renames a file
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+          return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
+      }
+
+      return res.status(200).json(fileSearch);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
+
 exports.fileRename = async (req, res) => {
   const { body } = req;
   //Get single file
@@ -209,4 +249,3 @@ catch (err) {
   res.status(500).json(err);
 }
 }
->>>>>>> 9803bac0b3a62392c7eeab93e5db024146a1152e

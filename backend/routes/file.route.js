@@ -14,6 +14,7 @@ const {
   getAllDeletedFiles,
   setEditPermission,
   searchBySize,
+  searchByType
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -50,5 +51,8 @@ router.route('/file/write/:admin')
 .delete(fileDelete)
 // SET EDIT PERMISSION
 router.get('/setedit/:admin', setEditPermission)
+
+// SEARCH FILES BY FILE TYPE
+router.get('/searchByType', searchByType);
 
 module.exports = router;
