@@ -159,6 +159,28 @@ exports.getAllDeletedFiles = async (req, res) => {
   }
 }
 
+
+// set edit permission
+exports.setEditPermission = async (req, res) => {
+  try{
+    const files = await File.fetchAll()
+    const fileData = files.data
+    const { admin } = req.params;
+    if( admin == 'true'){
+      res.send(fileData.map((files) => {
+        return files.permission = 'edit'
+      }))
+    }else{
+      res.send(fileData.map((files) => {
+        return files.permission = 'view'
+      }))
+    }
+  } catch (error){
+    res.status(500).send(error)
+  }
+}
+
+
 exports.searchByType = async (req, res) => {
 
   try {
@@ -180,8 +202,8 @@ exports.searchByType = async (req, res) => {
     return res.status(500).json(error);
   }
 }
-  
-//Renames a file
+
+
 exports.fileRename = async (req, res) => {
   const { body } = req;
   //Get single file
