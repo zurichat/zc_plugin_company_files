@@ -148,14 +148,11 @@ exports.searchByType = async (req, res) => {
 
     if (fileType) {
       const fileSearch = data.filter((file) => {
-          if (file.name[file.name.length - 4] === '.') {
-              return file.name.slice(file.name.length - 3,) === fileType
-          }
-          return file.name.slice(file.name.length - 4,) === fileType
+          return file.type === fileType
       });
 
       if (fileSearch.length === 0) {
-        return res.status(404).json(`Sorry, there is no file type: ${fileType}, try search with the file extention e.g pdf, mp3, doc, docx, png, jpeg`);   
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
       }
 
       return res.status(200).json(fileSearch);
