@@ -4,7 +4,7 @@ import classes from './FolderCardOption.module.css';
 
 import EyeIcon from './Icons/eye.svg';
 import CopyIcon from './Icons/copy.svg';
-import DownloadIcon from './Icons/download.svg';
+// import DownloadIcon from './Icons/download.svg';
 import InfoIcon from './Icons/info.svg';
 import MoveIcon from './Icons/move.svg';
 import RenameIcon from './Icons/rename.svg';

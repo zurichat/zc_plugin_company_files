@@ -1,11 +1,3 @@
-body {
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
 .flex {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -21,21 +13,16 @@ body {
 
 .folder_list_view {
   background-color: #fff;
+  width: 100vw;
   overflow: hidden;
-}
-
-@media (min-width: 300px) and (max-width: 900px) {
-  .folder_list_view {
-    overflow-x: scroll;
-  }
 }
 
 .folder_list_view .flv_header .flv_left button {
   background-color: #fff;
   outline: none;
-  border: 1px solid #2F80ED;
+  border: 1px solid #2f80ed;
   padding: 10px 14px;
-  color: #2F80ED;
+  color: #2f80ed;
   border-radius: 4px;
   font-size: 12px;
   line-height: 20px;
@@ -43,7 +30,7 @@ body {
 }
 
 .folder_list_view .flv_header .flv_left button:hover {
-  background-color: #2F80ED;
+  background-color: #2f80ed;
   color: #fff;
 }
 
@@ -81,6 +68,8 @@ body {
 .flv_right .settingAvater {
   background-color: #fff;
   border: 0.8px solid rgba(153, 153, 153, 0.2);
+  height: 40px !important;
+  width: 40px;
   border-radius: 50%;
 }
 
@@ -104,7 +93,7 @@ body {
 .sorting_col .left_sorting h4 {
   font-size: 20px;
   line-height: 24px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   font-weight: 600;
   margin-left: 3px;
 }
@@ -132,9 +121,9 @@ body {
 }
 
 .sorting_col .right_sorting button {
-  background-color: #2F80ED;
+  background-color: #2f80ed;
   outline: none;
-  border: 1px solid #2F80ED;
+  border: 1px solid #2f80ed;
   padding: 8px 10px;
   color: #fff;
   border-radius: 4px;
@@ -145,20 +134,24 @@ body {
 
 .sorting_col .right_sorting button:hover {
   background-color: #fff;
-  color: #2F80ED;
+  color: #2f80ed;
 }
 
 table {
   width: 100%;
-  margin: 5px 50px 20px;
+  margin: 20px 30px 20px;
 }
 
-table th {
+table tr th {
   text-align: left;
   font-size: 15px;
   line-height: 18px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   font-weight: 600;
+}
+
+table td p {
+  margin: 10px auto;
 }
 
 table .folder_name {
@@ -181,11 +174,13 @@ table .folder_name h3 {
       align-self: center;
   font-size: 13px;
   line-height: 15.6px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   font-weight: 600;
 }
 
-table .folder_owner, table .folder_date, table .folder_size {
+table .folder_owner,
+table .folder_date,
+table .folder_size {
   font-size: 13px;
   line-height: 15.6px;
   color: #999999;
@@ -196,5 +191,13 @@ table .folder_owner, table .folder_date, table .folder_size {
 
 table .center {
   text-align: center;
+}
+
+.fileImg {
+  background-color: #e3eeff;
+  padding: 5px;
+  -webkit-box-shadow: 0px 18px 30px -5px rgba(255, 193, 237, 0.2);
+          box-shadow: 0px 18px 30px -5px rgba(255, 193, 237, 0.2);
+  border-radius: 6px;
 }
 /*# sourceMappingURL=FolderAllFileListView.css.map */
