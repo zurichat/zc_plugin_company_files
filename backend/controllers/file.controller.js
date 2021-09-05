@@ -139,3 +139,28 @@ exports.getAllDeletedFiles = async (req, res) => {
     res.status(500).send(error)
   }
 }
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+          if (file.name[file.name.length - 4] === '.') {
+              return file.name.slice(file.name.length - 3,) === fileType
+          }
+          return file.name.slice(file.name.length - 4,) === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}, try search with the file extention e.g pdf, mp3, doc, docx, png, jpeg`);   
+      }
+
+      return res.status(200).json(fileSearch);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
