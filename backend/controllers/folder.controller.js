@@ -44,10 +44,13 @@ exports.folderUpdate = async (req, res) => {
 exports.folderDelete = async (req, res) => {
   const {id} = req.params;
  
+  //fetch all folders
   const folders = await Folders.fetchAll();
   
+  //fetch a folder
   const folder = folders.data.filter(item => item._id == id);
-
+  
+  //check to see if folder exists
   if(!folder.length) {
     return res.status(404).json({error: 'folder with the given ID not found!'})
   }
