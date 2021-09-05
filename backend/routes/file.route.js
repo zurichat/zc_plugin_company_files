@@ -11,7 +11,8 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
-  addFileToFolder
+  addFileToFolder,
+  searchBySize,
 } = require('../controllers/file.controller');
 
 // ADD FILE TO FOLDER
@@ -37,6 +38,10 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
+// SEARCH FILES BY SIZE
+router.get('/searchBySize/:size', searchBySize)
+
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
 router.route('/file/write/:id')

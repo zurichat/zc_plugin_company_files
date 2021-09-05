@@ -23,12 +23,16 @@ jobs:
             
       - name: Obtaining response from server
         run: |
-          OUTPUT= $(curl -Is $ip:$port| head -n 1| cut -c 10-13) && echo "::set-output name=OUTPUT::$OUTPUT"
+          OUTPUT= echo "::set-output name=OUTPUT::$(curl -Is $ip:$port| head -n 1| cut -c 10-13)"
+          echo $ip
+          echo $port
+        id: version
         env:
           ip: ${{ secrets.IP_ADDRESS }}
-          port: ${{ secrets.PORT1 }}             
+          port: ${{ secrets.PORT1 }} 
+          OUTPUT: ${{ env.OUTPUT }}
       - name: Deploying to main port
-        if: env.OUTPUT == '200'
+        if: ${{ steps.version.outputs.OUTPUT }} == 200
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ secrets.IP_ADDRESS }}
@@ -36,14 +40,14 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/staging-company-files
+            cd /var/www/zc_plugin_company_files
             git restore .
             git pull
             npm run install-setup
             npm run build
             pm2 restart server.js
       - name: Send email
-        if: env.OUTPUT != '200'
+        if: ${{ steps.version.outputs.OUTPUT }} != 200
         uses: dawidd6/action-send-mail@v3
         with:
               # Required mail server address:
@@ -65,11 +69,11 @@ jobs:
               # Optional plain body:
               body: Your recent merge broke the code and so was deployed check github actions log for detail
 
-      - name: Deploying to main port
-        if: env.OUTPUT != '200'
-        uses: actions/github-script@v3
-        with:
-           script: |
-             core.setFailed('Your merge broke the code and so was not deployed onthe main port')
+#       - name: Failing build when response code is not 200
+#         if: ${{ steps.version.outputs.OUTPUT }} != 200
+#         uses: actions/github-script@v3
+#         with:
+#            script: |
+#              core.setFailed('Your merge broke the code and so was not deployed onthe main port')
 
 

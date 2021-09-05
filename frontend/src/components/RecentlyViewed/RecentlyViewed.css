@@ -1,104 +1,47 @@
-#recently-viewed-header {
-  width: 147px;
-  height: 24px;
 
+#headerText {
   font-family: Lato;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
+  padding: 4rem 5rem 2rem;
+  color: #4a4a4a;
+
+}
+.mainContainer {
+  background-color: #fff;
+  width: 100vw;
+}
+.container {
+  width: 100vw;
+  display: flex;
+  transform: translateX(5rem);
 }
 
-#image-name {
-  width: 56px;
-  height: 22px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  height: 22px;
-  width: 56px;
-  left: 329.421875px;
-  top: 406.37890625px;
+.con {
+  width: 300px;
+  margin-bottom: 2rem;
 }
 
-#image-date {
-  width: 123px;
-  height: 17px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #999999;
+.con .icon {
+  transform: translateX(-1.6rem);
+  width: 300px;
+  /* display: block !important; */
 }
 
-#video-name {
-  width: 55px;
-  height: 22px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #000000;
-}
-
-#video-date {
-  width: 123px;
-  height: 17px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #999999;
-}
-
-#document-name {
-  width: 92px;
-  height: 22px;
-
+.name {
   font-family: Lato;
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
   color: #4a4a4a;
+  margin-bottom: .5rem;
+
 }
 
-#document-date {
-  width: 123px;
-  height: 17px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #999999;
-}
-
-#compressed-name {
-  width: 99px;
-  height: 22px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 22px;
-  color: #4a4a4a;
-}
-
-#compressed-date {
-  width: 123px;
-  height: 17px;
+.date {
 
   font-family: Lato;
   font-style: normal;
