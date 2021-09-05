@@ -42,5 +42,17 @@ exports.folderUpdate = async (req, res) => {
 }
 
 exports.folderDelete = async (req, res) => {
+  const {id} = req.params;
+ 
+  const folders = await Folders.fetchAll();
   
-}
+  const folder = folders.data.filter(item => item._id == id);
+
+  if(!folder.length) {
+    return res.status(404).json({error: 'folder with the given ID not found!'})
+  }
+
+  const response = await Folders.delete(id);
+
+   res.status(200).send(appResponse(null, response, true));
+ }
