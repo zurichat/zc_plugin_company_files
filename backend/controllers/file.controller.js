@@ -93,3 +93,23 @@ exports.getArchivedFiles = async (req, res) => {
     return error.response.data;
   }
 }
+
+//Pins a file as requested by user
+exports.pinFiles = async (req, res) => {
+  
+  const {id} = req.params;
+
+  const pin = await Files.fetchAll();
+
+  const pinnedFile = pin.data.filter(item => item._id == id);
+
+  if(!pinnedFile.length) {
+    return res.status(404).json({error: 'file with the given ID not found!'})
+  }
+  else pinnedfile.isPinned=true;
+  res.status(200).send(appResponse(null, pinnedfile, true).json({
+    response: { status: 200, message: "isPinned" }
+  }));
+   }
+   
+ 

@@ -8,6 +8,7 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
+  pinFiles
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -27,6 +28,9 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
+// PIN A single file from endpoint
+router.get('file/write/:id', pinFiles);
 
 router.route('/write/:id')
   .put(fileUpdate)
