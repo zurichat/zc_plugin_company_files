@@ -22,7 +22,6 @@ function FolderAllFileListView() {
             className="settingAvater"
             alt="setting"
             src={myAvater}
-            alt="avater"
           />
         </div>
       </div>
