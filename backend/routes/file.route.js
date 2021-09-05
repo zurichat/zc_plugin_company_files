@@ -11,6 +11,7 @@ const {
   searchByDate,
   searchStarredFiles,
   toggleStarred,
+  searchFileByIsDeleted,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -21,6 +22,8 @@ router.get('/read', getAllFiles);
 
 //star a particular file
 router.patch('/star/:id', toggleStarred);
+// SEARCH FOR ALL DELETED FILES
+router.get("/file/searchByisDeleted", searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
