@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const {
   fileCreate,
   fileUpdate,
@@ -6,25 +7,39 @@ const {
   fileDelete,
   getAllFiles,
   getArchivedFiles,
-  fileSearchByIsStarred,
+  searchByDate,
+  searchStarredFiles,
+  searchFileByIsDeleted,
+  getAllDeletedFiles,
+  searchBySize,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
-
-router.post('/file/write', fileCreate);
+router.post('/write', fileCreate);
 
 // GET ALL THE FILES FROM THE ENDPOINT
-router.get('/file/read', getAllFiles);
+router.get('/read', getAllFiles);
+
+// SEARCH FOR ALL DELETED FILES
+router.get('/file/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
-router.get('/file/read/:id', fileDetails);
+router.get('/read/:id', fileDetails);
 
 // GET ARCHIVED FILES
 router.get('/archive', getArchivedFiles);
 
+// SEARCH FILES BY DATE ADDED
+router.get('/searchByDate', searchByDate);
 
-router.get('/searchByIsStarred', fileSearchByIsStarred)
+// SEARCH STARRED FILES
+router.get('/searchStarredFiles', searchStarredFiles)
 
+// SEARCH FILES BY SIZE
+router.get('/searchBySize/:size', searchBySize)
+
+// GET DELETED FILES
+router.get('/deletedFiles', getAllDeletedFiles)
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)

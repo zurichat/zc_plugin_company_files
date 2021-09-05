@@ -1,111 +1,168 @@
-const File = require("../models/File");
-
-const ApiConnection = require("./helpers/api.helper");
-const API = new ApiConnection("File");
+const ApiConnection = require('../utils/database.helper');
+const File = new ApiConnection('File');
+// const FileSchema = require('../models/File');
 
 exports.fileCreate = async (req, res) => {
-  const response = await API.create(req.body);
+  const { body } = req;
+
+  // const file = await FileSchema.validateAsync(body);
+  const response = await File.create(body);
+
   res.send({ response });
-};
+}
+
 
 exports.getAllFiles = async (req, res) => {
-  const response = await API.fetchAll();
+  
+  const response = await File.fetchAll();
+
   res.send({ response });
-};
+  
+}
+
 
 exports.fileDetails = async (req, res) => {
-  const response = await API.fetchOne(req.params.id);
+  const response = await File.fetchOne(req.params.id);
+
   res.send({ response });
-};
+}
 
-exports.fileUpdate = async (req, res) => { };
+exports.fileUpdate = async (req, res) => {
 
-exports.fileDelete = async (req, res) => { };
+}
+
+exports.fileDelete = async (req, res) => {
+
+}
+
+exports.searchFileByIsDeleted = async (req, res) => {
+  
+  try {
+
+    const isDeleted = true;
+    const response = await File.fetchAll();
+
+    const deletedFiles = response.data.filter ( (file) => {
+      return file.isDeleted === isDeleted;
+    })
+
+    console.log(deletedFiles)
+    res.status(200).send({ deletedFiles })
+
+  } catch (error) {
+
+    console.log(error)
+    res.send({ error })
+    
+  }
+
+}
 
 // handle file searching by is starred is true
-exports.fileSearchByIsStarred = async (req, res) => {
+exports.searchStarredFiles = async (req, res) => {
   try {
-    const { data } = await API.fetchAll();
+    const { data } = await File.fetchAll();
     // loop through response object and check if isStarred is true
     const starredFiles = [];
-    data.map(({ isStarred, file_type, name, _id, isArchived }) => {
-      if (isStarred) {
-        starredFiles.push({ _id, isStarred, file_type, name, isArchived });
-      }
-    })
-    return res.status(200).json({
-      response: {
-        status: 200,
-        message: "success",
-        data: starredFiles,
-      }
+    data.map((data) => {
+      return data.isStarred ? starredFiles.push(data) : null;
     });
-  } catch (err) {
-    return res.status(500).json(err);
+    return res.status(200).json({
+      response: { status: 200, message: 'success', data: starredFiles }
+    });
+  } catch (error) {
+    return res.send({ error })
   }
 }
 
-exports.fileSearchByDate = async (req, res) => {
-  let { startDate, endDate } = req.query;
+exports.searchByDate = async (req, res) => {
 
   try {
-    if (startDate === "") {
-      return res.status(400).json("pick a date");
+    const { data } = await File.fetchAll();
+    const { pickDate } = req.query;
+
+    // date format yyyy-m-d
+    if (pickDate) {
+      const rd = data.filter((d) => {
+        if (d.createdAt === pickDate) {
+          return true;
+        } else return false;
+      });
+      rd.length === 0
+        ? res.status(404).json(`no files found on ${pickDate}`)
+        : res.status(200).json(rd);
+      console.log(rd);
     }
-
-    //use this to search for files from your input date till present
-
-    if (startDate && endDate) {
-      const file = await File.find({
-        createdAt: {
-          $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-          $lt: new Date(new Date(endDate).setHours(23, 59, 59)),
-        },
-      }).sort({ createdAt: "asc" });
-
-      file.length === 0
-        ? res
-          .status(404)
-          .json(`No files found between ${startDate} and ${endDate}`)
-        : res.status(200).json(file);
-    }
-
-    //use this to search for files from your input date till present
-
-    if (startDate && !endDate) {
-      const file = await File.find({
-        createdAt: {
-          $gte: new Date(new Date(startDate).setHours(00, 00, 00)),
-        },
-      }).sort({ createdAt: "asc" });
-
-      file.length === 0
-        ? res.status(404).json(`No files found from ${startDate} till date`)
-        : res.status(200).json(file);
-    }
-
-    //to get files for the only one day end and start date should be the same
   } catch (error) {
-    res.status(500).json(error);
+    return res.status(500).json(error);
   }
-};
+}
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
   try {
-    const allFiles = await API.fetchAll();
+    const allFiles = await File.fetchAll();
 
     //   Validate Response Status
     if (allFiles.status === 200) {
       const archives = [];
       allFiles.data.map((file) => {
-        file.isArchived ? archives.push(file) : null;
+        return file.isArchived ? archives.push(file) : null;
       });
       return res
         .status(200)
-        .json({ status: 200, message: "success", archives: archives });
+        .json({ status: 200, message: 'success', archives });
     }
   } catch (error) {
-    return error.response.data;
+    return error;
   }
 };
+// get sall deleted files
+exports.getAllDeletedFiles = async (req, res) => {
+  try {
+    const response = await File.fetchAll()
+    const responseData = response.data
+    const resposneArray = []
+    for (const iterator of responseData) {
+      if (!iterator.isDeleted) {
+        continue
+      }
+      resposneArray.push(iterator)
+    }
+    if (!resposneArray.length) {
+      res.status(404).send('no data found')
+      return
+    }
+    res.send(resposneArray)
+  } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+try {
+  const { data } = await File.fetchAll();
+  let { size } = req.params;
+  let sizeRangePlus = Number(size) + 500;
+  let sizeRangeMinus = Number(size) - 500;
+  const files = [];
+  for(i=0; i<data.length; i++){
+    if(data[i].size){
+      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
+          files.push(data[i])      
+      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+        files.push(data[i])      
+      }
+    }
+  }
+  files.length > 0 ?  
+  res.status(200).json(files) : 
+  res.status(404).json("No matches")
+
+} 
+catch (err) {
+  res.status(500).json(err);
+}
+}

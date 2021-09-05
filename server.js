@@ -13,15 +13,19 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const router = express.Router();
 
-const connectToDatabase = require('./backend/utils/db');
 const rootRouter = require('./backend/routes/index')(router);
 const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
+<<<<<<< HEAD
 const fileRouter = require('./backend/routes/file.route'); // File Read and Write route
 const folderRouter = require('./backend/routes/folder.route'); // Folder Read and Write route
 const archiveRouter = require('./backend/routes/archive.route');
+=======
+const fileRouter = require('./backend/routes/file.route');
+const folderRouter = require('./backend/routes/folder.route');
+>>>>>>> 0db2e2af806f1ef3ff0751647f548a6bca685049
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -29,6 +33,7 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
 
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
+
 if (isProduction) {
   app.set('trust proxy', 1); // Trust first proxy
 } else {
@@ -38,7 +43,7 @@ if (isProduction) {
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
-// Using the File and Folder routes
+// USING FILE AND FOLDER ROUTER
 app.use(fileRouter);
 app.use(folderRouter);
 
@@ -54,12 +59,11 @@ app.use((req, res, next) => {
   res.sendFile(path.join(__dirname, './frontend/build', 'index.html'));
 });
 
+
 // For handling server errors and all other errors that might occur
 app.use(ErrorHandler);
 
 (async () => {
-  // await connectToDatabase();
-
   if (cluster.isMaster) {
     // Fork workers
     cpus.forEach(() => cluster.fork());

@@ -1,0 +1,18 @@
+
+.totalSpaceContainer {
+    font-family: 'Lato', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    padding: 1rem;
+    background-color: #fff;
+    width: 20%;
+    min-width: 200px;
+    margin-left: auto;
+}
+
+.totalStorageText {
+    font-size: 14px;
+    color:#C4C4C4;
+    text-align: center;
+    margin-top: 22px;
+}
