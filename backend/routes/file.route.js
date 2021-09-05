@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const {
   fileCreate,
+  fileRename,
   fileUpdate,
   fileDetails,
   fileDelete,
@@ -13,6 +14,7 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   getAllDuplicates,
+  searchBySize,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -22,10 +24,13 @@ router.post('/write', fileCreate);
 router.get('/read', getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get("/file/searchByisDeleted", searchFileByIsDeleted);
+router.get('/file/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
+
+// Renames file
+router.post('/rename/:id', fileRename);
 
 // GET ARCHIVED FILES
 router.get('/archive', getArchivedFiles);
@@ -35,6 +40,9 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
+// SEARCH FILES BY SIZE
+router.get('/searchBySize/:size', searchBySize)
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)

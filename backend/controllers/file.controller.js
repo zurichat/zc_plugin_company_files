@@ -1,5 +1,5 @@
-const ApiConnection = require("../utils/database.helper");
-const File = new ApiConnection("File");
+const ApiConnection = require('../utils/database.helper');
+const File = new ApiConnection('File');
 // const FileSchema = require('../models/File');
 
 exports.fileCreate = async (req, res) => {
@@ -35,15 +35,17 @@ exports.fileDelete = async (req, res) => {
 
 }
 
+
+
 exports.searchFileByIsDeleted = async (req, res) => {
   
   try {
 
-    const is_deleted = true;
+    const isDeleted = true;
     const response = await File.fetchAll();
 
     const deletedFiles = response.data.filter ( (file) => {
-      return file.isDeleted === is_deleted;
+      return file.isDeleted === isDeleted;
     })
 
     console.log(deletedFiles)
@@ -65,15 +67,12 @@ exports.searchStarredFiles = async (req, res) => {
     // loop through response object and check if isStarred is true
     const starredFiles = [];
     data.map((data) => {
-      if (data.isStarred) {
-        return starredFiles.push(data);
-      }
+      return data.isStarred ? starredFiles.push(data) : null;
     });
     return res.status(200).json({
       response: { status: 200, message: 'success', data: starredFiles }
     });
-  }
-  catch (error) {
+  } catch (error) {
     return res.send({ error })
   }
 }
@@ -82,7 +81,7 @@ exports.searchByDate = async (req, res) => {
 
   try {
     const { data } = await File.fetchAll();
-    let { pickDate } = req.query;
+    const { pickDate } = req.query;
 
     // date format yyyy-m-d
     if (pickDate) {
@@ -110,7 +109,7 @@ exports.getArchivedFiles = async (req, res) => {
     if (allFiles.status === 200) {
       const archives = [];
       allFiles.data.map((file) => {
-        file.isArchived ? archives.push(file) : null;
+        return file.isArchived ? archives.push(file) : null;
       });
       return res
         .status(200)
@@ -120,23 +119,23 @@ exports.getArchivedFiles = async (req, res) => {
     return error;
   }
 };
-//get sall deleted files
+// get sall deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {
     const response = await File.fetchAll()
-    const response_data = response.data
-    const resposne_array = []
-    for (const iterator of response_data) {
+    const responseData = response.data
+    const resposneArray = []
+    for (const iterator of responseData) {
       if (!iterator.isDeleted) {
         continue
       }
-      resposne_array.push(iterator)
+      resposneArray.push(iterator)
     }
-    if (!resposne_array.length) {
+    if (!resposneArray.length) {
       res.status(404).send('no data found')
       return
     }
-    res.send(resposne_array)
+    res.send(resposneArray)
   } catch (error) {
     console.log(error)
     res.status(500).send(error)
@@ -191,4 +190,50 @@ exports.getAllDuplicates = async (req, res) => {
   } catch (error) {
     res.status(500).json(error);
   }
+}
+//Renames a file
+exports.fileRename = async (req, res) => {
+  const { body } = req;
+  //Get single file
+  const data = await File.fetchAll();
+  var fileDetails={};
+  
+  //gets file details
+  files=await data.data;
+  files.forEach(function (file) {
+    if(file._id == req.params.id){
+      fileDetails=file;
+    }
+  });
+  fileDetails.name=body.name;
+  //updates file name
+  const response = await File.update(req.params.id, fileDetails);
+  res.send({ response });
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+try {
+  const { data } = await File.fetchAll();
+  let { size } = req.params;
+  let sizeRangePlus = Number(size) + 500;
+  let sizeRangeMinus = Number(size) - 500;
+  const files = [];
+  for(i=0; i<data.length; i++){
+    if(data[i].size){
+      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
+          files.push(data[i])      
+      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+        files.push(data[i])      
+      }
+    }
+  }
+  files.length > 0 ?  
+  res.status(200).json(files) : 
+  res.status(404).json("No matches")
+
+} 
+catch (err) {
+  res.status(500).json(err);
+}
 }
