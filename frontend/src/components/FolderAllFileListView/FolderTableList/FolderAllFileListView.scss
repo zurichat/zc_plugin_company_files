@@ -1,63 +1,48 @@
-$blue-color: #2F80ED;
-$grey-black: #4A4A4A;
-
-body {
-  background-color: #fff;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+$blue-color: #2f80ed;
+$grey-black: #4a4a4a;
 
 .flex {
   display: flex;
-    justify-content: space-between;
-    margin: 15px 20px auto 20px;
-    align-items: center;
+  justify-content: space-between;
+  margin: 15px 20px auto 20px;
+  align-items: center;
 }
 
 .folder_list_view {
   background-color: #fff;
+  width: 100vw;
   overflow: hidden;
 
-  @media (min-width: 300px) and (max-width:900px) {
-    overflow-x: scroll;
-  }
- 
-
   .flv_header {
-    
-
     .flv_left {
       button {
         background-color: #fff;
-         outline: none;
-         border: 1px solid $blue-color;
-         padding: 10px 14px;
-         color: $blue-color;
-         border-radius: 4px;
-         font-size: 12px;
-         line-height: 20px;
-         cursor: pointer;
+        outline: none;
+        border: 1px solid $blue-color;
+        padding: 10px 14px;
+        color: $blue-color;
+        border-radius: 4px;
+        font-size: 12px;
+        line-height: 20px;
+        cursor: pointer;
 
-         &:hover {
-           background-color: $blue-color;
-           color: #fff;
-         }
+        &:hover {
+          background-color: $blue-color;
+          color: #fff;
+        }
       }
-
     }
   }
 }
 
-
 .flv_right {
   display: flex;
   flex-direction: row;
-  
+
   input {
-     outline: none;
-    border:  1px solid rgba(153, 153, 153, 0.2);
-    padding:10px 15px;
+    outline: none;
+    border: 1px solid rgba(153, 153, 153, 0.2);
+    padding: 10px 15px;
   }
 
   img {
@@ -66,7 +51,6 @@ body {
     margin-left: 10px;
   }
 
-
   .settingIcon {
     height: 24px;
     width: 24px;
@@ -74,19 +58,17 @@ body {
   }
 
   .settingAvater {
-   background-color: #fff;
-   border: 0.8px solid rgba(153, 153, 153, 0.2);
-   height: 40px;
-   width: 40px;
-   border-radius: 50%;
+    background-color: #fff;
+    border: 0.8px solid rgba(153, 153, 153, 0.2);
+    height: 40px !important;
+    width: 40px;
+    border-radius: 50%;
   }
-   
 }
 
 // sorting column
 
 .sorting_col {
-
   .left_sorting {
     display: flex;
     flex-direction: row;
@@ -98,61 +80,66 @@ body {
     }
 
     h4 {
-    font-size: 20px;
-    line-height: 24px;
-    color: $grey-black;
-     font-weight: 600;
-     margin-left: 3px;
+      font-size: 20px;
+      line-height: 24px;
+      color: $grey-black;
+      font-weight: 600;
+      margin-left: 3px;
     }
   }
 
   .right_sorting {
     display: flex;
     flex-direction: row;
-     img {
-       height: 22px;
-       width: 22px;
-       object-fit: contain;
-       cursor: pointer;
-       align-self: center;
-       margin-right: 5px;
-     }
+    img {
+      height: 22px;
+      width: 22px;
+      object-fit: contain;
+      cursor: pointer;
+      align-self: center;
+      margin-right: 5px;
+    }
 
-     button {
+    button {
       background-color: $blue-color;
-       outline: none;
-       border: 1px solid $blue-color;
-       padding: 8px 10px;
-       color: #fff;
-       border-radius: 4px;
-       font-size: 12px;
-       line-height: 20px;
-       cursor: pointer;
+      outline: none;
+      border: 1px solid $blue-color;
+      padding: 8px 10px;
+      color: #fff;
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 20px;
+      cursor: pointer;
 
-       &:hover {
-         background-color: #fff;
-         color: $blue-color;
-       }
+      &:hover {
+        background-color: #fff;
+        color: $blue-color;
+      }
     }
   }
-
 }
 
-
-// Table 
+// Table
 
 table {
   width: 100%;
-  margin: 5px 50px 20px;
+  margin: 20px 30px 20px;
 
-  th {
-    text-align: left;
-    font-size: 15px;
-    line-height: 18px;
-    color: $grey-black;
-    font-weight: 600;
+  tr {
+    th {
+      text-align: left;
+      font-size: 15px;
+      line-height: 18px;
+      color: $grey-black;
+      font-weight: 600;
+    }
   }
 
+  td {
+    p {
+      margin: 10px auto;
+    }
+  }
 
   .folder_name {
     display: flex;
@@ -165,13 +152,15 @@ table {
     h3 {
       align-self: center;
       font-size: 13px;
-    line-height: 15.6px;
-    color: $grey-black;
-    font-weight: 600;
+      line-height: 15.6px;
+      color: $grey-black;
+      font-weight: 600;
     }
   }
 
-  .folder_owner, .folder_date, .folder_size {
+  .folder_owner,
+  .folder_date,
+  .folder_size {
     font-size: 13px;
     line-height: 15.6px;
     color: #999999;
@@ -180,8 +169,14 @@ table {
     text-transform: capitalize;
   }
 
-   .center {
-     text-align: center;
-   }
+  .center {
+    text-align: center;
+  }
+}
 
+.fileImg {
+  background-color: #e3eeff;
+  padding: 5px;
+  box-shadow: 0px 18px 30px -5px rgba(255, 193, 237, 0.2);
+  border-radius: 6px;
 }

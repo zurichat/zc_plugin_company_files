@@ -26,7 +26,6 @@
     "axios": "^0.21.1",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
-    "craco": "^0.0.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",

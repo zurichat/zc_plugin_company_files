@@ -21,8 +21,8 @@ exports.getAllFolders = async (req, res) => {
 }
 
 exports.folderDetails = async (req, res) => {
-  const response = await Folders.fetchOne(req.params.id);
-
+  const response = await Folders.fetchOne( req.params.id );
+  
   res.status(200).send(appResponse(null, response, true));
 }
 
@@ -31,5 +31,5 @@ exports.folderUpdate = async (req, res) => {
 }
 
 exports.folderDelete = async (req, res) => {
-
+  
 }

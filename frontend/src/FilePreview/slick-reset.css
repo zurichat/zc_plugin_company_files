@@ -1,0 +1,19 @@
+.slick-track {
+    display: flex;
+}
+.slick-track .slick-slide {
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+}
+.slick-next {
+    right: -75px;
+}
+.slick-prev {
+    left: -75px;
+}
+.slick-prev:before, .slick-next:before {
+    color: #1B1C1F;
+    padding: 0.5rem;
+}

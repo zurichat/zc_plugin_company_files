@@ -23,10 +23,10 @@
   margin-bottom: 2rem;
 }
 
-.con img {
+.con .icon {
   transform: translateX(-1.6rem);
   width: 300px;
-  display: block;
+  /* display: block !important; */
 }
 
 .name {
