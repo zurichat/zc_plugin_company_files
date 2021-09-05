@@ -12,6 +12,7 @@ const {
   searchFileByIsDeleted,
   getAllDeletedFiles,
   searchBySize,
+  searchStarredFiles,
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -37,6 +38,9 @@ router.get('/searchStarredFiles', searchStarredFiles)
 
 // SEARCH FILES BY SIZE
 router.get('/searchBySize/:size', searchBySize)
+
+//star a particular file
+router.patch('/star/:id', toggleStarred);
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
