@@ -1,8 +1,8 @@
 import FolderCard from './FolderCard/FolderCard'
-
+import "./folder.css"
 function Folder() {
   return (
-    <div className="flex space-x-14">
+    <div className="folder flex space-x-14">
       <FolderCard />
       <FolderCard /> <FolderCard />
     </div>
