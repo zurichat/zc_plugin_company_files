@@ -13,9 +13,13 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+<<<<<<< HEAD
 import NavBar from './components/NavBar/NavBar'
+=======
+import VideoPreview from './components/VideoPreview/VideoPreview'
+>>>>>>> 25286015278a823b09bf802f4d58004a989f3796
 import Upload from './components/Upload/Upload'
-
+import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
 
 function App() {
   return (
@@ -41,6 +45,9 @@ function App() {
           <Route path="/folder">
             <Folder />
           </Route>
+          <Route path="/add-new">
+            <AddNewTextDoc />
+          </Route>
           <Route path="/help">
             <Help />
           </Route>
@@ -52,6 +59,9 @@ function App() {
           </Route>
           <Route path="/folder-list-view">
           <FolderListView />
+            </Route>
+            <Route path="/videopreview">
+            <VideoPreview/>
             </Route>
             <Route path="/upload">
             <Upload />

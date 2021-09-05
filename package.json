@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/zurichat/zc_plugin_company_files#readme",
   "dependencies": {
+    "@headlessui/react": "^1.4.1",
+    "@heroicons/react": "^1.0.4",
     "axios": "^0.21.1",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
