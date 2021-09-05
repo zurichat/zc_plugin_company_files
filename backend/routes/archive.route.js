@@ -2,6 +2,6 @@ const router = require('express').Router();
 const { archiveFile } = require('../controllers/archive.controller');
 
 
-router.get('/download', archiveFile);
+router.get('/', archiveFile);
 
 module.exports = router;
