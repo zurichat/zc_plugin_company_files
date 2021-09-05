@@ -20,7 +20,6 @@ exports.getAllFiles = async (req, res) => {
   
 }
 
-
 exports.fileDetails = async (req, res) => {
   const response = await File.fetchOne(req.params.id);
 
