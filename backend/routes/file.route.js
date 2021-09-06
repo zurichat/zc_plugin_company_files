@@ -13,7 +13,6 @@ const {
   toggleStarred,
   searchFileByIsDeleted,
   getAllDeletedFiles,
-  searchFileByIsDeleted,
   isDuplicate,
   getAllDuplicates,
   setEditPermission,
