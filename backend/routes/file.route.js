@@ -14,7 +14,9 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   getAllDuplicates,
+  setEditPermission,
   searchBySize,
+  searchByType
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -55,5 +57,14 @@ router.get('/duplicateFiles', getAllDuplicates);
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
+=======
+router.route('/file/write/:admin')
+.put(fileUpdate)
+.delete(fileDelete)
+// SET EDIT PERMISSION
+router.get('/setedit/:admin', setEditPermission)
+
+// SEARCH FILES BY FILE TYPE
+router.get('/searchByType', searchByType);
 
 module.exports = router;
