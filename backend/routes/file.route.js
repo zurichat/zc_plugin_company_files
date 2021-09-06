@@ -61,10 +61,11 @@ router.route('/file/write/:id')
 router.route('/file/write/:admin')
 .put(fileUpdate)
 .delete(fileDelete)
+
 // SET EDIT PERMISSION
 router.get('/setedit/:admin', setEditPermission)
 
 // SEARCH FILES BY FILE TYPE
-router.get('/searchByType', searchByType);
+// router.get('/searchByType', searchByType);
 
 module.exports = router;
