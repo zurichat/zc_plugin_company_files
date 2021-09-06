@@ -13,11 +13,8 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
-<<<<<<< HEAD
 import NavBar from './components/NavBar/NavBar'
-=======
 import VideoPreview from './components/VideoPreview/VideoPreview'
->>>>>>> 25286015278a823b09bf802f4d58004a989f3796
 import Upload from './components/Upload/Upload'
 import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
 

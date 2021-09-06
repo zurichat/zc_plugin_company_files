@@ -57,7 +57,7 @@ router.get('/duplicateFiles', getAllDuplicates);
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
-=======
+
 router.route('/file/write/:admin')
 .put(fileUpdate)
 .delete(fileDelete)
