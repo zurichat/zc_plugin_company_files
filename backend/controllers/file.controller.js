@@ -9,54 +9,40 @@ exports.fileCreate = async (req, res) => {
   const response = await File.create(body);
 
   res.send({ response });
-}
-
+};
 
 exports.getAllFiles = async (req, res) => {
-  
   const response = await File.fetchAll();
 
   res.send({ response });
-  
-}
-
+};
 
 exports.fileDetails = async (req, res) => {
   const response = await File.fetchOne(req.params.id);
 
   res.send({ response });
-}
+};
 
-exports.fileUpdate = async (req, res) => {
+exports.fileUpdate = async (req, res) => {};
 
-}
-
-exports.fileDelete = async (req, res) => {
-
-}
+exports.fileDelete = async (req, res) => {};
 
 exports.searchFileByIsDeleted = async (req, res) => {
-  
   try {
-
     const isDeleted = true;
     const response = await File.fetchAll();
 
-    const deletedFiles = response.data.filter ( (file) => {
+    const deletedFiles = response.data.filter((file) => {
       return file.isDeleted === isDeleted;
-    })
+    });
 
-    console.log(deletedFiles)
-    res.status(200).send({ deletedFiles })
-
+    console.log(deletedFiles);
+    res.status(200).send({ deletedFiles });
   } catch (error) {
-
-    console.log(error)
-    res.send({ error })
-    
+    console.log(error);
+    res.send({ error });
   }
-
-}
+};
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
@@ -68,15 +54,14 @@ exports.searchStarredFiles = async (req, res) => {
       return data.isStarred ? starredFiles.push(data) : null;
     });
     return res.status(200).json({
-      response: { status: 200, message: 'success', data: starredFiles }
+      response: { status: 200, message: 'success', data: starredFiles },
     });
   } catch (error) {
-    return res.send({ error })
+    return res.send({ error });
   }
-}
+};
 
 exports.searchByDate = async (req, res) => {
-
   try {
     const { data } = await File.fetchAll();
     const { pickDate } = req.query;
@@ -96,7 +81,7 @@ exports.searchByDate = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
@@ -117,25 +102,43 @@ exports.getArchivedFiles = async (req, res) => {
     return error;
   }
 };
+
+// empty recycle bin
+exports.emptyRecycleBin = async (req, res) => {
+  try {
+    const { data } = await File.fetchAll();
+    const getIsDeletedFiles = data.filter(({ isDeleted }) => isDeleted === true);
+    return res.status(200).json({
+      response: {
+        status: 200,
+        message: 'Recycle Bin Empty',
+        data: getIsDeletedFiles,
+      },
+    });
+  } catch (error) {
+    res.send({ error });
+  }
+};
+
 // get sall deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {
-    const response = await File.fetchAll()
-    const responseData = response.data
-    const resposneArray = []
+    const response = await File.fetchAll();
+    const responseData = response.data;
+    const resposneArray = [];
     for (const iterator of responseData) {
       if (!iterator.isDeleted) {
-        continue
+        continue;
       }
-      resposneArray.push(iterator)
+      resposneArray.push(iterator);
     }
     if (!resposneArray.length) {
-      res.status(404).send('no data found')
-      return
+      res.status(404).send('no data found');
+      return;
     }
-    res.send(resposneArray)
+    res.send(resposneArray);
   } catch (error) {
-    console.log(error)
-    res.status(500).send(error)
+    console.log(error);
+    res.status(500).send(error);
   }
-}
+};

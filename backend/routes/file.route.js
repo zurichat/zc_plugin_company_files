@@ -11,6 +11,7 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  emptyRecycleBin
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -33,6 +34,10 @@ router.get('/searchByDate', searchByDate);
 
 // SEARCH STARRED FILES
 router.get('/searchStarredFiles', searchStarredFiles)
+
+// EMPTY RECYCLE BIN
+router.get('/emptyRecycleBin', emptyRecycleBin)
+
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
 router.route('/file/write/:id')
