@@ -107,7 +107,7 @@ exports.getArchivedFiles = async (req, res) => {
 exports.emptyRecycleBin = async (req, res) => {
   try {
     const { data } = await File.fetchAll();
-    const getIsDeletedFiles = data.filter(({ isDeleted }) => isDeleted === true);
+    const getIsDeletedFiles = data.filter(({ isDeleted }) => isDeleted === 'true');
     return res.status(200).json({
       response: {
         status: 200,
