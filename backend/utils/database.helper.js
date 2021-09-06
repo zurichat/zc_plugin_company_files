@@ -1,12 +1,16 @@
-const axios = require('axios');
-const databaseWriteUrl = 'https://zccore.herokuapp.com/data/write';
-const databaseReadUrl = 'https://zccore.herokuapp.com/data/read';
+const axios = require("axios");
+
+const databaseWriteUrl = "https://api.zuri.chat/data/write";
+const databaseReadUrl = "https://api.zuri.chat/data/read";
+
+// const databaseWriteUrl = "https://zccore.herokuapp.com/data/write";
+// const databaseReadUrl = "https://zccore.herokuapp.com/data/read";
 
 class DatabaseConnection {
   constructor(collection_name) {
     this.data = {
-      plugin_id: '613125166e7d00b82b78b815',
-      organization_id: '612a3a914acf115e685df8e3',
+      plugin_id: '6134c6a40366b6816a0b75cd',
+      organization_id: '6133c5a68006324323416896',
       collection_name: collection_name,
       bulk_write: false,
       object_id: '',
@@ -16,35 +20,98 @@ class DatabaseConnection {
   }
 
   create = async (payload) => {
-    this.data.payload = payload;
-    this.data.payload.createdAt = new Date().toISOString();
+    try {
 
-    const response = await axios.post(databaseWriteUrl, JSON.stringify(this.data));
+      this.data.payload = payload;
+      const response = await axios.post(
+        databaseWriteUrl,
+        this.data
+      );
 
-    console.log(response.data);
-    return response.data;
-  }
+      return response.data;
 
-  fetchAll = async () => {
-    const response = await axios.get(`${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`);
+    } catch (error) {
+      
+      console.log(error)
+      return error;
 
-    return response.data;
-  }
+    }
+  };
+
+  fetchAll = async ( filter = {} ) => {
+    
+    try {
+      
+      this.data.filter = filter;
+      const response = await axios.get(
+        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
+      );
+  
+      return response.data;
+
+    } catch (error) {
+
+      return error;
+
+    }
+
+  };
 
   fetchOne = async (id) => {
-    const response = await axios.get(`${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?object_id=${id}`);
+    try {
+      
+      const response = await axios.get(
+        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?object_id=${id}`
+      );
+  
+      return response.data;
 
-    return response.data;
-  }
+    } catch (error) {
+      
+      return error;
+
+    }
+  };
 
   update = async (id, payload) => {
-    this.data.payload = payload;
-    this.data.object_id = id;
+    try {
+      
+      this.data.payload = payload;
+      this.data.object_id = id;
 
-    const response = await axios.post(databaseWriteUrl, JSON.stringify(this.data));
+      const response = await axios.put(
+        databaseWriteUrl,
+        JSON.stringify(this.data)
+      );
 
-    return response.data;
-  }
+      return response.data;
+
+    } catch (error) {
+      
+      return error;
+      
+    }
+  };
+
+  delete = async ( id ) => {
+    try {
+      
+      this.data.object_id = id;
+
+      
+      const response = await axios.delete(
+        databaseWriteUrl,
+        JSON.stringify(this.data)
+      );
+
+      return response.data;
+
+    } catch (error) {
+      
+      return error;
+      
+    }
+  };
 }
 
 module.exports = DatabaseConnection;
