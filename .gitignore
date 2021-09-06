@@ -6,7 +6,9 @@ npm-debug.log_
 yarn-debug.log*
 yarn-error.log*
 yarn.lock
-# package-lock.json
+package-lock.json
+frontend/yarn.lock
+frontend/package-lock.json
 
 # Runtime data
 
@@ -50,11 +52,8 @@ node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
-<<<<<<< Updated upstream
 
 typings/
-=======
->>>>>>> Stashed changes
 
 typings/
 frontend/yarn.lock
