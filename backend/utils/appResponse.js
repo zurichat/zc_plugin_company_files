@@ -1,9 +1,9 @@
-const formatMessage = objectOrMessage => {
-  return typeof(objectOrMessage) === 'string'
-    ? objectOrMessage
-    : (typeof(objectOrMessage) === 'object' && objectOrMessage?.message)
-    ? objectOrMessage.message
-    : '';
+ const formatMessage = objectOrMessage => {
+   return typeof(objectOrMessage) === 'string'
+     ? objectOrMessage
+     : (typeof(objectOrMessage) === 'object' && objectOrMessage?.message)
+     ? objectOrMessage.message
+     : '';
 }
 
 const createResponse = (objectOrMessage, data, status = false, additionalData) => {
