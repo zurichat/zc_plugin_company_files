@@ -29,9 +29,26 @@ exports.fileDetails = async (req, res) => {
 
 exports.fileUpdate = async (req, res) => {
 
+  const { body } = req;
+
+  const response = await File.update(req.params.id, body);
+  const allFiles = await File.fetchAll();
+
+  const updatedFile = allFiles.data.filter(file => {
+
+    return file._id === req.params.id;
+
+  })
+
+  res.send({ message: "File details updated!", updatedFile })
+
 }
 
 exports.fileDelete = async (req, res) => {
+
+  const response = await File.delete(req.params.id);
+
+  res.send({ message: "File details deleted!", response })
 
 }
 
@@ -142,7 +159,102 @@ exports.getAllDeletedFiles = async (req, res) => {
   }
 }
 
-//Renames a file
+
+// check for duplicate files with md5 values
+exports.isDuplicate = async (req, res) => {
+  try {
+    const { md5Hash } = req.body;
+    const { data } = await API.fetchAll();
+    let fileExists = false;
+    // loop through response object and check if md5Hash value exist
+    data.forEach(fileObject => {
+      if (fileObject.md5Hash === md5Hash) fileExists = true;
+    });
+    if (fileExists) {
+      return res
+        .status(200)
+        .json({ status: 200, message: "This is a duplicate file", duplicate: fileExists, });
+    } else {
+      return res
+        .status(200)
+        .json({ status: 200, message: "This is a new file", duplicate: fileExists, });
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+// get all duplicate files
+exports.getAllDuplicates = async (req, res) => {
+  try {
+    const { data } = await API.fetchAll();
+    const duplicateFiles = [];
+    const duplicateHash = [];
+    // loop through response object and check if md5Hash value exist
+    data.forEach(fileObject => {
+      if (!duplicateHash.includes(fileObject.md5Hash)) {
+        duplicateHash.push(fileObject.md5Hash);
+      } else {
+        duplicateFiles.push(fileObject);
+      }
+    });
+    return res
+      .status(200)
+      .json({
+        status: 200,
+        message: `${duplicateHash.length} ${(duplicateHash.length > 1) ? ' Files' : ' File'} has duplicates`,
+        duplicate: deletedFiles,
+      });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}
+
+
+// set edit permission
+exports.setEditPermission = async (req, res) => {
+  try{
+    const files = await File.fetchAll()
+    const fileData = files.data
+    const { admin } = req.params;
+    if( admin == 'true'){
+      res.send(fileData.map((files) => {
+        return files.permission = 'edit'
+      }))
+    }else{
+      res.send(fileData.map((files) => {
+        return files.permission = 'view'
+      }))
+    }
+  } catch (error){
+    res.status(500).send(error)
+  }
+}
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+          return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
+      }
+
+      return res.status(200).json(fileSearch);
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
+
+
 exports.fileRename = async (req, res) => {
   const { body } = req;
   //Get single file
