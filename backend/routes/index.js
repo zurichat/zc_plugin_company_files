@@ -1,6 +1,5 @@
 const fileRouter = require('./file.route');
 const folderRouter = require('./folder.route');
-const uuid = require('uuid');
 const archiveRouter = require('./archive.route');
 
 module.exports = router => {

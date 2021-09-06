@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-
 const FolderSchema = Joi.object({
   id: Joi.string().guid({ version: 'uuidv4' }).required(),
   folderName: Joi.string().required(),
