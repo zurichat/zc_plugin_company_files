@@ -6,7 +6,6 @@ const Folders = new DatabaseConnection('Folder');
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
-  body.id = uuid.v4();
 
   const folder = await FolderSchema.validateAsync(body);
   const response = await Folders.create(folder);
@@ -27,9 +26,36 @@ exports.folderDetails = async (req, res) => {
 }
 
 exports.folderUpdate = async (req, res) => {
+  const { body } = req;
+
+  const response = await Folders.update(req.params.id, body);
+  const allFolders = await Folders.fetchAll();
+
+  const updatedFolder = allFolders.data.filter(folder => {
+
+    return folder._id === req.params.id;
+
+  })
+
+  res.status(200).send(appResponse(null, updatedFolder, true));
 
 }
 
 exports.folderDelete = async (req, res) => {
+  const {id} = req.params;
+ 
+  //fetch all folders
+  const folders = await Folders.fetchAll();
   
-}
+  //fetch a folder
+  const folder = folders.data.filter(item => item._id == id);
+  
+  //check to see if folder exists
+  if(!folder.length) {
+    return res.status(404).json({error: 'folder with the given ID not found!'})
+  }
+
+  const response = await Folders.delete(id);
+
+   res.status(200).send(appResponse(null, response, true));
+ }
