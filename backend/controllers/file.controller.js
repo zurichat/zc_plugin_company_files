@@ -191,8 +191,11 @@ catch (err) {
 
 //Pins a file as requested by user
 exports.pinFiles = async (req, res) => {
-  const pinned = await File.update({id:req.params.id}, {$set:{isPInned:true}} );
-
-  res.status(200).send({ pinned });
+  try {
+    const pinned = await File.update(req.params.id,{isPinned:true});
+    res.status(200).json(pinned);
+  }
+  catch(err){
+    res.status(500).json("server error try again");
+  }
 }
-   

@@ -11,9 +11,11 @@ const {
   searchByDate,
   searchStarredFiles,
   searchFileByIsDeleted,
-  searchBySize,
   getAllDeletedFiles,
-  pinFiles
+  setEditPermission,
+  searchBySize,
+  pinFiles,
+  searchByType
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -44,12 +46,17 @@ router.get('/searchStarredFiles', searchStarredFiles)
 router.get('/searchBySize/:size', searchBySize)
 
 //Pin files 
-router.put('/file/pinFiles/:id', pinFiles);
+router.put('/pinFile/:id', pinFiles);
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
-router.route('/file/write/:id')
-  .put(fileUpdate)
-  .delete(fileDelete)
+router.route('/file/write/:admin')
+.put(fileUpdate)
+.delete(fileDelete)
+// SET EDIT PERMISSION
+router.get('/setedit/:admin', setEditPermission)
+
+// SEARCH FILES BY FILE TYPE
+router.get('/searchByType', searchByType);
 
 module.exports = router;
