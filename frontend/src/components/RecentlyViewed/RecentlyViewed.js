@@ -1,6 +1,6 @@
 
 import "./RecentlyViewed.css"
-import image from "./images/image.svg"
+import imageFile from "./images/image.svg"
 import video from "./images/video.svg";
 import document from "./images/document.svg";
 import compressed from "./images/compressed.svg";
@@ -14,7 +14,7 @@ function RecentlyViewed() {
       <h3 id="headerText">Recently Viewed</h3>
       <div class="container" >
         <div className="con">
-          <img className="icon" src={image} alt="image" />
+          <img className="icon" src={imageFile} alt="logo" />
           <p className="name">Images </p>
           <p className="date">Viewed 20 Jul 2020</p>
         </div>

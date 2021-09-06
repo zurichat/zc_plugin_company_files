@@ -1,0 +1,118 @@
+.app-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--app-container);
+    transition: 0.2s;
+  }
+  
+.project-boxes {
+    margin: 0 -8px;
+    overflow-y: auto;
+  }
+  .project-boxes.jsGridView {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .project-boxes.jsGridView .project-box-wrapper {
+    width: 33.3%;
+  }
+  .project-boxes.jsListView .project-box {
+    display: flex;
+    border-radius: 10px;
+    position: relative;
+  }
+  .project-boxes.jsListView .project-box > * {
+    margin-right: 24px;
+  }
+  .project-boxes.jsListView .more-wrapper {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+  }
+  .project-boxes.jsListView .project-box-content-header {
+    order: 1;
+    max-width: 120px;
+  }
+  .project-boxes.jsListView .project-box-header {
+    order: 1;
+    display: none;
+  }
+  .project-boxes.jsListView .project-box-footer {
+    order: 3;
+    padding-top: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .project-boxes.jsListView .project-box-footer:after {
+    display: none;
+  }
+  
+  .project-boxes.jsListView .project-box-content-header p {
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .project-boxes.jsListView .project-box-header > span {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 12px;
+  }
+  .project-boxes.jsListView .box-progress-wrapper {
+    order: 3;
+    flex: 1;
+  }
+
+
+  .view-actions {
+    display: flex;
+    align-items: center;
+  }
+  
+  .view-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px;
+    border-radius: 4px;
+    background-color: transparent;
+    border: none;
+    color: #1f1c2e;
+    margin-left: 8px;
+    transition: 0.2s;
+  }
+  .view-btn.active {
+    background-color: #1f1c2e;
+    color: #fff;
+  }
+  .view-btn:not(.active):hover {
+    background-color: #c3cff4;
+    color: #fff;
+  }
+
+  @media screen and (max-width: 980px) {
+    .project-boxes.jsGridView .project-box-wrapper {
+      width: 50%;
+    }
+  }
+  @media screen and (max-width: 520px) {
+    .project-boxes.jsGridView .project-box-wrapper {
+        width: 100%;
+      }
+    .project-boxes.jsListView .project-box-header > span {
+    font-size: 10px;
+    }
+    .project-boxes.jsListView .project-box > * {
+        margin-right: 10px;
+      }
+    
+      .project-boxes.jsListView .more-wrapper {
+        right: 2px;
+        top: 10px;
+      }
+  }
