@@ -12,6 +12,8 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  isDuplicate,
+  getAllDuplicates,
   setEditPermission,
   searchBySize,
   pinFiles,
@@ -50,6 +52,16 @@ router.put('/pinFile/:id', pinFiles);
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
+
+// CHECK IF FILE IS A DUPLICATE
+router.post('/isDuplicate', isDuplicate);
+
+// GET DUPLICATE FILES
+router.get('/duplicateFiles', getAllDuplicates);
+router.route('/file/write/:id')
+  .put(fileUpdate)
+  .delete(fileDelete)
+
 router.route('/file/write/:admin')
 .put(fileUpdate)
 .delete(fileDelete)

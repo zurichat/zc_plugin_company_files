@@ -62,4 +62,3 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 8. To make sure there are no conflicts : `git pull upstream dev`
 9. Push changes to your new branch : `git push origin feat-import-file-from-url`
 10. Create a pull request to the `dev` branch.
-

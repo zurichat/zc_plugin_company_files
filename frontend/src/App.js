@@ -13,6 +13,7 @@ import FilePreviewDemo from './FilePreview/Demo'
 // import Sidebar from './components/SideBar/Sidebar'//
 import Home from './components/Home/Home';
 import FolderListView from './components/FolderAllFileListView/FolderTableList/FolderAllFileListView';
+import NavBar from './components/NavBar/NavBar'
 import VideoPreview from './components/VideoPreview/VideoPreview'
 import Upload from './components/Upload/Upload'
 import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
@@ -20,6 +21,7 @@ import AddNewTextDoc from './components/AddNewTextDoc/AddNewTextDoc'
 function App() {
   return (
     <Router>
+      <NavBar/>
       <div className="App font-lato flex">
         <Switch>
           <Route exact path="/">
