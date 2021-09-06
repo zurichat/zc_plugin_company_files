@@ -27,6 +27,7 @@ exports.fileDetails = async (req, res) => {
   res.send({ response });
 }
 
+
 exports.fileUpdate = async (req, res) => {
 
   const { body } = req;
@@ -74,6 +75,19 @@ exports.searchFileByIsDeleted = async (req, res) => {
     res.send({ error })
     
   }
+
+}
+
+//star a file
+exports.toggleStarred = async (req, res) => {
+  await File.update(req.params.id, { isStarred: true });
+
+  const allFiles = await File.fetchAll();
+  const starredFile =  allFiles.data.filter((file) => {
+      return file._id === req.params.id
+});
+
+  res.send({ starredFile })
 
 }
 
@@ -154,6 +168,53 @@ exports.getAllDeletedFiles = async (req, res) => {
     }
     res.send(resposneArray)
   } catch (error) {
+    console.log(error)
+    res.status(500).send(error)
+  }
+}
+
+
+// set edit permission
+exports.setEditPermission = async (req, res) => {
+  try{
+    const files = await File.fetchAll()
+    const fileData = files.data
+    const { admin } = req.params;
+    if( admin == 'true'){
+      res.send(fileData.map((files) => {
+        return files.permission = 'edit'
+      }))
+    }else{
+      res.send(fileData.map((files) => {
+        return files.permission = 'view'
+      }))
+    }
+  } catch (error){
+    res.status(500).send(error)
+  }
+}
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+          return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
+      }
+
+      return res.status(200).json(fileSearch);
+    }
+    res.send(resposneArray)
+  } catch (error) {
+    return res.status(500).json(error);
     console.log(error)
     res.status(500).send(error)
   }

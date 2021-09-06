@@ -1,6 +1,7 @@
 require('colors');
 require('dotenv').config();
 require('express-async-errors');
+require('uuid');
 
 const path = require('path');
 const cpus = require('os').cpus();
