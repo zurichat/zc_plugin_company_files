@@ -13,6 +13,9 @@ const {
   toggleStarred,
   searchFileByIsDeleted,
   getAllDeletedFiles,
+  searchFileByIsDeleted,
+  isDuplicate,
+  getAllDuplicates,
   setEditPermission,
   searchBySize,
   searchByType
@@ -47,8 +50,16 @@ router.get('/searchStarredFiles', searchStarredFiles)
 // SEARCH FILES BY SIZE
 router.get('/searchBySize/:size', searchBySize)
 
-// GET DELETED FILES
-router.get('/deletedFiles', getAllDeletedFiles)
+// GET DELETED FILESrouter.get('/deletedFiles', getAllDeletedFiles)
+
+// CHECK IF FILE IS A DUPLICATE
+router.post('/isDuplicate', isDuplicate);
+
+// GET DUPLICATE FILES
+router.get('/duplicateFiles', getAllDuplicates);
+router.route('/file/write/:id')
+  .put(fileUpdate)
+  .delete(fileDelete)
 router.route('/file/write/:admin')
 .put(fileUpdate)
 .delete(fileDelete)
