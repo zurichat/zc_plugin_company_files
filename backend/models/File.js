@@ -10,6 +10,7 @@ const FileSchema = Joi.object({
   metadata: {},
   isPinned:Joi.boolean().default(false).required(),
   isStarred: Joi.boolean().default(false).required(),
+  isDeleted: Joi.boolean().default(false),
   comments: [{ content: Joi.string(), name: Joi.string() }],
   md5Hash: Joi.string().pattern(/^[a-f0-9]{32}$/i).required()
     .messages({ 'string.pattern.base': 'MD5 hash provided is invalid or malformed' }),
