@@ -21,6 +21,7 @@ const ErrorHandler = require('./backend/middlewares/errorHandler');
 const fileRouter = require('./backend/routes/file.route');
 const folderRouter = require('./backend/routes/folder.route');
 const archiveRouter = require('./backend/routes/archive.route'); 
+const roomRouter = require('./backend/routes/rooms.route');
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -41,6 +42,8 @@ app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/
 // USING FILE AND FOLDER ROUTER
 app.use(fileRouter);
 app.use(folderRouter);
+
+app.use('/api/v1/rooms', roomRouter); // ROOMS ROUTER
 
 // file archiving route
 app.use(archiveRouter);
