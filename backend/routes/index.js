@@ -1,7 +1,7 @@
 const fileRouter = require('./file.route');
 const folderRouter = require('./folder.route');
 const archiveRouter = require('./archive.route');
-const roomsRouter = require('./rooms.router');
+const roomsRouter = require('./rooms.route');
 const pluginRouter = require('./plugin.router');
 
 module.exports = router => {
