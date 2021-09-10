@@ -5,7 +5,8 @@ const {
   deleteRoom, 
   addToRoom, 
   removeFromRoom,
-  editRoom
+  editRoom,
+  setRoomPrivate
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS
@@ -28,5 +29,8 @@ router.delete('/delete/:roomId', deleteRoom);
 
 // EDIT A ROOM INFO
 router.put('/update/:roomId', editRoom);
+
+// MAKE ROOM PRIVATE
+router.put('/setPrivate/:roomId', setRoomPrivate)
 
 module.exports = router;

@@ -129,3 +129,16 @@ exports.removeFromRoom = async (req, res) => {
 
   res.status(200).send(appResponse('User has been successfully removed from the room', updatedRoom, true));
 }
+
+exports.setRoomPrivate = async (req, res) => {
+  const { body } = req;
+  body.isPrivate = true;
+  
+
+  await Rooms.update(req.params.roomId, body);
+
+  const allRooms = await Rooms.fetchAll();
+  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
+
+  res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
+}
