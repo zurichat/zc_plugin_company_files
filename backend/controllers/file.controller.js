@@ -1,5 +1,6 @@
 const ApiConnection = require('../utils/database.helper');
 const File = new ApiConnection('File');
+const RealTime = require('../utils/realtime.helper');
 // const FileSchema = require('../models/File');
 
 exports.fileCreate = async (req, res) => {
@@ -14,17 +15,23 @@ exports.fileCreate = async (req, res) => {
 
 exports.getAllFiles = async (req, res) => {
   
-  const response = await File.fetchAll();
+  const data = await File.fetchAll();
 
-  res.send({ response });
+  let response = await RealTime.publish("all_files", data)
+
+  res.send({ ...response });
   
 }
 
 
 exports.fileDetails = async (req, res) => {
-  const response = await File.fetchOne(req.params.id);
 
-  res.send({ response });
+  const data = await File.fetchOne({ "_id": req.params.id });
+
+  const response = await RealTime.publish("file_detail", data)
+
+  res.send({ ...response });
+
 }
 
 exports.fileUpdate = async (req, res) => {
@@ -53,20 +60,20 @@ exports.fileDelete = async (req, res) => {
 }
 
 
-
 exports.searchFileByIsDeleted = async (req, res) => {
   
   try {
 
     const isDeleted = true;
-    const response = await File.fetchAll();
+    let response = await File.fetchAll();
 
     const deletedFiles = response.data.filter ( (file) => {
       return file.isDeleted === isDeleted;
     })
 
-    console.log(deletedFiles)
-    res.status(200).send({ deletedFiles })
+    response = RealTime.publish("deleted_files", deletedFiles)
+
+    res.status(200).send({ ...response })
 
   } catch (error) {
 
@@ -81,14 +88,17 @@ exports.searchFileByIsDeleted = async (req, res) => {
 exports.searchStarredFiles = async (req, res) => {
   try {
     const { data } = await File.fetchAll();
+
     // loop through response object and check if isStarred is true
     const starredFiles = [];
     data.map((data) => {
       return data.isStarred ? starredFiles.push(data) : null;
     });
-    return res.status(200).json({
-      response: { status: 200, message: 'success', data: starredFiles }
-    });
+
+    response = await RealTime.publish("starred_files", starredFiles)
+
+    return res.status(200).json({ status: 200, statusText: 'success', ...response });
+
   } catch (error) {
     return res.send({ error })
   }
@@ -124,16 +134,18 @@ exports.getArchivedFiles = async (req, res) => {
 
     //   Validate Response Status
     if (allFiles.status === 200) {
+      
       const archives = [];
       allFiles.data.map((file) => {
         return file.isArchived ? archives.push(file) : null;
       });
-      return res
-        .status(200)
-        .json({ status: 200, message: 'success', archives });
+
+      const response = await RealTime.publish("archived_files", archives)
+
+      return res.status(200).json({ status: 200, statusText: 'success', archives });
     }
   } catch (error) {
-    return error;
+    return res.send({ ...error });
   }
 };
 // get sall deleted files

@@ -1,5 +1,9 @@
 const DatabaseConnection = require('../utils/database.helper');
+
+const RealTime = require('../utils/realtime.helper');
+
 const Rooms = new DatabaseConnection('NewRooms');
+
 const appResponse = require('../utils/appResponse');
 const RoomSchema = require('../models/Room');
 const slugify = require('slugify');
@@ -48,11 +52,15 @@ exports.editRoom = async (req, res) => {
   res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 }
 
-
 exports.getAllRooms = async (req, res) => {
-  const { data } = await Rooms.fetchAll();
 
-  res.status(200).send(appResponse('All rooms', data, true));
+    let response = await Rooms.fetchAll();
+
+    const data = response.data.filter(room => room._id !== "613a1e3f59842c7444fb0222")
+
+    response = await RealTime.publish("all_rooms", data)
+
+    res.status(200).send(appResponse('All rooms', { ...response }, true));
 }
 
 

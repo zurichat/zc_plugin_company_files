@@ -7,6 +7,8 @@ const { PLUGIN_ID } =  process.env;
 const authCheck = require('../utils/authcheck.helper');
 
 
+const RealTime = require('../utils/realtime.helper');
+
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
 
@@ -23,7 +25,6 @@ exports.info = (req, res) => {
     version,
   });
 }
-
 
 exports.sidebar = async (req, res) => {
   const { org, user, token } = req.query;
@@ -60,7 +61,9 @@ exports.sidebar = async (req, res) => {
     pluginRooms
   }
 
-  res.status(200).json(sidebarListObject);
+  await RealTime.publish("sidebar", sidebarListObject)
+
+  res.status(200).json({ ...sidebarListObject });
 }
 
 
