@@ -33,6 +33,8 @@
     "express-fileupload": "^1.2.1",
     "fs": "0.0.1-security",
     "joi": "^17.4.2",
+    "joi-objectid": "^3.0.1",
+    "slugify": "^1.6.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
