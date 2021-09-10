@@ -148,5 +148,5 @@ exports.setRoomPrivate = async (req, res) => {
   const allRooms = await Rooms.fetchAll();
   const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-  res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
+  res.status(200).send(appResponse('Room set to private!', updatedRoom, true));
 }
