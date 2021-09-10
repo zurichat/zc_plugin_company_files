@@ -1,4 +1,6 @@
 const DatabaseConnection = require('../utils/database.helper');
+
+const RealTime = require('../utils/realtime.helper');
 const Rooms = new DatabaseConnection('Rooms');
 const appResponse = require('../utils/appResponse');
 const uuid = require('uuid').v4;
@@ -33,11 +35,13 @@ exports.editRoomInfo = async (req, res) => {
 
 exports.getAllRooms = async (req, res) => {
 
-    const response = await Rooms.fetchAll();
+    let response = await Rooms.fetchAll();
 
     const data = response.data.filter(room => room._id !== "613a1e3f59842c7444fb0222")
 
-    res.status(200).send({ data });
+    response = await RealTime.publish("all_rooms", data)
+
+    res.status(200).send({ ...response });
 
 }
 

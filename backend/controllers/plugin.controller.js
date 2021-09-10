@@ -2,6 +2,8 @@ const { name, version, author } = require('../../package.json');
 const pluginId = name;
 const pluginName = 'Company Files Management Plug-In';
 
+const RealTime = require('../utils/realtime.helper');
+
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
 
@@ -19,7 +21,7 @@ exports.info = (req, res) => {
   });
 }
 
-exports.sidebar = (req, res) => {
+exports.sidebar = async (req, res) => {
   const sidebarListObject = {
       status: 'success',
       pluginId,
@@ -69,7 +71,9 @@ exports.sidebar = (req, res) => {
       }]
   };
 
-  res.status(200).json(sidebarListObject);
+  await RealTime.publish("sidebar", sidebarListObject)
+
+  res.status(200).json({ ...sidebarListObject });
 }
 
 exports.ping = (req, res) => {
