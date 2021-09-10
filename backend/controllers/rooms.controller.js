@@ -1,36 +1,55 @@
 const DatabaseConnection = require('../utils/database.helper');
 
 const RealTime = require('../utils/realtime.helper');
-const Rooms = new DatabaseConnection('Rooms');
+
+const Rooms = new DatabaseConnection('NewRooms');
+
 const appResponse = require('../utils/appResponse');
+const RoomSchema = require('../models/Room');
+const slugify = require('slugify');
 const uuid = require('uuid').v4;
+const { BadRequestError, ForbiddenError, NotFoundError } = require('../utils/appError');
+
 
 exports.createRoom = async (req, res) => {
+  const { body } = req;
+  body.roomId = uuid();
 
-    const { body } = req;
+  const room = await RoomSchema.validateAsync(body);
+  room.members = [];
+  room.slug = slugify(room.roomName, { lower: true, remove: /[*+~\/\\.()'"!:@]/g })
+  console.log(room);
 
-    const response = await Rooms.create(body);
+  if (room.roomType === 'inbox') {
+    room.isPrivate = true;
+    room.members = [room.ownerId, room.receiverId];
+  } else if (room.roomType === 'group' || room.roomType === 'plugin') {
+    room.members = [room.ownerId, ...room.members];
+    delete room.receiverId;
+  } else if (room.roomType === 'plugin' || room.roomType === 'channel') {
+    room.isPrivate = false;
+  }
 
-    res.send({ message: "Room created successfully!", response });
+  // Verify user ids later on...
 
+  const response = await Rooms.create(room);
+
+  res.status(201).send(appResponse('Room created successfully!', response, true));
 }
 
-exports.editRoomInfo = async (req, res) => {
-    const { body } = req;
 
-    if (("users" in body)) delete body.users;
+exports.editRoom = async (req, res) => {
+  const { body } = req;
+  console.log(req.body);
 
-    await Rooms.update(req.params.id, body);
+  if (('members' in body)) delete body.members;
 
-    const allRooms = await Rooms.fetchAll();
+  await Rooms.update(req.params.roomId, body);
 
-    const updatedRoom = allRooms.data.filter(room => {
+  const allRooms = await Rooms.fetchAll();
+  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-        return room._id === req.params.id;
-
-    })
-
-    res.send({ message: "Room details updated!", updatedRoom })
+  res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 }
 
 exports.getAllRooms = async (req, res) => {
@@ -41,92 +60,80 @@ exports.getAllRooms = async (req, res) => {
 
     response = await RealTime.publish("all_rooms", data)
 
-    res.status(200).send({ ...response });
-
+    res.status(200).send(appResponse('All rooms', { ...response }, true));
 }
+
 
 exports.deleteRoom = async (req, res) => {
-
-    // filter out the target room
-    const response = await Rooms.delete(req.params.id)
-    res.send({ message: "Room has been removed successfully!", response})
-
+  // filter out the target room
+  const response = await Rooms.delete(req.params.roomId);
+  
+  res.status(200).send(appResponse('Room has been deleted successfully!', response, true));
 }
+
 
 exports.addToRoom = async (req, res) => {
+  // the info of the user to be added to a room
+  const { userId } = req.body;
 
-    // the info of the user to be added to a room
-    const { body } = req;
+  if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
+    throw new BadRequestError('Invalid user id. Enter a valid object id!');
+  }
 
-    // assign a unique id to each user in the room.
-    body.user_room_id = uuid()
+  // fetch all the rooms available and get the target room with the provided room_id.
+  let allRooms = await Rooms.fetchAll();
+  const [room] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-    // fetch all the rooms available and get the target room with the provided room_id.
-    let allRooms = await Rooms.fetchAll();
+  if (!room) throw new NotFoundError();
 
-    // parse the room data and push the user data inside it.
-    // allRooms = JSON.parse(allRooms);
-    let room = allRooms.data.filter(room => room._id === req.params.id)
-    let userCheck = false;
+  if (room.isPrivate) throw new ForbiddenError(`You can't join a private room!`);
 
+  const isUserInRoom = room.members.filter(id => id === userId).length;
 
-    room[0].users.forEach(user => {
-        if (user.username === body.username) {
-            console.log(body.username)
-            userCheck = true;
-        } 
-    })
+  if (isUserInRoom) throw new BadRequestError('User is already in room!');
 
-    if (userCheck) {
-        return res.send({ message: `Oops! '${body.username}' is in the room already!`})
-    }
+  // Add user to room...
+  room.members.push(userId);
+  delete room._id;
 
-    else {
-        room[0].users.push({ ...body })
-        delete room[0]._id;
+  // send the data to the api endpoint for update.
+  await Rooms.update(req.params.roomId, room);
 
-        console.log(room[0])
+  allRooms = await Rooms.fetchAll();
+  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-        // send the data to the api endpoint for update.
-        await Rooms.update(req.params.id, room[0]);
-
-        allRooms = await Rooms.fetchAll();
-        const updatedRoom = allRooms.data.filter(room => {
-
-            return room._id === req.params.id;
-
-        })
-
-        return res.status(200).send(appResponse(null, updatedRoom, true));
-    }
-
+  return res.status(200).send(appResponse(null, updatedRoom, true));
 }
 
+
 exports.removeFromRoom = async (req, res) => {
-    
-    // the info of the user to be added to a room
-    const { body } = req;
+  // the info of the user to be removed from a room
+  const { userId } = req.body;
 
-    // fetch all the rooms available and get the target room with the provided room_id.
-    let allRooms = await Rooms.fetchAll();
-    const room = allRooms.data.filter(room => room._id === req.params.id)
+  // fetch all the rooms available and get the target room with the provided room_id.
+  let allRooms = await Rooms.fetchAll();
+  const [room] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-    // parse the room data and remove the target user data from it.
-    room[0].users = room[0].users.filter(user => user.user_room_id !== body.user_room_id )
+  if (!room) throw new NotFoundError();
 
-    // clean up the room data
-    delete room[0]._id;
+  // Check if room type is DM...
+  if (room.roomType === 'inbox' && userId in room.members) {
+    throw new BadRequestError(`You cannot leave a DM!`);
+  } else if (room.roomType === 'inbox' && room.members.indexOf(userId) === -1) {
+    throw new ForbiddenError('Access forbidden! You cannot join an already existing DM!');
+  }
 
-    // send the data to the api endpoint for update.
-    const response = await Rooms.update(req.params.id, room[0]);
+  // parse the room data and remove the target user data from it.
+  room.members = room.members.filter(member => member !== userId );
 
-    allRooms = await Rooms.fetchAll();
-    const updatedRoom = allRooms.data.filter(room => {
+  // clean up the room data
+  delete room._id;
 
-        return room._id === req.params.id;
+  // send the data to the api endpoint for update.
+  await Rooms.update(req.params.roomId, room);
 
-    })
+  allRooms = await Rooms.fetchAll();
+  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
 
-    res.status(200).send({ message: "User has been successfully removed from the room."});
-
+  res.status(200).send(appResponse('User has been successfully removed from the room', updatedRoom, true));
 }
