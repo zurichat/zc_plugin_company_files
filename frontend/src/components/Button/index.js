@@ -19,12 +19,15 @@ const Button = ({
   //   active = false,
   disabled = false,
   children,
+  className: customClass,
+  ...restProps
 }) => {
   return (
     <button
       className={`${sizePadding[size]}  ${!disabled ? "" : "opacity-30"} ${
         variantChoices[variant]
-      } hover:opacity-70  rounded`}
+      } hover:opacity-70  rounded ${customClass}`}
+      {...restProps}
     >
       {children}
     </button>
