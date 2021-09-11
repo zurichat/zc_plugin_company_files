@@ -36,7 +36,7 @@ export default function index() {
                 <h4 className="mr-auto">Properties</h4>
                 <table>
                     {Object.entries(properties).map(([key, value], i) => (
-                        <tr className="mb-5">
+                        <tr className="mb-5" key={i}>
                             <td>{key}</td>
                             <td>{value}</td>
                         </tr>
