@@ -86,7 +86,7 @@ exports.toggleStarred = async (req, res) => {
   const starredFile =  allFiles.data.filter((file) => {
       return file._id === req.params.id
 });
-
+console.log(allFiles)
   res.send({ starredFile })
 
 }
