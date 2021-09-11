@@ -1,9 +1,6 @@
 const DatabaseConnection = require('../utils/database.helper');
-
-const RealTime = require('../utils/realtime.helper');
-
 const Rooms = new DatabaseConnection('NewRooms');
-
+const RealTime = require('../utils/realtime.helper');
 const appResponse = require('../utils/appResponse');
 const RoomSchema = require('../models/Room');
 const slugify = require('slugify');
@@ -17,8 +14,7 @@ exports.createRoom = async (req, res) => {
 
   const room = await RoomSchema.validateAsync(body);
   room.members = [];
-  room.slug = slugify(room.roomName, { lower: true, remove: /[*+~\/\\.()'"!:@]/g })
-  console.log(room);
+  room.slug = slugify(room.roomName, { lower: true, remove: /[*+~\/\\.()''!:@]/g });
 
   if (room.roomType === 'inbox') {
     room.isPrivate = true;
@@ -40,27 +36,36 @@ exports.createRoom = async (req, res) => {
 
 exports.editRoom = async (req, res) => {
   const { body } = req;
-  console.log(req.body);
+  const { data: [room] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
-  if (('members' in body)) delete body.members;
+  if (!room) throw new NotFoundError();
+  if ('members' in body) delete body.members;
 
   await Rooms.update(req.params.roomId, body);
 
-  const allRooms = await Rooms.fetchAll();
-  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
+  const [updatedRoom] = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 }
 
+
 exports.getAllRooms = async (req, res) => {
+  const { data: allRooms } = await Rooms.fetchAll();
 
-    let response = await Rooms.fetchAll();
+  allRooms.forEach(room => room.memberCount = room.members.length);
 
-    const data = response.data.filter(room => room._id !== "613a1e3f59842c7444fb0222")
+  // response = await RealTime.publish('allRooms', response);
 
-    response = await RealTime.publish("all_rooms", data)
+  res.status(200).send(appResponse('All rooms', allRooms, true));
+}
 
-    res.status(200).send(appResponse('All rooms', { ...response }, true));
+
+exports.getOne = async (req, res) => {
+  const { data: [room] } = await Rooms.fetchOne({ _id: req.params.roomId });
+
+  if (!room) throw new NotFoundError();
+
+  res.status(200).send(appResponse('Room found!', room, true));
 }
 
 
@@ -81,8 +86,7 @@ exports.addToRoom = async (req, res) => {
   }
 
   // fetch all the rooms available and get the target room with the provided room_id.
-  let allRooms = await Rooms.fetchAll();
-  const [room] = allRooms.data.filter(room => room._id === req.params.roomId);
+  const { data: [room] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -99,8 +103,7 @@ exports.addToRoom = async (req, res) => {
   // send the data to the api endpoint for update.
   await Rooms.update(req.params.roomId, room);
 
-  allRooms = await Rooms.fetchAll();
-  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
+  const { data: [updatedRoom] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   return res.status(200).send(appResponse(null, updatedRoom, true));
 }
@@ -110,9 +113,8 @@ exports.removeFromRoom = async (req, res) => {
   // the info of the user to be removed from a room
   const { userId } = req.body;
 
-  // fetch all the rooms available and get the target room with the provided room_id.
-  let allRooms = await Rooms.fetchAll();
-  const [room] = allRooms.data.filter(room => room._id === req.params.roomId);
+  // fetch all the target room with the provided room_id.
+  const { data: [room] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -132,21 +134,27 @@ exports.removeFromRoom = async (req, res) => {
   // send the data to the api endpoint for update.
   await Rooms.update(req.params.roomId, room);
 
-  allRooms = await Rooms.fetchAll();
-  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
+  const { data: [updatedRoom] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res.status(200).send(appResponse('User has been successfully removed from the room', updatedRoom, true));
 }
 
+
 exports.setRoomPrivate = async (req, res) => {
-  const { body } = req;
-  body.isPrivate = true;
-  
+  const { userId } = req.body;
+  const { data: [room] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
-  await Rooms.update(req.params.roomId, body);
+  if (!room) throw new NotFoundError();
 
-  const allRooms = await Rooms.fetchAll();
-  const [updatedRoom] = allRooms.data.filter(room => room._id === req.params.roomId);
+  const isUserOwner = room.ownerId === userId;
+
+  if (!isUserOwner) {
+    throw new ForbiddenError(`Access forbidden! You don't have access to make this room private!`);
+  }
+
+  await Rooms.update(req.params.roomId, { isPrivate: false });
+
+  const { data: [updatedRoom] } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res.status(200).send(appResponse('Room set to private!', updatedRoom, true));
 }
