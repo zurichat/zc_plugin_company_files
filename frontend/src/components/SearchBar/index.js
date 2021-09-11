@@ -18,7 +18,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     >
       <CustomIcon {...{ src: searchIcon, alt: "search icon" }} />
       <input
-        className="w-full py-2 px-4 focus:outline-none"
+        className="flex-1 py-2 px-4 focus:outline-none"
         type="text"
         placeholder="Search for your files"
       />
@@ -39,8 +39,8 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
         <span className="text-2xl">Files</span>
         <Button {...{ variant: "outline-primary" }}>Add New</Button>
       </div>
-      <div className="flex items-center gap-4">
-        <SearchInput />
+      <div className="flex items-center gap-4 lg:w-2/3 xl:w-3/5">
+        <SearchInput className="flex-1" />
         <CustomIcon {...{ src: settingsIcon, alt: "search icon" }} />
         <CustomIcon
           {...{ src: greenCircleIcon, alt: "search icon" }}
