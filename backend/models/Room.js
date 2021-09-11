@@ -16,6 +16,7 @@ const RoomSchema = Joi.object({
     then: Joi.objectId().required(),
     otherwise: Joi.valid(null)
   }),
+  description: Joi.string().required().max(250),
   members: [Joi.objectId()],
   createdAt: Joi.date().default(new Date().toISOString()),
   isArchived: Joi.boolean().default(false),
