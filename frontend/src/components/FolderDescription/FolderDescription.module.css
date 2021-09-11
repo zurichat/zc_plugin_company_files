@@ -1,0 +1,35 @@
+.folderDescription {
+    border-left: 2px solid #E5E5E5;
+    padding: 1rem 2rem;
+    min-width: 350px;
+}
+
+.folderDescription h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4A4A4A;
+}
+
+.folderDescription h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #606060;
+}
+
+.folderDescription p {
+    color: #4A4A4A;
+}
+
+.folderDescription td {
+    color: #4A4A4A;
+}
+
+.folderDescription table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.75rem;
+}
+
+.folderDescription td {
+    width: 50%;
+}

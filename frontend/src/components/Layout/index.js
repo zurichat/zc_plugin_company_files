@@ -4,7 +4,7 @@ import Sidebar from "Components/Sidebar";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen gap-3">
+    <div className="flex justify-center min-h-screen gap-3">
       <Head>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />

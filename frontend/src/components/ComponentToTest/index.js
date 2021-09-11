@@ -1,9 +1,15 @@
 import Button from "Components/Button";
 import React from "react";
+import EmptyFolder from "Components/EmptyFolder";
+import FolderDescription from "Components/FolderDescription";
 
 const ComponentToTest = () => {
-  // return <Button onClick>button</Button>;
-  return <h1>Test your component Here</h1>;
+  return (
+    <div className="flex">
+      <EmptyFolder />
+      <FolderDescription />
+    </div>
+  )
 };
 
 export default ComponentToTest;
