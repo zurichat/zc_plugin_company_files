@@ -1,11 +1,12 @@
+import PropTypes from "prop-types";
 import React from "react";
 
-const sizePadding = {
+const SIZES = {
   sm: "py-2 px-3 text-sm",
   md: "py-3 px-4",
   lg: "py-4 px-5 text-lg",
 };
-const variantChoices = {
+const VARIANTS = {
   primary: "bg-primary text-white",
   success: "",
   "outline-primary":
@@ -24,14 +25,23 @@ const Button = ({
 }) => {
   return (
     <button
-      className={`${sizePadding[size]}  ${!disabled ? "" : "opacity-30"} ${
-        variantChoices[variant]
+      className={`${SIZES[size]}  ${!disabled ? "" : "opacity-30"} ${
+        VARIANTS[variant]
       } hover:opacity-70  rounded ${customClass}`}
       {...restProps}
     >
       {children}
     </button>
   );
+};
+
+Button.propTypes = {
+  variant: PropTypes.oneOf(Object.keys(VARIANTS)),
+  size: PropTypes.oneOf(Object.keys(SIZES)),
+  disabled: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  restProps: PropTypes.any,
 };
 
 export default Button;
