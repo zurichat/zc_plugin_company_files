@@ -1,7 +1,6 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
   "private": true,
+<<<<<<< HEAD
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -18,34 +17,25 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
+=======
+>>>>>>> b7e0d69c8245f8770986f0213a1d6fbf6b891b0e
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "next": "latest",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.36",
+    "autoprefixer": "^10.2.6",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "postcss": "^8.3.5",
     "prettier": "^2.3.2",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.9"
+    "tailwindcss": "^2.2.4"
   }
 }

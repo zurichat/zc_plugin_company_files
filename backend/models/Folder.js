@@ -1,45 +1,15 @@
-const { Schema, model } = require('mongoose');
-const mongoose = require('mongoose')
-const FolderSchema = new Schema({
-  folderName: {
-    type: String,
-    trim: true,
-    required: true
-  },
-  description: {
-    type: String,
-    trim: true,
-    default: '',
-  },
-  folderId: {type: Schema.Types.ObjectId, default: mongoose.Types.ObjectId},
-  permissions: {
-    type: String,
-    trim: true,
-    default: '',
-  },
-  isPinned: {type: Boolean, default: false},
-  lastAccessed: { type: Date, default: Date.now() },
-  dateModified: { type: Date, default: Date.now() },
-  dateAdded: { type: Date, default: Date.now() },
-});
+const Joi = require('joi');
 
-FolderSchema.methods.joiValidate = data => {
-	const Joi = require('joi');
-	const schema = Joi.object().keys({
-		folderName: Joi.string().required(),
-    description: Joi.string(),
-    permissions: Joi.string(),
-    isPinned: Joi.boolean(),
-    lastAccessed: Joi.date(),
-    dateModified: Joi.date(),
-    dateAdded: Joi.date()
-  }).unknown(true);
-  
-  return new Promise((resolve, reject) => {
-    schema.validateAsync(data)
-      .then(result => resolve(result))
-      .catch(error => reject(error))
-  })
-}
+const FolderSchema = Joi.object({
+  id: Joi.string().guid({ version: 'uuidv4' }).required(),
+  folderName: Joi.string().required(),
+  folderId: [Joi.string().guid({ version: 'uuidv4' }).required(), Joi.allow(null)],
+  description: Joi.string().required(),
+  permissions: Joi.string().default('view'),
+  isPinned: Joi.boolean().default(false).required(),
+  dateAdded: Joi.date().default(new Date().toISOString()),
+  dateModified: Joi.date().default(new Date().toISOString()),
+  lastAccessed: Joi.date().default(new Date().toISOString())
+})
 
-module.exports = model('Folder', FolderSchema);
+module.exports = FolderSchema;
