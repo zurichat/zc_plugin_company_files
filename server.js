@@ -1,7 +1,6 @@
 require('colors');
 require('dotenv').config();
 require('express-async-errors');
-require('uuid');
 
 const path = require('path');
 const cpus = require('os').cpus();
@@ -15,13 +14,8 @@ const app = express();
 const router = express.Router();
 
 const rootRouter = require('./backend/routes/index')(router);
-const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
-
-const fileRouter = require('./backend/routes/file.route');
-const folderRouter = require('./backend/routes/folder.route');
-const archiveRouter = require('./backend/routes/archive.route'); 
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -37,14 +31,6 @@ if (isProduction) {
 }
 
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
-app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
-
-// USING FILE AND FOLDER ROUTER
-app.use(fileRouter);
-app.use(folderRouter);
-
-// file archiving route
-app.use(archiveRouter);
 
 
 // All other GET requests not handled before will return our React app

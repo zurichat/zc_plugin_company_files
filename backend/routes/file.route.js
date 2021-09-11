@@ -10,7 +10,6 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
-  toggleStarred,
   searchFileByIsDeleted,
   getAllDeletedFiles,
   isDuplicate,
@@ -26,10 +25,8 @@ router.post('/write', fileCreate);
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/read', getAllFiles);
 
-//star a particular file
-router.patch('/star/:id', toggleStarred);
 // SEARCH FOR ALL DELETED FILES
-router.get('/file/searchByisDeleted', searchFileByIsDeleted);
+router.get('/read/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
@@ -49,7 +46,8 @@ router.get('/searchStarredFiles', searchStarredFiles)
 // SEARCH FILES BY SIZE
 router.get('/searchBySize/:size', searchBySize)
 
-// GET DELETED FILESrouter.get('/deletedFiles', getAllDeletedFiles)
+// GET DELETED FILES
+router.get('/deletedFiles', getAllDeletedFiles)
 
 // CHECK IF FILE IS A DUPLICATE
 router.post('/isDuplicate', isDuplicate);

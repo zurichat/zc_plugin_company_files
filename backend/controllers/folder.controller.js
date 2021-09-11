@@ -2,6 +2,8 @@ const uuid = require('uuid');
 const FolderSchema = require('../models/Folder.js');
 const appResponse = require('../utils/appResponse');
 const DatabaseConnection = require('../utils/database.helper');
+const RealTime = require('../utils/realtime.helper');
+
 const Folders = new DatabaseConnection('Folder');
 
 exports.folderCreate = async (req, res) => {
@@ -14,15 +16,20 @@ exports.folderCreate = async (req, res) => {
 }
 
 exports.getAllFolders = async (req, res) => {
-  const response = await Folders.fetchAll();
+  const data = await Folders.fetchAll();
 
-  res.status(200).send(appResponse(null, response, true, { count: response.length }));
+  const response = await RealTime.publish("all_folders", data);
+
+  res.status(200).send(appResponse(null, { ...response }, true, { count: response.length }));
 }
 
 exports.folderDetails = async (req, res) => {
-  const response = await Folders.fetchOne( req.params.id );
+
+  const data = await Folders.fetchOne( req.params.id );
+
+  const response = await RealTime.publish("folder_detail", data)
   
-  res.status(200).send(appResponse(null, response, true));
+  res.status(200).send(appResponse(null, { ...response }, true));
 }
 
 exports.folderUpdate = async (req, res) => {

@@ -23,6 +23,7 @@ class DatabaseConnection {
     try {
 
       this.data.payload = payload;
+      
       const response = await axios.post(
         databaseWriteUrl,
         this.data
@@ -31,8 +32,7 @@ class DatabaseConnection {
       return response.data;
 
     } catch (error) {
-      
-      console.log(error)
+
       return error;
 
     }
@@ -57,11 +57,11 @@ class DatabaseConnection {
 
   };
 
-  fetchOne = async (id) => {
+  fetchOne = async (query) => {
     try {
       
       const response = await axios.get(
-        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?object_id=${id}`
+        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?${Object.keys(query)}=${Object.values(query)}`
       );
   
       return response.data;
@@ -81,7 +81,7 @@ class DatabaseConnection {
 
       const response = await axios.put(
         databaseWriteUrl,
-        JSON.stringify(this.data)
+        this.data
       );
 
       return response.data;
@@ -97,7 +97,6 @@ class DatabaseConnection {
     try {
       
       this.data.object_id = id;
-
       
       const response = await axios.delete(
         databaseWriteUrl,

@@ -1,17 +1,16 @@
 const router = require('express').Router();
-const uuid = require('uuid');
 const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders } = require('../controllers/folder.controller');
 
 // CREATE A NEW FOLDER
-router.post('/folder/write', folderCreate);
+router.post('/write', folderCreate);
 
 // FETCH ALL THE FOLDERS FROM THE ENDPOINT
-router.get('/folder/read', getAllFolders);
+router.get('/read', getAllFolders);
 
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
-router.get('/folder/read/:id', folderDetails);
+router.get('/read/:id', folderDetails);
 
-router.route('/folder/write/:id')
+router.route('/write/:id')
   .put(folderUpdate)
   .delete(folderDelete)
 
