@@ -1,6 +1,5 @@
 import Button from "Components/Button";
 import CustomIcon from "Components/CustomIcon";
-import NextImage from "next/image";
 import PropTypes from "prop-types";
 import React from "react";
 const searchIcon = "/Icons/search.svg";
@@ -61,8 +60,8 @@ const RECENT_SEARCH_ITEMS = [
 
 const SearchResultCategory = ({ iconLink, bgColor, title }) => {
   return (
-    <div className="flex items-center gap-3">
-      <div className={`p-2 rounded-lg ${bgColor || "bg-blue-100"}`}>
+    <div className="flex items-center gap-3 cursor-pointer">
+      <div className={`min-w-max p-2 rounded-lg ${bgColor || "bg-blue-100"}`}>
         <img {...{ src: iconLink, alt: "icon" }} />
       </div>
       <span className="">{title}</span>
@@ -78,7 +77,7 @@ const SearchResultCategoryList = ({ list = [] }) => {
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-text-dustygray">I'm searching for...</h2>
-      <div className="flex flex-wrap gap-8">
+      <div className="grid grid-flow-row sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-8">
         {list?.map((elm, ind) => (
           <SearchResultCategory {...{ key: ind, ...elm }} />
         ))}
@@ -92,7 +91,7 @@ SearchResultCategoryList.propTypes = {
 
 const RecentSearchItem = ({ name = "file_name.txt" }) => {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 cursor-pointer">
       <img {...{ src: clockIcon, alt: "icon" }} />
       <span className="text-sm text-text-grayish">{name}</span>
     </div>
@@ -148,22 +147,24 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
         ...restProps,
       }}
     >
-      <div className="flex items-center gap-4">
+      <div className="hidden md:flex items-center gap-4">
         <span className="text-2xl">Files</span>
         <Button {...{ variant: "outline-primary" }}>Add New</Button>
       </div>
-      <div className="flex items-center gap-4 lg:w-2/3 xl:w-3/5">
+      <div className="flex items-center gap-4 w-full lg:w-2/3 xl:w-3/5">
         <SearchInput className="flex-1" />
-        <CustomIcon {...{ src: settingsIcon, alt: "settings icon" }} />
+        <CustomIcon
+          {...{ src: settingsIcon, alt: "settings icon" }}
+          className="hidden md:inline-flex"
+        />
         <CustomIcon
           {...{ src: greenCircleIcon, alt: "profile image" }}
-          className="h-16"
+          className="h-16 hidden md:inline-flex"
         />
       </div>
     </div>
   );
 };
-
 SearchBar.propTypes = {
   className: PropTypes.string,
   restProps: PropTypes.any,
