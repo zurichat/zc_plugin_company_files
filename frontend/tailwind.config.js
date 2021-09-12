@@ -11,6 +11,7 @@ module.exports = {
         secondary: "#00B87C",
         primary: "#1A61DB",
         shiraz: "#B8003C",
+        orange: "#FCE7DE",
         text: {
           shaft: "#242424",
           shaftlight: "#3A3A3A",
