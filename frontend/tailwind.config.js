@@ -18,6 +18,7 @@ module.exports = {
           dustygray: "#999999",
           silverlight: "#C1C1C1",
           silver: "#BEBEBE",
+          grayish: "#606060",
         },
         error: "#F40101",
         wildsand: "#F6F6F6",

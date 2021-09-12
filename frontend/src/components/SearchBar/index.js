@@ -14,6 +14,7 @@ const psCat = "Icons/ps-cat.svg";
 const videoCat = "Icons/video-cat.svg";
 const excelCat = "Icons/excel-cat.svg";
 const imgCat = "Icons/img-cat.svg";
+const clockIcon = "Icons/clock-icon.svg";
 
 const SEARCH_CATEGORY_LIST = [
   {
@@ -49,6 +50,14 @@ const SEARCH_CATEGORY_LIST = [
     title: "Image",
   },
 ];
+const RECENT_SEARCH_ITEMS = [
+  {
+    name: "design101.doc",
+  },
+  {
+    name: "project.xlsx",
+  },
+];
 
 const SearchResultCategory = ({ iconLink, bgColor, title }) => {
   return (
@@ -62,33 +71,49 @@ const SearchResultCategory = ({ iconLink, bgColor, title }) => {
 };
 SearchResultCategory.propTypes = {
   iconLink: PropTypes.string.isRequired,
-  bgColor: PropTypes.string.isRequired,
+  bgColor: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 const SearchResultCategoryList = ({ list = [] }) => {
   return (
-    <div className="flex flex-wrap gap-8">
-      {list?.map((elm, ind) => (
-        <SearchResultCategory {...{ key: ind, ...elm }} />
-      ))}
+    <div className="flex flex-col gap-6">
+      <h2 className="text-text-dustygray">I'm searching for...</h2>
+      <div className="flex flex-wrap gap-8">
+        {list?.map((elm, ind) => (
+          <SearchResultCategory {...{ key: ind, ...elm }} />
+        ))}
+      </div>
     </div>
   );
 };
 SearchResultCategoryList.propTypes = {
-  list: PropTypes.arrayOf(SearchResultCategory.propTypes),
+  list: PropTypes.arrayOf(PropTypes.shape(SearchResultCategory.propTypes)),
 };
-// const RecentSearchList = ({ list = [] }) => {
-//     return (
-//       <div className="flex flex-wrap gap-8">
-//         {list?.map((elm, ind) => (
-//           <SearchResultCategory {...{ key: ind, ...elm }} />
-//         ))}
-//       </div>
-//     );
-//   };
-//   RecentSearchList.propTypes = {
-//     list: PropTypes.arrayOf(SearchResultCategory.propTypes),
-//   };
+
+const RecentSearchItem = ({ name = "file_name.txt" }) => {
+  return (
+    <div className="flex items-center gap-3">
+      <img {...{ src: clockIcon, alt: "icon" }} />
+      <span className="text-sm text-text-grayish">{name}</span>
+    </div>
+  );
+};
+RecentSearchItem.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+const RecentSearchList = ({ list = [] }) => {
+  return (
+    <div className="flex flex-col gap-3">
+      <h2 className="text-text-dustygray mb-1">Recent searches</h2>
+      {list?.map((elm, ind) => (
+        <RecentSearchItem {...{ key: ind, ...elm }} />
+      ))}
+    </div>
+  );
+};
+RecentSearchList.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.shape(RecentSearchItem.propTypes)),
+};
 
 const SearchInput = ({ className: customClass, ...restProps }) => {
   return (
@@ -107,9 +132,9 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
         />
         <CustomIcon {...{ src: cancelIcon, alt: "cancel icon" }} />
       </div>
-      <div className="bg-white w-full absolute top-full mt-1 py-2 px-5 shadow-md flex flex-col gap-3">
-        <h2 className="text-text-dustygray mt-3">I'm searching for...</h2>
+      <div className="bg-white w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
         <SearchResultCategoryList {...{ list: SEARCH_CATEGORY_LIST }} />
+        <RecentSearchList {...{ list: RECENT_SEARCH_ITEMS }} />
       </div>
     </div>
   );
