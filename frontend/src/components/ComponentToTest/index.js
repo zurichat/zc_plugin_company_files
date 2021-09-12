@@ -5,7 +5,7 @@ import FolderDescription from "Components/FolderDescription";
 
 const ComponentToTest = () => {
   return (
-    <div className="flex">
+    <div className="flex items-center justify-between w-full">
       <EmptyFolder />
       <FolderDescription />
     </div>
