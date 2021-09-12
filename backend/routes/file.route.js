@@ -12,8 +12,11 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
-  searchByType,
-  searchBySize
+  isDuplicate,
+  getAllDuplicates,
+  setEditPermission,
+  searchBySize,
+  searchByType
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -23,7 +26,7 @@ router.post('/write', fileCreate);
 router.get('/read', getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get('/file/searchByisDeleted', searchFileByIsDeleted);
+router.get('/read/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
@@ -45,9 +48,21 @@ router.get('/searchBySize/:size', searchBySize)
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
+
+// CHECK IF FILE IS A DUPLICATE
+router.post('/isDuplicate', isDuplicate);
+
+// GET DUPLICATE FILES
+router.get('/duplicateFiles', getAllDuplicates);
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
+
+router.route('/file/write/:admin')
+.put(fileUpdate)
+.delete(fileDelete)
+// SET EDIT PERMISSION
+router.get('/setedit/:admin', setEditPermission)
 
 // SEARCH FILES BY FILE TYPE
 router.get('/searchByType', searchByType);

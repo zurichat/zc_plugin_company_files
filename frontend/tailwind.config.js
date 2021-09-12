@@ -1,38 +1,34 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
+  mode: "jit",
+  purge: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./src/components/**/*.{js,ts,jsx,tsx}",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
-        primary: '#00B87C',
-        secondary: '#1A61DB',
-        accent: '#B8003C',
-        error: '#F40101',
-        bgLight: '#E5E5E5',
-        border: '#BEBEBE',
-        bg: {
-          lightGrey: '#F6F6F6',
-          white: '#FFFFFF'
-        },
-        success: '#008B5E',
+        secondary: "#00B87C",
+        primary: "#1A61DB",
+        shiraz: "#B8003C",
         text: {
-          header: '#242424',
-          body: '#3A3A3A',
-          navbar: '#999999',
-          grey: '#4A4A4A',
-          time: '#C1C1C1',
-          lightIcon: '#BEBEBE'
+          shaft: "#242424",
+          shaftlight: "#3A3A3A",
+          dustygray: "#999999",
+          silverlight: "#C1C1C1",
+          silver: "#BEBEBE",
         },
+        error: "#F40101",
+        wildsand: "#F6F6F6",
+        white: "#FFF",
+        success: "#008B5E",
         avatar: {
-          one: '#F7E0FF',
-          two: '#F8FFCD',
-          three: '#FFF0F0',
-          four: '#ACFFE6',
-          five: '#E3EEFF'
-        }
-      },
-      fontFamily: {
-        lato: ['Lato']
+          pink: "#F7E0FF",
+          yellow: "#F8FFCD",
+          chablis: "#FFF0F0",
+          aeroblue: "#ACFFE6",
+          bluelight: "#E3EEFF",
+        },
       },
     },
   },
@@ -40,4 +36,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

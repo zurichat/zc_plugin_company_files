@@ -14,12 +14,8 @@ const app = express();
 const router = express.Router();
 
 const rootRouter = require('./backend/routes/index')(router);
-const pluginInfoRouter = require('./backend/routes/plugin.router');
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
-
-const fileRouter = require('./backend/routes/file.route');
-const folderRouter = require('./backend/routes/folder.route');
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
@@ -35,11 +31,7 @@ if (isProduction) {
 }
 
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
-app.use('/', pluginInfoRouter); // For mounting the plugin info router on the '/' path
 
-// USING FILE AND FOLDER ROUTER
-app.use(fileRouter);
-app.use(folderRouter);
 
 // All other GET requests not handled before will return our React app
 app.use((req, res, next) => {

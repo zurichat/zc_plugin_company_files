@@ -40,11 +40,11 @@ const sendErrorInProduction = (errorObject, res) => {
   }
 
 
-  if (errorObject?.error) {
-    if (errorObject?.error.code === 'ENOTFOUND' && errorObject?.error?.hostname) {
-      errorObject = new AppError('An error occured while connecting to a required external service', 500);
-    }
-  }
+   if (errorObject?.error) {
+     if (errorObject?.error.code === 'ENOTFOUND' && errorObject?.error?.hostname) {
+       errorObject = new AppError('An error occured while connecting to a required external service', 500);
+     }
+   }
 
 
   res.status(errorObject.statusCode || 500).json({

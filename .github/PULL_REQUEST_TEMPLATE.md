@@ -1,8 +1,8 @@
 # Description
 
-Please include a summary of the change and which issue is fixed. Please also include relevant and context. List any new dependencies that are required for this change.
+Please include a summary of the change and which issue is fixed. Please also include relevant context. List any new dependencies that are required for this change.
 
-> Fixes # (issue)
+> Fixes #issueNumber
 
 # How Has This Been Tested?
 
