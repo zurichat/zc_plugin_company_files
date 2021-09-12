@@ -12,7 +12,8 @@ const {
   searchStarredFiles,
   searchFileByIsDeleted,
   getAllDeletedFiles,
-  searchBySize,
+  searchByType,
+  searchBySize
 } = require('../controllers/file.controller');
 
 // CREATE A NEW FILE
@@ -47,5 +48,8 @@ router.get('/deletedFiles', getAllDeletedFiles)
 router.route('/file/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
+
+// SEARCH FILES BY FILE TYPE
+router.get('/searchByType', searchByType);
 
 module.exports = router;
