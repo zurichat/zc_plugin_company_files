@@ -1,6 +1,5 @@
 {
   "private": true,
-<<<<<<< HEAD
   "dependencies": {
     "@craco/craco": "^6.2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -17,8 +16,6 @@
     "react-scripts": "4.0.3",
     "web-vitals": "^1.0.1"
   },
-=======
->>>>>>> b7e0d69c8245f8770986f0213a1d6fbf6b891b0e
   "scripts": {
     "dev": "next dev",
     "build": "next build",
