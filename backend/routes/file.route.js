@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
 const {
   fileCreate,
@@ -16,55 +16,51 @@ const {
   getAllDuplicates,
   setEditPermission,
   searchBySize,
-  searchByType
-} = require('../controllers/file.controller');
+  searchByType,
+} = require("../controllers/file.controller");
 
 // CREATE A NEW FILE
-router.post('/write', fileCreate);
+router.post("/write", fileCreate);
 
 // GET ALL THE FILES FROM THE ENDPOINT
-router.get('/read', getAllFiles);
+router.get("/read", getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get('/read/searchByisDeleted', searchFileByIsDeleted);
+router.get("/read/searchByisDeleted", searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
-router.get('/read/:id', fileDetails);
+router.get("/read/:id", fileDetails);
 
 // Renames file
-router.post('/rename/:id', fileRename);
+router.post("/rename/:id", fileRename);
 
 // GET ARCHIVED FILES
-router.get('/archive', getArchivedFiles);
+router.get("/archive", getArchivedFiles);
 
 // SEARCH FILES BY DATE ADDED
-router.get('/searchByDate', searchByDate);
+router.get("/searchByDate", searchByDate);
 
 // SEARCH STARRED FILES
-router.get('/searchStarredFiles', searchStarredFiles)
+router.get("/searchStarredFiles", searchStarredFiles);
 
 // SEARCH FILES BY SIZE
-router.get('/searchBySize/:size', searchBySize)
+router.get("/searchBySize/:size", searchBySize);
 
 // GET DELETED FILES
-router.get('/deletedFiles', getAllDeletedFiles)
+router.get("/deletedFiles", getAllDeletedFiles);
 
 // CHECK IF FILE IS A DUPLICATE
-router.post('/isDuplicate', isDuplicate);
+router.post("/isDuplicate", isDuplicate);
 
 // GET DUPLICATE FILES
-router.get('/duplicateFiles', getAllDuplicates);
-router.route('/file/write/:id')
-  .put(fileUpdate)
-  .delete(fileDelete)
+router.get("/duplicateFiles", getAllDuplicates);
+router.route("/file/write/:id").put(fileUpdate).delete(fileDelete);
 
-router.route('/file/write/:admin')
-.put(fileUpdate)
-.delete(fileDelete)
+router.route("/file/write/:admin").put(fileUpdate).delete(fileDelete);
 // SET EDIT PERMISSION
-router.get('/setedit/:admin', setEditPermission)
+router.get("/setedit/:admin", setEditPermission);
 
 // SEARCH FILES BY FILE TYPE
-router.get('/searchByType', searchByType);
+router.get("/searchByType", searchByType);
 
 module.exports = router;
