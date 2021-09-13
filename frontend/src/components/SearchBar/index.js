@@ -2,6 +2,7 @@ import Button from "Components/Button";
 import CustomIcon from "Components/CustomIcon";
 import PropTypes from "prop-types";
 import React from "react";
+import { useState } from "react";
 const searchIcon = "/Icons/search.svg";
 const cancelIcon = "Icons/x-icon.svg";
 const settingsIcon = "Icons/parameters-icon.svg";
@@ -115,6 +116,21 @@ RecentSearchList.propTypes = {
 };
 
 const SearchInput = ({ className: customClass, ...restProps }) => {
+  const [showSearchWindow, setShowSearchWindow] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState("initialState");
+  console.log(
+    "🚀 ~ file: index.js ~ line 121 ~ SearchInput ~ searchInputValue",
+    searchInputValue
+  );
+  const onChangeHandler = (e) => {
+    setSearchInputValue(e?.target?.value);
+  };
+  const onFocusHandler = () => {
+    setShowSearchWindow(true);
+  };
+  const onBlurHandler = () => {
+    setShowSearchWindow(false);
+  };
   return (
     <div className="bg-white flex flex-col w-full relative">
       <div
@@ -126,15 +142,22 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
         <CustomIcon {...{ src: searchIcon, alt: "search icon" }} />
         <input
           className="flex-1 py-2 px-4 focus:outline-none"
-          type="text"
-          placeholder="Search for your files"
+          {...{
+            type: "text",
+            placeholder: "Search for your files",
+            onChange: onChangeHandler,
+            onFocus: onFocusHandler,
+            onBlur: onBlurHandler,
+          }}
         />
         <CustomIcon {...{ src: cancelIcon, alt: "cancel icon" }} />
       </div>
-      <div className="bg-white w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
-        <SearchResultCategoryList {...{ list: SEARCH_CATEGORY_LIST }} />
-        <RecentSearchList {...{ list: RECENT_SEARCH_ITEMS }} />
-      </div>
+      {!!showSearchWindow && (
+        <div className="bg-white z-20 w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
+          <SearchResultCategoryList {...{ list: SEARCH_CATEGORY_LIST }} />
+          <RecentSearchList {...{ list: RECENT_SEARCH_ITEMS }} />
+        </div>
+      )}
     </div>
   );
 };
