@@ -10,13 +10,12 @@ const createResponse = (
   objectOrMessage,
   data,
   status = false,
-  additionalData,
-  moreAdditionalData
+  additionalData
 ) => {
   return {
     status: status === false ? "failure" : "success",
     message: objectOrMessage ? formatMessage(objectOrMessage) : undefined,
-    ...additionalData, ...moreAdditionalData,
+    ...additionalData,
     data,
   };
 };

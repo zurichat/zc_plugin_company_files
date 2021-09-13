@@ -27,7 +27,8 @@ exports.getAllFolders = async (req, res) => {
   //   .status(200)
   //   .send(appResponse(null, { ...response }, true, { count: response.length }));
   res.status(200).send(
-    appResponse("All folders", data, true, response, {
+    appResponse(null, data, true, {
+      ...response,
       count: data.length,
     })
   );
@@ -41,7 +42,7 @@ exports.folderDetails = async (req, res) => {
     throw new NotFoundError();
   } else {
     const response = await RealTime.publish("folder_detail", data);
-    res.status(200).send(appResponse("folder found", data, true, response));
+    res.status(200).send(appResponse(null, data, true, { ...response }));
   }
 
   // res.status(200).send(appResponse(null, { ...response }, true));
