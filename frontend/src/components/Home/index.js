@@ -7,6 +7,7 @@ import FileOptions from "Components/FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
 const Index = () => {
   const [upload, setUpload] = useState(false);
+  const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
 
   const showOptions = (e) => {
@@ -27,15 +28,27 @@ const Index = () => {
 
   const hideUploadModal = () => {
     setUpload(!upload);
+    setProgress(!progress);
+  };
+
+  const showProgressModal = () => {
+    // hideProgressModal();
+    setProgress(!progress);
+    console.log(progress);
+  };
+
+  const hideProgressModal = () => {
+    setProgress(!progress);
+    setUpload(!upload);
   };
 
   // const show
 
   return (
-    <div className="relative p-10 z-auto">
+    <div className="relative py-10 z-auto">
       <button
         onClick={showUploadModal}
-        className="relative ml-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
+        className="relative ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
       >
         Add File
         <FileOptions options={options} />
@@ -48,7 +61,10 @@ const Index = () => {
         <SelectFileModal
           className=""
           upload={upload}
+          progress={progress}
           hideUploadModal={hideUploadModal}
+          showProgressModal={showProgressModal}
+          hideProgressModal={hideProgressModal}
         />
       )}
     </div>
