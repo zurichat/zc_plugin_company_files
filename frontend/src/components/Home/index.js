@@ -4,6 +4,7 @@ import Folder from "./Folder";
 import Files from "./Files";
 import SelectFileModal from "Components/FileUpload/SelectFileModal";
 import FileOptions from "Components/FileUpload/FileOptions";
+import ShortCut from "./ShortCut";
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [options, setOptions] = useState(false);
@@ -32,6 +33,8 @@ const Index = () => {
         <FileOptions options={options} />
       </button>
 
+    <div>
+      <ShortCut />
       <RecentlyViewed />
       <Folder />
       <Files />
