@@ -1,7 +1,9 @@
 const router = require('express').Router();
 
 const {
-  fileCreate,
+  fileUpload,
+  fileUploadRequest,
+  fileUploadStatus,
   fileRename,
   fileUpdate,
   fileDetails,
@@ -19,14 +21,20 @@ const {
   searchByType
 } = require('../controllers/file.controller');
 
-// CREATE A NEW FILE
-router.post('/write', fileCreate);
+// FILE UPLOAD REQUEST
+router.post('/uploadRequest', fileUploadRequest);
+
+// FILE UPLOAD STATUS
+router.get('/uploadStatus', fileUploadStatus);
+
+// UPLOAD A NEW FILE/FILES
+router.post('/upload', fileUpload);
 
 // GET ALL THE FILES FROM THE ENDPOINT
-router.get('/read', getAllFiles);
+router.get('/all', getAllFiles);
 
 // SEARCH FOR ALL DELETED FILES
-router.get('/read/searchByisDeleted', searchFileByIsDeleted);
+router.get('/searchByisDeleted', searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:id', fileDetails);
@@ -54,15 +62,16 @@ router.post('/isDuplicate', isDuplicate);
 
 // GET DUPLICATE FILES
 router.get('/duplicateFiles', getAllDuplicates);
-router.route('/file/write/:id')
+router.route('/write/:id')
   .put(fileUpdate)
   .delete(fileDelete)
 
-router.route('/file/write/:admin')
-.put(fileUpdate)
-.delete(fileDelete)
+router.route('/write/:admin')
+  .put(fileUpdate)
+  .delete(fileDelete)
+
 // SET EDIT PERMISSION
-router.get('/setedit/:admin', setEditPermission)
+router.get('/setEdit/:admin', setEditPermission)
 
 // SEARCH FILES BY FILE TYPE
 router.get('/searchByType', searchByType);
