@@ -108,27 +108,19 @@ class DatabaseConnection {
       // delete multiple files
       let obj_id = id
       if (obj_id instanceof Array) {
-        console.log(obj_id);
         let delItems = await Promise.all(
           obj_id.map(async val => {
-            console.log(1),
-            console.log(val),
-            
-            this.delete_data.object_id = val,
-            console.log(this.delete_data);
+            this.delete_data.object_id = val;
             let info = this.delete_data
-            console.log(info)
             let response = await axios.post(
               databaseDeleteUrl,
               info,
             )
-            console.log(response.data)
             return response.data
           }))
         return delItems
       } else {
         this.delete_data.object_id = id
-        console.log(this.delete_data)
         const response = await axios.post(
           databaseDeleteUrl,
           this.delete_data
