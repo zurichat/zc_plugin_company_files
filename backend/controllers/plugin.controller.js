@@ -1,13 +1,12 @@
 const { version, author } = require('../../package.json');
 const pluginName = 'Company Files Management Plug-In';
 const { BadRequestError, UnAuthorizedError } = require('../utils/appError');
+const RealTime = require('../utils/realtime.helper');
 const DatabaseConnection = require('../utils/database.helper');
 const Rooms = new DatabaseConnection('NewRooms');
 const { PLUGIN_ID } =  process.env;
 const authCheck = require('../utils/authcheck.helper');
 
-
-const RealTime = require('../utils/realtime.helper');
 
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -22,9 +21,10 @@ exports.info = (req, res) => {
     pingUrl: `${baseUrl}/api/v1/ping`,
     description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
     author,
-    version,
+    version
   });
 }
+
 
 exports.sidebar = async (req, res) => {
   const { org, user, token } = req.query;
@@ -37,7 +37,7 @@ exports.sidebar = async (req, res) => {
 
   if (!isUserValidated) throw new UnAuthorizedError();
 
-  let { data: allRooms } = await Rooms.fetchAll();
+  const { data: allRooms } = await Rooms.fetchAll();
 
   allRooms.forEach(room => room.memberCount = room.members.length);
 
@@ -61,7 +61,7 @@ exports.sidebar = async (req, res) => {
     pluginRooms
   }
 
-  await RealTime.publish("sidebar", sidebarListObject)
+  await RealTime.publish('sidebar', sidebarListObject)
 
   res.status(200).json({ ...sidebarListObject });
 }

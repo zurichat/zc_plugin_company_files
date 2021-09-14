@@ -3,11 +3,11 @@ require('dotenv').config();
 require('express-async-errors');
 
 const path = require('path');
+const cors = require('cors');
 const cpus = require('os').cpus();
 const cluster = require('cluster');
 const express = require('express');
 const compression = require('compression');
-const fileUpload = require('express-fileupload');
 
 
 const app = express();
@@ -20,7 +20,7 @@ const ErrorHandler = require('./backend/middlewares/errorHandler');
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-app.use(fileUpload({ createParentPath: true })); // For adding the 'req.files' property
+app.use(cors());
 
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
 
