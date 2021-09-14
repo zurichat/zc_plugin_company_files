@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const SelectFileModal = ({ upload }) => {
+const SelectFileModal = ({ upload, hideUploadModal }) => {
   const [files, setFiles] = useState();
-  const [uploadState, setUploadState] = useState(upload);
-  // let files = useRef();
+  let modalStatus = useRef(upload.current);
   let dragArea = useRef(null);
   let dragNdrop = useRef(null);
 
@@ -63,8 +62,9 @@ const SelectFileModal = ({ upload }) => {
   };
 
   const closeModal = () => {
-    setUploadState(false);
-    console.log();
+    console.log(modalStatus);
+    modalStatus.current = false;
+    console.log(modalStatus.current);
   };
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const SelectFileModal = ({ upload }) => {
           <div className="modalHeader my-2 flex justify-between text-gray-400 border-b">
             <span className="text-[20px]">Load File(s)</span>
             <span
-              onClick={closeModal}
+              onClick={hideUploadModal}
               className="capitalize text-2xl hover:text-red-600 cursor-pointer "
             >
               &#10005;
@@ -145,6 +145,9 @@ const SelectFileModal = ({ upload }) => {
         </div>
       </div>
     );
+  }
+  if (modalStatus.current === false) {
+    return null;
   }
 };
 

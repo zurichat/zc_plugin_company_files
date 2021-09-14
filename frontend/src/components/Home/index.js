@@ -21,24 +21,36 @@ const Index = () => {
     document.removeEventListener("click", hideOptions);
   };
 
+  const showUploadModal = () => {
+    setUpload(!upload);
+  };
+
+  const hideUploadModal = () => {
+    setUpload(!upload);
+  };
+
   // const show
 
   return (
-    <div className="relative mt-10 z-auto">
+    <div className="relative p-10 z-auto">
       <button
-        onClick={showOptions}
-        className="relative ml-10 px-[14px] py-[10px] text-[12px] text-green-600 border-2 rounded-sm border-green-600 hover:text-white hover:bg-green-600"
+        onClick={showUploadModal}
+        className="relative ml-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
       >
         Add File
         <FileOptions options={options} />
       </button>
-
-    <div>
       <ShortCut />
       <RecentlyViewed />
       <Folder />
       <Files />
-      {upload && <SelectFileModal className="" upload={upload} />}
+      {upload && (
+        <SelectFileModal
+          className=""
+          upload={upload}
+          hideUploadModal={hideUploadModal}
+        />
+      )}
     </div>
   );
 };
