@@ -20,13 +20,13 @@ const index = () => {
               <span className="block text-gray-400">140 people</span>
             </div>
             <div className="icons flex">
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-10">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user.svg" alt="folder user" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-20">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user2.svg" alt="" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around z-30">
+              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
                 <img src="/Icons/plus/active.svg" alt="add user" />
               </div>
             </div>
@@ -47,13 +47,13 @@ const index = () => {
               <span className="block text-gray-400">140 people</span>
             </div>
             <div className="icons flex">
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-10">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user.svg" alt="folder user" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-20">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user2.svg" alt="" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around z-30">
+              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
                 <img src="/Icons/plus/active.svg" alt="add user" />
               </div>
             </div>
@@ -74,13 +74,13 @@ const index = () => {
               <span className="block text-gray-400">140 people</span>
             </div>
             <div className="icons flex">
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-10">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user.svg" alt="folder user" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-20">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user2.svg" alt="" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around z-30">
+              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
                 <img src="/Icons/plus/active.svg" alt="add user" />
               </div>
             </div>
@@ -101,13 +101,13 @@ const index = () => {
               <span className="block text-gray-400">140 people</span>
             </div>
             <div className="icons flex">
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-10">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user.svg" alt="folder user" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill z-20">
+              <div className="avi w-[23px] h-[23px] -m-1 rounded-full object-fill">
                 <img src="/Icons/folder-user2.svg" alt="" />
               </div>
-              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around z-30">
+              <div className="avi w-[23px] h-[23px] -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
                 <img src="/Icons/plus/active.svg" alt="add user" />
               </div>
             </div>
