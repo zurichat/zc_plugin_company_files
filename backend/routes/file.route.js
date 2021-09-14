@@ -6,6 +6,10 @@ const {
   fileUpdate,
   fileDetails,
   fileDelete,
+  deleteMultipleFiles,
+  getNonDeletedFiles,
+  deleteTemporarily,
+  restoreFile,
   getAllFiles,
   getArchivedFiles,
   searchByDate,
@@ -49,14 +53,29 @@ router.get('/searchBySize/:size', searchBySize)
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
 
+// GET NON DELETED FILES
+router.get('/NonDeletedFiles', getNonDeletedFiles);
+
 // CHECK IF FILE IS A DUPLICATE
 router.post('/isDuplicate', isDuplicate);
 
 // GET DUPLICATE FILES
 router.get('/duplicateFiles', getAllDuplicates);
-router.route('/file/write/:id')
-  .put(fileUpdate)
-  .delete(fileDelete)
+
+// EDIT FILE
+router.put('/file/write/:id', fileUpdate)
+
+// DELETE SINGLE FILE
+router.delete('/deleteFile/:id', fileDelete);  
+
+// DELETE MULTIPLE FILES
+router.post('/deleteMultipleFiles', deleteMultipleFiles);
+
+//  TEMPORARILY DELETE FILES TO BIN
+router.put('/deleteToBin/:id', deleteTemporarily);
+
+// RESTORE FILE FROM BIN
+router.put('/restoreFile/:id', restoreFile);
 
 router.route('/file/write/:admin')
 .put(fileUpdate)
