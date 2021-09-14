@@ -10,7 +10,7 @@ const File = new DatabaseConnection('File');
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
-const { BadRequestError, InternalServerError } = require('../utils/appError');
+const { BadRequestError, InternalServerError, NotFoundError } = require('../utils/appError');
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 
@@ -130,6 +130,20 @@ exports.getAllFiles = async (req, res) => {
   res.status(200).send(appResponse(null, data, true));
 }
 
+exports.getNonDeletedFiles = async (req, res) => {
+  
+  const allFiles = await File.fetchAll();
+
+  const data = allFiles.data.filter(file => {
+
+    return file.isDeleted === false;
+
+  })
+
+
+  res.status(200).send(appResponse(null, data, true));
+}
+
 
 exports.fileDetails = async (req, res) => {
   const data = await File.fetchOne({ '_id': req.params.id });
@@ -154,9 +168,49 @@ exports.fileUpdate = async (req, res) => {
 exports.fileDelete = async (req, res) => {
   const response = await File.delete(req.params.id);
 
+  if (!response) throw new InternalServerError()
+
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
+exports.deleteMultipleFiles = async (req,res) => {
+  const [... ids] = req.body.ids;
+
+  const response = await File.delete(ids);
+
+  if (!response) throw new InternalServerError()
+
+  res.status(200).send(appResponse('Multiple Files deleted successfully!', response, true));
+}
+
+// send to trash
+exports.deleteTemporarily = async (req,res) => {
+  const {data} = await File.fetchOne( {_id: req.params.id });
+  let toggler
+  if (data.isDeleted === false) {
+    toggler = true
+
+    const response = await File.update(req.params.id, { isDeleted: toggler });
+
+    res.status(200).send(appResponse('File sent to trash!', response, true));
+  } else {
+    throw new BadRequestError()
+  }
+}
+
+exports.restoreFile =  async (req,res) => {
+  const {data} = await File.fetchOne( {_id: req.params.id });
+  let toggler
+  if (data.isDeleted === true) {
+    toggler = false
+
+    const response = await File.update(req.params.id, { isDeleted: toggler });
+
+    res.status(200).send(appResponse('File restored!', response, true));
+  } else {
+    throw new BadRequestError()
+  }
+}
 
 exports.searchFileByIsDeleted = async (req, res) => {
   
@@ -267,6 +321,22 @@ exports.getAllDeletedFiles = async (req, res) => {
     console.log(error)
     res.status(500).send(error)
   }
+}
+
+// get non deleted files
+exports.getNonDeletedFiles = async (req, res) => {
+  
+  const allFiles = await File.fetchAll();
+
+  const data = allFiles.data.filter(file => {
+
+    return file.isDeleted === false;
+
+  })
+
+  
+  res.send({ ...data });
+  
 }
 
 
