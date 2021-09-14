@@ -1,3 +1,5 @@
+uploads/**
+
 # Logs
 
 logs
@@ -50,12 +52,6 @@ node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files
-<<<<<<< Updated upstream
-
-typings/
-=======
->>>>>>> Stashed changes
-
 typings/
 frontend/yarn.lock
 # frontend/package-lock.json
