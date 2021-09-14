@@ -6,8 +6,6 @@ const RealTime = require("../utils/realtime.helper");
 exports.fileCreate = async (req, res) => {
   const { body } = req;
 
-  // const file = await FileSchema.validateAsync(body);
-  const response = await File.create(body);
 
   res.send({ response });
 };
@@ -31,8 +29,8 @@ exports.fileDetails = async (req, res) => {
 exports.fileUpdate = async (req, res) => {
   const { body } = req;
 
-  const response = await File.update(req.params.id, body);
-  const allFiles = await File.fetchAll();
+  res.status(200).send(appResponse(null, data, true));
+
 
   const updatedFile = allFiles.data.filter((file) => {
     return file._id === req.params.id;

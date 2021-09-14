@@ -1,7 +1,9 @@
 const router = require("express").Router();
 
 const {
-  fileCreate,
+  fileUpload,
+  fileUploadRequest,
+  fileUploadStatus,
   fileRename,
   fileUpdate,
   fileDetails,

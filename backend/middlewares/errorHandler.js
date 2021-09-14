@@ -9,23 +9,7 @@ const sendErrorInDev = (errorObject, res) => {
 
 const sendErrorInProduction = (errorObject, res) => {
   let details;
-
-  // Handles bad Mongo ObjectId
-  if (errorObject.name === 'CastError') {
-    errorObject = new NotFoundError();
-  }
-
-
-  // Mongoose duplicate key error
-  if (errorObject.name === 'MongoError' && errorObject.code === 11000) {
-    let duplicateError = errorObject.message.split('dup key: ').pop();
-    duplicateError = duplicateError.slice(3 - 1, duplicateError.length - 3).split(': "');
-    
-    details = { [duplicateError.shift()]: duplicateError.pop() }
-    errorObject = new BadRequestError('A record exists with some of your entered values');
-  }
-
-
+  
   // Joi validation errors
   if (errorObject.name === 'ValidationError') {
     const errorDetails = errorObject.details;
@@ -40,11 +24,11 @@ const sendErrorInProduction = (errorObject, res) => {
   }
 
 
-   if (errorObject?.error) {
-     if (errorObject?.error.code === 'ENOTFOUND' && errorObject?.error?.hostname) {
-       errorObject = new AppError('An error occured while connecting to a required external service', 500);
-     }
-   }
+  if (errorObject?.error) {
+    if (errorObject?.error.code === 'ENOTFOUND' || errorObject?.error.code === 'ECONNRESET') {
+      errorObject = new AppError('An error occured while connecting to a required external service', 500);
+    }
+  }
 
 
   res.status(errorObject.statusCode || 500).json({

@@ -7,8 +7,8 @@ const pluginRouter = require('./plugin.router');
 module.exports = router => {
   router.use('/', pluginRouter);
   router.use('/rooms', roomsRouter);
-  router.use('/file', fileRouter);
-  router.use('/folder', folderRouter);
+  router.use('/files', fileRouter);
+  router.use('/folders', folderRouter);
   router.use('/archive', archiveRouter);
 
   return router;
