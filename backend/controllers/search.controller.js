@@ -28,15 +28,15 @@ exports.searchAndFilterFiles = async (req, res) => {
                 if(nFile.fileName === undefined){
                     return false;
                 }else{
-                    return nFile.fileName.toLowerCase().includes(filename.toLowerCase())
+                    return nFile.fileName.toLowerCase().includes(filename.toLowerCase());
                 }
             }).filter(nFile => {
                 if(nFile.type === undefined){
                     return false;
                 }else if(filetype === "all"){
-                    return true
+                    return true;
                 }else{
-                    return nFile.type.toLowerCase().includes(filetype.toLowerCase())
+                    return nFile.type.toLowerCase().includes(filetype.toLowerCase());
                 }
             })
             if(respData.length === 0){
