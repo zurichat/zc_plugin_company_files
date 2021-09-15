@@ -1,10 +1,12 @@
-import Layout from "Components/Layout";
-import Main from "Components/Main";
+import Layout  from "Components/Layout";
+import VideoPreview  from "Components/VideoPreview";
 
 export default function VideoPreviewPage() {
   return (
     <Layout>
-      <Main />
+      <div className="bg-gray-50 h-screen flex-1 flex items-center justify-center">
+          <VideoPreview/>
+      </div>
     </Layout>
   );
 }
