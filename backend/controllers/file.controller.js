@@ -489,7 +489,7 @@ exports.searchBySize = async (req, res) => {
     }
   files.length > 0 ?  
   res.status(200).json(files) : 
-  res.status(404).json("No matches")
+  res.status(404).json('No matches')
   } catch (err) {
   res.status(500).json(err);
   }

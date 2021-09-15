@@ -10,7 +10,7 @@
     "lint:backend": "eslint -c .eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "npm run lint:backend -- --fix",
     "prepare": "husky install",
-    "start": "node server.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -49,12 +49,10 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^3.4.1",
     "husky": "^7.0.2",
-    "jest": "^27.2.0",
     "lint-staged": "^11.1.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "prettier": "^2.3.2",
-    "supertest": "^6.1.6"
+    "prettier": "^2.3.2"
   },
   "husky": {
     "hooks": {
