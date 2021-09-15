@@ -10,22 +10,20 @@ const Folders = new DatabaseConnection("Folder");
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   body.folderId = uuid();
-  body.parentId = uuid();
+  // body.parentId = uuid();
 
   const folder = await FolderSchema.validateAsync(body);
-  const response = await Folders.create(folder);
+  const createdFolder = await Folders.create(folder);
 
-  res
-    .status(201)
-    .send(appResponse("Folder successfully created!", response, true));
+
+  res.status(201).send(appResponse(null, createdFolder, true))
+      
 };
 
 exports.getAllFolders = async (req, res) => {
   const { data } = await Folders.fetchAll();
   const response = await RealTime.publish("all_folders", data);
-  // res
-  //   .status(200)
-  //   .send(appResponse(null, { ...response }, true, { count: response.length }));
+
   res.status(200).send(
     appResponse(null, data, true, {
       ...response,
@@ -35,17 +33,22 @@ exports.getAllFolders = async (req, res) => {
 };
 
 exports.folderDetails = async (req, res) => {
-  const { folderId } = req.params;
-  const { data } = await Folders.fetchOne({ folderId });
+  const { id } = req.params;
+  const { data } = await Folders.fetchOne({ _id: id });
 
   if (data === null) {
     throw new NotFoundError();
   } else {
     const response = await RealTime.publish("folder_detail", data);
-    res.status(200).send(appResponse(null, data, true, { ...response }));
+    res.status(200).send(
+      appResponse(null, data, true, {
+        ...response,
+        count: data.length,
+      })
+    );
   }
 
-  // res.status(200).send(appResponse(null, { ...response }, true));
+ 
 };
 
 exports.folderUpdate = async (req, res) => {

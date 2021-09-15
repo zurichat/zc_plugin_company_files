@@ -14,7 +14,7 @@ router.post("/write", folderCreate);
 router.get("/read", getAllFolders);
 
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
-router.get("/read/:folderId", folderDetails);
+router.get("/read/:id", folderDetails);
 
 router.route("/write/:id").put(folderUpdate).delete(folderDelete);
 

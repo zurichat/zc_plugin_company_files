@@ -7,7 +7,7 @@ const FolderSchema = Joi.object({
   parentId: Joi.string().guid({ version: "uuidv4" }).default(null),
   description: Joi.string().default(null),
   permissions: Joi.string().default("view"),
-  isPinned: Joi.boolean().default(false).required(),
+  isPinned: Joi.boolean().default(false),
   dateAdded: Joi.date().default(new Date().toISOString()),
   dateModified: Joi.date().default(new Date().toISOString()),
   lastAccessed: Joi.date().default(new Date().toISOString()),
