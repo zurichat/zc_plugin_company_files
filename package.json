@@ -11,13 +11,6 @@
     "lint:backend:fix": "npm run lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
-    "test": "jest"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
   },
   "repository": {
     "type": "git",
