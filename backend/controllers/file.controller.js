@@ -1,7 +1,118 @@
-const ApiConnection = require("../utils/database.helper");
-const File = new ApiConnection("File");
-const RealTime = require("../utils/realtime.helper");
-// const FileSchema = require('../models/File');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const uuid = require('uuid').v4;
+const Busboy = require('busboy');
+const { promisify } = require('util');
+const mimeTypes = require('mime-types');
+const DatabaseConnection = require('../utils/database.helper');
+const File = new DatabaseConnection('File');
+const RealTime = require('../utils/realtime.helper');
+const FileSchema = require('../models/File');
+const MediaUpload = require('../utils/mediaUpload');
+const { BadRequestError, InternalServerError, NotFoundError } = require('../utils/appError');
+const appResponse = require('../utils/appResponse');
+const md5Generator = require('../utils/md5Generator');
+
+const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), `\\uploads\\file~~${fileId}~~${fileName}`));
+const getFileDetails = promisify(fs.stat);
+const deleteFile = promisify(fs.unlink);
+
+exports.fileUploadRequest = (req, res) => {
+	const { fileName } = req.body;
+	if (!fileName) {
+    throw new BadRequestError('Missing file name!');
+	} else {
+		const fileId = uuid();
+		fs.createWriteStream(getFilePath(fileName, fileId), { flags: 'w' });
+
+    res.status(200).send(appResponse(null, { fileId, fileName }, true));
+	}
+}
+
+
+exports.fileUploadStatus = (req, res) => {
+	if (req.query && req.query.fileName && req.query.fileId) {
+		getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
+			.then(stats => {
+				res.status(200).json({ status: 'success', totalChunkUploaded: stats.size });
+			}).catch(e => {
+				console.error('-- file read failed:', e);
+				res.status(400).json({ status: 'failure', message: 'No file with provided credentials...', credentials: { ...req.query } });
+			})
+	} else {
+		return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
+	}
+}
+
+
+exports.fileUpload = async (req, res) => {
+  const contentRange = req.headers['content-range'];
+	const fileId = req.headers['x-file-id'];
+	const folderId = req.headers['x-folder-id'] || null;
+
+	if (!contentRange) throw new BadRequestError('Missing "Content-Range" header');
+	if (!fileId) throw new BadRequestError('Missing "X-File-Id" header');
+
+	const match = contentRange.match(/bytes=(\d+)-(\d+)\/(\d+)/);
+
+	if (!match) throw new BadRequestError('Invalid "Content-Range" format');
+
+	const rangeStart = Number(match[1]);
+	const rangeEnd = Number(match[2]);
+	const fileSize = Number(match[3]);
+	
+	if (rangeStart >= fileSize || rangeStart >= rangeEnd || rangeStart >= rangeEnd) {
+		throw new BadRequestError('Invalid "Content-Range" provided');
+	}
+
+	const busboy = new Busboy({ headers: req.headers });
+
+	busboy.on('file', (_, file, fileName, encoding, mimetype) => {
+		const filePath = getFilePath(fileName, fileId);
+
+    if (!fileId) req.pause();
+
+		getFileDetails(filePath).then(stats => {
+			if (stats.size !== rangeStart) throw new BadRequestError('Bad chunk range start');
+
+			const fileStream = file.pipe(fs.createWriteStream(filePath, { flags: 'a' }));
+
+      fileStream.on('error', () => {
+        throw new InternalServerError('File upload failed!');
+      })
+      
+      fileStream.on('finish', async () => {
+        // Generate file's md5Hash & upload to Cloudinary
+        const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
+          md5Generator(filePath),
+          MediaUpload.uploadFile(filePath)
+        ]);
+        
+        const fileData = {
+          fileId,
+          folderId,
+          fileName,
+          url,
+          type: mimeTypes.lookup(fileName),
+          size,
+          cloudinaryId,
+          md5Hash
+        }
+
+        const file = await FileSchema.validateAsync(fileData);
+        
+        // Save file details to zccore & delete file from local disk
+        await Promise.all([File.create(file), deleteFile(filePath)]);
+
+        // Send (file) info to FE using Centrifugo
+        return res.status(200).send(appResponse('File uploaded successfully!', file, true));
+      });
+		}).catch(e => {
+			console.error('-- file read failed:', e);
+      return res.status(400).send(appResponse(null, 'No file with provided credentials...', false, { credentials: { fileId, fileName } }));
+		});
+	})
 
 exports.fileCreate = async (req, res) => {
   const { body } = req;
@@ -15,8 +126,20 @@ exports.getAllFiles = async (req, res) => {
 
   let response = await RealTime.publish("all_files", data);
 
-  res.send({ ...response });
-};
+exports.getNonDeletedFiles = async (req, res) => {
+  
+  const allFiles = await File.fetchAll();
+
+  const data = allFiles.data.filter(file => {
+
+    return file.isDeleted === false;
+
+  })
+
+
+  res.status(200).send(appResponse(null, data, true));
+}
+
 
 exports.fileDetails = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });
@@ -42,8 +165,49 @@ exports.fileUpdate = async (req, res) => {
 exports.fileDelete = async (req, res) => {
   const response = await File.delete(req.params.id);
 
-  res.send({ message: "File details deleted!", response });
-};
+  if (!response) throw new InternalServerError()
+
+  res.status(200).send(appResponse('File deleted successfully!', response, true));
+}
+
+exports.deleteMultipleFiles = async (req,res) => {
+  const [... ids] = req.body.ids;
+
+  const response = await File.delete(ids);
+
+  if (!response) throw new InternalServerError()
+
+  res.status(200).send(appResponse('Multiple Files deleted successfully!', response, true));
+}
+
+// send to trash
+exports.deleteTemporarily = async (req,res) => {
+  const {data} = await File.fetchOne( {_id: req.params.id });
+  let toggler
+  if (data.isDeleted === false) {
+    toggler = true
+
+    const response = await File.update(req.params.id, { isDeleted: toggler });
+
+    res.status(200).send(appResponse('File sent to trash!', response, true));
+  } else {
+    throw new BadRequestError()
+  }
+}
+
+exports.restoreFile =  async (req,res) => {
+  const {data} = await File.fetchOne( {_id: req.params.id });
+  let toggler
+  if (data.isDeleted === true) {
+    toggler = false
+
+    const response = await File.update(req.params.id, { isDeleted: toggler });
+
+    res.status(200).send(appResponse('File restored!', response, true));
+  } else {
+    throw new BadRequestError()
+  }
+}
 
 exports.searchFileByIsDeleted = async (req, res) => {
   try {
@@ -149,7 +313,24 @@ exports.getAllDeletedFiles = async (req, res) => {
     console.log(error);
     res.status(500).send(error);
   }
-};
+}
+
+// get non deleted files
+exports.getNonDeletedFiles = async (req, res) => {
+  
+  const allFiles = await File.fetchAll();
+
+  const data = allFiles.data.filter(file => {
+
+    return file.isDeleted === false;
+
+  })
+
+  
+  res.send({ ...data });
+  
+}
+
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {
@@ -298,4 +479,7 @@ exports.searchBySize = async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-};
+}
+}
+}
+
