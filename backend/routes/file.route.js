@@ -8,7 +8,12 @@ const {
   fileUpdate,
   fileDetails,
   fileDelete,
+  deleteMultipleFiles,
+  getNonDeletedFiles,
+  deleteTemporarily,
+  restoreFile,
   getAllFiles,
+  getFileByType,
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
@@ -32,6 +37,9 @@ router.post('/upload', fileUpload);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
+
+// GET A SPECIFIC FILE TYPE
+router.get('fileByType/:type', getFileByType);
 
 // SEARCH FOR ALL DELETED FILES
 router.get('/searchByisDeleted', searchFileByIsDeleted);
@@ -57,15 +65,29 @@ router.get('/searchBySize/:size', searchBySize)
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles)
 
+// GET NON DELETED FILES
+router.get('/NonDeletedFiles', getNonDeletedFiles);
+
 // CHECK IF FILE IS A DUPLICATE
 router.post('/isDuplicate', isDuplicate);
 
 // GET DUPLICATE FILES
 router.get('/duplicateFiles', getAllDuplicates);
 
-router.route('/write/:admin')
-  .put(fileUpdate)
-  .delete(fileDelete)
+// EDIT FILE
+router.put('/file/write/:id', fileUpdate)
+
+// DELETE SINGLE FILE
+router.delete('/deleteFile/:id', fileDelete);  
+
+// DELETE MULTIPLE FILES
+router.post('/deleteMultipleFiles', deleteMultipleFiles);
+
+//  TEMPORARILY DELETE FILES TO BIN
+router.put('/deleteToBin/:id', deleteTemporarily);
+
+// RESTORE FILE FROM BIN
+router.put('/restoreFile/:id', restoreFile);
 
 // SET EDIT PERMISSION
 router.get('/setEdit/:admin', setEditPermission)
