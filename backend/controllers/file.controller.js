@@ -146,20 +146,6 @@ exports.getFileByType = async (req, res) => {
   res.status(200).send(appResponse(null, matchedFiles, true));
 }
 
-exports.getNonDeletedFiles = async (req, res) => {
-
-  const allFiles = await File.fetchAll();
-
-  const data = allFiles.data.filter(file => {
-
-    return file.isDeleted === false;
-
-  })
-
-
-  res.status(200).send(appResponse(null, data, true));
-}
-
 
 exports.fileDetails = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });
@@ -181,6 +167,7 @@ exports.fileUpdate = async (req, res) => {
   res.status(200).send(appResponse('File details updated!', updatedFile, true));
 }
 
+// delete permanently
 exports.fileDelete = async (req, res) => {
   const response = await File.delete(req.params.id);
 
@@ -189,6 +176,7 @@ exports.fileDelete = async (req, res) => {
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
+// delete multiple files 
 exports.deleteMultipleFiles = async (req, res) => {
   const [...ids] = req.body.ids;
 
@@ -214,6 +202,7 @@ exports.deleteTemporarily = async (req, res) => {
   }
 }
 
+// restore file
 exports.restoreFile = async (req, res) => {
   const { data } = await File.fetchOne({ _id: req.params.id });
   let toggler
@@ -316,45 +305,45 @@ exports.getArchivedFiles = async (req, res) => {
     return res.send({ ...error });
   }
 };
-// get sall deleted files
+// get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
-  try {
-    const response = await File.fetchAll()
-    const responseData = response.data
-    const resposneArray = []
-    for (const iterator of responseData) {
-      if (!iterator.isDeleted) {
-        continue
-      }
-      resposneArray.push(iterator)
-    }
-    if (!resposneArray.length) {
-      res.status(404).send('no data found')
-      return
-    }
-    res.send(resposneArray)
-  } catch (error) {
-    console.log(error)
-    res.status(500).send(error)
+  const allFiles = await File.fetchAll();
+
+  if (!allFiles) throw new InternalServerError()
+
+  const data = allFiles.data.filter(file => {
+
+    return file.isDeleted === true;
+
+  })
+
+  if ((data.length)<1) {
+    return res.status(200).send(appResponse('No file deleted yet!', {}, true));
   }
+
+  res.status(200).send(appResponse(null, data, true));
 }
 
-// get non deleted files
+// get all files that are not deleted
 exports.getNonDeletedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
+
+  if (!allFiles) throw new InternalServerError()
 
   const data = allFiles.data.filter(file => {
 
     return file.isDeleted === false;
 
   })
+  
 
-
-  res.send({ ...data });
-
+  if ((data.length)<1) {
+    return res.status(200).send(appResponse('No file uploaded yet!', {}, true));
+  }
+  
+  res.status(200).send(appResponse(null, data, true));
 }
-
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {

@@ -45,6 +45,7 @@
     "joi-objectid": "^3.0.1",
     "mime-types": "^2.1.32",
     "slugify": "^1.6.0",
+    "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
