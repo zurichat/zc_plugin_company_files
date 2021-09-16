@@ -1,7 +1,7 @@
 module.exports = {
     tags: [
         {
-            name: "Info Endpoints"
+            name: "Info CRUD"
         },
         {
             name: "Files CRUD"

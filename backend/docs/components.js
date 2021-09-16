@@ -1,11 +1,6 @@
 module.exports = {
     components: {
         schemas: {
-            id: {
-                type: "string",
-                description: "Id of the Files",
-                example: "xyz",
-            },
             File: {
                 type: "object",
                 properties: {
