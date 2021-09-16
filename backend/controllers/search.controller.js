@@ -47,6 +47,6 @@ exports.searchAndFilterFiles = async (req, res) => {
         }
         res.status(400).json('Invalid search parameters');
     }catch(err){
-        res.status(500).json(err)
+        res.status(500).json(err);
     }
 }
