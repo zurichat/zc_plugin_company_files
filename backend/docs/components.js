@@ -169,7 +169,51 @@ module.exports = {
             Folder: {
                 type: "object",
                 properties: {
-                    
+                    folderId: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    folderName: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    parentId: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    description: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    permissions: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    isPinned: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    dateAdded: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    dateModified: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
+                    lastAccessed: {
+                        type: "string",
+                        description: "Id of the Files",
+                        example: "xyz",
+                    },
                 }
             }
         }
