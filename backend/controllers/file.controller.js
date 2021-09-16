@@ -19,76 +19,76 @@ const getFileDetails = promisify(fs.stat);
 const deleteFile = promisify(fs.unlink);
 
 exports.fileUploadRequest = (req, res) => {
-	const { fileName } = req.body;
-	if (!fileName) {
+  const { fileName } = req.body;
+  if (!fileName) {
     throw new BadRequestError('Missing file name!');
-	} else {
-		const fileId = uuid();
-		fs.createWriteStream(getFilePath(fileName, fileId), { flags: 'w' });
+  } else {
+    const fileId = uuid();
+    fs.createWriteStream(getFilePath(fileName, fileId), { flags: 'w' });
 
     res.status(200).send(appResponse(null, { fileId, fileName }, true));
-	}
+  }
 }
 
 
 exports.fileUploadStatus = (req, res) => {
-	if (req.query && req.query.fileName && req.query.fileId) {
-		getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
-			.then(stats => {
-				res.status(200).json({ status: 'success', totalChunkUploaded: stats.size });
-			}).catch(e => {
-				console.error('-- file read failed:', e);
-				res.status(400).json({ status: 'failure', message: 'No file with provided credentials...', credentials: { ...req.query } });
-			})
-	} else {
-		return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
-	}
+  if (req.query && req.query.fileName && req.query.fileId) {
+    getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
+      .then(stats => {
+        res.status(200).json({ status: 'success', totalChunkUploaded: stats.size });
+      }).catch(e => {
+        console.error('-- file read failed:', e);
+        res.status(400).json({ status: 'failure', message: 'No file with provided credentials...', credentials: { ...req.query } });
+      })
+  } else {
+    return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
+  }
 }
 
 
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
-	const fileId = req.headers['x-file-id'];
-	const folderId = req.headers['x-folder-id'] || null;
+  const fileId = req.headers['x-file-id'];
+  const folderId = req.headers['x-folder-id'] || null;
 
-	if (!contentRange) throw new BadRequestError('Missing "Content-Range" header');
-	if (!fileId) throw new BadRequestError('Missing "X-File-Id" header');
+  if (!contentRange) throw new BadRequestError('Missing "Content-Range" header');
+  if (!fileId) throw new BadRequestError('Missing "X-File-Id" header');
 
-	const match = contentRange.match(/bytes=(\d+)-(\d+)\/(\d+)/);
+  const match = contentRange.match(/bytes=(\d+)-(\d+)\/(\d+)/);
 
-	if (!match) throw new BadRequestError('Invalid "Content-Range" format');
+  if (!match) throw new BadRequestError('Invalid "Content-Range" format');
 
-	const rangeStart = Number(match[1]);
-	const rangeEnd = Number(match[2]);
-	const fileSize = Number(match[3]);
-	
-	if (rangeStart >= fileSize || rangeStart >= rangeEnd || rangeStart >= rangeEnd) {
-		throw new BadRequestError('Invalid "Content-Range" provided');
-	}
+  const rangeStart = Number(match[1]);
+  const rangeEnd = Number(match[2]);
+  const fileSize = Number(match[3]);
 
-	const busboy = new Busboy({ headers: req.headers });
+  if (rangeStart >= fileSize || rangeStart >= rangeEnd || rangeStart >= rangeEnd) {
+    throw new BadRequestError('Invalid "Content-Range" provided');
+  }
 
-	busboy.on('file', (_, file, fileName, encoding, mimetype) => {
-		const filePath = getFilePath(fileName, fileId);
+  const busboy = new Busboy({ headers: req.headers });
+
+  busboy.on('file', (_, file, fileName, encoding, mimetype) => {
+    const filePath = getFilePath(fileName, fileId);
 
     if (!fileId) req.pause();
 
-		getFileDetails(filePath).then(stats => {
-			if (stats.size !== rangeStart) throw new BadRequestError('Bad chunk range start');
+    getFileDetails(filePath).then(stats => {
+      if (stats.size !== rangeStart) throw new BadRequestError('Bad chunk range start');
 
-			const fileStream = file.pipe(fs.createWriteStream(filePath, { flags: 'a' }));
+      const fileStream = file.pipe(fs.createWriteStream(filePath, { flags: 'a' }));
 
       fileStream.on('error', () => {
         throw new InternalServerError('File upload failed!');
       })
-      
+
       fileStream.on('finish', async () => {
         // Generate file's md5Hash & upload to Cloudinary
         const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
           md5Generator(filePath),
           MediaUpload.uploadFile(filePath)
         ]);
-        
+
         const fileData = {
           fileId,
           folderId,
@@ -101,37 +101,53 @@ exports.fileUpload = async (req, res) => {
         }
 
         const file = await FileSchema.validateAsync(fileData);
-        
+
         // Save file details to zccore & delete file from local disk
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
         // Send (file) info to FE using Centrifugo
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
       });
-		}).catch(e => {
-			console.error('-- file read failed:', e);
+    }).catch(e => {
+      console.error('-- file read failed:', e);
       return res.status(400).send(appResponse(null, 'No file with provided credentials...', false, { credentials: { fileId, fileName } }));
-		});
-	})
+    });
+  })
 
   busboy.on('error', e => {
-		console.error('-- file read failed:', e);
-		throw new InternalServerError('File read failed!');
-	})
+    console.error('-- file read failed:', e);
+    throw new InternalServerError('File read failed!');
+  })
 
-	req.pipe(busboy);
+  req.pipe(busboy);
 }
 
-
+// get all files and also by type
 exports.getAllFiles = async (req, res) => {
+
   const data = await File.fetchAll();
-  const response = await RealTime.publish('allFiles', data)
+  await RealTime.publish('allFiles', data);
 
   res.status(200).send(appResponse(null, data, true));
 }
 
+exports.getFileByType = async (req, res) => {
+  // type from params
+  const { type } = req.params;
+  console.log(`type: ${type}`);
+  const matchedFiles = []
+  // filter from response to get type
+  const data = await File.fetchAll();
+  data.data.filter((resp) => {
+    return new RegExp(`\\b${type}\\b`).test(resp.type) ? matchedFiles.push(resp) : null
+  })
+
+  await RealTime.publish(`${type}Files`, data); 
+  res.status(200).send(appResponse(null, matchedFiles, true));
+}
+
 exports.getNonDeletedFiles = async (req, res) => {
-  
+
   const allFiles = await File.fetchAll();
 
   const data = allFiles.data.filter(file => {
@@ -173,8 +189,8 @@ exports.fileDelete = async (req, res) => {
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
-exports.deleteMultipleFiles = async (req,res) => {
-  const [... ids] = req.body.ids;
+exports.deleteMultipleFiles = async (req, res) => {
+  const [...ids] = req.body.ids;
 
   const response = await File.delete(ids);
 
@@ -184,8 +200,8 @@ exports.deleteMultipleFiles = async (req,res) => {
 }
 
 // send to trash
-exports.deleteTemporarily = async (req,res) => {
-  const {data} = await File.fetchOne( {_id: req.params.id });
+exports.deleteTemporarily = async (req, res) => {
+  const { data } = await File.fetchOne({ _id: req.params.id });
   let toggler
   if (data.isDeleted === false) {
     toggler = true
@@ -198,8 +214,8 @@ exports.deleteTemporarily = async (req,res) => {
   }
 }
 
-exports.restoreFile =  async (req,res) => {
-  const {data} = await File.fetchOne( {_id: req.params.id });
+exports.restoreFile = async (req, res) => {
+  const { data } = await File.fetchOne({ _id: req.params.id });
   let toggler
   if (data.isDeleted === true) {
     toggler = false
@@ -213,17 +229,17 @@ exports.restoreFile =  async (req,res) => {
 }
 
 exports.searchFileByIsDeleted = async (req, res) => {
-  
+
   try {
 
     const isDeleted = true;
     let response = await File.fetchAll();
 
-    const deletedFiles = response.data.filter ( (file) => {
+    const deletedFiles = response.data.filter((file) => {
       return file.isDeleted === isDeleted;
     })
 
-    response = RealTime.publish("deleted_files", deletedFiles)
+    response = RealTime.publish('deleted_files', deletedFiles)
 
     res.status(200).send({ ...response })
 
@@ -231,7 +247,7 @@ exports.searchFileByIsDeleted = async (req, res) => {
 
     console.log(error)
     res.send({ error })
-    
+
   }
 
 }
@@ -247,7 +263,7 @@ exports.searchStarredFiles = async (req, res) => {
       return data.isStarred ? starredFiles.push(data) : null;
     });
 
-    response = await RealTime.publish("starred_files", starredFiles)
+    response = await RealTime.publish('starred_files', starredFiles)
 
     return res.status(200).json({ status: 200, statusText: 'success', ...response });
 
@@ -286,13 +302,13 @@ exports.getArchivedFiles = async (req, res) => {
 
     //   Validate Response Status
     if (allFiles.status === 200) {
-      
+
       const archives = [];
       allFiles.data.map((file) => {
         return file.isArchived ? archives.push(file) : null;
       });
 
-      const response = await RealTime.publish("archived_files", archives)
+      const response = await RealTime.publish('archived_files', archives)
 
       return res.status(200).json({ status: 200, statusText: 'success', archives });
     }
@@ -325,7 +341,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 
 // get non deleted files
 exports.getNonDeletedFiles = async (req, res) => {
-  
+
   const allFiles = await File.fetchAll();
 
   const data = allFiles.data.filter(file => {
@@ -334,9 +350,9 @@ exports.getNonDeletedFiles = async (req, res) => {
 
   })
 
-  
+
   res.send({ ...data });
-  
+
 }
 
 
@@ -353,11 +369,11 @@ exports.isDuplicate = async (req, res) => {
     if (fileExists) {
       return res
         .status(200)
-        .json({ status: 200, message: "This is a duplicate file", duplicate: fileExists, });
+        .json({ status: 200, message: 'This is a duplicate file', duplicate: fileExists, });
     } else {
       return res
         .status(200)
-        .json({ status: 200, message: "This is a new file", duplicate: fileExists, });
+        .json({ status: 200, message: 'This is a new file', duplicate: fileExists, });
     }
   } catch (error) {
     res.status(500).json(error);
@@ -393,20 +409,20 @@ exports.getAllDuplicates = async (req, res) => {
 
 // set edit permission
 exports.setEditPermission = async (req, res) => {
-  try{
+  try {
     const files = await File.fetchAll()
     const fileData = files.data
     const { admin } = req.params;
-    if( admin == 'true'){
+    if (admin == 'true') {
       res.send(fileData.map((files) => {
         return files.permission = 'edit'
       }))
-    }else{
+    } else {
       res.send(fileData.map((files) => {
         return files.permission = 'view'
       }))
     }
-  } catch (error){
+  } catch (error) {
     res.status(500).send(error)
   }
 }
@@ -420,11 +436,11 @@ exports.searchByType = async (req, res) => {
 
     if (fileType) {
       const fileSearch = data.filter((file) => {
-          return file.type === fileType
+        return file.type === fileType
       });
 
       if (fileSearch.length === 0) {
-        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);   
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);
       }
 
       return res.status(200).json(fileSearch);
@@ -437,46 +453,44 @@ exports.searchByType = async (req, res) => {
 
 exports.fileRename = async (req, res) => {
   const { body } = req;
-  //Get single file
+  // Get single file
   const data = await File.fetchAll();
-  var fileDetails={};
-  
-  //gets file details
-  files=await data.data;
-  files.forEach(function (file) {
-    if(file._id == req.params.id){
-      fileDetails=file;
+  const fileDetails = {};
+
+  // gets file details
+  files = await data.data;
+  files.forEach((file) => {
+    if (file._id == req.params.id) {
+      fileDetails = file;
     }
   });
-  fileDetails.name=body.name;
-  //updates file name
+  fileDetails.name = body.name;
+  // updates file name
   const response = await File.update(req.params.id, fileDetails);
   res.send({ response });
 }
 
 // Search Files By Size
 exports.searchBySize = async (req, res) => {
-try {
-  const { data } = await File.fetchAll();
-  let { size } = req.params;
-  let sizeRangePlus = Number(size) + 500;
-  let sizeRangeMinus = Number(size) - 500;
-  const files = [];
-  for(i=0; i<data.length; i++){
-    if(data[i].size){
-      if((data[i].size >= sizeRangeMinus) && (data[i].size <= size) ){
-          files.push(data[i])      
-      } else if((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
-        files.push(data[i])      
+  try {
+    const { data } = await File.fetchAll();
+    const { size } = req.params;
+    const sizeRangePlus = Number(size) + 500;
+    const sizeRangeMinus = Number(size) - 500;
+    const files = [];
+    for (i = 0; i < data.length; i++) {
+      if (data[i].size) {
+        if ((data[i].size >= sizeRangeMinus) && (data[i].size <= size)) {
+          files.push(data[i])
+        } else if ((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+          files.push(data[i])
+        }
       }
     }
-  }
   files.length > 0 ?  
   res.status(200).json(files) : 
-  res.status(404).json("No matches")
-
-} 
-catch (err) {
+  res.status(404).json('No matches')
+  } catch (err) {
   res.status(500).json(err);
-}
+  }
 }

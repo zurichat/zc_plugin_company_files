@@ -13,6 +13,7 @@ const {
   deleteTemporarily,
   restoreFile,
   getAllFiles,
+  getFileByType,
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
@@ -36,6 +37,9 @@ router.post('/upload', fileUpload);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
+
+// GET A SPECIFIC FILE TYPE
+router.get('/:type', getFileByType);
 
 // SEARCH FOR ALL DELETED FILES
 router.get('/searchByisDeleted', searchFileByIsDeleted);
