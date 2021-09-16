@@ -69,3 +69,6 @@ app.use(ErrorHandler);
 })().catch(error => {
   console.log(`✖ | Error: ${error.message}`.red.bold);
 });
+
+
+module.exports = app;

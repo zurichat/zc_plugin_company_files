@@ -134,7 +134,7 @@ exports.getAllFiles = async (req, res) => {
 exports.getFileByType = async (req, res) => {
   // type from params
   const { type } = req.params;
-  console.log(`type: ${type}`);
+  // console.log(`type: ${type}`);
   const matchedFiles = []
   // filter from response to get type
   const data = await File.fetchAll();
@@ -162,7 +162,7 @@ exports.getNonDeletedFiles = async (req, res) => {
 
 
 exports.fileDetails = async (req, res) => {
-  const data = await File.fetchOne({ '_id': req.params.id });
+  const data = await File.fetchOne({ _id: req.params.id });
   const response = await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));

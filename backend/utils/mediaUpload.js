@@ -20,7 +20,8 @@ class MediaUpload {
     this.config();
 
     return new Promise((resolve, reject) => {
-      cloudinary.uploader.upload(file,
+      cloudinary.uploader.upload(
+file,
         { timeout: 120000, resource_type: 'auto' },
         (error, result) => {
           console.log(result);

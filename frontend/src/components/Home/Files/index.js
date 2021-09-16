@@ -1,6 +1,9 @@
 import React, { Link } from "react";
+import axios from 'axios';
 
-const index = () => {
+const index = ({ res }) => {
+  console.log(res);
+
   return (
     <div className="w-full px-10">
       <div className="top flex justify-between">
@@ -182,5 +185,21 @@ const index = () => {
     </div>
   );
 };
+
+export async function getStaticProps() {
+  let urlLink;
+  console.log(process.env.NODE_ENV)
+  process.env.NODE_ENV === 'production' ?
+    urlLink = "http://companyfiles.zuri.chat/api/v1/files/all"
+    :
+    urlLink = "http://localhost:5500/api/v1/files/all";
+  const res = await axios.get('http://localhost:5500/api/v1/files/all');
+  console.log(res)
+  return {
+    props: {
+      res
+    }
+  }
+}
 
 export default index;
