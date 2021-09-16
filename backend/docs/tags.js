@@ -7,6 +7,9 @@ module.exports = {
             name: "Files CRUD"
         },
         {
+            name: "Folder CRUD"
+        },
+        {
             name: "Rooms CRUD"
         }
     ]
