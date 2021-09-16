@@ -16,6 +16,7 @@ class MediaUpload {
    * @param {PathLike} file Absolute path of file to upload
    * @returns 
    */
+  
   static async uploadFile(file) {
     this.config();
 

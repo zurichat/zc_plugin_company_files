@@ -9,6 +9,7 @@ const cluster = require('cluster');
 const express = require('express');
 const compression = require('compression');
 
+// const fileUpload = require('express-fileupload');
 
 const app = express();
 const router = express.Router();
@@ -22,6 +23,7 @@ app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 app.use(cors());
 
+app.use(cors()); // SETTING UP CORS POLICY
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
 
 if (isProduction) {

@@ -93,14 +93,11 @@ class DatabaseConnection {
     }
   };
 
-  delete = async ( id ) => {
+  delete = async ( query ) => {
     try {
       
-      this.data.object_id = id;
-      
       const response = await axios.delete(
-        databaseWriteUrl,
-        JSON.stringify(this.data)
+        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?${Object.keys(query)}=${Object.values(query)}`
       );
 
       return response.data;

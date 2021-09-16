@@ -43,6 +43,7 @@ exports.fileUploadStatus = (req, res) => {
 	} else {
 		return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
 	}
+
 }
 
 
@@ -246,6 +247,8 @@ exports.getArchivedFiles = async (req, res) => {
     return res.send({ ...error });
   }
 };
+
+
 // get sall deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   try {

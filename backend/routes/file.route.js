@@ -62,9 +62,6 @@ router.post('/isDuplicate', isDuplicate);
 
 // GET DUPLICATE FILES
 router.get('/duplicateFiles', getAllDuplicates);
-router.route('/write/:id')
-  .put(fileUpdate)
-  .delete(fileDelete)
 
 router.route('/write/:admin')
   .put(fileUpdate)
