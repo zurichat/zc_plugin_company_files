@@ -1,4 +1,4 @@
-import React, { Link } from "react";
+import React, { Link } from 'react';
 import axios from 'axios';
 
 const index = ({ res }) => {
@@ -190,9 +190,9 @@ export async function getStaticProps() {
   let urlLink;
   console.log(process.env.NODE_ENV)
   process.env.NODE_ENV === 'production' ?
-    urlLink = "http://companyfiles.zuri.chat/api/v1/files/all"
+    urlLink = 'http://companyfiles.zuri.chat/api/v1/files/all'
     :
-    urlLink = "http://localhost:5500/api/v1/files/all";
+    urlLink = 'http://localhost:5500/api/v1/files/all';
   const res = await axios.get('http://localhost:5500/api/v1/files/all');
   console.log(res)
   return {
