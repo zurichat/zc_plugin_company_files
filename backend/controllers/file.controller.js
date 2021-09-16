@@ -307,13 +307,8 @@ exports.getArchivedFiles = async (req, res) => {
     return res.send({ ...error });
   }
 };
-<<<<<<< HEAD
 
-
-// get sall deleted files
-=======
 // get all deleted files
->>>>>>> 905201030d5012efb54a5524c1976efd3e123419
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
 

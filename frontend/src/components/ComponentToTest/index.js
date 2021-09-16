@@ -167,7 +167,6 @@ class UploadFiles {
 
 }
 
-
 // #################################################################3
 
 const ProgressContainer = ({ file, uploader, addToFileMap, deleteCurrentFile, FILE_STATUS }) => {

@@ -7,6 +7,7 @@ const FileOptions = ({ options }) => {
     setUpload(!upload);
   };
 
+
   return (
     options && (
       <div className="absolute bg-white w-[235px] top-[38px] -left-1 text-left shadow-md rounded-sm">
@@ -29,7 +30,7 @@ const FileOptions = ({ options }) => {
           <img src="/Icons/file-plus/active.svg" alt="" />
           <span className="ml-4">File Upload</span>
         </div>
-        {upload && <SelectFileModal upload={upload} />}
+        <SelectFileModal upload={upload} />
       </div>
     )
   );

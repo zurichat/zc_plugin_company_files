@@ -1,11 +1,383 @@
 import React, { useEffect, useRef, useState } from "react";
 
+import axios from 'axios';
+
+class UploadFiles {
+  constructor (files, options) {
+    this.fileRequests = new WeakMap()
+    this.endpoints = {
+      UPLOAD: 'http://127.0.0.1:5500/api/v1/files/upload',
+      UPLOAD_STATUS: 'http://127.0.0.1:5500/api/v1/files/uploadStatus',
+      UPLOAD_REQUEST: 'http://127.0.0.1:5500/api/v1/files/uploadRequest'
+    }
+
+    this.defaultOptions = {
+      url: this.endpoints.UPLOAD,
+      fileId: null,
+      folderId: null,
+      startingByte: 0,
+      onAbort() { },
+      onError() { },
+      onProgress() { },
+      onComplete() { }
+    }
+
+    this.files = files;
+    this.options = options;
+
+    // console.log({ ...this.defaultOptions, ...options })
+    [...this.files].map((file, index) => {
+      this.uploadFile(file, { ...this.defaultOptions, ...this.options })
+    })
+    
+  }
+
+  uploadChunks = (file, options) => {
+
+    const payload = new FormData();
+    const request = new XMLHttpRequest();
+    const chunk = file.slice(options.startingByte);
+
+    payload.append("chunk", chunk, file.name);
+    payload.append("fileId", options.fileId)
+
+    request.open("POST", options.url, true);
+
+    request.setRequestHeader("X-File-Id", options.fileId)
+    if (options.folderId) request.setRequestHeader("X-Folder-Id", options.folderId)
+    request.setRequestHeader('Content-Range', `bytes=${options.startingByte}-${options.startingByte + chunk.size}/${file.size}`)
+    
+    request.onload = event => {
+      (request.status === 200 || request.status === 201)
+      ? options.onComplete(event, file) : options.onError(event, file)
+    }
+
+    request.onerror = event => options.onError(event, file);
+    request.ontimeout = event => options.onError(event, tile);
+
+    request.upload.onprogress = event => {
+      const loaded = options.startingByte + event.loaded;
+      options.onProgress({
+        ...event,
+        loaded,
+        total: file.size,
+        percentage: Math.round((loaded * 100) / file.size)
+      }, file)
+    }
+
+    request.onabort = event => options.onAbort(event, file)
+
+    this.fileRequests.get(file).request = request;
+
+    request.send(payload)
+
+  } 
+
+  uploadFile = (file, options) => {
+    const fileInfoRequest = new Request('http://127.0.0.1:5500/api/v1/files/uploadRequest', {
+      method: 'POST',
+      body: JSON.stringify({ fileName: file.name }),
+      headers: new Headers({ 'Content-Type': 'application/json' })
+    });
+
+    fetch(fileInfoRequest)
+      .then(res => res.json())
+      .then(({ data: { fileId }}) => {
+        options = { ...options, fileId };
+        this.fileRequests.set(file, { request: null, options });
+
+        this.uploadChunks(file, options);
+      }).catch(e => {
+				options.onError({...e, file})
+			})
+  }
+
+
+  abortFileUpload = file => {
+    const fileRequest = this.fileRequests.get(file);
+
+    if (fileRequest && fileRequest.request) {
+      fileRequest.request.abort();
+      return true;
+    } else return false;
+  }
+
+  retryFileUpload = file => {
+    const fileRequest = this.fileRequests.get(file);
+
+    if (fileRequest) {
+      return fetch(`${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`)
+      .then(res => res.json())
+      .then(response => {
+        this.uploadChunks(file, { ...fileRequest.options, startingByte: Number(response.totalChunkUploaded)});
+    
+      })
+      .catch(() => {
+        this.uploadChunks(file, fileRequest.options)
+      })
+    }
+  }
+
+  clearFileUpload = async file => {
+    const fileRequest = this.fileRequests.get(file);
+
+    if (fileRequest) {
+
+      await this.abortFileUpload(file);
+      fileRequest.delete(file);
+      return true;
+
+    } else return false;
+  }
+
+  resumeFileUpload = file => {
+    const fileRequest = this.fileRequests.get(file);
+
+    if (fileRequest) {
+      return fetch(`${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`)
+      .then(res => res.json())
+      .then(response => {
+        this.uploadChunks(file, { ...fileRequest.options, startingByte: Number(response.totalChunkUploaded)});
+    
+      })
+      .catch(error => {
+        fileRequest.options.onError({...error, file})
+      })
+    }
+  }
+
+}
+
+const ProgressContainer = ({ file, uploader, addToFileMap, deleteCurrentFile, FILE_STATUS }) => {
+  const thisElement = useRef();
+  const extensionIndex = file.name.lastIndexOf('.');
+
+  useEffect(() => {
+
+    addToFileMap(file, {
+      status: FILE_STATUS.PENDING,
+      size: file.size,
+      percentage: 0,
+      uploadedChunkSize: 0,
+      element: thisElement.current
+    })
+
+  })
+  return (
+    <div ref={thisElement} className="w-full">
+      <div className="file-status-container " style={{
+                display: "flex", 
+                justifyContent: "flex-end", 
+                padding: ".3rem",
+                marginBottom: "-2rem",
+                zIndex: 30
+                }}>
+
+        <span className="file-status" style={{marginRight: ".5rem"}}>{FILE_STATUS.PENDING}</span>
+        <span className="file-percentage">0%</span>
+      </div>
+      <p className="file-name text-[14px]">{file.name}</p>
+      <div className="progress-bar-container w-full h-[6px] my-4 bg-black-50 rounded-full">
+        <div className="progress-bar block w-[200px] h-full bg-black-400 rounded-full"></div>
+      </div>
+
+      <div className="file-actions">
+        <button style={{ marginRight: ".4rem"}} className="pause-button"
+          onClick={() => uploader.abortFileUpload(file)}
+        >
+          <span className="title">Pause</span>
+        </button>
+        <button style={{ marginRight: ".4rem"}} className="resume-button"
+          onClick={() => uploader.resumeFileUpload(file)}
+        >
+          <span className="title">Resume</span>
+        </button>
+        <button style={{ marginRight: ".4rem"}} className="retry-button"
+          onClick={() => uploader.retryFileUpload(file)}
+        >
+          <span className="title">Retry</span>
+        </button>
+        <button className="clear-button"
+          onClick={() => {
+            uploader.clearFileUpload(file)
+            deleteCurrentFile(file);
+            thisElement.current.remove();
+          }}
+        >
+          <span className="title">Clear</span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+const FileProgressWrapper = ({ children }) => {
+  return (
+    <div>{ children }</div>
+  )
+}
+
+const ProgressWrapper = ({ files, progress, setTotalUploadedFiles,
+  setTotalUploadingFiles,
+  setTotalFailedFiles,
+  setTotalPausedFiles,
+  setTotalChunkSize,
+  setTotalUploadedChunkSize }) => {
+
+  const thisElem = useRef();
+
+  const allFiles = new Map();
+
+  let uploader = null;
+
+  const addToFileMap = (file, options) => {
+    allFiles.set(file, options)
+  }
+
+  const deleteCurrentFile = (file) => {
+    allFiles.delete(file)
+  }
+
+  const FILE_STATUS = {
+    PENDING: 'pending',
+    UPLOADING: 'uploading',
+    PAUSED: 'paused',
+    COMPLETED: 'completed',
+    PROCESSING: 'processing',
+    FAILED: 'failed'
+  };
+
+  const updateFileProgessElement = (fileObject) => {
+    const fileElement = fileObject.element;
+
+    const fileStatus = fileElement.querySelector('.file-status');
+    const filePercentage = fileElement.querySelector('.file-percentage');
+    const progressBar = fileElement.querySelector('.progress-bar');
+    const pauseButton = fileElement.querySelector('.pause-button');
+    const resumeButton = fileElement.querySelector('.resume-button');
+    const retryButton = fileElement.querySelector('.retry-button');
+    const clearButton = fileElement.querySelector('.clear-button');
+
+    requestAnimationFrame(() => {
+      fileStatus.textContent = fileObject.status;
+      filePercentage.textContent = `${fileObject.percentage < 100 ? Number(fileObject.percentage).toFixed(2) : 100}%`;
+      fileStatus.className = `file-status ${fileObject.status}`;
+      progressBar.style.width = fileObject.percentage + '%';
+      progressBar.style.backgroundColor = fileObject.status === FILE_STATUS.UPLOADING
+        ? 'black' : fileObject.status === FILE_STATUS.FAILED ? 'red' : '#60E838';
+
+      pauseButton.style.display = fileObject.status === FILE_STATUS.UPLOADING ? 'inline-block' : 'none';
+      resumeButton.style.display = fileObject.status === FILE_STATUS.PAUSED ? 'inline-block' : 'none';
+      retryButton.style.display = fileObject.status === FILE_STATUS.FAILED ? 'inline-block' : 'none';
+      clearButton.style.display = fileObject.status === FILE_STATUS.UPLOADING || fileObject.status === FILE_STATUS.PAUSED
+        ? 'inline-block' : 'none';
+      
+      // updateProgressBox();
+    })
+  }
+
+  const onAbort = (e, file) => {
+    const fileObject = allFiles.get(file);
+
+    fileObject.status = FILE_STATUS.PAUSED;
+    updateFileProgessElement(fileObject);
+  }
+
+  const onError = (e, file) => {
+    const fileObject = allFiles.get(file);
+    
+
+    fileObject.status = FILE_STATUS.FAILED;
+    fileObject.percentage = 0;
+
+    updateFileProgessElement(fileObject);
+  }
+
+  const onProgress = (e, file) => {
+    const fileObject = allFiles.get(file);
+
+    fileObject.status = e.loaded >= e.total ? FILE_STATUS.PROCESSING : FILE_STATUS.UPLOADING;
+    fileObject.percentage = e.percentage;
+    fileObject.uploadedChunkSize = e.loaded;
+
+    updateFileProgessElement(fileObject);
+  }
+
+  const onComplete = (e, file) => {
+    const fileObject = allFiles.get(file);
+
+    fileObject.status = FILE_STATUS.COMPLETED;
+    fileObject.percentage = 100;
+
+    updateFileProgessElement(fileObject);
+  };
+
+  if (progress) {
+    uploader = new UploadFiles(files, {
+      url: 'http://127.0.0.1:5500/api/v1/files/upload',
+      onAbort,
+      onError,
+      onProgress,
+      onComplete,
+      folderId: null
+    })
+  }
+
+  const ListFiles = () => {
+    return [...files].map((file, index) => {
+
+      return <ProgressContainer 
+        key={index}
+        file={file} 
+        addToFileMap={addToFileMap} 
+        deleteCurrentFile={deleteCurrentFile}
+        uploader={uploader}
+        FILE_STATUS={FILE_STATUS}
+      />
+    })
+  }
+
+
+  [...allFiles].map((fileObject) => {
+    if (fileObject.status === FILE_STATUS.FAILED) {
+      setTotalFailedFiles(totalFailedFiles => totalFailedFiles += 1);
+    } else {
+      if (fileObject.status === FILE_STATUS.COMPLETED) {
+        setTotalUploadedFiles(totalUploadedFiles => totalUploadedFiles += 1);
+      } else if (fileObject.status === FILE_STATUS.PAUSED) {
+        setTotalPausedFiles(totalPausedFiles => totalPausedFiles += 1);
+      } else {
+        setTotalUploadingFiles(totalUploadingFiles => totalUploadingFiles += 1);
+      }
+
+      setTotalChunkSize(totalChunkSize => totalChunkSize += fileObject.size);
+      setTotalUploadedChunkSize(totalUploadedChunkSize => totalUploadedChunkSize += fileObject.uploadedChunkSize);
+    }
+  })
+  
+  return (
+    <div >
+      {progress && <FileProgressWrapper children={<ListFiles />} />}
+    </div>
+  )
+}
+
 const SelectFileModal = ({
   upload,
   progress,
   hideUploadModal,
   showProgressModal,
 }) => {
+
+  const [ totalUploadedFiles, setTotalUploadedFiles] = useState(0)
+  const [ totalUploadingFiles, setTotalUploadingFiles ] = useState(0)
+  const [ totalFailedFiles, setTotalFailedFiles ] = useState(0)
+  const [ totalPausedFiles, setTotalPausedFiles ] = useState(0)
+  const [ totalChunkSize, setTotalChunkSize ] = useState(0)
+  const [ totalUploadedChunkSize, setTotalUploadedChunkSize ] = useState(0);
+
+  let percentage = totalChunkSize > 0 ? Math.min(100, Math.round((totalUploadedChunkSize * 100) / totalChunkSize)) : 0;
+
   const [files, setFiles] = useState();
   let modalStatus = useRef(upload.current);
   let dragArea = useRef(null);
@@ -53,13 +425,14 @@ const SelectFileModal = ({
     Object.entries(files).map((file) => {
       console.log(file[1].name);
     });
-    console.log(files);
+
     setFiles(files);
   };
 
   const handleFileSelection = (e) => {
     const { files } = e.target;
     setFiles(files);
+    console.log("this is progress: " + progress)
   };
 
   const handleCancel = () => {
@@ -78,7 +451,11 @@ const SelectFileModal = ({
     onLeave();
 
     dragNdrop.current.addEventListener("drop", handleDrop, false);
+    // percentage = totalChunkSize > 0 ? Math.min(100, Math.round((totalUploadedChunkSize * 100) / totalChunkSize)) : 0;
+
   }, []);
+
+  console.log("progress: " + progress)
 
   if (upload) {
     return (
@@ -94,9 +471,11 @@ const SelectFileModal = ({
                 <div>
                   <p>Your Uploads</p>
                   <div className="flex justify-between text-gray-400 text-[12px] ">
-                    <p>40%</p>
-                    <p>{files.length}</p>
-                    <p>0</p>
+                    <p>{percentage}%</p>
+                    <p>{totalUploadingFiles}</p>
+                    <p>{totalUploadedFiles}</p>
+                    <p>{totalPausedFiles}</p>
+                    <p>{totalFailedFiles}</p>
                   </div>
                 </div>
                 <button
@@ -146,33 +525,25 @@ const SelectFileModal = ({
               </div>
             </div>
           ) : (
-            <div
-              className={
+            <div className={
                 (progress ? " mt-10 border-none " : "") +
-                "w-[612px] h-[430px]  p-2 flex flex-col  border-2 my-2 border-dashed border-green-300"
+                "w-[612px] h-[430px]  p-2 flex flex-col  border-2 my-2 border-dashed border-green-300" }>
+              {
+                !progress && [...files].map((file, index) => {
+                  return <div className="flex justify-between items-center" key={index}>
+                    <div className="w-[350px] truncate">{file.name}</div>
+                    <div>{(file.size / 1000000).toFixed(3)}MB</div>
+                  </div>
+                })
               }
-            >
-              {Object.entries(files).map((file) => (
-                <div
-                  className="flex justify-between items-center"
-                  key={file[1].lastModified}
-                >
-                  {!progress && (
-                    <div className="w-[350px] truncate">{file[1].name}</div>
-                  )}
-                  {!progress && (
-                    <div>{(file[1].size / 1000000).toFixed(3)}MB</div>
-                  )}
-                  {progress && (
-                    <div className="w-full">
-                      <p className="text-[14px]">{file[1].name}</p>
-                      <div className="w-full h-[6px] my-4 bg-green-50 rounded-full">
-                        <div className="block w-[200px] h-full bg-green-400 rounded-full"></div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
+              {upload && <ProgressWrapper progress={progress} files={files}
+                setTotalUploadedFiles={setTotalUploadedFiles}
+                setTotalUploadingFiles={setTotalUploadingFiles}
+                setTotalFailedFiles={setTotalFailedFiles}
+                setTotalPausedFiles={setTotalPausedFiles}
+                setTotalChunkSize={setTotalChunkSize}
+                setTotalUploadedChunkSize={setTotalUploadedChunkSize}
+              />}
             </div>
           )}
           {!progress && (
