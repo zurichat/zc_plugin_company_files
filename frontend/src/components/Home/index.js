@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder";
 import Files from "./Files";
@@ -11,6 +11,8 @@ const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
+  const [demo, setDemo] = useState(false);
+  // let progress = useRef(false)
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -30,19 +32,17 @@ const Index = () => {
 
   const hideUploadModal = () => {
     setUpload(!upload);
-    // setProgress(!progress);
   };
 
   const showProgressModal = () => {
-    console.log('Hide Upload');
     hideUploadModal();
-    setProgress(!progress);
-    console.log(progress);
+    setProgress(true);
+    setDemo(true);
+    console.log({ Progress: progress, Demo: demo });
   };
 
   const hideProgressModal = () => {
-    setProgress(!progress);
-    setUpload(!upload);
+    setProgress(false);
   };
 
   // const show
