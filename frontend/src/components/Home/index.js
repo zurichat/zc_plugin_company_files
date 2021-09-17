@@ -5,6 +5,8 @@ import Files from "./Files";
 import SelectFileModal from "Components/FileUpload/SelectFileModal";
 import FileOptions from "Components/FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
+import UploadProgressModal from "Components/FileUpload/UploadProgressModal";
+import FileUpload from "components/FileUpload";
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -28,11 +30,12 @@ const Index = () => {
 
   const hideUploadModal = () => {
     setUpload(!upload);
-    setProgress(!progress);
+    // setProgress(!progress);
   };
 
   const showProgressModal = () => {
-    // hideProgressModal();
+    console.log('Hide Upload');
+    hideUploadModal();
     setProgress(!progress);
     console.log(progress);
   };
@@ -45,21 +48,22 @@ const Index = () => {
   // const show
 
   return (
-    <div className="relative py-10 z-auto">
+    <div
+      className={(upload ? " overflow-y-hidden" : "") + "relative py-10 z-auto"}
+    >
       <button
-        onClick={showUploadModal}
-        className="relative ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
+        onClick={showOptions}
+        className="ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
       >
         Add File
-        <FileOptions options={options} />
       </button>
+      <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
       <Folder />
       <Files />
       {upload && (
-        <SelectFileModal
-          className=""
+        <FileUpload
           upload={upload}
           progress={progress}
           hideUploadModal={hideUploadModal}
