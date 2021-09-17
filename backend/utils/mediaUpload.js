@@ -42,9 +42,11 @@ class MediaUpload {
    * @returns 
    */
   static async deleteFromCloudinary(publicId) {
+
     this.config();
     const result = await cloudinary.uploader.destroy(publicId);
     return result;
+
   }
 
   /**

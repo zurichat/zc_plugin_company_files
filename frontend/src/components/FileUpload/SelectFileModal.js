@@ -5,10 +5,16 @@ import axios from 'axios';
 class UploadFiles {
   constructor (files, options) {
     this.fileRequests = new WeakMap()
+    // this.endpoints = {
+    //   UPLOAD: 'http://127.0.0.1:5500/api/v1/files/upload',
+    //   UPLOAD_STATUS: 'http://127.0.0.1:5500/api/v1/files/uploadStatus',
+    //   UPLOAD_REQUEST: 'http://127.0.0.1:5500/api/v1/files/uploadRequest'
+    // }
+
     this.endpoints = {
-      UPLOAD: 'http://127.0.0.1:5500/api/v1/files/upload',
-      UPLOAD_STATUS: 'http://127.0.0.1:5500/api/v1/files/uploadStatus',
-      UPLOAD_REQUEST: 'http://127.0.0.1:5500/api/v1/files/uploadRequest'
+      UPLOAD: 'https://companyfiles.zuri.chat/api/v1/files/upload',
+      UPLOAD_STATUS: 'https://companyfiles.zuri.chat/api/v1/files/uploadStatus',
+      UPLOAD_REQUEST: 'https://companyfiles.zuri.chat/api/v1/files/uploadRequest'
     }
 
     this.defaultOptions = {
@@ -52,6 +58,7 @@ class UploadFiles {
       ? options.onComplete(event, file) : options.onError(event, file)
     }
 
+    console.log(file)
     request.onerror = event => options.onError(event, file);
     request.ontimeout = event => options.onError(event, tile);
 
@@ -74,7 +81,7 @@ class UploadFiles {
   } 
 
   uploadFile = (file, options) => {
-    const fileInfoRequest = new Request('http://127.0.0.1:5500/api/v1/files/uploadRequest', {
+    const fileInfoRequest = new Request(this.endpoints.UPLOAD_REQUEST, {
       method: 'POST',
       body: JSON.stringify({ fileName: file.name }),
       headers: new Headers({ 'Content-Type': 'application/json' })
@@ -284,6 +291,8 @@ const ProgressWrapper = ({ files, progress, setTotalUploadedFiles,
   }
 
   const onError = (e, file) => {
+    console.log(allFiles)
+    console.log(file)
     const fileObject = allFiles.get(file);
     
 
@@ -312,9 +321,10 @@ const ProgressWrapper = ({ files, progress, setTotalUploadedFiles,
     updateFileProgessElement(fileObject);
   };
 
+  // url: 'http://127.0.0.1:5500/api/v1/files/upload'
   if (progress) {
     uploader = new UploadFiles(files, {
-      url: 'http://127.0.0.1:5500/api/v1/files/upload',
+      url: 'https://companyfiles.zuri.chat/api/v1/files/upload',
       onAbort,
       onError,
       onProgress,

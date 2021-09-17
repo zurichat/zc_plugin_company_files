@@ -171,9 +171,15 @@ exports.fileUpdate = async (req, res) => {
 
 // delete permanently
 exports.fileDelete = async (req, res) => {
-  const response = await File.delete(req.params.id);
 
+  const { data } = await File.fetchOne({ '_id': req.params.id });
+
+  await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+
+  const response = await File.delete(req.params.id);
+  
   if (!response) throw new InternalServerError()
+
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
@@ -181,6 +187,11 @@ exports.fileDelete = async (req, res) => {
 // delete multiple files 
 exports.deleteMultipleFiles = async (req, res) => {
   const [...ids] = req.body.ids;
+
+  [...ids].map(async id => {
+    const data = await File.fetchOne({ '_id': id });
+    MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+  })
 
   const response = await File.delete(ids);
 
