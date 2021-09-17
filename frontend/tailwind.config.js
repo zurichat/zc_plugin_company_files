@@ -11,6 +11,7 @@ module.exports = {
         secondary: '#00B87C',
         primary: '#1A61DB',
         shiraz: '#B8003C',
+        backGround: 'rgba(0, 0, 0, 0.6)',
         text: {
           shaft: '#242424',
           shaftlight: '#3A3A3A',
@@ -22,6 +23,7 @@ module.exports = {
         wildsand: '#F6F6F6',
         white: '#FFF',
         success: '#008B5E',
+        lightGreen: '#F0FFFB',
         avatar: {
           pink: '#F7E0FF',
           yellow: '#F8FFCD',

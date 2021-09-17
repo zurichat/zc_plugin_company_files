@@ -22,7 +22,7 @@ describe('Files Test', () => {
 
   it('should get files by specified type', async () => {
     const response = await request(app)
-      .get('/api/v1/files/zip');
+      .get('/api/v1/files/type/zip');
 
     expect(response.statusCode).toEqual(200);
     // expect(response.body)
