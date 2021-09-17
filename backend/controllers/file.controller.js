@@ -30,7 +30,6 @@ exports.fileUploadRequest = (req, res) => {
   }
 }
 
-
 exports.fileUploadStatus = (req, res) => {
 
   if (req.query && req.query.fileName && req.query.fileId) {
@@ -146,6 +145,7 @@ exports.getFileByType = async (req, res) => {
 
   await RealTime.publish(`${type}Files`, data); 
   res.status(200).send(appResponse(null, matchedFiles, true));
+
 }
 
 
@@ -318,6 +318,7 @@ exports.getArchivedFiles = async (req, res) => {
     return res.send({ ...error });
   }
 };
+
 
 // get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
