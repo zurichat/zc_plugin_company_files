@@ -1,5 +1,5 @@
 import Layout  from "Components/Layout";
-import VideoPreview  from "Components/VideoPreview";
+import VideoPreview  from "components/VideoPreview/Index";
 
 export default function VideoPreviewPage() {
   return (

@@ -39,7 +39,7 @@ router.post('/upload', fileUpload);
 router.get('/all', getAllFiles);
 
 // GET A SPECIFIC FILE TYPE
-router.get('fileByType/:type', getFileByType);
+router.get('/type/:type', getFileByType);
 
 // SEARCH FOR ALL DELETED FILES
 router.get('/searchByisDeleted', searchFileByIsDeleted);
