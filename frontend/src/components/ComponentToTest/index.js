@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import Centrifuge from "centrifuge";
-const centrifuge = new Centrifuge("ws://localhost:8000/connection/websocket");
+// const centrifuge = new Centrifuge("ws://localhost:8000/connection/websocket");
+const centrifuge = new Centrifuge("wss://realtime.zuri.chat/connection/websocket");
 
+// axios.get("http://localhost:5500/api/v1/files/all");
 centrifuge.on('connect', ( data ) => {
-  axios.get("http://localhost:5500/api/v1/files/all");
+  axios.get("https://companyfiles.zuri.chat/api/v1/files/all");
   console.log(data)
 });
 
