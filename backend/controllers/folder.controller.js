@@ -14,10 +14,10 @@ exports.folderCreate = async (req, res) => {
 
   const folder = await FolderSchema.validateAsync(body);
   const createdFolder = await Folders.create(folder);
+  const { data } = createdFolder;
+  const createdFolderObject = await Folders.fetchOne({ _id: data?.object_id });
 
-
-  res.status(201).send(appResponse(null, createdFolder, true))
-      
+  res.status(201).json(createdFolderObject);
 };
 
 exports.getAllFolders = async (req, res) => {
@@ -43,8 +43,6 @@ exports.folderDetails = async (req, res) => {
         count: data.length,
       }));
   }
-
- 
 };
 
 exports.folderUpdate = async (req, res) => {

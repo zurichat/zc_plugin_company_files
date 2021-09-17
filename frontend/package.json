@@ -6,8 +6,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "centrifuge": "^2.8.0",
     "@headlessui/react": "^1.4.1",
-    "next": "latest",
     "prop-types": "^15.7.2",
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

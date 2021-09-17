@@ -16,6 +16,7 @@ class MediaUpload {
    * @param {PathLike} file Absolute path of file to upload
    * @returns 
    */
+  
   static async uploadFile(file) {
     this.config();
 
@@ -42,9 +43,11 @@ file,
    * @returns 
    */
   static async deleteFromCloudinary(publicId) {
+
     this.config();
     const result = await cloudinary.uploader.destroy(publicId);
     return result;
+
   }
 
   /**
