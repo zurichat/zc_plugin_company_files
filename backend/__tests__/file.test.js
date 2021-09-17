@@ -17,7 +17,6 @@ describe('Files Test', () => {
       .get('/api/v1/files/all');
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body)
   });
 
   it('should get files by specified type', async () => {
