@@ -10,7 +10,6 @@ const express = require('express');
 const compression = require('compression');
 
 // const fileUpload = require('express-fileupload');
-// const fileUpload = require('express-fileupload');
 
 const app = express();
 const router = express.Router();

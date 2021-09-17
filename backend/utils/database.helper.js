@@ -103,6 +103,7 @@ class DatabaseConnection {
     }
   };
 
+
   delete = async (id) => {
     try {
       // delete multiple files
