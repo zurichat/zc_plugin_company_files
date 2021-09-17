@@ -103,6 +103,7 @@ class DatabaseConnection {
     }
   };
 
+
   delete = async (id) => {
     try {
       // delete multiple files
@@ -127,6 +128,7 @@ class DatabaseConnection {
         );
         return response.data;
       }
+
     } catch (error) {
       
       return error;

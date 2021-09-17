@@ -75,7 +75,7 @@ router.post('/isDuplicate', isDuplicate);
 router.get('/duplicateFiles', getAllDuplicates);
 
 // EDIT FILE
-router.put('/file/write/:id', fileUpdate)
+router.put('/write/:id', fileUpdate)
 
 // DELETE SINGLE FILE
 router.delete('/deleteFile/:id', fileDelete);  
