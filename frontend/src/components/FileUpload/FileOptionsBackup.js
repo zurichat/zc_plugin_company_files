@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import SelectFileModal from "./SelectFileModal";
 
 const FileOptions = ({ options, showUploadModal }) => {
-
-
   return (
     options && (
       <div className="bg-white w-[235px] ml-10 -mt-3 text-left shadow-md rounded-sm">

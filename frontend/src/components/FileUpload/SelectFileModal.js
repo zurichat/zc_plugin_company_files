@@ -374,9 +374,14 @@ const ProgressWrapper = ({ files, progress, setTotalUploadedFiles,
 
 const SelectFileModal = ({
   upload,
+  uploadFiles,
   progress,
   hideUploadModal,
   showProgressModal,
+  handleFileSelection,
+  handleDrop,
+  files,
+  clearFiles,
 }) => {
 
   const [ totalUploadedFiles, setTotalUploadedFiles] = useState(0)
@@ -503,11 +508,9 @@ const SelectFileModal = ({
               >
                 &#10005;
               </span>
-            )}
-          </div>
-          {!progress && (
+            </div>
             <div id="uploadBtn my-2">
-              <label className="inline-block min-w-max px-[14px] py-[8px] bg-white text-green-600 border hover:text-white hover:bg-green-500 border-green-600 rounded-md text-center cursor-pointer">
+              <label className=" flex justify-between bg-white text-gray-600 ">
                 <input
                   type="file"
                   name=""
@@ -516,22 +519,26 @@ const SelectFileModal = ({
                   className="hidden"
                   onChange={handleFileSelection}
                 />
-                Choose Files...
+                <span className="hover:text-white max-h-[200px] px-[14px] py-[8px] hover:bg-green-500 rounded-md text-center cursor-pointer">
+                  Choose Files
+                </span>
+                {files && <span>{`${files.length} selected`}</span>}
               </label>
             </div>
-          )}
-          {!files ? (
-            <div
-              ref={dragNdrop}
-              className="dragNdrop my-2 border-2 border-dashed  w-[612px] h-[430px] flex"
-            >
-              <div className="m-auto">
-                <img
-                  src="/Icons/upload/upload.svg"
-                  alt=""
-                  className="mx-auto"
-                />
-                <p className="text-gray-400 text-[25px]">Drop Files Here</p>
+
+            {!files ? (
+              <div
+                ref={dragNdrop}
+                className="relative dragNdrop my-2 border-2 border-dashed  w-full h-1/2 flex overflow-y-auto"
+              >
+                <div className="m-auto">
+                  <img
+                    src="/Icons/upload/upload.svg"
+                    alt=""
+                    className="mx-auto"
+                  />
+                  <p className="text-gray-400 text-[25px]">Drop Files Here</p>
+                </div>
               </div>
             </div>
           ) : (
@@ -559,20 +566,20 @@ const SelectFileModal = ({
           {!progress && (
             <div className="uploadActions flex justify-end border-t mt-6 pt-6 text-[12px]">
               <button
-                onClick={showProgressModal}
+                onClick={uploadFiles}
                 className="mx-4 px-[14px] py-[8px] bg-green-500 text-white rounded-sm"
               >
                 Upload
               </button>
               <button
-                onClick={handleCancel}
+                onClick={clearFiles}
                 className=" px-[14px] py-[8px]  border border-green-100 text-green-500 text-[12px]"
               >
-                Cancel
+                Clear
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     );
   }
