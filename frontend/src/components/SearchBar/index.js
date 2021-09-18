@@ -1,4 +1,4 @@
-import CustomIcon from "Components/CustomIcon";
+import CustomIcon from "../CustomIcon";
 import PropTypes from "prop-types";
 import React from "react";
 import { useState } from "react";
@@ -75,10 +75,10 @@ SearchResultCategory.propTypes = {
 const SearchResultCategoryList = ({ list = [] }) => {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-text-200">I'm searching for...</h2>
+      <h2 className="text-text-200">I&apos;m searching for...</h2>
       <div className="grid grid-flow-row sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-8">
         {list?.map((elm, ind) => (
-          <SearchResultCategory {...{ key: ind, ...elm }} />
+          <SearchResultCategory key={ind} {...elm} />
         ))}
       </div>
     </div>
@@ -104,7 +104,7 @@ const RecentSearchList = ({ list = [] }) => {
     <div className="flex flex-col gap-3">
       <h2 className="text-text-200 mb-1">Recent searches</h2>
       {list?.map((elm, ind) => (
-        <RecentSearchItem {...{ key: ind, ...elm }} />
+        <RecentSearchItem key={ind} {...elm} />
       ))}
     </div>
   );
@@ -158,6 +158,10 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
       )}
     </div>
   );
+};
+SearchInput.propTypes = {
+  className: PropTypes.string,
+  restProps: PropTypes.any,
 };
 
 const SearchBar = ({ className: customClass, ...restProps }) => {

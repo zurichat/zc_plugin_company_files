@@ -1,6 +1,6 @@
-import ComponentToTest from "Components/ComponentToTest";
+import ComponentToTest from "../ComponentToTest";
 import React from "react";
-import SearchBar from "Components/SearchBar";
+import SearchBar from "../SearchBar";
 
 const Main = () => {
   return (
