@@ -10,7 +10,7 @@ module.exports = {
   },
   rules: {
     'comma-dangle': ['off'],
-    'comma-style': ["error", "first", { "exceptions": { "ArrayExpression": true, "ObjectExpression": true, "FunctionDeclaration": true } }],
+    'comma-style': ['error', 'first', { exceptions: { ArrayExpression: true, ObjectExpression: true, FunctionDeclaration: true } }],
     'arrow-body-style': 'off',
     'no-console': ['error', { allow: ['warn', 'error', 'log'] }],
     'prefer-const': ['error'],

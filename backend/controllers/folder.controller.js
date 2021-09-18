@@ -1,11 +1,11 @@
-const uuid = require("uuid").v4;
-const FolderSchema = require("../models/Folder.js");
-const appResponse = require("../utils/appResponse");
-const DatabaseConnection = require("../utils/database.helper");
-const RealTime = require("../utils/realtime.helper");
-const { NotFoundError } = require("../utils/appError");
+const uuid = require('uuid').v4;
+const FolderSchema = require('../models/Folder.js');
+const appResponse = require('../utils/appResponse');
+const DatabaseConnection = require('../utils/database.helper');
+const RealTime = require('../utils/realtime.helper');
+const { NotFoundError } = require('../utils/appError');
 
-const Folders = new DatabaseConnection("Folder");
+const Folders = new DatabaseConnection('Folder');
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
@@ -22,14 +22,12 @@ exports.folderCreate = async (req, res) => {
 
 exports.getAllFolders = async (req, res) => {
   const { data } = await Folders.fetchAll();
-  const response = await RealTime.publish("all_folders", data);
+  const response = await RealTime.publish('all_folders', data);
 
-  res.status(200).send(
-    appResponse(null, data, true, {
+  res.status(200).send(appResponse(null, data, true, {
       ...response,
       count: data.length,
-    })
-  );
+    }));
 };
 
 exports.folderDetails = async (req, res) => {
@@ -39,13 +37,11 @@ exports.folderDetails = async (req, res) => {
   if (data === null) {
     throw new NotFoundError();
   } else {
-    const response = await RealTime.publish("folder_detail", data);
-    res.status(200).send(
-      appResponse(null, data, true, {
+    const response = await RealTime.publish('folder_detail', data);
+    res.status(200).send(appResponse(null, data, true, {
         ...response,
         count: data.length,
-      })
-    );
+      }));
   }
 };
 
@@ -65,17 +61,17 @@ exports.folderUpdate = async (req, res) => {
 exports.folderDelete = async (req, res) => {
   const { id } = req.params;
 
-  //fetch all folders
+  // fetch all folders
   const folders = await Folders.fetchAll();
 
-  //fetch a folder
+  // fetch a folder
   const folder = folders.data.filter((item) => item._id == id);
 
-  //check to see if folder exists
+  // check to see if folder exists
   if (!folder.length) {
     return res
       .status(404)
-      .json({ error: "folder with the given ID not found!" });
+      .json({ error: 'folder with the given ID not found!' });
   }
 
   const response = await Folders.delete(id);

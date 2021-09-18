@@ -13,6 +13,7 @@ module.exports = {
         success: "#008B5E",
         error: "#F40101",
         accent: "#B8003C",
+        backGround: 'rgba(0, 0, 0, 0.6)',
         progress: "#FFB425",
         lightgray: "F6F6F6",
         orange: "#FCE7DE",

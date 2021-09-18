@@ -1,15 +1,15 @@
-const DatabaseConnection = require("../utils/database.helper");
-const Rooms = new DatabaseConnection("NewRooms");
-const RealTime = require("../utils/realtime.helper");
-const appResponse = require("../utils/appResponse");
-const RoomSchema = require("../models/Room");
-const slugify = require("slugify");
-const uuid = require("uuid").v4;
+const DatabaseConnection = require('../utils/database.helper');
+const Rooms = new DatabaseConnection('NewRooms');
+const RealTime = require('../utils/realtime.helper');
+const appResponse = require('../utils/appResponse');
+const RoomSchema = require('../models/Room');
+const slugify = require('slugify');
+const uuid = require('uuid').v4;
 const {
   BadRequestError,
   ForbiddenError,
   NotFoundError,
-} = require("../utils/appError");
+} = require('../utils/appError');
 
 exports.createRoom = async (req, res) => {
   const { body } = req;
@@ -22,13 +22,13 @@ exports.createRoom = async (req, res) => {
     remove: /[*+~\/\\.()''!:@]/g,
   });
 
-  if (room.roomType === "inbox") {
+  if (room.roomType === 'inbox') {
     room.isPrivate = true;
     room.members = [room.ownerId, room.receiverId];
-  } else if (room.roomType === "group" || room.roomType === "plugin") {
+  } else if (room.roomType === 'group' || room.roomType === 'plugin') {
     room.members = [room.ownerId, ...room.members];
     delete room.receiverId;
-  } else if (room.roomType === "plugin" || room.roomType === "channel") {
+  } else if (room.roomType === 'plugin' || room.roomType === 'channel') {
     room.isPrivate = false;
   }
 
@@ -38,7 +38,7 @@ exports.createRoom = async (req, res) => {
 
   res
     .status(201)
-    .send(appResponse("Room created successfully!", response, true));
+    .send(appResponse('Room created successfully!', response, true));
 };
 
 exports.editRoom = async (req, res) => {
@@ -48,13 +48,13 @@ exports.editRoom = async (req, res) => {
   } = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
-  if ("members" in body) delete body.members;
+  if ('members' in body) delete body.members;
 
   await Rooms.update(req.params.roomId, body);
 
   const [updatedRoom] = await Rooms.fetchOne({ _id: req.params.roomId });
 
-  res.status(200).send(appResponse("Room details updated!", updatedRoom, true));
+  res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 };
 
 exports.getAllRooms = async (req, res) => {
@@ -64,7 +64,7 @@ exports.getAllRooms = async (req, res) => {
 
   // response = await RealTime.publish('allRooms', response);
 
-  res.status(200).send(appResponse("All rooms", allRooms, true));
+  res.status(200).send(appResponse('All rooms', allRooms, true));
 };
 
 exports.getOne = async (req, res) => {
@@ -74,7 +74,7 @@ exports.getOne = async (req, res) => {
 
   if (!room) throw new NotFoundError();
 
-  res.status(200).send(appResponse("Room found!", room, true));
+  res.status(200).send(appResponse('Room found!', room, true));
 };
 
 exports.deleteRoom = async (req, res) => {
@@ -83,7 +83,7 @@ exports.deleteRoom = async (req, res) => {
 
   res
     .status(200)
-    .send(appResponse("Room has been deleted successfully!", response, true));
+    .send(appResponse('Room has been deleted successfully!', response, true));
 };
 
 exports.addToRoom = async (req, res) => {
@@ -91,7 +91,7 @@ exports.addToRoom = async (req, res) => {
   const { userId } = req.body;
 
   if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
-    throw new BadRequestError("Invalid user id. Enter a valid object id!");
+    throw new BadRequestError('Invalid user id. Enter a valid object id!');
   }
 
   // fetch all the rooms available and get the target room with the provided room_id.
@@ -106,7 +106,7 @@ exports.addToRoom = async (req, res) => {
 
   const isUserInRoom = room.members.filter((id) => id === userId).length;
 
-  if (isUserInRoom) throw new BadRequestError("User is already in room!");
+  if (isUserInRoom) throw new BadRequestError('User is already in room!');
 
   // Add user to room...
   room.members.push(userId);
@@ -134,12 +134,10 @@ exports.removeFromRoom = async (req, res) => {
   if (!room) throw new NotFoundError();
 
   // Check if room type is DM...
-  if (room.roomType === "inbox" && userId in room.members) {
+  if (room.roomType === 'inbox' && userId in room.members) {
     throw new BadRequestError(`You cannot leave a DM!`);
-  } else if (room.roomType === "inbox" && room.members.indexOf(userId) === -1) {
-    throw new ForbiddenError(
-      "Access forbidden! You cannot join an already existing DM!"
-    );
+  } else if (room.roomType === 'inbox' && room.members.indexOf(userId) === -1) {
+    throw new ForbiddenError('Access forbidden! You cannot join an already existing DM!');
   }
 
   // parse the room data and remove the target user data from it.
@@ -157,13 +155,11 @@ exports.removeFromRoom = async (req, res) => {
 
   res
     .status(200)
-    .send(
-      appResponse(
-        "User has been successfully removed from the room",
+    .send(appResponse(
+        'User has been successfully removed from the room',
         updatedRoom,
         true
-      )
-    );
+      ));
 };
 
 exports.setRoomPrivate = async (req, res) => {
@@ -177,9 +173,7 @@ exports.setRoomPrivate = async (req, res) => {
   const isUserOwner = room.ownerId === userId;
 
   if (!isUserOwner) {
-    throw new ForbiddenError(
-      `Access forbidden! You don't have access to make this room private!`
-    );
+    throw new ForbiddenError(`Access forbidden! You don't have access to make this room private!`);
   }
 
   await Rooms.update(req.params.roomId, { isPrivate: false });
@@ -188,7 +182,7 @@ exports.setRoomPrivate = async (req, res) => {
     data: [updatedRoom],
   } = await Rooms.fetchOne({ _id: req.params.roomId });
 
-  res.status(200).send(appResponse("Room set to private!", updatedRoom, true));
+  res.status(200).send(appResponse('Room set to private!', updatedRoom, true));
 };
 
 exports.getUserRooms = async (req, res) => {
@@ -199,8 +193,8 @@ exports.getUserRooms = async (req, res) => {
   if (roomFound.length === 0) {
     throw new NotFoundError();
   } else {
-    res.status(200).send(appResponse("All rooms you're in", roomFound, true));
+    res.status(200).send(appResponse('All rooms you\'re in', roomFound, true));
   }
-  //6138cb6e99bd9e223a37d8ea
-  //6139fe2859842c7444fb0218
+  // 6138cb6e99bd9e223a37d8ea
+  // 6139fe2859842c7444fb0218
 };

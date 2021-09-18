@@ -30,8 +30,8 @@ exports.fileUploadRequest = (req, res) => {
   }
 }
 
-
 exports.fileUploadStatus = (req, res) => {
+
   if (req.query && req.query.fileName && req.query.fileId) {
     getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
       .then(stats => {
@@ -43,6 +43,7 @@ exports.fileUploadStatus = (req, res) => {
   } else {
     return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
   }
+
 }
 
 
@@ -134,7 +135,7 @@ exports.getAllFiles = async (req, res) => {
 exports.getFileByType = async (req, res) => {
   // type from params
   const { type } = req.params;
-  console.log(`type: ${type}`);
+  // console.log(`type: ${type}`);
   const matchedFiles = []
   // filter from response to get type
   const data = await File.fetchAll();
@@ -144,11 +145,12 @@ exports.getFileByType = async (req, res) => {
 
   await RealTime.publish(`${type}Files`, data); 
   res.status(200).send(appResponse(null, matchedFiles, true));
+
 }
 
 
 exports.fileDetails = async (req, res) => {
-  const data = await File.fetchOne({ '_id': req.params.id });
+  const data = await File.fetchOne({ _id: req.params.id });
   const response = await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
@@ -169,9 +171,15 @@ exports.fileUpdate = async (req, res) => {
 
 // delete permanently
 exports.fileDelete = async (req, res) => {
-  const response = await File.delete(req.params.id);
 
+  const { data } = await File.fetchOne({ '_id': req.params.id });
+
+  await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+
+  const response = await File.delete(req.params.id);
+  
   if (!response) throw new InternalServerError()
+
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
@@ -179,6 +187,11 @@ exports.fileDelete = async (req, res) => {
 // delete multiple files 
 exports.deleteMultipleFiles = async (req, res) => {
   const [...ids] = req.body.ids;
+
+  [...ids].map(async id => {
+    const data = await File.fetchOne({ '_id': id });
+    MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+  })
 
   const response = await File.delete(ids);
 
@@ -305,6 +318,8 @@ exports.getArchivedFiles = async (req, res) => {
     return res.send({ ...error });
   }
 };
+
+
 // get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
