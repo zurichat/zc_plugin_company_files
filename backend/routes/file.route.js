@@ -39,7 +39,7 @@ router.post('/upload', fileUpload);
 router.get('/all', getAllFiles);
 
 // GET A SPECIFIC FILE TYPE
-router.get('fileByType/:type', getFileByType);
+router.get('/type/:type', getFileByType);
 
 // SEARCH FOR ALL DELETED FILES
 router.get('/searchByisDeleted', searchFileByIsDeleted);
@@ -75,7 +75,7 @@ router.post('/isDuplicate', isDuplicate);
 router.get('/duplicateFiles', getAllDuplicates);
 
 // EDIT FILE
-router.put('/file/write/:id', fileUpdate)
+router.put('/write/:id', fileUpdate)
 
 // DELETE SINGLE FILE
 router.delete('/deleteFile/:id', fileDelete);  

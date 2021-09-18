@@ -9,7 +9,6 @@ const cluster = require('cluster');
 const express = require('express');
 const compression = require('compression');
 
-
 const app = express();
 const router = express.Router();
 
@@ -17,10 +16,10 @@ const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
+app.use(cors());
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-app.use(cors());
 
 app.use(express.static(path.resolve(__dirname, './frontend/build')));
 
@@ -69,3 +68,6 @@ app.use(ErrorHandler);
 })().catch(error => {
   console.log(`✖ | Error: ${error.message}`.red.bold);
 });
+
+
+module.exports = app;
