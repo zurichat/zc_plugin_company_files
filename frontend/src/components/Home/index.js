@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import RecentlyViewed from "./RecentlyViewed";
-import Folder from "./Folder";
+
+import FileOptions from "../FileUpload/FileOptions";
 import Files from "./Files";
-import SelectFileModal from "Components/FileUpload/SelectFileModal";
-import FileOptions from "Components/FileUpload/FileOptions";
+import Folder from "./Folder";
+import RecentlyViewed from "./RecentlyViewed";
+import SelectFileModal from "../FileUpload/SelectFileModal";
 import ShortCut from "./ShortCut";
+
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
