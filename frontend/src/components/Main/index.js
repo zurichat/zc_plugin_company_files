@@ -11,6 +11,7 @@ import {
 import Files from "../Home/Files"
 import ImagePreview from "../ImagePreview"
 import FileUpload from "../Home"
+import VideoPreview from "../VideoPreview"
 
 const Main = () => {
   return (
@@ -30,6 +31,9 @@ const Main = () => {
           </Route>
           <Route path="/upload" exact>
             <FileUpload />
+          </Route>
+          <Route path="/singleSapa" exact>
+            <VideoPreview />
           </Route>
         </Switch>
 
