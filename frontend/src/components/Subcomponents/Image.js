@@ -4,8 +4,8 @@ import FileMenu from "./FileMenu";
 
 function Image({ file }) {
   const openMenu = (file) => {
-    console.log("clicked")
-    console.log(`${file.fileName} clicked`)
+    console.log("clicked");
+    console.log(`${file.fileName} clicked`);
   };
 
   return (
