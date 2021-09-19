@@ -1,5 +1,7 @@
 import React from "react";
-import Image from "next/image";
+import active from "../../../public/Icons/arrow-left/active.svg"
+import imageIcon from "../../../public/Icons/image/active.svg"
+import downloadIcon from "../../../public/Icons/download/active.svg"
 
 function index() {
   return (
@@ -8,7 +10,7 @@ function index() {
         <div className="flex">
           <div>
             <img
-              src="/Icons/arrow-left/active.svg"
+              src={active}
               alt="arrow-left"
               className="mr-5"
             />
@@ -16,7 +18,7 @@ function index() {
           <div>
             <div className="flex flex-row">
               <img
-                src="/Icons/image/active.svg"
+                src={imageIcon}
                 alt="image-icon"
                 className="mr-2"
               />
@@ -26,7 +28,7 @@ function index() {
         </div>
         <div className="flex">
           <div>
-            <img src="/Icons/download/active.svg" alt="download-icon" />
+            <img src={downloadIcon} alt="download-icon" />
           </div>
           <div>
             <img
