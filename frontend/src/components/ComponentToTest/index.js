@@ -1,30 +1,30 @@
 // import Button from "../Button";
 import React, { useEffect, useState } from "react";
 
-import Centrifuge from "centrifuge";
+// import Centrifuge from "centrifuge";
 import axios from "axios";
 
 // const centrifuge = new Centrifuge("ws://localhost:8000/connection/websocket");
-const centrifuge = new Centrifuge(
-  "wss://realtime.zuri.chat/connection/websocket"
-);
+// const centrifuge = new Centrifuge(
+//   "wss://realtime.zuri.chat/connection/websocket"
+// );
 
 // axios.get("http://localhost:5500/api/v1/files/all");
-centrifuge.on("connect", (data) => {
-  axios.get("https://companyfiles.zuri.chat/api/v1/files/all");
-  console.log(data);
-});
+// centrifuge.on("connect", (data) => {
+//   axios.get("https://companyfiles.zuri.chat/api/v1/files/all");
+//   console.log(data);
+// });
 
-centrifuge.on("disconnect", (data) => {
-  console.log(data);
-});
+// centrifuge.on("disconnect", (data) => {
+//   console.log(data);
+// });
 
 const ComponentToTest = () => {
   const [allFiles, setAllFiles] = useState([]);
 
   const fetchData = () => {
-    centrifuge.connect();
-    centrifuge.subscribe("allFiles", (response) => setAllFiles(response.data));
+    // centrifuge.connect();
+    // centrifuge.subscribe("allFiles", (response) => setAllFiles(response.data));
   };
 
   useEffect(() => {

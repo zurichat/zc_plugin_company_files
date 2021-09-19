@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -33,9 +32,9 @@ const index = () => {
       <div className="top flex justify-between">
         <h2 className="text-2xl md:text-[20px]">Files</h2>
 
-        <Link href="/">
-          <a className="text-gray-400 hover:text-green-400">View All</a>
-        </Link>
+        
+          <a href="/" className="text-gray-400 hover:text-green-400">View All</a>
+       
       </div>
 
       <div className="project-box-wrapper">
