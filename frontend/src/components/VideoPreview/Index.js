@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState, useRef, useEffect } from "react"
-import Router from 'next/router'
 import {  faArrowLeft, faImage, faDownload, faEllipsisV, faPlay, faPause,  } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import VideoPreview from "./videoPreview.module.css"
@@ -17,7 +16,6 @@ const Index = ({videoUrl, title}) => {
 
     const previous = () => {
         console.log("Go back");
-        Router.push('/home');
     }
 
 
