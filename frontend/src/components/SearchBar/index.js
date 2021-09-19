@@ -2,17 +2,19 @@ import CustomIcon from "../CustomIcon";
 import PropTypes from "prop-types";
 import React from "react";
 import { useState } from "react";
-const searchIcon = "/Icons/search.svg";
-const cancelIcon = "Icons/x-icon.svg";
-const docCat = "Icons/doc-cat.svg";
-const pdfCat = "Icons/pdf-cat.svg";
-const ppCat = "Icons/pp-cat.svg";
-const psCat = "Icons/ps-cat.svg";
-const videoCat = "Icons/video-cat.svg";
-const excelCat = "Icons/excel-cat.svg";
-const imgCat = "Icons/img-cat.svg";
-const clockIcon = "Icons/clock-icon.svg";
-const onlineUserIcon = "Icons/online-user.svg";
+import  searchIcon from  "../../../public/Icons/search.svg";
+import  cancelIcon from  "../../../public/Icons/xlsfile.svg";
+import  docCat from  "../../../public/Icons/doc-cat.svg";
+import  pdfCat from  "../../../public/Icons/pdf-cat.svg";
+import  ppCat from  "../../../public/Icons/pp-cat.svg";
+import  psCat from  "../../../public/Icons/ps-cat.svg";
+import  videoCat from  "../../../public/Icons/video-cat.svg";
+import  excelCat from  "../../../public/Icons/excel-cat.svg";
+import  imgCat from  "../../../public/Icons/img-cat.svg";
+import  clockIcon from  "../../../public/Icons/clock-icon.svg";
+import  onlineUserIcon from  "../../../public/Icons/online-user.svg";
+
+
 
 const SEARCH_CATEGORY_LIST = [
   {

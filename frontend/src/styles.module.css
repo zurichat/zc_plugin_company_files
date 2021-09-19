@@ -1,0 +1,67 @@
+.deletemodal {
+  position: absolute;
+  z-index: 7;
+  top: 0;
+  left: 0;
+    font-family: Lato;
+    height: 100vh;
+    width: 100vw;
+    background: #0000004d;
+    /* position: relative; */
+    font-weight: 500;
+    transition: all 100ms ease-in-out;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .display {
+    visibility: hidden;
+    opacity: 0;
+  }
+  .centerdis {
+    transform: translateY(1rem) !important;
+  }
+  .center {
+    width: 450px;
+    height: 270px;
+    background: #ffffff;
+    border-radius: 5px;
+    transition: all 100ms ease-in-out;
+  }
+
+  .center p {
+    text-align: center;
+    margin: 2.5rem 0 1.6rem;
+    letter-spacing: 0.2px;
+  }
+
+  .headertext {
+    padding: 1rem;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn {
+    padding: 0.7rem 1.25rem;
+    border-radius: 3px;
+    outline: none;
+    border: none;
+    font-size: 0.9rem;
+  }
+
+  .cancle {
+    margin: 0 1.5rem 0 0;
+    background: #ffffff;
+    color: #00B87C;
+    
+    border: 2px solid #00B87C;
+  }
+
+  .delete {
+    background: #00B87C;
+    color: #fff;
+  }
