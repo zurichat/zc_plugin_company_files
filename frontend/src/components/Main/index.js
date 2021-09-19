@@ -9,25 +9,27 @@ import {
 } from "react-router-dom";
 
 import Files from "../Home/Files"
+import ImagePreview from "../ImagePreview"
+import FileUpload from "../Home"
 
 const Main = () => {
   return (
-    <Router>
+    <Router basename="/companyfiles">
       <div className="bg-gray-50 h-screen flex flex-1 flex-col items-center ">
         <SearchBar />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
         {/* <ComponentToTest /> */}
 
         <Switch>
-          <Route path="/files">
+          <Route path="/files" exact>
             <Files />
-            {/* <About /> */}
+
           </Route>
-          <Route path="/users">
-            {/* <Users /> */}
+          <Route path="/image">
+            <ImagePreview />
           </Route>
-          <Route path="/">
-            {/* <Home /> */}
+          <Route path="/upload" exact>
+            <FileUpload />
           </Route>
         </Switch>
 
