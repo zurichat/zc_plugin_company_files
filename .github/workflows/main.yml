@@ -19,6 +19,6 @@ jobs:
             git pull
             npm run install-setup
             npm run build
-            pm2 restart staging.js
+            pm2 restart server.js
             
  
