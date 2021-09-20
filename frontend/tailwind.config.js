@@ -10,14 +10,8 @@ module.exports = {
         accent: "#B8003C",
         error: "#F40101",
         bgLight: "#E5E5E5",
+        backGround: "rgba(0, 0, 0, 0.6)",
         border: "#BEBEBE",
-        // Colours for TrashListView
-        lightGreen: "#F0FBF8",
-        durationGray: "#616161",
-        itemsGray: "#606060",
-        emptyGray: "#292929",
-        itemTrash: "#4A4A4A",
-        lightGrayHover: "#FAFAFA",
         bg: {
           lightGrey: "#F6F6F6",
           white: "#FFFFFF",
@@ -41,10 +35,6 @@ module.exports = {
       },
       fontFamily: {
         lato: ["Lato"],
-      },
-      fontSize: {
-        trashTheading: "0.9375rem",
-        empty: "0.8125rem",
       },
     },
   },

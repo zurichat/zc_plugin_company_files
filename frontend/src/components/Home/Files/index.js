@@ -10,6 +10,7 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
+import Audio from "../../Subcomponents//audio"
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
@@ -35,7 +36,6 @@ const index = () => {
         loading...
       </div>
     );
-  console.log(data);
 
   return (
     <div className="w-full px-10 flex-auto">
@@ -74,7 +74,11 @@ const index = () => {
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Powerpoint file={file} />
               </div>
-            ) : (
+            ) : new RegExp("\\b" + "audi" + "\\b").test(file.type) ? (
+              <div key={file._id} className="file flex items-center mr-0 my-5">
+                <Audio file={file} />
+              </div>
+            ) :  (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Video file={file} />
               </div>
