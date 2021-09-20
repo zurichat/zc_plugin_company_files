@@ -8,6 +8,7 @@ import ImagePreview from "../ImagePreview";
 import FileUpload from "../Home";
 import Home from "../Home";
 // import VideoPreview from "../VideoPreview";
+import TrashApp from "../TrashListView/TrashApp";
 
 const Main = () => {
   return (
@@ -32,6 +33,9 @@ const Main = () => {
           </Route>
           <Route path="/singleSapa" exact>
             {/* <VideoPreview /> */}
+          </Route>
+          <Route path="/trashapp" exact>
+            <TrashApp />
           </Route>
         </Switch>
       </div>
