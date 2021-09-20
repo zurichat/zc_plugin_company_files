@@ -1,0 +1,27 @@
+.addnew_wrapper {
+  position: relative;
+  margin-bottom: 2rem;
+}
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid #a3f6db;
+  color: #a3f6db;
+  border-radius: 3px;
+  background: #ffffff;
+}
+.card_wrapper {
+  position: absolute;
+  padding: 5px 0;
+  top: 40px;
+  left: 0;
+  height: 10rem;
+  z-index: 100;
+  width: 20rem;
+  background-color: #ffffff;
+  box-shadow: 0px 6px 20px -5px #a5a5a566;
+  border: 1px solid #f6f6f6;
+}

@@ -7,7 +7,9 @@ import Files from "../Home/Files";
 import ImagePreview from "../ImagePreview";
 import FileUpload from "../Home";
 import Home from "../Home";
-//import VideoPreview from "../VideoPreview";
+import NewFolder from "../FolderCreation/Folder"
+import TrashApp from "../TrashListView/TrashApp";
+// import VideoPreview from "../VideoPreview";
 
 const Main = () => {
   return (
@@ -29,6 +31,12 @@ const Main = () => {
           </Route>
           <Route path="/upload" exact>
             <FileUpload />
+          </Route>
+          <Route path="/newfolder" exact>
+            <NewFolder />
+          </Route>
+          <Route path="/trashapp" exact>
+            <TrashApp />
           </Route>
         </Switch>
       </div>
