@@ -21,7 +21,7 @@ app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
-app.use(express.static(path.resolve(__dirname, './frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 if (isProduction) {
   app.set('trust proxy', 1); // Trust first proxy
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
-  res.sendFile(path.join(__dirname, './frontend/dist'));
+  res.sendFile(path.join(__dirname, 'frontend/dist/zuri-zuri-plugin-companyFiles.js'));
 });
 
 
