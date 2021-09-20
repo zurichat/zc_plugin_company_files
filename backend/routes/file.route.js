@@ -21,6 +21,7 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   getAllDuplicates,
+  croppedImages,
   setEditPermission,
   searchBySize,
   searchByType
@@ -80,6 +81,7 @@ router.put('/write/:id', fileUpdate)
 // DELETE SINGLE FILE
 router.delete('/deleteFile/:id', fileDelete);  
 
+
 // DELETE MULTIPLE FILES
 router.post('/deleteMultipleFiles', deleteMultipleFiles);
 
@@ -94,5 +96,8 @@ router.get('/setEdit/:admin', setEditPermission)
 
 // SEARCH FILES BY FILE TYPE
 router.get('/searchByType', searchByType);
+
+//Save Cropped images
+router.post('/croppedImages', croppedImages);
 
 module.exports = router;

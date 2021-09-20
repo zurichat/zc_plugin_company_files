@@ -46,6 +46,28 @@ exports.fileUploadStatus = (req, res) => {
 
 }
 
+exports.croppedImages = async(req, res)=>{
+    const file = await File.fetchOne({_id : req.params.id});
+    console.log(file);
+    /*const del = await MediaUpload.deleteFromCloudinary.cloudinaryId(file);
+
+    var busboy = new Busboy({ headers: req.headers });
+    busboy.on('file', function(fieldname, file, filename, encoding, mimetype){
+      const filePath=getFilePath(fileName, file)
+    });
+    
+    file.on('end', async()=>{
+      const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
+      md5Generator(filePath),
+      MediaUpload.uploadFile(filePath)
+      ])
+    })*/
+
+
+
+
+};
+
 
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
@@ -54,6 +76,21 @@ exports.fileUpload = async (req, res) => {
 
   if (!contentRange) throw new BadRequestError('Missing "Content-Range" header');
   if (!fileId) throw new BadRequestError('Missing "X-File-Id" header');
+    // check if file exist in the database
+  // query to get file by fileId .. what we have currently is getting by _id
+  const data = await File.fetchOne({ _id: fileId }); 
+  await RealTime.publish('fileDetail', data)
+  if (data?._id) {
+    // delete from cloudinary
+    if (data?.cloudinaryId) {
+      await MediaUpload.deleteFromCloudinary(data.cloudinaryId)      
+    }
+    // delete file from the zuri endpoint 
+    const deletedResponse = File.delete(data._id)
+  
+   
+    if (!deletedResponse) throw new InternalServerError()
+  }
 
   const match = contentRange.match(/bytes=(\d+)-(\d+)\/(\d+)/);
 
