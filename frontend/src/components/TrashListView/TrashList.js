@@ -46,7 +46,6 @@ function TrashList() {
   };
 
   // creates reference for array items
-
   const menu = useRef(data && Array(data.length).fill(createRef()));
 
   //This displays the Menu button
