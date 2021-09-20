@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import SelectFileModal from "./SelectFileModalUpdate";
+import SelectFileModal from "./SelectFileModal";
 import UploadProgressModal from "./UploadProgressModal";
 
 const index = ({

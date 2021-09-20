@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import uploadImg from "../../../public/Icons/upload/upload.svg";
 
 const SelectFileModal = ({
   upload,
@@ -75,7 +76,7 @@ const SelectFileModal = ({
         {!progress && (
           <div
             ref={dragArea}
-            className="absolute px-[18px] py-[22px] min-w-[400px] max-w-[650px] h-4/6 top-1/2 left-1/2 rounded-[12px] bg-white bg-opacity-100 transform -translate-x-1/2 -translate-y-1/2 shadow-lg drop-shadow-lg"
+            className="absolute px-5 py-6 w-96 h-auto top-1/2 left-1/2 rounded-lg bg-white bg-opacity-100 transform -translate-x-1/2 -translate-y-1/2 shadow-lg drop-shadow-lg"
           >
             <div className="modalHeader my-2 flex justify-between text-gray-400 border-b">
               <span className="text-[20px]">Load File(s)</span>
@@ -96,7 +97,7 @@ const SelectFileModal = ({
                   className="hidden"
                   onChange={handleFileSelection}
                 />
-                <span className="hover:text-white max-h-[200px] border border-green-100 px-[14px] py-[8px] hover:bg-green-500 rounded-md text-center cursor-pointer">
+                <span className="hover:text-white border border-green-100 px-4 py-2 hover:bg-green-500 rounded-md text-center cursor-pointer">
                   Choose Files
                 </span>
                 {files && <span>{`${files.length} selected`}</span>}
@@ -106,19 +107,15 @@ const SelectFileModal = ({
             {!files ? (
               <div
                 ref={dragNdrop}
-                className="relative dragNdrop my-2 border-2 border-dashed  w-full h-1/2 flex overflow-y-auto"
+                className="relative dragNdrop my-2 border-2 border-dashed  w-full h-52 flex overflow-y-auto"
               >
                 <div className="m-auto">
-                  <img
-                    src="/Icons/upload/upload.svg"
-                    alt=""
-                    className="mx-auto"
-                  />
-                  <p className="text-gray-400 text-[25px]">Drop Files Here</p>
+                  <img src={uploadImg} alt="" className="mx-auto w-1/3" />
+                  <p className="text-gray-400 text-6">Drop Files Here</p>
                 </div>
               </div>
             ) : (
-              <div className="w-auto max-h-[200px] relative  p-4 flex flex-col shadow-inner my-2 overflow-y-auto">
+              <div className="w-auto h-52 relative  p-4 flex flex-col shadow-inner my-2 overflow-y-auto">
                 {[...files].map((file) => (
                   <div
                     className="flex justify-between items-center"
@@ -130,16 +127,16 @@ const SelectFileModal = ({
                 ))}
               </div>
             )}
-            <div className="uploadActions flex justify-end border-t mt-6 pt-6 text-[12px]">
+            <div className="uploadActions flex justify-end border-t mt-6 pt-6 text-sm">
               <button
                 onClick={uploadFiles}
-                className="mx-4 px-[14px] py-[8px] bg-green-500 text-white rounded-sm"
+                className="mx-4 px-3 py-2 bg-green-500 text-white rounded-sm"
               >
                 Upload
               </button>
               <button
                 onClick={clearFiles}
-                className=" px-[14px] py-[8px]  border border-green-100 text-green-500 text-[12px]"
+                className=" px-3 py-2  border border-green-100 text-green-500 text-sm"
               >
                 Clear
               </button>
