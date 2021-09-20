@@ -34,9 +34,6 @@ const Main = () => {
           <Route path="/newfolder" exact>
             <NewFolder />
           </Route>
-          <Route path="/singleSapa" exact>
-            {/* <VideoPreview /> */}
-          </Route>
         </Switch>
       </div>
     </Router>
