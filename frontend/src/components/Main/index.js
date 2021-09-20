@@ -8,6 +8,7 @@ import ImagePreview from "../ImagePreview";
 import FileUpload from "../Home";
 import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder"
+import TrashApp from "../TrashListView/TrashApp";
 // import VideoPreview from "../VideoPreview";
 
 const Main = () => {
@@ -33,6 +34,9 @@ const Main = () => {
           </Route>
           <Route path="/newfolder" exact>
             <NewFolder />
+          </Route>
+          <Route path="/trashapp" exact>
+            <TrashApp />
           </Route>
         </Switch>
       </div>
