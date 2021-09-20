@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { useState, useRef, useEffect } from "react";
-import active from "../../../public/Icons/arrow-left/active.svg";
-import imageIcon from "../../../public/Icons/image/active.svg";
-import downloadIcon from "../../../public/Icons/download/active.svg";
-import Vertical from "../../../public/Icons/more-vertical/active.svg";
-import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
-import RightArrow from "../../../public/Icons/arrow-right/active.svg";
-import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
-import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
-
-const Index = ({ videoUrl, title, file, setOpenStatus }) => {
-  const [show, setShow] = useState(true);
-  const videoPlayer = useRef(null);
-
-  const [isPlaying, setIsPlaying] = useState(true);
-
-  const playPause = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const previous = () => {
-    console.log("Go back");
-  };
-=======
 // import React from 'react'
 // import { useState, useRef, useEffect } from "react"
 // import {  faArrowLeft, faImage, faDownload, faEllipsisV, faPlay, faPause,  } from '@fortawesome/free-solid-svg-icons'
@@ -42,8 +16,7 @@ const Index = ({videoUrl, title}) => {
 
     // const previous = () => {
     //     console.log("Go back");
-    }
->>>>>>> 0cfa6ceaed5d53210b4470151a738e1f4367d587
+    // }
 
   // useEffect(() => {
   //     if (isPlaying) {
