@@ -11,7 +11,10 @@
     "check-format": "prettier --check .",
     "test": "cross-env BABEL_ENV=test jest",
     "watch-tests": "cross-env BABEL_ENV=test jest --watch",
+<<<<<<< HEAD
     "prepare": "cd .. && husky install frontend/.husky",
+=======
+>>>>>>> cfd190e6e7c11e858f50f411305270192d6ec200
     "coverage": "cross-env BABEL_ENV=test jest --coverage"
   },
   "devDependencies": {
