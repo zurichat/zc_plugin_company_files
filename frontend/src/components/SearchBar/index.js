@@ -1,3 +1,4 @@
+import Axios from "axios";
 import CustomIcon from "../CustomIcon";
 import PropTypes from "prop-types";
 import React from "react";
@@ -19,34 +20,41 @@ const SEARCH_CATEGORY_LIST = [
   {
     iconLink: docCat,
     title: "Document",
+    ext: "doc",
   },
   {
     iconLink: pdfCat,
     bgColor: "bg-red-100",
     title: "Pdf",
+    ext: "pdf",
   },
   {
     iconLink: psCat,
     title: "Photoshop",
+    ext: "ps",
   },
   {
     iconLink: ppCat,
     bgColor: "bg-orange",
     title: "Powerpoint",
+    ext: "pp",
   },
   {
     iconLink: excelCat,
     bgColor: "bg-green-100",
     title: "Excel",
+    ext: "xls",
   },
   {
     iconLink: videoCat,
     bgColor: "bg-red-50",
     title: "Video",
+    ext: "mp4",
   },
   {
     iconLink: imgCat,
     title: "Image",
+    ext: "png",
   },
 ];
 const RECENT_SEARCH_ITEMS = [
@@ -57,6 +65,12 @@ const RECENT_SEARCH_ITEMS = [
     name: "project.xlsx",
   },
 ];
+const getCatExt = (cat) => {
+  if (!cat) return null;
+  return SEARCH_CATEGORY_LIST?.find(
+    (elm) => cat?.toLowerCase() === elm?.title?.toLowerCase()
+  )?.ext;
+};
 
 const SearchResultCategory = ({ iconLink, bgColor, title, ...restProps }) => {
   return (
@@ -143,6 +157,13 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
   const [showSearchWindow, setShowSearchWindow] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [selectedCategory, selectCategory] = useState(false);
+  const fetchUrl = `https://companyfiles.zuri.chat/api/v1/search${
+    !searchInputValue
+      ? ""
+      : `/filter?filename=${searchInputValue}&filetype=${
+          getCatExt(selectedCategory || "") || "all"
+        }`
+  }`;
 
   const onChangeHandler = (e) => {
     setSearchInputValue(e?.target?.value);
@@ -155,6 +176,18 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
   };
   const clearInput = () => {
     setSearchInputValue("");
+  };
+  const onSubmit = () => {
+    return Axios.get(fetchUrl)
+      .then((data) => console.log(`Search data`, data))
+      .catch((err) => console.log(err));
+  };
+  const handleSubmit = (e) => {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == "Enter") {
+      return onSubmit();
+    }
   };
   SearchInput.handleClickOutside = onBlurHandler;
   const selectCategoryHandler = (cat) => {
@@ -184,6 +217,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
             placeholder: "Search for your files",
             onChange: onChangeHandler,
             onFocus: onFocusHandler,
+            onKeyPress: handleSubmit,
           }}
         />
         <CustomIcon
