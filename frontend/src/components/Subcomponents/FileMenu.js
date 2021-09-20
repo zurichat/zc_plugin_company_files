@@ -1,13 +1,28 @@
-import React from 'react'
-import FileMenuButton from './FileMenuButton'
+import React, { useState } from "react";
+import FileMenuButton from "./FileMenuButton";
+import Eye from "../../../public/Icons/eye/active.svg";
+import Move from "../../../public/Icons/move/active.svg";
 
 function FileMenu() {
-    return (
-        <div className="bg-white py-3 w-60 hidden">
-            <FileMenuButton name="preview" imgLink="/Icons/eye/active.svg" altText="preview" />
-            <FileMenuButton name="open with" imgLink="/Icons/move/active.svg" altText="open with" />
-        </div>
-    )
+  
+  return (
+    <>
+      <div className="bg-white py-3 w-60 absolute">
+        <FileMenuButton
+          name="preview"
+          imgLink={Eye}
+          altText="preview"
+          cmd={previewCmd}
+        />
+        <FileMenuButton
+          name="open with"
+          imgLink={Move}
+          altText="open with"
+          cmd={openWith}
+        />
+      </div>
+    </>
+  );
 }
 
-export default FileMenu
+export default FileMenu;
