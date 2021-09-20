@@ -21,7 +21,6 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   getAllDuplicates,
-  croppedImages,
   setEditPermission,
   searchBySize,
   searchByType
@@ -97,7 +96,6 @@ router.get('/setEdit/:admin', setEditPermission)
 // SEARCH FILES BY FILE TYPE
 router.get('/searchByType', searchByType);
 
-//Save Cropped images
-router.post('/croppedImages', croppedImages);
+
 
 module.exports = router;
