@@ -78,7 +78,7 @@ const index = () => {
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Audio file={file} />
               </div>
-            ) : (
+            ) :  (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Video file={file} />
               </div>
