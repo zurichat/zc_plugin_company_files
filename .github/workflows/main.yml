@@ -1,38 +1,12 @@
 name: Continuous integration
 on:
   push:
-    branches: [dev]
+    branches: [switch]
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Pulling changes for testing
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{ secrets.IP_ADDRESS }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /var/www/staging-company-files
-            git restore .
-            git pull
-            npm run install-setup
-            npm run build
-            pm2 restart staging.js
-            
-      - name: Obtaining response from server
-        run: |
-          OUTPUT= echo "::set-output name=OUTPUT::$(curl -Is $ip:$port| head -n 1| cut -c 10-13)"
-          echo $ip
-          echo $port
-        id: version
-        env:
-          ip: ${{ secrets.IP_ADDRESS }}
-          port: ${{ secrets.PORT1 }} 
-          OUTPUT: ${{ env.OUTPUT }}
-      - name: Deploying to main port
-        if: ${{ steps.version.outputs.OUTPUT }} == 200
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{ secrets.IP_ADDRESS }}
@@ -46,34 +20,5 @@ jobs:
             npm run install-setup
             npm run build
             pm2 restart server.js
-      - name: Send email
-        if: ${{ steps.version.outputs.OUTPUT }} != 200
-        uses: dawidd6/action-send-mail@v3
-        with:
-              # Required mail server address:
-              server_address: ${{ secrets.SMTP_SERVER }}
-              # Required mail server port:
-              server_port: ${{ secrets.SMTP_SERVER_PORT }}
-              # Optional (recommended): mail server username:
-              username: ${{ secrets.AUTH_USER }}
-              # Optional (recommended) mail server password:
-              password: ${{secrets.EMAIL_PASSWORD }}
-              # Required mail subject:
-              subject: Team galileo build fail report
-              # Required recipients' addresses:
-              to: ${{ secrets.EMAIL_RECIVER }}
-              # Required sender full name (address can be skipped):
-              from: ${{ secrets.EMAIL_FROM }}
-              # Optional whether this connection use TLS (default is true if server_port is 465)
-              secure: true
-              # Optional plain body:
-              body: Your recent merge broke the code and so was deployed check github actions log for detail
-
-#       - name: Failing build when response code is not 200
-#         if: ${{ steps.version.outputs.OUTPUT }} != 200
-#         uses: actions/github-script@v3
-#         with:
-#            script: |
-#              core.setFailed('Your merge broke the code and so was not deployed onthe main port')
-
-
+            
+ 
