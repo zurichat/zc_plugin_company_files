@@ -7,11 +7,8 @@ import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
 import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
 import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
-import { useHistory } from "react-router";
 
 function index({ file, setOpenStatus }) {
-  const history = useHistory();
-
   return (
     <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
       <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
@@ -40,8 +37,8 @@ function index({ file, setOpenStatus }) {
           </div>
         </div>
       </nav>
-      <div className="flex flex-col justify-between items-center w-full">
-        <div className="flex justify-between w-full md:px-6 px-2">
+      <div className="flex flex-col justify-between items-center h-3/4 w-full">
+        <div className="flex justify-between h-full w-full md:px-6 px-2">
           <div className="flex self-center">
             <img
               src={LeftArrow}
@@ -53,7 +50,7 @@ function index({ file, setOpenStatus }) {
             <img
               src={file.url}
               alt="image"
-              className="md:min-w-0 min-w-full w-60 md:w-10/12"
+              className="w-60 h-60 md:max-w-md md:h-2/4 lg:max-w-lg lg:h-3/4"
             />
           </div>
           <div className="flex self-center">
