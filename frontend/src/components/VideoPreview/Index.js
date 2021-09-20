@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import active from "../../../public/Icons/arrow-left/active.svg";
@@ -23,27 +22,6 @@ const Index = ({ videoUrl, title, file, setOpenStatus }) => {
   const previous = () => {
     console.log("Go back");
   };
-=======
-// import React from 'react'
-// import { useState, useRef, useEffect } from "react"
-// import {  faArrowLeft, faImage, faDownload, faEllipsisV, faPlay, faPause,  } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-//import VideoPreview from "./videoPreview.module.css"
-
-const Index = ({videoUrl, title}) => {
-    // const [show, setShow] = useState(true);
-    // const videoPlayer = useRef(null);
-
-    // const [isPlaying, setIsPlaying] = useState(true);
-
-    // const playPause = () => {
-    //     setIsPlaying(!isPlaying);
-    // }
-
-    // const previous = () => {
-    //     console.log("Go back");
-    }
->>>>>>> 0cfa6ceaed5d53210b4470151a738e1f4367d587
 
   // useEffect(() => {
   //     if (isPlaying) {
