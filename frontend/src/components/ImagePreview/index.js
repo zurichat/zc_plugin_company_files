@@ -13,7 +13,7 @@ function index({ file, setOpenStatus }) {
   const history = useHistory();
 
   return (
-    <div className="bg-gray-800 bg-opacity-70 h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
+    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
       <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
         <div className="flex">
           <div>
