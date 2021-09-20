@@ -27,7 +27,7 @@ function index({ file, setOpenStatus }) {
           <div>
             <div className="flex flex-row">
               <img src={imageIcon} alt="image-icon" className="mr-2" />
-              <p className="text-white">file name.jpg</p>
+              <p className="text-white">{file.fileName}</p>
             </div>
           </div>
         </div>
@@ -51,7 +51,7 @@ function index({ file, setOpenStatus }) {
           </div>
           <div className="flex items-center justify-center">
             <img
-              src="https://images.unsplash.com/photo-1580746342105-d49a38cbccb4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=701&q=80"
+              src={file.url}
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             />
