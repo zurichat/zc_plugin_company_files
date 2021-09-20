@@ -18,7 +18,6 @@ jobs:
             git restore .
             git pull
             npm run install-setup
-            npm run build
             pm2 restart server.js
             
  
