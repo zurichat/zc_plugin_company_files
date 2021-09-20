@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-
-import FileOptions from "../FileUpload/FileOptions";
-import Files from "./Files";
-import Folder from "./Folder";
+import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
-import SelectFileModal from "../FileUpload/SelectFileModal";
+import Folder from "./Folder";
+import Files from "./Files/index";
+// import SelectFileModal from "../FileUpload/SelectFileModal";
+import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
-
+// import UploadProgressModal from "../FileUpload/UploadProgressModal";
+import FileUpload from "../FileUpload/index";
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
+  const [demo, setDemo] = useState(false);
+  // let progress = useRef(false)
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -30,38 +32,36 @@ const Index = () => {
 
   const hideUploadModal = () => {
     setUpload(!upload);
-    setProgress(!progress);
   };
 
   const showProgressModal = () => {
-    // hideProgressModal();
-    setProgress(!progress);
-    console.log(progress);
+    hideUploadModal();
+    setProgress(true);
+    setDemo(true);
+    console.log({ Progress: progress, Demo: demo });
   };
 
   const hideProgressModal = () => {
-    setProgress(!progress);
-    setUpload(!upload);
+    setProgress(false);
   };
 
-  // const show
-
   return (
-    <div className="relative py-10 z-auto">
+    <div
+      className={(upload ? " overflow-y-hidden" : "") + "w-full py-10 z-auto"}
+    >
       <button
-        onClick={showUploadModal}
-        className="relative ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
+        onClick={showOptions}
+        className="ml-10 mt-10 px-4 py-2 text-4 text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none rounded-md"
       >
         Add File
-        <FileOptions options={options} />
       </button>
+      <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
       <Folder />
       <Files />
       {upload && (
-        <SelectFileModal
-          className=""
+        <FileUpload
           upload={upload}
           progress={progress}
           hideUploadModal={hideUploadModal}
