@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import dayjs from "dayjs";
-import Vertical from "../../../public/Icons/more-vertical/active.svg"
-import Vid from "../../../public/Icons/video.svg"
-import VideoPreviewNew from "../VideoPreviewNew/Index"
+import Vertical from "../../../public/Icons/more-vertical/active.svg";
+import Vid from "../../../public/Icons/video.svg";
+import VideoPreview from "../VideoPreview/Index";
 
 function Video({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -14,21 +14,25 @@ function Video({ file }) {
       setOpenStatus(true);
     }
   };
+
   return (
     <>
-      <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md"
-      onClick={(e) => handlePreview(e)}
-      onContextMenu={(e) => handlePreview(e)}
+      <div
+        className="flex"
+        onClick={(e) => handlePreview(e)}
+        onContextMenu={(e) => handlePreview(e)}
       >
-        <img src={Vid} alt="Video icon" className="" />
+        <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
+          <img src={Vid} alt="Video icon" className="" />
+        </div>
+        <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
+          <span className="w-full truncate text-[14px]">{file.fileName}</span>
+          <span className="text-gray-400 text-[13px]">
+            {dayjs(file.dateAdded).fromNow()}
+          </span>
+        </div>
       </div>
-      <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-        <span className="w-full truncate text-[14px]">{file.fileName}</span>
-        <span className="text-gray-400 text-[13px]">
-          {dayjs(file.dateAdded).fromNow()}
-        </span>
-      </div>
-       {openStatus && <VideoPreviewNew file={file} setOpenStatus={setOpenStatus} />}
+      {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />}
     </>
   );
 }
