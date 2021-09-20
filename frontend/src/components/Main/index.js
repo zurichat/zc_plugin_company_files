@@ -12,6 +12,7 @@ import Files from "../Home/Files"
 import ImagePreview from "../ImagePreview"
 import FileUpload from "../Home"
 // import VideoPreview from "../VideoPreview"
+import PdfPreview from "../PdfPreview"
 
 const Main = () => {
   return (
@@ -34,6 +35,9 @@ const Main = () => {
           </Route>
           <Route path="/singleSapa" exact>
             {/* <VideoPreview /> */}
+          </Route>
+          <Route path="/PdfPreview">
+            <PdfPreview />
           </Route>
         </Switch>
 
