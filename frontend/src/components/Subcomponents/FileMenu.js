@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import FileMenuButton from "./FileMenuButton";
 import Eye from "../../../public/Icons/eye/active.svg";
 import Move from "../../../public/Icons/move/active.svg";
-import ImagePreview from "../ImagePreview/index";
 
-function FileMenu({ file, previewCmd, openWith }) {
+function FileMenu() {
   
   return (
     <>

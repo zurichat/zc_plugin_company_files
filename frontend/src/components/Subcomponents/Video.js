@@ -15,9 +15,6 @@ function Video({ file }) {
           {dayjs(file.dateAdded).fromNow()}
         </span>
       </div>
-      <div className="options self-start mx-3">
-        <img src={Vertical} alt="vertical icon" />
-      </div>
     </>
   );
 }
