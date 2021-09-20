@@ -1,21 +1,21 @@
-import React from 'react'
-import { useState, useRef, useEffect } from "react"
-import {  faArrowLeft, faImage, faDownload, faEllipsisV, faPlay, faPause,  } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import VideoPreview from "./videoPreview.module.css"
+// import React from 'react'
+// import { useState, useRef, useEffect } from "react"
+// import {  faArrowLeft, faImage, faDownload, faEllipsisV, faPlay, faPause,  } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+//import VideoPreview from "./videoPreview.module.css"
 
 const Index = ({videoUrl, title}) => {
-    const [show, setShow] = useState(true);
-    const videoPlayer = useRef(null);
+    // const [show, setShow] = useState(true);
+    // const videoPlayer = useRef(null);
 
-    const [isPlaying, setIsPlaying] = useState(true);
+    // const [isPlaying, setIsPlaying] = useState(true);
 
-    const playPause = () => {
-        setIsPlaying(!isPlaying);
-    }
+    // const playPause = () => {
+    //     setIsPlaying(!isPlaying);
+    // }
 
-    const previous = () => {
-        console.log("Go back");
+    // const previous = () => {
+    //     console.log("Go back");
     }
 
 

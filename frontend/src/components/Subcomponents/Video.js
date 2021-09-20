@@ -2,11 +2,24 @@ import React from "react";
 import dayjs from "dayjs";
 import Vertical from "../../../public/Icons/more-vertical/active.svg"
 import Vid from "../../../public/Icons/video.svg"
+import VideoPreviewNew from "../VideoPreviewNew/Index"
 
 function Video({ file }) {
+  const [openStatus, setOpenStatus] = useState(false);
+  const handlePreview = (e) => {
+    e.preventDefault();
+    if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
+      console.log("right click");
+      console.log("clicked");
+      setOpenStatus(true);
+    }
+  };
   return (
     <>
-      <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
+      <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md"
+      onClick={(e) => handlePreview(e)}
+      onContextMenu={(e) => handlePreview(e)}
+      >
         <img src={Vid} alt="Video icon" className="" />
       </div>
       <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
@@ -15,6 +28,7 @@ function Video({ file }) {
           {dayjs(file.dateAdded).fromNow()}
         </span>
       </div>
+       {openStatus && <VideoPreviewNew file={file} setOpenStatus={setOpenStatus} />}
     </>
   );
 }
