@@ -269,6 +269,22 @@ exports.searchFileByIsDeleted = async (req, res) => {
 
 }
 
+<<<<<<< HEAD
+//star a file
+exports.toggleStarred = async (req, res) => {
+  await File.update(req.params.id, { isStarred: true });
+
+  const allFiles = await File.fetchAll();
+  const starredFile =  allFiles.data.filter((file) => {
+      return file._id === req.params.id
+});
+console.log(allFiles)
+  res.send({ starredFile })
+
+}
+
+=======
+>>>>>>> 9e0b60f1144c30e8999e232a47ea6da51ef1c510
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
   try {
