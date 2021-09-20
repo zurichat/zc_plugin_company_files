@@ -46,28 +46,6 @@ exports.fileUploadStatus = (req, res) => {
 
 }
 
-exports.croppedImages = async(req, res)=>{
-    const file = await File.fetchOne({_id : req.params.id});
-    console.log(file);
-    /*const del = await MediaUpload.deleteFromCloudinary.cloudinaryId(file);
-
-    var busboy = new Busboy({ headers: req.headers });
-    busboy.on('file', function(fieldname, file, filename, encoding, mimetype){
-      const filePath=getFilePath(fileName, file)
-    });
-    
-    file.on('end', async()=>{
-      const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
-      md5Generator(filePath),
-      MediaUpload.uploadFile(filePath)
-      ])
-    })*/
-
-
-
-
-};
-
 
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
