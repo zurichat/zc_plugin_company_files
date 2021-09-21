@@ -39,7 +39,9 @@ const index = ({
   };
 
   return (
-    <div className="index-container">
+
+    <div className="">
+
       {upload && (
         <SelectFileModal
           upload={upload}
