@@ -10,7 +10,7 @@
     "client:dev": "concurrently \"yarn start --prefix root-config\" \"yarn start --prefix frontend\"",
     "dev": "nodemon .",
     "install-setup": "yarn install && cd frontend && yarn install",
-    "lint:backend": "eslint -c .eslintrc.js backend/** --ext .js",
+    "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "yarn lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
