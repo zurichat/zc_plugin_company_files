@@ -16,7 +16,7 @@ const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
-app.use(cors());
+app.use(cors({ origin: ['*'] }));
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
@@ -60,13 +60,7 @@ app.use(ErrorHandler);
     // In this case, it is an HTTP server
     const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
-      console.log(
-        ':>>'.green.bold,
-        'Server running in'.yellow.bold,
-        (process.env.NODE_ENV || 'production').toUpperCase().blue.bold,
-        'mode, on port'.yellow.bold,
-        `${port}`.blue.bold
-      );
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, (process.env.NODE_ENV || 'production').toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
     });
 
     // Handle unhandled promise rejections
@@ -79,5 +73,3 @@ app.use(ErrorHandler);
 })().catch((error) => {
   console.log(`✖ | Error: ${error.message}`.red.bold);
 });
-
-module.exports = app;
