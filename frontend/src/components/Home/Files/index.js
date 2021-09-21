@@ -48,8 +48,8 @@ const index = () => {
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box w-full py-5 flex flex-wrap justify-between">
-          {data.data.slice(0, 10).map((file, index) => {
+        <div className="project-box w-full py-5 flex flex-wrap">
+          {data.data.slice(0, 30).map((file, index) => {
             return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Image file={file} />
@@ -74,7 +74,7 @@ const index = () => {
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Powerpoint file={file} />
               </div>
-            ) : new RegExp("\\b" + "audi" + "\\b").test(file.type) ? (
+            ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Audio file={file} />
               </div>

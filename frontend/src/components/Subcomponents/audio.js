@@ -1,8 +1,9 @@
 import React from 'react'
 import Aud from "../../../public/Icons/music/active.svg";
 import Vertical from "../../../public/Icons/more-vertical/active.svg";
+import dayjs from "dayjs"
 
-function audio() {
+function audio({ file }) {
   return (
     <>
     <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
@@ -13,9 +14,6 @@ function audio() {
       <span className="text-gray-400 text-[13px]">
         {dayjs(file.dateAdded).fromNow()}
       </span>
-    </div>
-    <div className="options self-start mx-3">
-      <img src={Vertical} alt="" />
     </div>
   </>
   )

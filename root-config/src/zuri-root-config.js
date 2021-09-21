@@ -1,21 +1,11 @@
-import { registerApplication, start } from 'single-spa';
-import {
-  constructApplications,
-  constructRoutes,
-  constructLayoutEngine,
-} from 'single-spa-layout';
-import microfrontendLayout from './microfrontend-layout.html';
+import { registerApplication, start } from "single-spa";
 
-const routes = constructRoutes(microfrontendLayout);
-const applications = constructApplications({
-  routes,
-  loadApp({ name }) {
-    return System.import(name);
-  },
-});
-const layoutEngine = constructLayoutEngine({ routes, applications });
+registerApplication({
+  name: '@zuri/zuri-plugin-companyFiles',
+  app: () => System.import("@zuri/zuri-plugin-companyFiles"),
+  activeWhen: ["/companyfiles"]
+})
 
-applications.forEach(registerApplication);
-layoutEngine.activate();
-
-start();
+start(
+  { urlRerouteOnly: true }
+);

@@ -50,7 +50,7 @@ function index({ file, setOpenStatus }) {
             <img
               src={file.url}
               alt="image"
-              className="w-60 h-60 md:96 md:h-2/4 lg:max-w-lg lg:h-3/4"
+              className="max-w-sm h-96 md:max-w-lg md:h-2/4 lg:max-w-lg lg:h-3/4"
             />
           </div>
           <div className="flex self-center">
