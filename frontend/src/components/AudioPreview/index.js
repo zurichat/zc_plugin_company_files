@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import Nav from "../Subcomponents/nav"
 
 function index({ file, setOpenStatus }) {
