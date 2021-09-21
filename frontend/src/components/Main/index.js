@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Files from "../Home/Files";
 import ImagePreview from "../ImagePreview";
-import FileUpload from "../Home";
+import FileUpload from "../Home/index";
 import Home from "../Home";
 
 import NewFolder from "../FolderCreation/Folder"
