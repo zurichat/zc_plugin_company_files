@@ -3,10 +3,6 @@ import React, { useState } from "react";
 import SelectFileModal from "./SelectFileModal";
 
 const FileOptions = ({ options, showUploadModal }) => {
-
-
-
-const FileOptions = ({ options, showUploadModal }) => {
   return (
     options && (
 

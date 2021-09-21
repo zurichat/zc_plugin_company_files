@@ -6,8 +6,8 @@ import Files from "./Files/index";
 import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
 
-import UploadProgressModal from "Components/FileUpload/UploadProgressModal";
-import FileUpload from "components/FileUpload";
+import UploadProgressModal from "../FileUpload/UploadProgressModal";
+import FileUpload from "../FileUpload/index";
 
 const Index = () => {
   const [upload, setUpload] = useState(false);
