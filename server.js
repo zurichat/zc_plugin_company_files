@@ -21,11 +21,9 @@ app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
-// To serve frontend build files in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'frontend/dist')));
-  app.use(express.static(path.join(__dirname, 'root-config/dist')));
-}
+// To serve frontend build files
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.use(express.static(path.join(__dirname, 'root-config/dist')));
 
 app.get('/zuri-zuri-plugin-company-files.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend/dist/zuri-zuri-plugin-company-files.js'));
