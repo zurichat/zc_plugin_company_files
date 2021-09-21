@@ -1,10 +1,10 @@
-const { mergeWithRules } = require('webpack-merge');
-const singleSpaDefaults = require('webpack-config-single-spa-react');
+const { mergeWithRules } = require("webpack-merge");
+const singleSpaDefaults = require("webpack-config-single-spa-react");
 
 module.exports = (webpackConfigEnv, argv) => {
   const defaultConfig = singleSpaDefaults({
-    orgName: 'zuri',
-    projectName: 'zuri-plugin-company-files',
+    orgName: "zuri",
+    projectName: "zuri-plugin-company-files",
     webpackConfigEnv,
     argv,
   });
@@ -12,16 +12,16 @@ module.exports = (webpackConfigEnv, argv) => {
   const config = mergeWithRules({
     module: {
       rules: {
-        test: 'match',
-        use: 'replace',
+        test: "match",
+        use: "replace",
       },
     },
   })(defaultConfig, {
     // customize the webpack config here
-    devtool: 'inline-source-map',
+    devtool: "inline-source-map",
     devServer: {
       historyApiFallback: true,
-      https: true
+      https: true,
     },
     module: {
       rules: [
@@ -35,6 +35,14 @@ module.exports = (webpackConfigEnv, argv) => {
               paths: [require.resolve("webpack-config-single-spa")],
             }),
             "postcss-loader",
+          ],
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg)$/i,
+          use: [
+            {
+              loader: "file-loader",
+            },
           ],
         },
       ],

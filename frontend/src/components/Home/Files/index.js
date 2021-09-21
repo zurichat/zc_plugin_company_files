@@ -10,19 +10,18 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio"
+import Audio from "../../Subcomponents//audio";
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
   const res = await axios.get(url);
   return res.data;
 }
-
+const API_URL = window.location.hostname.includes("zuri.chat")
+  ? "https://companyfiles.zuri.chat/api/v1"
+  : "http://localhost:5500/api/v1";
 const index = () => {
-  const { data, error } = useSWR(
-    "http://localhost:5500/api/v1/files/NonDeletedFiles",
-    fetcher
-  );
+  const { data, error } = useSWR(`${API_URL}/files/NonDeletedFiles`, fetcher);
 
   if (error)
     return (
@@ -78,7 +77,7 @@ const index = () => {
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Audio file={file} />
               </div>
-            ) :  (
+            ) : (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Video file={file} />
               </div>
