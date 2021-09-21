@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 // import Head from "next/head";
 import React from "react";
-import Sidebar from "../Sidebar";
+// import Sidebar from "../Sidebar";
 
 const Layout = ({ children }) => {
   return (
@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </head>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className="flex flex-start items-center justify-center w-full">
         {children}
       </main>
