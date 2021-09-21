@@ -7,8 +7,10 @@ import Files from "../Home/Files";
 import ImagePreview from "../ImagePreview";
 import FileUpload from "../Home";
 import Home from "../Home";
+
 import NewFolder from "../FolderCreation/Folder"
 import TrashApp from "../TrashListView/TrashApp";
+
 // import VideoPreview from "../VideoPreview";
 
 const Main = () => {
@@ -25,6 +27,9 @@ const Main = () => {
           </Route>
           <Route path="/files" exact>
             <Files />
+          </Route>
+          <Route path="/starred" exact>
+            <Starred />
           </Route>
           <Route path="/image">
             <ImagePreview />
