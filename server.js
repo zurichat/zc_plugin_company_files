@@ -28,9 +28,11 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('/zuri-zuri-plugin-company-files.js', (req, res) => {
-  res.sendFile(
-    path.join(__dirname, 'frontend/dist/zuri-zuri-plugin-company-files.js')
-  );
+  res.sendFile(path.join(__dirname, 'frontend/dist/zuri-zuri-plugin-company-files.js'));
+});
+
+app.get('/zuri-root-config.js', (req, res) => {
+  res.sendFile(path.join(__dirname, 'root-config/dist/zuri-root-config.js'));
 });
 
 if (isProduction) {
