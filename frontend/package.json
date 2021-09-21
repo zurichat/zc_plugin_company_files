@@ -1,5 +1,5 @@
 {
-  "name": "@zuri/zuri-plugin-companyFiles",
+  "name": "@zuri/zuri-plugin-company-files",
   "scripts": {
     "start": "webpack serve --port 8500",
     "start:standalone": "webpack serve --env standalone",
