@@ -43,7 +43,9 @@ app.use('/api/v1', rootRouter); // For mounting the root router on the specified
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'root-config/dist', 'index.html'));
+  isProduction
+    ? res.sendFile(path.join(__dirname, 'root-config/dist', 'index.html'))
+    : res.sendFile(path.join(__dirname, 'root-config/dist', 'index-dev.html'))
 });
 
 // For handling server errors and all other errors that might occur
