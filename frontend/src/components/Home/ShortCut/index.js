@@ -4,6 +4,7 @@ import shared from "../../../../public/Icons/shared.svg";
 import starred from "../../../../public/Icons/starred.svg";
 import trash from "../../../../public/Icons/homeTrash.svg";
 import help from "../../../../public/Icons/Help.svg";
+import { Link } from "react-router-dom";
 
 const index = () => {
   return (
@@ -48,19 +49,21 @@ const index = () => {
             <p className="name text-[18px] text-center">Starred</p>
           </div>
         </div>
-        <div className="mb-10 md:mb-0">
-          <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
-            <img
-              className="icon"
-              src={trash}
-              alt="image icon"
-              className="w-1/3"
-            />
+        <Link to="/trashapp">
+          <div className="mb-10 md:mb-0">
+            <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
+              <img
+                className="icon"
+                src={trash}
+                alt="image icon"
+                className="w-1/3"
+              />
+            </div>
+            <div className="mt-5">
+              <p className="name text-[18px] text-center">Trash</p>
+            </div>
           </div>
-          <div className="mt-5">
-            <p className="name text-[18px] text-center">Trash</p>
-          </div>
-        </div>
+        </Link>
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
             <img

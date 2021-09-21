@@ -9,15 +9,16 @@ import Loader from "./Loader";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function TrashList() {
-  const API_BASE_URL = location.hostname.includes("zuri.chat") ? "https://companyfiles.zuri.chat/api/v1" : "http://localhost:5500/api/v1"
+function TrashList({ restore, fileDel, setFileDel, setRestore }) {
+  const API_BASE_URL = location.hostname.includes("zuri.chat")
+    ? "https://companyfiles.zuri.chat/api/v1"
+    : "http://localhost:5500/api/v1";
   const {
     data = [],
     setData,
     isLoading,
     error,
-  } = useFetch(`${API_BASE_URL}/files/deletedFiLes`);
-  // console.log("This is trashlist data);
+  } = useFetch(`${API_BASE_URL}/files/nondeletedFiLes`, restore, fileDel);
 
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -84,15 +85,17 @@ function TrashList() {
           </div>
         )}
         {isLoading && <Loader />}
-        {isEmpty(data) && data === null ? (
+        {isEmpty(data) && !isLoading ? (
           <div className="text-center flex flex-col justify-center items-center h-96">
             <img src={bin} alt="Bin icon" />
-            <h3>No items</h3>
-            <p>items moved to the trash will appear here</p>
+            <h3 className="itemsTrash font-semibold pt-2">No items</h3>
+            <p className="itemsTrash pt-2">
+              items moved to the trash will appear here
+            </p>
           </div>
         ) : null}
         {!isEmpty(data) && (
-          <table className="w-full table-fixed mt-2 pb-14 pl-2 sm:pl-5 border-separate     borderSpace tableHide">
+          <table className="w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate     borderSpace tableHide">
             <thead className="text-left content-box">
               <tr>
                 <th className="font-semibold trashTheading">Name</th>
@@ -189,7 +192,9 @@ function TrashList() {
         deleteModal={deleteModal}
         clickedId={id}
         setData={setData}
-        data={data}
+        // data={data}
+        setFileDel={setFileDel}
+        setRestore={setRestore}
       />
     </>
   );

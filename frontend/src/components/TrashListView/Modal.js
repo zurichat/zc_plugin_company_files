@@ -7,15 +7,16 @@ export default function Modal({
   setDeleteModal,
   clickedId,
   setData,
-  data,
+  setFileDel,
+  setRestore,
 }) {
   const handleRestore = (id) => {
     fetch("https://companyfiles.zuri.chat/api/v1/files/restoreFile/" + id, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
       body: "",
-    }).then(() => {
-      console.log("Restored");
+    }).then((res) => {
+      res.status === 200 ? setRestore("") : null;
     });
     setData((prev) => prev.filter((data) => data.id !== id));
   };
@@ -23,8 +24,8 @@ export default function Modal({
   const handleDelete = (id) => {
     fetch("https://companyfiles.zuri.chat/api/v1/files/deleteFile/" + id, {
       method: "DELETE",
-    }).then(() => {
-      console.log("Deleted");
+    }).then((res) => {
+      res.status === 200 ? setFileDel("") : null;
     });
     setData((prev) => prev.filter((data) => data.id !== id));
   };
