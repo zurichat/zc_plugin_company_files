@@ -2,16 +2,15 @@ import List from "./TrashList";
 import useFetch from "./useFetch";
 
 function Trash() {
-  const { data = [], setData } = useFetch(
-    "http://localhost:5500/api/v1/files/deletedFiles"
-  );
+  const API_BASE_URL = location.hostname.includes("zuri.chat") ? "https://companyfiles.zuri.chat/api/v1" : "http://localhost:5500/api/v1";
+  const { data = [], setData } = useFetch(`${API_BASE_URL}/files/deletedFiles`);
 
   let fileIds = () => data.map((data) => data._id);
 
   console.log(fileIds());
 
   const emptyTrash = () => {
-    fetch("http://localhost:5500/api/v1/files/deleteMultipleFiles", {
+    fetch(`${API_BASE_URL}/files/deleteMultipleFiles`, {
       method: "Post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ids: fileIds() }),

@@ -10,12 +10,13 @@ import Loader from "./Loader";
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 function TrashList() {
+  const API_BASE_URL = location.hostname.includes("zuri.chat") ? "https://companyfiles.zuri.chat/api/v1" : "http://localhost:5500/api/v1"
   const {
     data = [],
     setData,
     isLoading,
     error,
-  } = useFetch("http://localhost:5500/api/v1/files/deletedFiLes");
+  } = useFetch(`${API_BASE_URL}/files/deletedFiLes`);
   // console.log("This is trashlist data);
 
   const [showModal, setShowModal] = useState(false);

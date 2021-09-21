@@ -20,7 +20,7 @@ async function fetcher(url) {
 
 const index = () => {
   const { data, error } = useSWR(
-    "http://localhost:5500/api/v1/files/NonDeletedFiles",
+    "https://companyfiles.zuri.chat/api/v1/files/nonDeletedFiles",
     fetcher
   );
 
