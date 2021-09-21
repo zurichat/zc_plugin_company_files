@@ -10,6 +10,7 @@ module.exports = {
         accent: '#B8003C',
         error: '#F40101',
         bgLight: '#E5E5E5',
+        backGround: 'rgba(0, 0, 0, 0.6)',
         border: '#BEBEBE',
         bg: {
           lightGrey: '#F6F6F6',

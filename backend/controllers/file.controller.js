@@ -343,6 +343,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 exports.getNonDeletedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
+  console.log(allFiles)
 
   if (!allFiles) throw new InternalServerError()
 
