@@ -10,7 +10,7 @@ export default function Modal({
   data,
 }) {
   const handleRestore = (id) => {
-    fetch("http://localhost:5500/api/v1/files/restoreFile/" + id, {
+    fetch("https://companyfiles.zuri.chat/api/v1/files/restoreFile/" + id, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
       body: "",
@@ -21,7 +21,7 @@ export default function Modal({
   };
 
   const handleDelete = (id) => {
-    fetch("http://localhost:5500/api/v1/files/deleteFile/" + id, {
+    fetch("https://companyfiles.zuri.chat/api/v1/files/deleteFile/" + id, {
       method: "DELETE",
     }).then(() => {
       console.log("Deleted");
