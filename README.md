@@ -10,9 +10,9 @@ Company Files Management Plugin for Zuri Chat.
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
 4. Run setup script to install all packages using `npm run install-setup` or `npm run install-setup:npm`
-5. Run build script to get bundled react file `npm run build`
+5. Run build script to get bundled react file `npm run build:local` or `npm run build:local-npm`
 6. Now run server in development mode with `npm run dev`
-
+7.  Go to [local](http://localhost:5500/)
 
 ### **Project Structure**
 For the BackEnd structure of this project, please refer to this [document](BACKEND_DOC.md).
