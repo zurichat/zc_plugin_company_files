@@ -9,7 +9,6 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
-import NewFolder from "../FolderCreation/Folder"
 import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc";
 // import VideoPreview from "../VideoPreview";
 

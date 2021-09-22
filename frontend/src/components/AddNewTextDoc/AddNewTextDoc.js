@@ -106,7 +106,7 @@ const AddNewTextDoc = () => {
                 </nav>
             
                 
-                <div className="flex -ml-3 sm:ml-8 w-3/12 no-underline rounded-md text-base tracking-widest"> 
+                <div className="flex -ml-3 sm:ml-2 w-3/12 no-underline rounded-md text-base tracking-widest"> 
                     <Menu as="div" className="relative inline-block text-left">
                         <div>
                             <Menu.Button className="inline-flex ml-14 w-15 rounded-md ml-5 px-3 py-1 tracking-widest hover:bg-green-100">
@@ -192,10 +192,10 @@ const AddNewTextDoc = () => {
             {modal}
         </div>
         {/*<textarea className='w-full mt-10 sm:mt-0 h-96 md:h-96 md:box-content lg:box-border box-border p-2'> </textarea>*/}
-        <div className=" w-full mt-10">
+        <div className=" w-full mt-24">
             <form onSubmit={handleSubmit}>
                 <textarea
-                    className='w-ful h-96 sm:h-96 md:box-content lg:box-border box-border p-2'
+                    className='w-full h-96 sm:h-96 md:box-content lg:box-border box-border p-2'
                     type='text'
                     value={content}
                     name='text'
