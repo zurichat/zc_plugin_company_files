@@ -4,10 +4,12 @@ import useSWR from "swr";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "../../Subcomponents/Image";
-
+import Pdf from "../../Subcomponents/Pdf";
 import Zip from "../../Subcomponents/Zip";
-
+import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
+import Powerpoint from "../../Subcomponents/Powerpoint";
+import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
 dayjs.extend(relativeTime);
 
@@ -54,9 +56,25 @@ const index = () => {
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Image file={file} />
               </div>
+            ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
+              <div key={file._id} className="file flex items-center mr-0 my-5">
+                <Pdf file={file} />
+              </div>
             ) : new RegExp("\\b" + "zip" + "\\b").test(file.type) ? (
               <div key={file._id} className="file flex items-center mr-0 my-5">
                 <Zip file={file} />
+              </div>
+            ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
+              <div key={file._id} className="file flex items-center mr-0 my-5">
+                <Excel file={file} />
+              </div>
+            ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+              <div key={file._id} className="file flex items-center mr-0 my-5">
+                <Document file={file} />
+              </div>
+            ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+              <div key={file._id} className="file flex items-center mr-0 my-5">
+                <Powerpoint file={file} />
               </div>
             ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
               <div key={file._id} className="file flex items-center mr-0 my-5">
@@ -68,6 +86,7 @@ const index = () => {
               </div>
             );
           })}
+
         </div>
       </div>
     </div>
