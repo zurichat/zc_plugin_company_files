@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import cropIcon from "../../../public/Icons/crop-icon/active.svg";
 import  Preview from "./reveal";
 import CroppingCSS from "./Cropping.module.css";
 import Crop from "./index"
@@ -9,7 +9,9 @@ function ImageCropper({file}) {
 
     return(
     <div>
-    <button className={CroppingCSS.crop} onClick={() => setShowPreview(true) }>CROP</button>
+    <button className={CroppingCSS.crop} onClick={() => setShowPreview(true) }>
+      <img src={cropIcon} alt="crop -icon" />
+    </button>
     <Preview trigger={showPreview} setTrigger={setShowPreview}>
       {['flow'].map((path) => {
         return(

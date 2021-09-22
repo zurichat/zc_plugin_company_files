@@ -40,13 +40,6 @@ function index({ file, setOpenStatus }) {
           </div>
           <div>
             <img src={Vertical} alt="more-icon" className="ml-2" onClick={() => setHidden(!hidden)} />
-            {hidden && (
-              <div className="dropdown">
-                <div className="crop">
-                  crop
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </nav>
@@ -65,8 +58,6 @@ function index({ file, setOpenStatus }) {
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             />
-            <ImageCropper file={file.url} />
-            {console.log(file.url)}
           </div>
           <div className="flex self-center">
             <img
@@ -87,6 +78,8 @@ function index({ file, setOpenStatus }) {
             alt="zoom-out"
             className="md:w-10 w-7"
           />
+            <ImageCropper file={file.url} />
+          
         </div>
       </div>
     </div>
