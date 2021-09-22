@@ -1,9 +1,9 @@
 import React from "react";
-import allFiles from "../../../../public/Icons/AllFiles.svg";
-import shared from "../../../../public/Icons/shared.svg";
-import starred from "../../../../public/Icons/starred.svg";
-import trash from "../../../../public/Icons/homeTrash.svg";
-import help from "../../../../public/Icons/Help.svg";
+import AllFiles from "../../../../public/Icons/AllFiles.svg";
+import Shared from "../../../../public/Icons/shared.svg";
+import Starred from "../../../../public/Icons/starred.svg";
+import Trash from "../../../../public/Icons/homeTrash.svg";
+import Help from "../../../../public/Icons/Help.svg";
 
 const index = () => {
   return (
@@ -12,7 +12,7 @@ const index = () => {
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
 
-            <img className="icon" src="/Icons/AllFiles.svg" alt="image icon" className=" w-1/3" />
+            <img className="icon" src={AllFiles} alt="image icon" className=" w-1/3" />
 
           </div>
           <div className="mt-5">
@@ -22,7 +22,7 @@ const index = () => {
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
 
-            <img className="icon" src="/Icons/shared.svg" alt="image icon" className=" w-1/3" />
+            <img className="icon" src={Shared} alt="image icon" className=" w-1/3" />
 
           </div>
           <div className="mt-5">
@@ -32,7 +32,7 @@ const index = () => {
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
 
-            <img className="icon" src="/Icons/starred.svg" alt="image icon" className=" w-1/3" />
+            <img className="icon" src={Starred} alt="image icon" className=" w-1/3" />
 
           </div>
           <div className="mt-5">
@@ -42,7 +42,7 @@ const index = () => {
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
 
-            <img className="icon" src="/Icons/homeTrash.svg" alt="image icon" className=" w-1/3" />
+            <img className="icon" src={Trash} alt="image icon" className=" w-1/3" />
 
           </div>
           <div className="mt-5">
@@ -52,7 +52,7 @@ const index = () => {
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
 
-            <img className="icon" src="/Icons/Help.svg" alt="image icon" className=" w-1/3" />
+            <img className="icon" src={Help} alt="image icon" className=" w-1/3" />
 
           </div>
           <div className="mt-5">

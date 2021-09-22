@@ -8,7 +8,6 @@
     "check-format": "prettier --check .",
     "build": "concurrently yarn:build:*",
     "build-npm": "concurrently npm:build:*",
-    "build:local": "webpack --mode=development",
     "build:webpack": "webpack --mode=production"
   },
   "devDependencies": {

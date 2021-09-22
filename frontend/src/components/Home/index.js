@@ -50,7 +50,7 @@ const Index = () => {
   return (
     <div
 
-      className={(upload ? " overflow-y-hidden" : "") + "relative py-10 z-auto"}
+      className={(upload ? " overflow-y-hidden" : "") + "py-10 z-auto"}
     >
       <button
         onClick={showOptions}
