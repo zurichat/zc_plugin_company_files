@@ -51,7 +51,7 @@ cancel(){
             aspectRatio: 1,
             crop: () => {
                 const canvas =cropper.getCroppedCanvas();
-                this.setState({ imageDestination: canvas.toDataURL("image/png")});
+                this.setState({ imageDestination: canvas.toDataURL("image/jpeg")});
             }
            
             

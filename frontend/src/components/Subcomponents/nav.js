@@ -4,6 +4,7 @@ import imageIcon from "../../../public/Icons/image/active.svg";
 import downloadIcon from "../../../public/Icons/download/active.svg";
 import Vertical from "../../../public/Icons/more-vertical/active.svg";
 
+
 function nav({file, setOpenStatus}) {
   return (
     <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
@@ -29,6 +30,7 @@ function nav({file, setOpenStatus}) {
             <img src={downloadIcon} alt="download-icon" />
           </a>
         </div>
+        
         <div>
           <img src={Vertical} alt="more-icon" className="ml-2" />
         </div>
