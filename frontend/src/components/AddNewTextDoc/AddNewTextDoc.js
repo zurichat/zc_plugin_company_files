@@ -40,7 +40,7 @@ const AddNewTextDoc = () => {
         console.log("Document created successfully");
       });
 
-    const resp = await axios.post("http://localhost:5500/api/v1/files/uploadRequest", { fileName: `${title}.docx`, file:{Blob} })
+    const resp = await axios.post("https://companyfiles.zuri.chat/api/v1/files/uploadRequest", { fileName: `${title}.docx`, file:{Blob} })
         .then(res => res.json())
         .then(data => this.setState({fileId: data.id}));
  
