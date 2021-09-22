@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import active from "../../../public/Icons/arrow-left/active.svg";
 import imageIcon from "../../../public/Icons/image/active.svg";
 import downloadIcon from "../../../public/Icons/download/active.svg";
@@ -8,9 +8,12 @@ import RightArrow from "../../../public/Icons/arrow-right/active.svg";
 import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
 import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
 import { useHistory } from "react-router";
+import ImageCropper from "../Image crop/ImageCropper";
+import './ImagePreview.Module.css'
 
 function index({ file, setOpenStatus }) {
   const history = useHistory();
+  const [hidden, setHidden] = useState(true)
 
   return (
     <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
@@ -36,7 +39,14 @@ function index({ file, setOpenStatus }) {
             <img src={downloadIcon} alt="download-icon" />
           </div>
           <div>
-            <img src={Vertical} alt="more-icon" className="ml-2" />
+            <img src={Vertical} alt="more-icon" className="ml-2" onClick={() => setHidden(!hidden)} />
+            {hidden && (
+              <div className="dropdown">
+                <div className="crop">
+                  crop
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </nav>
@@ -55,6 +65,8 @@ function index({ file, setOpenStatus }) {
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             />
+            <ImageCropper file={file.url} />
+            {console.log(file.url)}
           </div>
           <div className="flex self-center">
             <img

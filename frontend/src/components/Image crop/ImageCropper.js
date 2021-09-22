@@ -4,7 +4,7 @@ import  Preview from "./reveal";
 import CroppingCSS from "./Cropping.module.css";
 import Crop from "./index"
 
-function ImageCropper() {
+function ImageCropper({file}) {
     const [showPreview, setShowPreview] = useState(false);
 
     return(
@@ -14,7 +14,7 @@ function ImageCropper() {
       {['flow'].map((path) => {
         return(
         <div key={path}>
-          <Crop src={`/${path}.jpg`} alt='crop' width='100%' height='100%' />
+          <Crop src={file} alt='crop' width='100%' height='100%' />
         </div>
         )
       })}
