@@ -3,23 +3,19 @@ import useViewport from "./useViewport";
 import Buttons from "./MenuButtons";
 import fileIcon from "./file-icon.png";
 import bin from "./bin 1.png";
-import useFetch from "./useFetch";
 import Modal from "./Modal";
 import Loader from "./Loader";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function TrashList({ restore, fileDel, setFileDel, setRestore }) {
-  const API_BASE_URL = location.hostname.includes("zuri.chat")
-    ? "https://companyfiles.zuri.chat/api/v1"
-    : "http://localhost:5500/api/v1";
-  const {
-    data = [],
-    setData,
-    isLoading,
-    error,
-  } = useFetch(`${API_BASE_URL}/files/nondeletedFiLes`, restore, fileDel);
-
+function TrashList({
+  error,
+  isLoading,
+  data,
+  setData,
+  setFileDel,
+  setRestore,
+}) {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [id, setId] = useState(null);
@@ -45,6 +41,23 @@ function TrashList({ restore, fileDel, setFileDel, setRestore }) {
     return data
       .map((date) => date.dateAdded.split("T")[0])
       .map((e) => e.split("-").join("/"));
+  };
+
+  //Reformat fetched size
+  const formatSize = (bytes, decimals = 2) => {
+    if (bytes === 0) {
+      return "0 Bytes";
+    }
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return (
+      Math.floor(parseFloat((bytes / Math.pow(k, i)).toFixed(dm))) +
+      " " +
+      sizes[i]
+    );
   };
 
   // creates reference for array items
@@ -85,7 +98,7 @@ function TrashList({ restore, fileDel, setFileDel, setRestore }) {
           </div>
         )}
         {isLoading && <Loader />}
-        {isEmpty(data) && !isLoading ? (
+        {isEmpty(data) && !isLoading && !error ? (
           <div className="text-center flex flex-col justify-center items-center h-96">
             <img src={bin} alt="Bin icon" />
             <h3 className="itemsTrash font-semibold pt-2">No items</h3>
@@ -94,7 +107,7 @@ function TrashList({ restore, fileDel, setFileDel, setRestore }) {
             </p>
           </div>
         ) : null}
-        {!isEmpty(data) && (
+        {!isEmpty(data) && data && !isLoading ? (
           <table className="w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate     borderSpace tableHide">
             <thead className="text-left content-box">
               <tr>
@@ -161,7 +174,7 @@ function TrashList({ restore, fileDel, setFileDel, setRestore }) {
                   <td></td>
                   <td></td>
                   <td className="py-2 text-xs relative">
-                    {data.size}
+                    {formatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
 
@@ -183,7 +196,7 @@ function TrashList({ restore, fileDel, setFileDel, setRestore }) {
               ))}
             </tbody>
           </table>
-        )}
+        ) : null}
       </div>
       <Modal
         setShowModal={setShowModal}

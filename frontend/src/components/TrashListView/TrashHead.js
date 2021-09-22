@@ -1,29 +1,25 @@
 import List from "./TrashList";
-import useFetch from "./useFetch";
 import { useState } from "react";
 
-function TrashHead(restore, fileDel, setFileDel, setRestore) {
-  const [emptyTrash, setEmptyTrash] = useState();
-
-  const API_BASE_URL = location.hostname.includes("zuri.chat")
-    ? "https://companyfiles.zuri.chat/api/v1"
-    : "http://localhost:5500/api/v1";
-  const { data = [], setData } = useFetch(
-    `${API_BASE_URL}/files/deletedFiles`,
-    restore,
-    fileDel,
-    emptyTrash
-  );
-
+function TrashHead({
+  error,
+  isLoading,
+  data,
+  setData,
+  setFileDel,
+  setRestore,
+  setEmptyTrash,
+  apiBase,
+}) {
   let fileIds = data.map((data) => data._id);
 
   const handleEmptyTrash = () => {
-    fetch(`${API_BASE_URL}/files/deleteMultipleFiles`, {
+    fetch(`${apiBase}/files/deleteMultipleFiles`, {
       method: "Post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ids: fileIds }),
     }).then((res) => (res.status === 200 ? setEmptyTrash("") : null));
-    setData([]);
+    setData((prev) => (prev = []));
   };
 
   return (
@@ -59,10 +55,14 @@ function TrashHead(restore, fileDel, setFileDel, setRestore) {
         </p>
       </div>
       <List
-        fileDel={fileDel}
-        restore={restore}
+        // fileDel={fileDel}
+        // restore={restore}
         setFileDel={setFileDel}
         setRestore={setRestore}
+        data={data}
+        setData={setData}
+        isLoading={isLoading}
+        error={error}
       />
     </div>
   );

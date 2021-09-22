@@ -54,11 +54,11 @@
   font-size: 0.8125rem;
 }
 
-.preloader {
+/* .preloader {
   margin: 100px auto 0;
   width: 66px;
   height: 12px;
-}
+} */
 
 .preloader .line {
   width: 1px;
