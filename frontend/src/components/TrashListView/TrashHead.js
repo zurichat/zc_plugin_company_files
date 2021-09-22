@@ -1,21 +1,25 @@
 import List from "./TrashList";
-import useFetch from "./useFetch";
+import { useState } from "react";
 
-function Trash() {
-  const API_BASE_URL = location.hostname.includes("zuri.chat") ? "https://companyfiles.zuri.chat/api/v1" : "http://localhost:5500/api/v1";
-  const { data = [], setData } = useFetch(`${API_BASE_URL}/files/deletedFiles`);
+function TrashHead({
+  error,
+  isLoading,
+  data,
+  setData,
+  setFileDel,
+  setRestore,
+  setEmptyTrash,
+  apiBase,
+}) {
+  let fileIds = data.map((data) => data._id);
 
-  let fileIds = () => data.map((data) => data._id);
-
-  console.log(fileIds());
-
-  const emptyTrash = () => {
-    fetch(`${API_BASE_URL}/files/deleteMultipleFiles`, {
+  const handleEmptyTrash = () => {
+    fetch(`${apiBase}/files/deleteMultipleFiles`, {
       method: "Post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ids: fileIds() }),
-    }).then(() => console.log("Multiple files deleted"));
-    setData([]);
+      body: JSON.stringify({ ids: fileIds }),
+    }).then((res) => (res.status === 200 ? setEmptyTrash("") : null));
+    setData((prev) => (prev = []));
   };
 
   return (
@@ -39,20 +43,29 @@ function Trash() {
           </span>
         </p>
       </div>
-      <div className="flex flex-col sm:flex-row justify-between lightGreen">
+      <div className="flex flex-col sm:flex-row justify-between light--Green">
         <p className="px-2 sm:px-5 py-4 durationGray text-sm">
           Items in trash are deleted forever after 30 days
         </p>
         <p
-          className="px-2 sm:px-5 py-4 cursor-pointer font-semibold  empty"
-          onClick={emptyTrash}
+          className="px-2 sm:px-5 py-4 cursor-pointer font-semibold emptyTrash"
+          onClick={handleEmptyTrash}
         >
           Empty Trash
         </p>
       </div>
-      <List />
+      <List
+        // fileDel={fileDel}
+        // restore={restore}
+        setFileDel={setFileDel}
+        setRestore={setRestore}
+        data={data}
+        setData={setData}
+        isLoading={isLoading}
+        error={error}
+      />
     </div>
   );
 }
 
-export default Trash;
+export default TrashHead;

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function useFetch(url) {
+function useFetch(url, del, res, empty) {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
-  const [error, seterror] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const abortCont = new AbortController();
@@ -21,27 +21,26 @@ function useFetch(url) {
       .then((data) => {
         if (isEmpty(data.data)) {
           setData([]);
-          seterror("Trash is Empty");
           setisLoading(false);
           return;
         } else {
           setData(data.data);
-          seterror(null);
+          setError(null);
           setisLoading(false);
         }
       })
       .catch((err) => {
         if (err.name === "AbortError") {
-          console.log("Fetch Aborted");
+          // console.log("Fetch Aborted");
         } else {
           setisLoading(false);
-          seterror(err.message);
+          setError(err.message);
         }
       });
     return () => abortCont.abort();
-  }, [data]);
+  }, [del, res, empty]);
 
-  return { data, error, isLoading, setData };
+  return { data, error, isLoading, setData, setError };
 }
 
 export default useFetch;
