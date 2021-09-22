@@ -5,8 +5,10 @@ import Files from "./Files/index";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
 import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
-// import UploadProgressModal from "../FileUpload/UploadProgressModal";
+
+import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -47,11 +49,13 @@ const Index = () => {
 
   return (
     <div
-      className={(upload ? " overflow-y-hidden" : "") + "w-full py-10 z-auto"}
+
+      className={(upload ? " overflow-y-hidden" : "") + "py-10 z-auto"}
     >
       <button
         onClick={showOptions}
-        className="ml-10 mt-10 px-4 py-2 text-4 text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none rounded-md"
+        className="ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
+
       >
         Add File
       </button>

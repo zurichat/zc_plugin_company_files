@@ -1,15 +1,14 @@
-import ComponentToTest from "../ComponentToTest";
 import React from "react";
 import SearchBar from "../SearchBar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Files from "../Home/Files";
-import ImagePreview from "../ImagePreview";
-import FileUpload from "../Home";
+import FileUpload from "../Home/index";
 import Home from "../Home";
+
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
-// import VideoPreview from "../VideoPreview";
+import Starred from "../Starred/index";
 
 const Main = () => {
   return (
@@ -26,8 +25,8 @@ const Main = () => {
           <Route path="/files" exact>
             <Files />
           </Route>
-          <Route path="/image">
-            <ImagePreview />
+          <Route path="/starred" exact>
+            <Starred />
           </Route>
           <Route path="/upload" exact>
             <FileUpload />

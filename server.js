@@ -43,7 +43,9 @@ app.use('/api/v1', rootRouter); // For mounting the root router on the specified
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'root-config/dist', 'index.html'));
+  isProduction
+    ? res.sendFile(path.join(__dirname, 'root-config/dist', 'index.html'))
+    : res.sendFile(path.join(__dirname, 'root-config/dist', 'index-dev.html'))
 });
 
 // For handling server errors and all other errors that might occur
@@ -60,7 +62,7 @@ app.use(ErrorHandler);
     // In this case, it is an HTTP server
     const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
-      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, (process.env.NODE_ENV || 'production').toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
     });
 
     // Handle unhandled promise rejections
