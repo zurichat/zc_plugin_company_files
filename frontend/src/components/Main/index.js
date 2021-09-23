@@ -24,7 +24,7 @@ const Main = () => {
           <Route path="/" exact>
             <Home/>
           </Route>
-          <Route path="/add-new">
+          <Route path="/add-new" exact>
             <AddNewTextDoc />
           </Route>
           <Route path="/files" exact>
