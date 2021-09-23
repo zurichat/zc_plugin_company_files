@@ -12,8 +12,8 @@ jobs:
 
     - name: Set up secret file
       run: |
-        cat ${{ secrets.PASSWORD }}  
-        cat ${{ secrets.USERNAME }}  
-        cat ${{ secrets.IP_ADDRESS }}
+        echo ${{ secrets.PASSWORD }}  
+        echo ${{ secrets.USERNAME }}  
+        echo ${{ secrets.IP_ADDRESS }}
 
 
