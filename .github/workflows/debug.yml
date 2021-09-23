@@ -17,9 +17,8 @@ jobs:
         IP_ADDRESS: ${{ secrets.IP_ADDRESS }}
 
       run: |
-        echo $PASSWORD  >> secrets.txt
-        echo $USERNAME  >> secrets.txt
-        echo $IP_ADDRESS >> secrets.txt
+        cat $PASSWORD  
+        cat $USERNAME  
+        cat $IP_ADDRESS 
 
-    - name: Run tmate
-      uses: mxschmitt/action-tmate@v2
+
