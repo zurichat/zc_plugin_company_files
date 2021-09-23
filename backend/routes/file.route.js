@@ -23,7 +23,8 @@ const {
   getAllDuplicates,
   setEditPermission,
   searchBySize,
-  searchByType
+  searchByType,
+  cropImage
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -34,6 +35,9 @@ router.get('/uploadStatus', fileUploadStatus);
 
 // UPLOAD A NEW FILE/FILES
 router.post('/upload', fileUpload);
+
+// CROP IMAGES
+router.post('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
