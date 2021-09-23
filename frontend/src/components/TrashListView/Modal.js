@@ -7,15 +7,16 @@ export default function Modal({
   setDeleteModal,
   clickedId,
   setData,
-  data,
+  setFileDel,
+  setRestore,
 }) {
   const handleRestore = (id) => {
     fetch("https://companyfiles.zuri.chat/api/v1/files/restoreFile/" + id, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
       body: "",
-    }).then(() => {
-      console.log("Restored");
+    }).then((res) => {
+      res.status === 200 ? setRestore("") : null;
     });
     setData((prev) => prev.filter((data) => data.id !== id));
   };
@@ -23,8 +24,8 @@ export default function Modal({
   const handleDelete = (id) => {
     fetch("https://companyfiles.zuri.chat/api/v1/files/deleteFile/" + id, {
       method: "DELETE",
-    }).then(() => {
-      console.log("Deleted");
+    }).then((res) => {
+      res.status === 200 ? setFileDel("") : null;
     });
     setData((prev) => prev.filter((data) => data.id !== id));
   };
@@ -37,7 +38,7 @@ export default function Modal({
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative w-full flex flex-col bg-white outline-none focus:outline-none p-4">
+              <div className="border-0 rounded-lg shadow-lg relative w-full flex flex-col bg-white outline-none focus:outline-none px-11">
                 {/*header*/}
                 <div className="p-5 pt-7 text-center md:text-left">
                   <h3 className="text-2xl itemsTrash font-semibold">
@@ -47,11 +48,11 @@ export default function Modal({
                 {/*body*/}
                 <div className="relative pb-3 px-5 md:pr-20 ">
                   <p className="mt-3 mb-4 itemsTrash text-sm text-center md:text-left">
-                    Are you sure you want to restore Design File?
+                    Are you sure you want to restore File?
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-center md:justify-end p-6 pr-1- rounded-b">
+                <div className="flex items-center justify-center md:justify-end py-6 pr-1- rounded-b">
                   <button
                     className="text-secondary border trashModal__cancel rounded background-white font-semibold px-6 py-3 text-sm outline-none focus:outline-none mr-5 mb-1 ease-linear transition-all duration-150"
                     type="button"
@@ -84,7 +85,7 @@ export default function Modal({
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative w-full flex flex-col bg-white outline-none focus:outline-none p-4">
+              <div className="border-0 rounded-lg shadow-lg relative w-full flex flex-col bg-white outline-none focus:outline-none px-11">
                 {/*header*/}
                 <div className="p-5 pt-7 text-center md:text-left">
                   <h3 className="text-2xl itemsTrash font-semibold">
@@ -94,11 +95,11 @@ export default function Modal({
                 {/*body*/}
                 <div className="relative pb-3 px-5 md:pr-20 ">
                   <p className="mt-3 mb-4 itemsTrash text-sm text-center md:text-left">
-                    Are you sure you want to Delete Design File Permanently?
+                    Are you sure you want to Delete File Permanently?
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="flex items-center justify-center md:justify-end p-6 rounded-b">
+                <div className="flex items-center justify-center md:justify-end py-6 rounded-b">
                   <button
                     className="text-trashModal border trashModal__cancel rounded background-white font-semibold px-6 py-3 text-sm outline-none focus:outline-none mr-5 mb-1 ease-linear transition-all duration-150"
                     type="button"

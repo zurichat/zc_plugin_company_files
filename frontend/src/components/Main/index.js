@@ -6,9 +6,9 @@ import Files from "../Home/Files";
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
-import NewFolder from "../FolderCreation/Folder"
+import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
-import Starred from "../Starred/index"
+import Starred from "../Starred/index";
 
 const Main = () => {
   return (
