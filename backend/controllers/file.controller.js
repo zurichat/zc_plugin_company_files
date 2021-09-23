@@ -156,15 +156,21 @@ exports.cropImage = async (req, res) => {
 
     if (localDiskMd5 !== uploadImageMd5) {
       //cropped
-      await MediaUpload.deleteFromCloudinary(data.cloudinaryId);
-   
-      console.log(data.cloudinaryId)
+      await MediaUpload.deleteFromCloudinary(data.cloudinaryId); //delete previous file image from cloud
 
-      res.status(200).json("successfully cropped");
+      const [{ url, size, cloudinaryId }] = await Promise.all([
+        //upload file from local disk to xloud
+        MediaUpload.uploadFile(`./local/${data.cloudinaryId}.png`),
+      ]);
+
+      deleteFile(`./local/${data.cloudinaryId}.png`);
+      const croppedImage = await File.update(id, (url, size, cloudinaryId));
+
+      res.status(200).json(croppedImage);
     } else if (localDiskMd5 === uploadImageMd5) {
       //not cropped
       deleteFile(`./local/${data.cloudinaryId}.png`);
-      res.status(200).json("local disk file deleted");
+      res.status(403).json("No crop occured");
     }
   } else res.status(403).json("Can only crop images");
 };

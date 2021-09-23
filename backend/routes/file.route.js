@@ -37,7 +37,7 @@ router.get('/uploadStatus', fileUploadStatus);
 router.post('/upload', fileUpload);
 
 // CROP IMAGES
-router.post('/crop', cropImage);
+router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
