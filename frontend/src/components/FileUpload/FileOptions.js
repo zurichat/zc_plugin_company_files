@@ -8,7 +8,7 @@ import folderPlus from "../../../public/Icons/folder/active.svg";
 const FileOptions = ({ options, showUploadModal }) => {
   return (
     options && (
-      <div className="bg-blue w-52 ml-10 -mt-3 text-left shadow-md rounded-sm">
+      <div className="bg-white w-52 ml-10 -mt-3 text-left shadow-md rounded-sm">
         <div className="w-full px-5 h-8 my-2 text-[14px] cursor-pointer text-gray-400 hover:bg-green-400 hover:text-white flex items-center">
           <img src={folder} alt="folder icon" />
           <span className="ml-4">Folder</span>
