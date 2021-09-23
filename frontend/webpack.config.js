@@ -21,7 +21,7 @@ module.exports = (webpackConfigEnv, argv) => {
     devtool: "inline-source-map",
     devServer: {
       historyApiFallback: true,
-      https: true,
+      // https: true,
     },
     module: {
       rules: [

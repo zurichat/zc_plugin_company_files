@@ -14,6 +14,11 @@
     "watch-tests": "cross-env BABEL_ENV=test jest --watch",
     "coverage": "cross-env BABEL_ENV=test jest --coverage"
   },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "<rootDir>/.jest.transform.js"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
@@ -42,7 +47,7 @@
     "pretty-quick": "^3.1.1",
     "style-loader": "^3.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14",
-    "webpack": "^5.51.1",
+    "webpack": "^5.53.0",
     "webpack-cli": "^4.8.0",
     "webpack-config-single-spa-react": "^4.0.0",
     "webpack-dev-server": "^4.0.0",
@@ -81,6 +86,7 @@
     "cropperjs": "^1.5.12",
     "d3": "^7.0.1",
     "dayjs": "^1.10.7",
+    "docx": "^6.0.3",
     "i": "^0.3.6",
     "path-browserify": "^1.0.1",
     "postcss": "^7.0.36",
