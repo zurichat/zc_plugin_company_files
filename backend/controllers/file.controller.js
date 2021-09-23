@@ -156,7 +156,7 @@ exports.cropImage = async (req, res) => {
 
     if (localDiskMd5 !== uploadImageMd5) {
       //cropped
-      MediaUpload.deleteFromCloudinary(data.cloudinaryId);
+      await MediaUpload.deleteFromCloudinary(data.cloudinaryId);
    
       console.log(data.cloudinaryId)
 
