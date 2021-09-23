@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder";
-import Files from "./Files";
-import SelectFileModal from "Components/FileUpload/SelectFileModal";
-import FileOptions from "Components/FileUpload/FileOptions";
+import Files from "./Files/index";
+// import SelectFileModal from "../FileUpload/SelectFileModal";
+import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
-import UploadProgressModal from "Components/FileUpload/UploadProgressModal";
-import FileUpload from "components/FileUpload";
+
+import UploadProgressModal from "../FileUpload/UploadProgressModal";
+import FileUpload from "../FileUpload/index";
+
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -45,15 +47,15 @@ const Index = () => {
     setProgress(false);
   };
 
-  // const show
-
   return (
     <div
-      className={(upload ? " overflow-y-hidden" : "") + "relative py-10 z-auto"}
+
+      className={(upload ? " overflow-y-hidden" : "") + "py-10 z-auto"}
     >
       <button
         onClick={showOptions}
         className="ml-10 mt-10 px-[14px] py-[10px] text-[12px] text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none"
+
       >
         Add File
       </button>

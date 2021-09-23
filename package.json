@@ -4,11 +4,18 @@
   "description": "Zuri Chat ~ Company Files Management Plug-In",
   "main": "server.js",
   "scripts": {
-    "build": "cd frontend && npm run build",
+    "build:npm" : "cd frontend && npm install && npm run build-npm && cd ../root-config && npm install && npm run build-npm",
+    "build": "yarn build-step-1",
+    "build-step-1": "cd frontend && yarn install && yarn build && cd ../ && yarn build-step-2",
+    "build-step-2": "cd root-config && yarn install && yarn build",
+    "build:local": "yarn build && cd root-config && node generateDevTestFile",
+    "build:local-npm": "npm run build:npm && cd root-config && node generateDevTestFile",
+    "client:dev": "concurrently \"yarn start --prefix root-config\" \"yarn start --prefix frontend\"",
     "dev": "nodemon .",
-    "install-setup": "npm install && cd frontend && npm install",
-    "lint:backend": "eslint -c .eslintrc.js backend/** --ext .js",
-    "lint:backend:fix": "npm run lint:backend -- --fix",
+    "install-setup": "yarn install && cd frontend && yarn install",
+    "install-setup:npm": "npm install && cd frontend && npm install && cd ../root-config && npm install",
+    "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
+    "lint:backend:fix": "yarn lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
     "test": "jest --testTimeout=10000 --detectOpenHandles"
@@ -36,6 +43,7 @@
     "cloudinary": "^1.26.3",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
+    "concurrently": "^6.2.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -72,6 +80,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "npm run lint:backend:fix"
+    "*.js": "yarn lint:backend:fix"
   }
 }

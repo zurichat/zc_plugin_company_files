@@ -1,4 +1,6 @@
+
 import React from "react";
+
 
 const UploadProgressModal = ({
   progress,
@@ -6,6 +8,7 @@ const UploadProgressModal = ({
   hideUploadModal,
   hideProgressModal,
 }) => {
+
   return (
     <div className="absolute bottom-12 right-12 z-30">
       {progress && (
@@ -24,16 +27,20 @@ const UploadProgressModal = ({
                   &#10005;
                 </span>
                 <p>0</p>
+
               </div>
             </div>
             <button
               onClick={hideUploadModal}
+
               className="px-3 py-1 bg-white border-2 border-green-400 text-green-400 text-[12px] rounded-md"
+
             >
               Close
             </button>
           </div>
           {files && (
+
             <div className="w-full mb-4 h-[280px] overflow-y-auto shadow-inner">
               {Object.entries(files).map((file) => (
                 <div
@@ -62,6 +69,7 @@ const UploadProgressModal = ({
                   </div>
                 </div>
               ))}
+
             </div>
           )}
         </div>

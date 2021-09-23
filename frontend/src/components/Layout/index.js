@@ -1,16 +1,17 @@
-import Head from "next/head";
+import PropTypes from "prop-types";
+// import Head from "next/head";
 import React from "react";
-import Sidebar from "Components/Sidebar";
+// import Sidebar from "../Sidebar";
 
 const Layout = ({ children }) => {
   return (
     <div className="flex items-center justify-center min-h-screen gap-3">
-      <Head>
+      <head>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </head>
 
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className="flex flex-start items-center justify-center w-full">
         {children}
       </main>
@@ -28,6 +29,12 @@ const Layout = ({ children }) => {
   </footer> */}
     </div>
   );
+};
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default Layout;
