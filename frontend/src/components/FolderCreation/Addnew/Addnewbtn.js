@@ -25,7 +25,7 @@ const Addnewbtn = ({ handleModal }) => {
             </li>
             <li>
               <BsFilesAlt />
-              <span>Document</span>
+              <Link to='/add-new'>Document</Link>
             </li>
             <li>
               <BsUpload />
