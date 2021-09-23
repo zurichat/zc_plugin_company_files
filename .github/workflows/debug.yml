@@ -1,0 +1,25 @@
+name: Debug
+on: [push]
+
+jobs:
+  debug:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Set up secret file
+    
+      env:
+          PASSWORD: ${{ secrets.PASSWORD }}
+          USERNAME: ${{ secrets.USERNAME }}
+          IP_ADDRESS: ${{ secrets.IP_ADDRESS }}
+      run: |
+        echo $PASSWORD >> secrets.txt
+        echo $USERNAME >> secrets.txt
+        echo $IP_ADDRESS >> secrets.txt 
+
+    - name: Run tmate
+      uses: mxschmitt/action-tmate@v2

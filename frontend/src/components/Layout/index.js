@@ -6,10 +6,10 @@ import React from "react";
 const Layout = ({ children }) => {
   return (
     <div className="flex items-center justify-center min-h-screen gap-3">
-      <head>
+      <div>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />
-      </head>
+      </div>
 
       {/* <Sidebar /> */}
       <main className="flex flex-start items-center justify-center w-full">
