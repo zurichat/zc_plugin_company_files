@@ -14,7 +14,7 @@ import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc";
 
 const Main = () => {
   return (
-    <Router basename="/companyfiles">
+    <Router basename="/">
       <div className="bg-gray-50 h-screen flex flex-1 flex-col items-center overflow-y-auto ">
         <SearchBar />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
