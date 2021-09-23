@@ -11,14 +11,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up secret file
-      env:
-        PASSWORD: ${{ secrets.PASSWORD }}
-        USERNAME: ${{ secrets.USERNAME }}
-        IP_ADDRESS: ${{ secrets.IP_ADDRESS }}
-
       run: |
-        cat $PASSWORD  
-        cat $USERNAME  
-        cat $IP_ADDRESS 
+        cat ${{ secrets.PASSWORD }}  
+        cat ${{ secrets.USERNAME }}  
+        cat ${{ secrets.IP_ADDRESS }}
 
 
