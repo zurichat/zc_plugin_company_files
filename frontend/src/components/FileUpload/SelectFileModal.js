@@ -98,7 +98,7 @@ const SelectFileModal = ({
                   onChange={handleFileSelection}
                 />
 
-                <span className="hover:text-white px-3 py-2 hover:bg-green-500 rounded-md text-center cursor-pointer">
+                <span className="border border-green-100 hover:text-white px-3 py-2 hover:bg-green-500 rounded-md text-center cursor-pointer">
                   Choose Files
                 </span>
                 {files && <span>{`${files.length} selected`}</span>}
@@ -123,7 +123,7 @@ const SelectFileModal = ({
                     key={file.name}
                   >
                     <div className="w-[350px] truncate">{file.name}</div>
-                    <div>{(file.size / 1000000).toFixed(3)}MB</div>
+                    <div>{(file.size / 1000000).toFixed(2)}MB</div>
                   </div>
                 ))}
               </div>
