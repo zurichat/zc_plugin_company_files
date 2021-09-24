@@ -62,7 +62,7 @@ app.use(ErrorHandler);
     // In this case, it is an HTTP server
     const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
-      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process?.env?.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
     });
 
     // Handle unhandled promise rejections
