@@ -22,9 +22,9 @@ const Main = () => {
           <Route path="/" exact>
             <Home/>
           </Route>
-          {/* <Route path="/add-new" exact>
+          <Route path="/add-new" exact>
             <AddNewTextDoc />
-          </Route> */}
+          </Route> 
           <Route path="/files" exact>
             <Files />
           </Route>
