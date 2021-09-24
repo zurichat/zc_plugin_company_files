@@ -159,7 +159,7 @@ exports.fileDetails = async (req, res) => {
 exports.fileUpdate = async (req, res) => {
   const { id: fileId } = req.params;
   const { data: [file] } = await File.fetchOne({ _id: fileId });
-
+  
   if (!file) throw new NotFoundError();
 
   await File.update(fileId, body);
@@ -256,21 +256,23 @@ exports.searchFileByIsDeleted = async (req, res) => {
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
-  try {
-    const { data } = await File.fetchAll();
+  const allFiles = await File.fetchAll();
+  
+  if (!allFiles) throw new InternalServerError()
 
-    // loop through response object and check if isStarred is true
-    const starredFiles = [];
-    data.map((data) => {
-      return data.isStarred ? starredFiles.push(data) : null;
-    });
+  const data = allFiles.data.filter(file => {
 
-    response = await RealTime.publish('starred_files', starredFiles)
+    return file.isStarred === true;
 
-    return res.status(200).json({ status: 200, statusText: 'success', ...response });
+  })
+  
 
-  } catch (error) {
-    return res.send({ error })
+  if ((data.length)<1) {
+    await RealTime.publish('starred_files', {})
+    return res.status(200).send(appResponse('No Starred File(s)!', {}, true));
+  } else {
+    await RealTime.publish('starred_files',data)
+    res.status(200).send(appResponse("Starred files", data, true));
   }
 }
 
