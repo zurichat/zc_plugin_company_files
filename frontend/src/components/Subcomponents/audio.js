@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Aud from "../../../public/Icons/music/active.svg";
 import dayjs from "dayjs";
+import AudioPreview from "../AudioPreview/index"
 
 function audio({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -31,7 +32,7 @@ function audio({ file }) {
           </span>
         </div>
       </div>
-      {openStatus && <AduioPreview file={file} setOpenStatus={setOpenStatus} />}
+      {openStatus && <AudioPreview file={file} setOpenStatus={setOpenStatus} />}
     </>
   );
 }

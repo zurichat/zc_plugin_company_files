@@ -9,12 +9,10 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
-import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc";
-// import VideoPreview from "../VideoPreview";
 
 const Main = () => {
   return (
-    <Router basename="/companyfiles">
+    <Router basename="/">
       <div className="bg-gray-50 h-screen flex flex-1 flex-col items-center overflow-y-auto ">
         <SearchBar />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
