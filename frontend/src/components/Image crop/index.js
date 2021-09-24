@@ -6,6 +6,7 @@ import "cropperjs/dist/cropper.min.css";
 
 
 
+
 class Crop extends React.Component{
     
     constructor() {
@@ -51,7 +52,7 @@ cancel(){
             aspectRatio: 1,
             crop: () => {
                 const canvas =cropper.getCroppedCanvas();
-                this.setState({ imageDestination: canvas.toDataURL("image/jpeg")});
+                this.setState({ imageDestination: canvas.toDataURL("image/jpg")});
             }
            
             
@@ -60,7 +61,9 @@ cancel(){
         
     };
     
+    
     render(){
+  
     return(
         <div className={CroppingCSS.cropbg}>
        <div className={CroppingCSS.container}>
@@ -75,8 +78,9 @@ cancel(){
     
     </div>
            <button className={CroppingCSS.cropbtn} onClick={()=>this.getCroppedImg()}>Crop</button>
+            
            <button className={CroppingCSS.rotatebtn}>Rotate</button>
-           <button  className={CroppingCSS.cancel} onClick={()=>this.cancel()}>Cancel</button>
+           
            </div>
            
          <div className={CroppingCSS.second}>
