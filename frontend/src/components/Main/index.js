@@ -9,8 +9,7 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
-import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc";
-// import VideoPreview from "../VideoPreview";
+{/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
 const Main = () => {
   return (
@@ -24,9 +23,9 @@ const Main = () => {
           <Route path="/" exact>
             <Home/>
           </Route>
-          <Route path="/add-new" exact>
+          {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
-          </Route>
+          </Route> */}
           <Route path="/files" exact>
             <Files />
           </Route>
