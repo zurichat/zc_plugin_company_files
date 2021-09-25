@@ -215,6 +215,20 @@ exports.deleteTemporarily = async (req, res) => {
   }
 }
 
+// find files with the same folder id
+exports.getFilesWithSameFolderId = async (req, res) => {
+  const { id } = req.params;
+  if (id === '' || id === undefined) throw new BadRequestError('Missing "id" parameter');
+  const {data} = await File.fetchAll({ folderId: id });
+  if (!data) throw new NotFoundError();
+  const matchingFolderId = []
+  data.filter((file) => {
+    return file.folderId === id ? matchingFolderId.push(file) : null;
+  })
+  if (matchingFolderId.length === 0) throw new NotFoundError();
+  res.status(200).send(appResponse(null, matchingFolderId, true));
+}
+
 // restore file
 exports.restoreFile = async (req, res) => {
   const { data } = await File.fetchOne({ _id: req.params.id });
@@ -343,7 +357,6 @@ exports.getAllDeletedFiles = async (req, res) => {
 exports.getNonDeletedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  console.log(allFiles)
 
   if (!allFiles) throw new InternalServerError()
 
