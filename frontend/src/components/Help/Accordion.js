@@ -8,8 +8,12 @@ import './help.css'
 
 const Accordion = ({ data }) => {
 
-    const accId = `${data.id}`
-    const imgId = `img${data.id}`
+    // assigning unique IDs to accordions to ensure the right accordions are toggle when clicked
+    const accId = `${data.id}`;
+
+    // assigning unique IDs to chevrons-down icon to ensure only the chevron-down icon for the targeted accordion is rotated when clicked
+    
+    const imgId = `img${data.id}`;
     const toggle = () => {
         const ans = document.getElementById(accId);
         const img = document.getElementById(imgId);

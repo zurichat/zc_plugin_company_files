@@ -12,6 +12,8 @@ const Help = () => {
             <div className="flex flex-col justify-between">
                 <h2 className="font-semibold text-2xl">Help</h2>
                 <SearchBar />
+
+                {/* Fetching the questions and answers from ./accordionData.js as faqs are not supplied by backend */}
                 <div className="my-4">
                     <p className="text-lg font-semibold">Popular Searches</p>
                     {
