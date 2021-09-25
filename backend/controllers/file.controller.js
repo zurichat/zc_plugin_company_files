@@ -1,4 +1,5 @@
 const fs = require("fs");
+const https = require("https");
 const os = require("os");
 const path = require("path");
 const uuid = require("uuid").v4;
@@ -47,22 +48,18 @@ exports.fileUploadStatus = (req, res) => {
       })
       .catch((e) => {
         console.error("-- file read failed:", e);
-        res
-          .status(400)
-          .json({
-            status: "failure",
-            message: "No file with provided credentials...",
-            credentials: { ...req.query },
-          });
+        res.status(400).json({
+          status: "failure",
+          message: "No file with provided credentials...",
+          credentials: { ...req.query },
+        });
       });
   } else {
-    return res
-      .status(400)
-      .json({
-        status: "failure",
-        message: 'Invalid "Content-Range" format',
-        credentials: { ...req.query },
-      });
+    return res.status(400).json({
+      status: "failure",
+      message: 'Invalid "Content-Range" format',
+      credentials: { ...req.query },
+    });
   }
 };
 
@@ -142,13 +139,11 @@ exports.fileUpload = async (req, res) => {
       })
       .catch((e) => {
         console.error("-- file read failed:", e);
-        return res
-          .status(400)
-          .send(
-            appResponse(null, "No file with provided credentials...", false, {
-              credentials: { fileId, fileName },
-            })
-          );
+        return res.status(400).send(
+          appResponse(null, "No file with provided credentials...", false, {
+            credentials: { fileId, fileName },
+          })
+        );
       });
   });
 
@@ -158,6 +153,54 @@ exports.fileUpload = async (req, res) => {
   });
 
   req.pipe(busboy);
+};
+
+exports.cropImage = async (req, res) => {
+  //upload cropped file to cloudinary
+  const cropImage = req.files.image;
+
+  //check if file is image
+  const pattern = /image/;
+  const check = pattern.test(cropImage.mimetype);
+
+  if (check) {
+    const cloudResponse = await MediaUpload.uploadFile(cropImage.tempFilePath);
+
+    //get previous image details
+    const { id } = req.body;
+    const { data } = await File.fetchOne({ _id: id });
+
+    const cropSize = cloudResponse.size;
+    const unCroppedSize = data.size;
+
+    if (cropSize !== unCroppedSize) {
+      //image crop occured
+
+      await MediaUpload.deleteFromCloudinary(data.cloudinaryId);
+      const updateParams = {
+        url: cloudResponse.url,
+        cloudinaryId: cloudResponse.cloudinaryId,
+        size: cloudResponse.size,
+      };
+      await File.update(id, updateParams);
+      deleteFile(cropImage.tempFilePath);
+      const updatedCropedImage = await File.fetchOne({ _id: id });
+
+      res
+        .status(200)
+        .send(
+          appResponse("Image Cropped successfully!", updatedCropedImage, true)
+        );
+    } else if (cropSize === unCroppedSize) {
+      //image cropp did not occur
+      await MediaUpload.deleteFromCloudinary(cloudResponse.cloudinaryId);
+      deleteFile(cropImage.tempFilePath);
+      throw new BadRequestError("Image crop didnt occur");
+    }
+  } else {
+    deleteFile(cropImage.tempFilePath);
+    throw new BadRequestError("Only Images Can Be Cropped");
+  }
 };
 
 // get all files and also by type
@@ -416,21 +459,17 @@ exports.isDuplicate = async (req, res) => {
       if (fileObject.md5Hash === md5Hash) fileExists = true;
     });
     if (fileExists) {
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: "This is a duplicate file",
-          duplicate: fileExists,
-        });
+      return res.status(200).json({
+        status: 200,
+        message: "This is a duplicate file",
+        duplicate: fileExists,
+      });
     } else {
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: "This is a new file",
-          duplicate: fileExists,
-        });
+      return res.status(200).json({
+        status: 200,
+        message: "This is a new file",
+        duplicate: fileExists,
+      });
     }
   } catch (error) {
     res.status(500).json(error);
