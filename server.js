@@ -16,7 +16,7 @@ const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
-app.use(cors());
+app.use(cors({ origin: ['*'] }));
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
