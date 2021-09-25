@@ -15,8 +15,6 @@ const { BadRequestError, InternalServerError, NotFoundError } = require('../util
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 
-
-
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), `\\uploads\\file~~${fileId}~~${fileName}`));
 const getFileDetails = promisify(fs.stat);
 const deleteFile = promisify(fs.unlink);
@@ -127,52 +125,42 @@ exports.fileUpload = async (req, res) => {
 }
 
 exports.cropImage = async (req, res) => {
-  //get file details
-  const { id } = req.body;
-  const { data } = await File.fetchOne({ _id: id });
+  //upload cropped file to cloudinary
+  const cropImage = req.files.image
 
   //check if file is image
   const pattern = /image/;
-  const check = pattern.test(data.type);
+  const check = pattern.test(cropImage.mimetype);
 
-  if (check) {
-    //save image to local disk
-    async function saveImageToDisk(url, path) {
-      let file = fs.createWriteStream(path);
-      await https.get(url, function (response) {
-        response.pipe(file);
-      });
-    }
-    saveImageToDisk(data.url, `./local/${data.cloudinaryId}.png`);
+  if(check){
+    const cloudResponse = await MediaUpload.uploadFile(cropImage.tempFilePath)
+    
+    //get previous image details
+      const { id } = req.body;
+      const { data } = await File.fetchOne({ _id: id });
 
-    //get the md5Hash of the new savedfile
-    const [md5Hash] = await Promise.all([
-      md5Generator(`./local/${data.cloudinaryId}.png`),
-    ]);
+      const cropSize = cloudResponse.size;
+      const unCroppedSize = data.size;
 
-    const localDiskMd5 = md5Hash;
-    // const localDiskMd5 = data.md5Hash //remove after test
-    const uploadImageMd5 = data.md5Hash;
+      if(cropSize !== unCroppedSize){ //image crop occured
 
-    if (localDiskMd5 !== uploadImageMd5) {
-      //cropped
-      await MediaUpload.deleteFromCloudinary(data.cloudinaryId); //delete previous file image from cloud
+        await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+        const updateParams = {url: cloudResponse.url, cloudinaryId: cloudResponse.cloudinaryId, size: cloudResponse.size}
+        await File.update(id, updateParams)
+        deleteFile(cropImage.tempFilePath);
+        const updatedCropedImage = await File.fetchOne({ _id: id });
+     
+        res.status(200).send(appResponse('Image Cropped successfully!', updatedCropedImage, true));
 
-      const [{ url, size, cloudinaryId }] = await Promise.all([
-        //upload file from local disk to xloud
-        MediaUpload.uploadFile(`./local/${data.cloudinaryId}.png`),
-      ]);
-
-      deleteFile(`./local/${data.cloudinaryId}.png`);
-      const croppedImage = await File.update(id, (url, size, cloudinaryId));
-
-      res.status(200).json(croppedImage);
-    } else if (localDiskMd5 === uploadImageMd5) {
-      //not cropped
-      deleteFile(`./local/${data.cloudinaryId}.png`);
-      res.status(403).json("No crop occured");
-    }
-  } else res.status(403).json("Can only crop images");
+      }else if(cropSize === unCroppedSize){ //image cropp did not occur
+        await MediaUpload.deleteFromCloudinary(cloudResponse.cloudinaryId)
+        deleteFile(cropImage.tempFilePath);
+        throw new BadRequestError('Image crop didnt occur');
+      }
+  }else{
+    deleteFile(cropImage.tempFilePath);
+    throw new BadRequestError('Only Images Can Be Cropped');  
+  }
 };
 
 // get all files and also by type
