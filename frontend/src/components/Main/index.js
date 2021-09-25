@@ -9,6 +9,7 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
+import Test from "../ComponentToTest";
 {/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
 const Main = () => {
@@ -28,6 +29,9 @@ const Main = () => {
           </Route> */}
           <Route path="/files" exact>
             <Files />
+          </Route>
+          <Route path="/test" exact>
+            <Test />
           </Route>
           <Route path="/starred" exact>
             <Starred />

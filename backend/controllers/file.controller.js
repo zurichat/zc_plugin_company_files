@@ -5,6 +5,9 @@ const uuid = require('uuid').v4;
 const Busboy = require('busboy');
 const { promisify } = require('util');
 const mimeTypes = require('mime-types');
+
+const axios = require('axios');
+
 const DatabaseConnection = require('../utils/database.helper');
 const File = new DatabaseConnection('File');
 const RealTime = require('../utils/realtime.helper');
@@ -107,6 +110,8 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
         // Send (file) info to FE using Centrifugo
+
+        // normal response without data.
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
       });
     }).catch(e => {
@@ -128,9 +133,14 @@ exports.getAllFiles = async (req, res) => {
 
   const data = await File.fetchAll();
   await RealTime.publish('allFiles', data);
+  
+  // setTimeout( async () => {
+  //   await axios.get('http://localhost:5500/api/v1/files/all');
+  // }, (1000 * 30));
 
   res.status(200).send(appResponse(null, data, true));
-}
+  
+};
 
 exports.getFileByType = async (req, res) => {
   // type from params
@@ -148,10 +158,10 @@ exports.getFileByType = async (req, res) => {
 
 }
 
-
 exports.fileDetails = async (req, res) => {
+
   const data = await File.fetchOne({ _id: req.params.id });
-  const response = await RealTime.publish('fileDetail', data)
+  await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
 }
@@ -165,6 +175,7 @@ exports.fileUpdate = async (req, res) => {
   await File.update(fileId, body);
 
   const { data: [updatedFile] } = await File.fetchOne({ _id: fileId });
+  await RealTime.publish('fileUpdate', data);
 
   res.status(200).send(appResponse('File details updated!', updatedFile, true));
 }
@@ -172,14 +183,15 @@ exports.fileUpdate = async (req, res) => {
 // delete permanently
 exports.fileDelete = async (req, res) => {
 
+  const response = undefined;
   const { data } = await File.fetchOne({ '_id': req.params.id });
+  const deleted = await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
 
-  await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
-
-  const response = await File.delete(req.params.id);
+  if (deleted === "ok" || deleted === "Ok" || deleted === "OK") {
+    response = await File.delete(req.params.id);
+  }
   
-  if (!response) throw new InternalServerError()
-
+  if (!response) throw new InternalServerError();
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
@@ -189,7 +201,7 @@ exports.deleteMultipleFiles = async (req, res) => {
   const [...ids] = req.body.ids;
 
   [...ids].map(async id => {
-    const data = await File.fetchOne({ '_id': id });
+    const { data } = await File.fetchOne({ '_id': id });
     MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   })
 
@@ -208,8 +220,8 @@ exports.deleteTemporarily = async (req, res) => {
     toggler = true
 
     const response = await File.update(req.params.id, { isDeleted: toggler });
-
     res.status(200).send(appResponse('File sent to trash!', response, true));
+
   } else {
     throw new BadRequestError()
   }
@@ -241,14 +253,13 @@ exports.searchFileByIsDeleted = async (req, res) => {
       return file.isDeleted === isDeleted;
     })
 
-    response = RealTime.publish('deleted_files', deletedFiles)
+    await RealTime.publish('deleted_files', deletedFiles)
 
-    res.status(200).send({ ...response })
+    res.status(200).send({ message: "Trash files fetched successfully" })
 
   } catch (error) {
 
-    console.log(error)
-    res.send({ error })
+    throw new BadRequestError()
 
   }
 
@@ -256,6 +267,7 @@ exports.searchFileByIsDeleted = async (req, res) => {
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
+
   const allFiles = await File.fetchAll();
   
   if (!allFiles) throw new InternalServerError()
@@ -267,14 +279,29 @@ exports.searchStarredFiles = async (req, res) => {
   })
   
 
-  if ((data.length)<1) {
-    await RealTime.publish('starred_files', {})
+  if (data.length < 1) {
+
+    await RealTime.publish('starredFiles', {})
+
+    // setTimeout( async () => {
+    //   await axios.get('http://localhost:5500/api/v1/files/searchStarredFiles');
+    // }, (1000 * 30));
+
     return res.status(200).send(appResponse('No Starred File(s)!', {}, true));
+
   } else {
-    await RealTime.publish('starred_files',data)
+
+    await RealTime.publish('starredFiles', data)
+
+    // setTimeout( async () => {
+    //   await axios.get('http://localhost:5500/api/v1/files/searchStarredFiles');
+    // }, (1000 * 30));
+
     res.status(200).send(appResponse("Starred files", data, true));
+
   }
-}
+
+};
 
 exports.searchByDate = async (req, res) => {
 
@@ -291,13 +318,14 @@ exports.searchByDate = async (req, res) => {
       });
       rd.length === 0
         ? res.status(404).json(`no files found on ${pickDate}`)
-        : res.status(200).json(rd);
+        : ( res.status(200).json(rd) && await RealTime.publish('fileDateSearch', rd) );
       console.log(rd);
     }
+
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
@@ -312,7 +340,7 @@ exports.getArchivedFiles = async (req, res) => {
         return file.isArchived ? archives.push(file) : null;
       });
 
-      const response = await RealTime.publish('archived_files', archives)
+      await RealTime.publish('archived_files', archives)
 
       return res.status(200).json({ status: 200, statusText: 'success', archives });
     }
@@ -329,25 +357,24 @@ exports.getAllDeletedFiles = async (req, res) => {
   if (!allFiles) throw new InternalServerError()
 
   const data = allFiles.data.filter(file => {
-
     return file.isDeleted === true;
-
   })
 
   if ((data.length)<1) {
     return res.status(200).send(appResponse('No file deleted yet!', {}, true));
   }
 
+  await RealTime.publish('deletedFiles', data);
+
   res.status(200).send(appResponse(null, data, true));
-}
+};
 
 // get all files that are not deleted
 exports.getNonDeletedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  console.log(allFiles)
 
-  if (!allFiles) throw new InternalServerError()
+  if (!allFiles) throw new InternalServerError();
 
   const data = allFiles.data.filter(file => {
 
@@ -359,20 +386,23 @@ exports.getNonDeletedFiles = async (req, res) => {
   if ((data.length)<1) {
     return res.status(200).send(appResponse('No file uploaded yet!', {}, true));
   }
+
+  await RealTime.publish('nonDeletedFiles', data);
   
   res.status(200).send(appResponse(null, data, true));
-}
+};
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {
   try {
     const { md5Hash } = req.body;
-    const { data } = await API.fetchAll();
+    const { data } = await File.fetchAll();
     let fileExists = false;
     // loop through response object and check if md5Hash value exist
     data.forEach(fileObject => {
       if (fileObject.md5Hash === md5Hash) fileExists = true;
     });
+
     if (fileExists) {
       return res
         .status(200)
@@ -390,7 +420,7 @@ exports.isDuplicate = async (req, res) => {
 // get all duplicate files
 exports.getAllDuplicates = async (req, res) => {
   try {
-    const { data } = await API.fetchAll();
+    const { data } = await File.fetchAll();
     const duplicateFiles = [];
     const duplicateHash = [];
     // loop through response object and check if md5Hash value exist
@@ -401,17 +431,22 @@ exports.getAllDuplicates = async (req, res) => {
         duplicateFiles.push(fileObject);
       }
     });
+
+    await RealTime.publish('duplicateFiles', { 
+      duplicate: deletedFiles, 
+      message: `${duplicateHash.length} ${(duplicateHash.length > 1) ? ' Files' : ' File'} has duplicates` 
+    })
+
     return res
       .status(200)
       .json({
         status: 200,
         message: `${duplicateHash.length} ${(duplicateHash.length > 1) ? ' Files' : ' File'} has duplicates`,
-        duplicate: deletedFiles,
       });
   } catch (error) {
     res.status(500).json(error);
   }
-}
+};
 
 
 // set edit permission
@@ -424,6 +459,7 @@ exports.setEditPermission = async (req, res) => {
       res.send(fileData.map((files) => {
         return files.permission = 'edit'
       }))
+      
     } else {
       res.send(fileData.map((files) => {
         return files.permission = 'view'
@@ -447,34 +483,38 @@ exports.searchByType = async (req, res) => {
       });
 
       if (fileSearch.length === 0) {
+        // await RealTime.publish('fileTypeSearch', { message: `Sorry, there is no file type: ${fileType}` })
         return res.status(404).json(`Sorry, there is no file type: ${fileType}`);
       }
 
+      await RealTime.publish('fileTypeSearch', fileSearch);
       return res.status(200).json(fileSearch);
+
     }
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};
 
 
 exports.fileRename = async (req, res) => {
-  const { body } = req;
-  // Get single file
-  const data = await File.fetchAll();
-  const fileDetails = {};
+  try {
+    const { body: { name } } = req;
 
-  // gets file details
-  files = await data.data;
-  files.forEach((file) => {
-    if (file._id == req.params.id) {
-      fileDetails = file;
-    }
-  });
-  fileDetails.name = body.name;
-  // updates file name
-  const response = await File.update(req.params.id, fileDetails);
-  res.send({ response });
+    // Get single file
+    const file = await File.fetchOne({ _id: req.params.id });
+    file.name = name;
+
+    // updates file name
+    const response = await File.update(req.params.id, file);
+
+    res.send({ response });
+
+  } catch (error) {
+
+    res.send({ error });
+
+  }
 }
 
 // Search Files By Size
@@ -485,6 +525,7 @@ exports.searchBySize = async (req, res) => {
     const sizeRangePlus = Number(size) + 500;
     const sizeRangeMinus = Number(size) - 500;
     const files = [];
+
     for (i = 0; i < data.length; i++) {
       if (data[i].size) {
         if ((data[i].size >= sizeRangeMinus) && (data[i].size <= size)) {
@@ -494,10 +535,12 @@ exports.searchBySize = async (req, res) => {
         }
       }
     }
-  files.length > 0 ?  
-  res.status(200).json(files) : 
-  res.status(404).json('No matches')
+
+    files.length > 0 ?  
+    ( res.status(200).json(files) && await RealTime.publish('fileSizeSearch', { files }) ) : 
+    res.status(404).json('No matches')
+
   } catch (err) {
   res.status(500).json(err);
   }
-}
+};
