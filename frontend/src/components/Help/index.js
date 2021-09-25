@@ -10,7 +10,7 @@ import {popData, moData} from './accordionData';
 const Help = () => {
     return (
         <div className="w-full">
-            <Header />
+            {/* <Header /> */}
         <div className="w-full p-6 pr-10">
 
             <div className="flex flex-col justify-between">

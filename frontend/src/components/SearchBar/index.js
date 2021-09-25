@@ -16,6 +16,8 @@ import searchIcon from "../../../public/Icons/search.svg";
 import { useState } from "react";
 import videoCat from "../../../public/Icons/video-cat.svg";
 
+import {AiOutlineClose} from 'react-icons/Ai'
+
 const SEARCH_CATEGORY_LIST = [
   {
     iconLink: docCat,
@@ -134,7 +136,7 @@ RecentSearchList.propTypes = {
 
 const SelectedCategory = ({ category = "Document", selectCategoryHandler }) => {
   return (
-    <div className="flex items-center justify-center py-1 px-3 bg-blue-50 gap-3">
+    <div className="flex items-center justify-center mr-2 py-1 px-3 bg-blue-50 gap-3">
       {category}
       <CustomIcon
         {...{
@@ -176,6 +178,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
   };
   const clearInput = () => {
     setSearchInputValue("");
+    selectCategory(false);
   };
   const onSubmit = () => {
     return Axios.get(fetchUrl)
@@ -194,23 +197,23 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     selectCategory(cat);
   };
   return (
-    <div className="bg-white flex flex-col w-full relative">
+    <div className="flex flex-col w-full relative">
       <div
         {...{
-          className: `flex items-center justify-between gap-1 py-2 px-5 shadow ${customClass}`,
+          className: `flex items-center justify-between py-1.5 px-2 border border-gray-200 rounded ${customClass}`,
           ...restProps,
         }}
       >
         {!selectedCategory ? (
-          <CustomIcon {...{ src: searchIcon, alt: "search icon" }} />
+          <p> </p>
         ) : (
-          <SelectedCategory
+          <SelectedCategory className="mr-4"
             {...{ category: selectedCategory || "", selectCategoryHandler }}
           />
         )}
 
         <input
-          className="flex-1 py-2 px-4 focus:outline-none"
+          className="flex-1 text-sm justify-start focus:outline-none"
           {...{
             value: searchInputValue,
             type: "text",
@@ -220,9 +223,18 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
             onKeyPress: handleSubmit,
           }}
         />
-        <CustomIcon
-          {...{ src: cancelIcon, alt: "cancel icon", onClick: clearInput }}
-        />
+        
+        {!selectedCategory ? (
+          <p> </p>
+        ) : (
+
+          <AiOutlineClose className="text-gray-500 cursor-pointer" onClick={clearInput}/>
+          // <CustomIcon
+          //   {...{ src: cancelIcon, alt: "cancel icon", onClick: clearInput }}
+          // />
+        )}
+
+        
       </div>
       {!!showSearchWindow && (
         <div className="bg-white z-20 w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
@@ -253,7 +265,7 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
   return (
     <div
       {...{
-        className: `container flex items-center justify-between m-2 ${customClass}`,
+        className: `container flex items-center justify-between py-3 px-6  ${customClass}`,
         ...restProps,
       }}
     >
@@ -262,7 +274,7 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
       </div>
       <CustomIcon
         {...{ src: onlineUserIcon, alt: "profile image" }}
-        className="h-16 hidden md:inline-flex"
+        className="h-10 ml-2 -mr-2 hidden md:inline-flex"
       />
     </div>
   );

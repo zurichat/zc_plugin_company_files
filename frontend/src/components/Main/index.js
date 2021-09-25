@@ -1,5 +1,6 @@
 import React from "react";
 import SearchBar from "../SearchBar";
+import Header from '../Help/Header'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Files from "../Home/Files";
@@ -15,8 +16,9 @@ import Help from '../Help/index';
 const Main = () => {
   return (
     <Router basename="/">
-      <div className="bg-gray-50 h-screen flex flex-1 flex-col items-center overflow-y-auto ">
+      <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
         <SearchBar />
+        <Header />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
         {/* <ComponentToTest /> */}
 

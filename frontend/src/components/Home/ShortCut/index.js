@@ -8,50 +8,61 @@ import { Link } from "react-router-dom";
 
 const index = () => {
   return (
-    <div className="w-full px-10 py-12">
+    <div className="w-full py-6">
       <div className="w-full flex flex-wrap justify-between sm:justify-between">
-        <div className="mb-10 md:mb-0">
-          <div className="w-20 h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
-            <img
-              className="icon"
-              src={AllFiles}
-              alt="image icon"
-              className=" w-1/3"
-            />
+        <Link to="./">
+          <div className="mb-10 md:mb-0">
+            <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
+              <img
+                className="icon"
+                src={AllFiles}
+                alt="image icon"
+                className=" w-1/3"
+              />
+            </div>
+            <div className="mt-5">
+              <p className="name text-base font-semibold text-center">All Files</p>
+            </div>
           </div>
-          <div className="mt-5">
-            <p className="name text-[18px] text-center">All Files</p>
+        </Link>
+        
+
+        <Link to="./">
+          <div className="mb-10 md:mb-0">
+            <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
+              <img
+                className="icon"
+                src={Shared}
+                alt="image icon"
+                className=" w-1/3"
+              />
+            </div>
+            <div className="mt-5">
+              <p className="name text-base font-semibold text-center">Shared</p>
+            </div>
           </div>
-        </div>
-        <div className="mb-10 md:mb-0">
-          <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
-            <img
-              className="icon"
-              src={Shared}
-              alt="image icon"
-              className=" w-1/3"
-            />
+        </Link>
+        
+
+        <Link to="./">
+          <div className="mb-10 md:mb-0">
+            <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
+              <img
+                className="icon"
+                src={Starred}
+                alt="image icon"
+                className=" w-1/3"
+              />
+            </div>
+            <div className="mt-5">
+              <p className="name text-base font-semibold text-center">Starred</p>
+            </div>
           </div>
-          <div className="mt-5">
-            <p className="name text-[18px] text-center">Shared</p>
-          </div>
-        </div>
-        <div className="mb-10 md:mb-0">
-          <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
-            <img
-              className="icon"
-              src={Starred}
-              alt="image icon"
-              className=" w-1/3"
-            />
-          </div>
-          <div className="mt-5">
-            <p className="name text-[18px] text-center">Starred</p>
-          </div>
-        </div>
+        </Link>
+        
         <Link to="/trashapp">
           <div className="mb-10 md:mb-0">
-            <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
+            <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
               <img
                 className="icon"
                 src={Trash}
@@ -60,13 +71,13 @@ const index = () => {
               />
             </div>
             <div className="mt-5">
-              <p className="name text-[18px] text-center">Trash</p>
+              <p className="name text-base font-semibold text-center">Trash</p>
             </div>
           </div>
         </Link>
         <Link to="/help">
         <div className="mb-10 md:mb-0">
-          <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
+          <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
             <img
               className="icon"
               src={Help}
@@ -75,7 +86,7 @@ const index = () => {
             />
           </div>
           <div className="mt-5">
-            <p className="name text-[18px] text-center">Help</p>
+            <p className="name text-base font-semibold text-center">Help</p>
           </div>
         </div>
         </Link>

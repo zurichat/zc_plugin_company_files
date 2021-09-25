@@ -7,10 +7,10 @@ import addUser from "../../../../public/Icons/plus/active.svg";
 
 const index = () => {
   return (
-    <div className="w-full p-10 ">
-      <h2 className=" mb-8 text-sm text-gray-700">Folders</h2>
+    <div className="w-full py-10 ">
+      <h2 className=" mb-8 text-lg font-semibold text-gray-900">Folders</h2>
       <div className="flex flex-wrap justify-between">
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
+        <div className="folderCard w-full sm:w-64 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
           <div className="card flex justify-between mb-6">
             <div className="icons">
               <img src={folderYellow} alt="" />
@@ -37,7 +37,7 @@ const index = () => {
             </div>
           </div>
         </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
+        <div className="folderCard w-full sm:w-64 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
           <div className="card flex justify-between mb-6">
             <div className="icons">
               <img src={folderYellow} alt="" />
@@ -64,7 +64,7 @@ const index = () => {
             </div>
           </div>
         </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
+        <div className="folderCard w-full sm:w-64 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
           <div className="card flex justify-between mb-6">
             <div className="icons">
               <img src={folderYellow} alt="" />
@@ -91,7 +91,7 @@ const index = () => {
             </div>
           </div>
         </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
+        <div className="folderCard w-full sm:w-64 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
           <div className="card flex justify-between mb-6">
             <div className="icons">
               <img src={folderYellow} alt="" />
