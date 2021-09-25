@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "../Subcomponents/nav";
 import active from "../../../public/Icons/arrow-left/active.svg";
 import imageIcon from "../../../public/Icons/image/active.svg";
 import downloadIcon from "../../../public/Icons/download/active.svg";
@@ -15,7 +14,7 @@ function index({ file, setOpenStatus }) {
 
   return (
     <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
-      {/* <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
+      <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
         <div className="flex">
           <div>
             <img
@@ -40,8 +39,7 @@ function index({ file, setOpenStatus }) {
             <img src={Vertical} alt="more-icon" className="ml-2" />
           </div>
         </div>
-      </nav> */}
-      <Nav file={file} setOpenStatus={setOpenStatus} />
+      </nav>
       <div className="flex flex-col justify-between items-center w-full">
         <div className="flex justify-between w-full md:px-6 px-2">
           <div className="flex self-center">
@@ -52,7 +50,13 @@ function index({ file, setOpenStatus }) {
             />
           </div>
           <div className="flex items-center justify-center">
+            {/* <img
+              src="../../../public/Icons/zoom-out/active.svg"
+              alt="image"
+              className="md:min-w-0 min-w-full w-60 md:w-10/12"
+            /> */}
             <video className="md:min-w-0 min-w-full w-60 md:w-10/12" src={file.url}  controls  autoPlay />
+            
           </div>
           <div className="flex self-center">
             <img
