@@ -8,9 +8,9 @@ import {popData, moData} from './accordionData';
 
 const Help = () => {
     return (
-        <div className="w-full p-6">
+        <div className="w-full p-6 pr-10">
             <div className="flex flex-col justify-between">
-                <h2 className="font-semibold text-xl">Help</h2>
+                <h2 className="font-semibold text-2xl">Help</h2>
                 <SearchBar />
                 <div className="my-4">
                     <p className="text-lg font-semibold">Popular Searches</p>
