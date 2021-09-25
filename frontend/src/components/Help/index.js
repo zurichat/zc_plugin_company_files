@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from './Header'
 
 import SearchBar from './SearchBar';
 import Accordion from './Accordion';
@@ -8,7 +9,10 @@ import {popData, moData} from './accordionData';
 
 const Help = () => {
     return (
+        <div className="w-full">
+            <Header />
         <div className="w-full p-6 pr-10">
+
             <div className="flex flex-col justify-between">
                 <h2 className="font-semibold text-2xl">Help</h2>
                 <SearchBar />
@@ -30,6 +34,8 @@ const Help = () => {
                         ))
                     }
                 </div>
+            </div>
+
             </div>
             
         </div>
