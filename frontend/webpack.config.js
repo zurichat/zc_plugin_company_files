@@ -18,7 +18,7 @@ module.exports = (webpackConfigEnv, argv) => {
     },
   })(defaultConfig, {
     // customize the webpack config here
-    devtool: "inline-source-map",
+    //devtool: "inline-source-map",
     devServer: {
       historyApiFallback: true,
       // https: true,
@@ -28,9 +28,6 @@ module.exports = (webpackConfigEnv, argv) => {
         {
           test: /\.css$/i,
           use: [
-            require.resolve("style-loader", {
-              paths: [require.resolve("webpack-config-single-spa")],
-            }),
             require.resolve("css-loader", {
               paths: [require.resolve("webpack-config-single-spa")],
             }),

@@ -17,12 +17,22 @@ async function fetcher(url) {
   const res = await axios.get(url);
   return res.data;
 }
-const API_URL = window.location.hostname.includes("zuri.chat")
-  ? "https://companyfiles.zuri.chat/api/v1"
-  : "http://localhost:5500/api/v1";
+// const API_URL = window.location.hostname.includes("zuri.chat")
+//   ? "https://companyfiles.zuri.chat/api/v1"
+//   : "http://localhost:5500/api/v1";
+  
+// const index = () => {
+//   const { data, error } = useSWR(
+//     "https://companyfiles.zuri.chat/api/v1/files/nonDeletedFiles",
+//     fetcher
+//   );
+
+  const API_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5500/api/v1"
+  : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
   const { data, error } = useSWR(
-    "https://companyfiles.zuri.chat/api/v1/files/nonDeletedFiles",
+    `${API_URL}/files/NonDeletedFiles`,
     fetcher
   );
 
