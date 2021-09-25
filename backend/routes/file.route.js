@@ -25,7 +25,8 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
-} = require("../controllers/file.controller");
+  cropImage
+} = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
 router.post("/uploadRequest", fileUploadRequest);
@@ -35,6 +36,9 @@ router.get("/uploadStatus", fileUploadStatus);
 
 // UPLOAD A NEW FILE/FILES
 router.post("/upload", fileUpload);
+
+// CROP IMAGES
+router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get("/all", getAllFiles);

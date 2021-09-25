@@ -8,6 +8,9 @@ const cpus = require('os').cpus();
 const cluster = require('cluster');
 const express = require('express');
 const compression = require('compression');
+const cropFileUpload = require("express-fileupload")
+
+
 
 const app = express();
 const router = express.Router();
@@ -20,6 +23,7 @@ app.use(cors());
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
+app.use(cropFileUpload({useTempFiles: true}))
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
@@ -62,7 +66,7 @@ app.use(ErrorHandler);
     // In this case, it is an HTTP server
     const port = process.env.PORT || 5500;
     const server = app.listen(port, () => {
-      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
+      console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process?.env?.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
     });
 
     // Handle unhandled promise rejections

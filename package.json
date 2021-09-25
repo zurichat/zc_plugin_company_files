@@ -4,7 +4,7 @@
   "description": "Zuri Chat ~ Company Files Management Plug-In",
   "main": "server.js",
   "scripts": {
-    "build:npm" : "cd frontend && npm install && npm run build-npm && cd ../root-config && npm install && npm run build-npm",
+    "build:npm": "cd frontend && npm install && npm run build-npm && cd ../root-config && npm install && npm run build-npm",
     "build": "yarn build-step-1",
     "build-step-1": "cd frontend && yarn install && yarn build && cd ../ && yarn build-step-2",
     "build-step-2": "cd root-config && yarn install && yarn build",
@@ -48,6 +48,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "express-fileupload": "^1.2.1",
     "fs": "0.0.1-security",
     "joi": "^17.4.2",
     "joi-objectid": "^3.0.1",
