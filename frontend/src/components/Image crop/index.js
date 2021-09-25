@@ -97,7 +97,7 @@ rotateleft(){
          <div className={CroppingCSS.first}> 
          <div className={CroppingCSS.previewcontainer}>{
               this.state.show?
-          <img className={CroppingCSS.preview} src={this.state.imageDestination}   alt="Destination" />
+          <img style={{transform: `rotate(${rotation}deg)`}} className={CroppingCSS.preview} src={this.state.imageDestination}   alt="Destination" />
           :null
     }
     
