@@ -41,7 +41,7 @@ const Activities = () => {
          </div>*/}
       <div className=" md:flex">
          
-         <div className="border-r-2 xl:ml-16">
+         <div className="border-r-2 xl:ml-12">
             <div className="flex justify-between pl-3 pr-6 mb-8 xl:-ml-8">
                <div className="flex">
                   <Link to='/'><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg></Link>
@@ -52,14 +52,14 @@ const Activities = () => {
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                </div>
             </div>
-            <div className="mr-12 mb-2">
+            <div className="mr-12 mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
                      <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
                   <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>10 hours ago</i></p>
+                  <p className="w-32"><i>4 hours ago</i></p>
                      <Menu as="div" className="relative inline-block">
                      <div>
                         <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
@@ -133,14 +133,14 @@ const Activities = () => {
                   </div>  
                </div>
             </div>  
-            <div className="mr-12 mb-2">
+            <div className="mr-12 mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
                      <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
                   <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>10 hours ago</i></p>
+                  <p className="w-32"><i>5 hours ago</i></p>
                      <Menu as="div" className="relative inline-block">
                      <div>
                         <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
@@ -214,14 +214,14 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12 mb-2">
+            <div className="mr-12  mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
                      <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
                   <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>10 hours ago</i></p>
+                  <p className="w-32"><i>6 hours ago</i></p>
                      <Menu as="div" className="relative inline-block">
                      <div>
                         <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
@@ -295,14 +295,14 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12 mb-2">
+            <div className="mr-12  mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
                      <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
                   <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>10 hours ago</i></p>
+                  <p className="w-32"><i>7 hours ago</i></p>
                      <Menu as="div" className="relative inline-block">
                      <div>
                         <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
@@ -376,14 +376,14 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12 mb-2">
+            <div className="mr-12  mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
                      <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
                   <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>10 hours ago</i></p>
+                  <p className="w-32"><i>8 hours ago</i></p>
                      <Menu as="div" className="relative inline-block">
                      <div>
                         <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
@@ -457,7 +457,250 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12 mb-2">
+            <div className="mr-12  mb-1 pl-1 shadow">
+               <div className="flex justify-between">
+                  <div className="flex items-center">
+                     <img src= {pic1} alt="user picture" />
+                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                  </div>
+                  <div className="flex items-center xl:w-96 justify-end">
+                  <p className="w-32 text-opacity-0"><i>8 hours ago</i></p>
+                     <Menu as="div" className="relative inline-block">
+                     <div>
+                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        </Menu.Button>
+                     </div>
+
+                     <Transition
+                     as={Fragment}
+                     enter="transition ease-out duration-100"
+                     enterFrom="transform opacity-0 scale-95"
+                     enterTo="transform opacity-100 scale-100"
+                     leave="transition ease-in duration-75"
+                     leaveFrom="transform opacity-100 scale-100"
+                     leaveTo="transform opacity-0 scale-95"
+                     >
+                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                        <div className="py-1">
+                           <Menu.Item>        
+                           {({ active }) => ( 
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                 <img src= {Pin} alt="pin" />
+                              <a                        
+                                 href="#"
+                                 >
+                                 <span className="ml-2">Pin</span>
+                              </a>
+                              </div>
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <img src= {read} alt="mark" />
+                                    <a
+                                 href="#"                           
+                              >                           
+                                 <span className="ml-4">Mark as read</span>
+                              </a>
+                              </div>                        
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div  className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                 <a
+                                 href="#"                          
+                              >                           
+                                 <span className="ml-4">Delete</span>
+                              </a>
+                              </div>                       
+                           )}
+                           </Menu.Item>
+                        </div>
+                     </Menu.Items>
+                     </Transition>
+                  </Menu>
+
+                  </div>  
+               </div>
+            </div> 
+            <div className="mr-12  mb-1 pl-1 shadow">
+               <div className="flex justify-between">
+                  <div className="flex items-center">
+                     <img src= {pic1} alt="user picture" />
+                     <p className="ml-4 mr-28 pr-6text-opacity-0"> Reavel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                  </div>
+                  <div className="flex items-center xl:w-96 justify-end">
+                  <p className="w-32 text-opacity-0"><i>9 hours ago</i></p>
+                     <Menu as="div" className="relative inline-block">
+                     <div>
+                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        </Menu.Button>
+                     </div>
+
+                     <Transition
+                     as={Fragment}
+                     enter="transition ease-out duration-100"
+                     enterFrom="transform opacity-0 scale-95"
+                     enterTo="transform opacity-100 scale-100"
+                     leave="transition ease-in duration-75"
+                     leaveFrom="transform opacity-100 scale-100"
+                     leaveTo="transform opacity-0 scale-95"
+                     >
+                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                        <div className="py-1">
+                           <Menu.Item>        
+                           {({ active }) => ( 
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                 <img src= {Pin} alt="pin" />
+                              <a                        
+                                 href="#"
+                                 >
+                                 <span className="ml-2">Pin</span>
+                              </a>
+                              </div>
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <img src= {read} alt="mark" />
+                                    <a
+                                 href="#"                           
+                              >                           
+                                 <span className="ml-4">Mark as read</span>
+                              </a>
+                              </div>                        
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div  className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                 <a
+                                 href="#"                          
+                              >                           
+                                 <span className="ml-4">Delete</span>
+                              </a>
+                              </div>                       
+                           )}
+                           </Menu.Item>
+                        </div>
+                     </Menu.Items>
+                     </Transition>
+                  </Menu>
+
+                  </div>  
+               </div>
+            </div> 
+            <div className="mr-12  mb-1 pl-1 shadow">
+               <div className="flex justify-between">
+                  <div className="flex items-center">
+                     <img src= {pic1} alt="user picture" />
+                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel created <strong>design file.png</strong> in <strong>Starred files</strong></p>
+                  </div>
+                  <div className="flex items-center xl:w-96 justify-end">
+                  <p className="w-32 text-opacity-0"><i>9 hours ago</i></p>
+                     <Menu as="div" className="relative inline-block">
+                     <div>
+                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        </Menu.Button>
+                     </div>
+
+                     <Transition
+                     as={Fragment}
+                     enter="transition ease-out duration-100"
+                     enterFrom="transform opacity-0 scale-95"
+                     enterTo="transform opacity-100 scale-100"
+                     leave="transition ease-in duration-75"
+                     leaveFrom="transform opacity-100 scale-100"
+                     leaveTo="transform opacity-0 scale-95"
+                     >
+                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                        <div className="py-1">
+                           <Menu.Item>        
+                           {({ active }) => ( 
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                 <img src= {Pin} alt="pin" />
+                              <a                        
+                                 href="#"
+                                 >
+                                 <span className="ml-2">Pin</span>
+                              </a>
+                              </div>
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <img src= {read} alt="mark" />
+                                    <a
+                                 href="#"                           
+                              >                           
+                                 <span className="ml-4">Mark as read</span>
+                              </a>
+                              </div>                        
+                           )}
+                           </Menu.Item>
+                           <Menu.Item>
+                           {({ active }) => (
+                              <div  className={classNames(
+                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
+                                 'block px-5 py-2 text-sm'
+                                 )}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                 <a
+                                 href="#"                          
+                              >                           
+                                 <span className="ml-4">Delete</span>
+                              </a>
+                              </div>                       
+                           )}
+                           </Menu.Item>
+                        </div>
+                     </Menu.Items>
+                     </Transition>
+                  </Menu>
+
+                  </div>  
+               </div>
+            </div> 
+            <div className="mr-12  mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
@@ -538,250 +781,7 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12 mb-2">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
-                     <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
-                  </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>10 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
-                     <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
-                        </Menu.Button>
-                     </div>
-
-                     <Transition
-                     as={Fragment}
-                     enter="transition ease-out duration-100"
-                     enterFrom="transform opacity-0 scale-95"
-                     enterTo="transform opacity-100 scale-100"
-                     leave="transition ease-in duration-75"
-                     leaveFrom="transform opacity-100 scale-100"
-                     leaveTo="transform opacity-0 scale-95"
-                     >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
-                           <Menu.Item>        
-                           {({ active }) => ( 
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                 <img src= {Pin} alt="pin" />
-                              <a                        
-                                 href="#"
-                                 >
-                                 <span className="ml-2">Pin</span>
-                              </a>
-                              </div>
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <img src= {read} alt="mark" />
-                                    <a
-                                 href="#"                           
-                              >                           
-                                 <span className="ml-4">Mark as read</span>
-                              </a>
-                              </div>                        
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                 <a
-                                 href="#"                          
-                              >                           
-                                 <span className="ml-4">Delete</span>
-                              </a>
-                              </div>                       
-                           )}
-                           </Menu.Item>
-                        </div>
-                     </Menu.Items>
-                     </Transition>
-                  </Menu>
-
-                  </div>  
-               </div>
-            </div> 
-            <div className="mr-12 mb-2">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
-                     <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
-                  </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>10 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
-                     <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
-                        </Menu.Button>
-                     </div>
-
-                     <Transition
-                     as={Fragment}
-                     enter="transition ease-out duration-100"
-                     enterFrom="transform opacity-0 scale-95"
-                     enterTo="transform opacity-100 scale-100"
-                     leave="transition ease-in duration-75"
-                     leaveFrom="transform opacity-100 scale-100"
-                     leaveTo="transform opacity-0 scale-95"
-                     >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
-                           <Menu.Item>        
-                           {({ active }) => ( 
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                 <img src= {Pin} alt="pin" />
-                              <a                        
-                                 href="#"
-                                 >
-                                 <span className="ml-2">Pin</span>
-                              </a>
-                              </div>
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <img src= {read} alt="mark" />
-                                    <a
-                                 href="#"                           
-                              >                           
-                                 <span className="ml-4">Mark as read</span>
-                              </a>
-                              </div>                        
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                 <a
-                                 href="#"                          
-                              >                           
-                                 <span className="ml-4">Delete</span>
-                              </a>
-                              </div>                       
-                           )}
-                           </Menu.Item>
-                        </div>
-                     </Menu.Items>
-                     </Transition>
-                  </Menu>
-
-                  </div>  
-               </div>
-            </div> 
-            <div className="mr-12 mb-2">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
-                     <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
-                  </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>10 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
-                     <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
-                        </Menu.Button>
-                     </div>
-
-                     <Transition
-                     as={Fragment}
-                     enter="transition ease-out duration-100"
-                     enterFrom="transform opacity-0 scale-95"
-                     enterTo="transform opacity-100 scale-100"
-                     leave="transition ease-in duration-75"
-                     leaveFrom="transform opacity-100 scale-100"
-                     leaveTo="transform opacity-0 scale-95"
-                     >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
-                           <Menu.Item>        
-                           {({ active }) => ( 
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                 <img src= {Pin} alt="pin" />
-                              <a                        
-                                 href="#"
-                                 >
-                                 <span className="ml-2">Pin</span>
-                              </a>
-                              </div>
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <img src= {read} alt="mark" />
-                                    <a
-                                 href="#"                           
-                              >                           
-                                 <span className="ml-4">Mark as read</span>
-                              </a>
-                              </div>                        
-                           )}
-                           </Menu.Item>
-                           <Menu.Item>
-                           {({ active }) => (
-                              <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
-                                 )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                 <a
-                                 href="#"                          
-                              >                           
-                                 <span className="ml-4">Delete</span>
-                              </a>
-                              </div>                       
-                           )}
-                           </Menu.Item>
-                        </div>
-                     </Menu.Items>
-                     </Transition>
-                  </Menu>
-
-                  </div>  
-               </div>
-            </div> 
-            <div className="mr-12 mb-2">
+            <div className="mr-12  mb-1 pl-1 shadow">
                <div className="flex justify-between">
                   <div className="flex items-center">
                      <img src= {pic1} alt="user picture" />
