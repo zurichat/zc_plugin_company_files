@@ -11,6 +11,7 @@ import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
 import Activities from "../Activities/Activities";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
+import Help from '../Help/index';
 
 const Main = () => {
   return (
@@ -44,6 +45,9 @@ const Main = () => {
           </Route>
           <Route path="/trashapp" exact>
             <TrashApp />
+          </Route>
+          <Route path="/help" exact>
+            <Help />
           </Route>
         </Switch>
       </div>
