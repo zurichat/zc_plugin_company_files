@@ -28,7 +28,7 @@ const Accordion = ({ data }) => {
                 </div>
                 <img src={toggleIcon} id={imgId} className="w-5 mr-6" />
             </div>
-            <div id={accId} className="accordion-answers pl-10 border-t border-gray-300">
+            <div id={accId} className="accordion-answers px-10 border-t border-gray-300">
                 <p className="p-4 text-gray-500">{data.answer}</p>
             </div>
         </div>

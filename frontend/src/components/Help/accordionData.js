@@ -15,13 +15,13 @@ export const popData = [
     },
     {
         id: 'p3',
-        title: 'Is it possible to copy files to multiple folders?',
+        title: 'How do i add collaborators to my files?',
         answer: 'Right click on the file and click on invite and enter the username of a collaborator',
         icon: `${accIcon}`
     },
     {
         id: 'p4',
-        title: 'Is it possible to copy files to multiple folders?',
+        title: 'Can i export my files from the cloud storage?git ',
         answer: 'Yes, you can export your files from the cloud by using the download option',
         icon: `${accIcon}`
     },
