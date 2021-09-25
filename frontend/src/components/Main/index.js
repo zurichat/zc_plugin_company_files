@@ -9,7 +9,9 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
+
 import Test from "../ComponentToTest";
+import Help from '../Help/index';
 {/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
 const Main = () => {
@@ -44,6 +46,9 @@ const Main = () => {
           </Route>
           <Route path="/trashapp" exact>
             <TrashApp />
+          </Route>
+          <Route path="/help" exact>
+            <Help />
           </Route>
         </Switch>
       </div>

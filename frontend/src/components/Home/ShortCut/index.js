@@ -64,6 +64,7 @@ const index = () => {
             </div>
           </div>
         </Link>
+        <Link to="/help">
         <div className="mb-10 md:mb-0">
           <div className="w-20 h-20 md:w-28 md:h-28  lg:w-32 lg:h-32 xl:w-[180px] xl:h-[165px] flex justify-around bg-green-50 rounded-md transition-all duration-150 shadow-md">
             <img
@@ -77,6 +78,8 @@ const index = () => {
             <p className="name text-[18px] text-center">Help</p>
           </div>
         </div>
+        </Link>
+        
       </div>
     </div>
   );
