@@ -27,7 +27,6 @@ function index({ file, setOpenStatus }) {
               className="bg-black rounded-full md:h-14 md:w-14 w-5 h-5 p-1 md:p-3"
             />
           </div>
-
           <div className="flex items-center justify-center">
             <img
               src={file.url}
