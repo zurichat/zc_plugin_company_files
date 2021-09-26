@@ -23,7 +23,7 @@ const API_URL = window.location.hostname.includes("localhost")
   : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
   const { data, error } = useSWR(
-    `${API_URL}/files/NonDeletedFiles`,
+    `${API_URL}/files/all`,
     fetcher
   );
 
