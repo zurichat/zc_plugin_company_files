@@ -17,6 +17,9 @@ import Help from '../Help/index';
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../Error/ErrorFallback";
 
+import Help from "../Help/index";
+import Collaborators from "../Collaborators/Collaborators";
+
 
 const Main = () => {
   return (
@@ -63,6 +66,9 @@ const Main = () => {
             </Route>
             <Route path="/help" exact>
               <Help />
+            </Route>
+            <Route path="/collaborators" exact>
+              <Collaborators />
             </Route>
           </Switch>
         </div>
