@@ -26,11 +26,10 @@ function FileMenu({ file, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
   function previewCmd() {
-    console.log("Preview");
     setOpenPreview(true);
   }
 
-  function getLink() {  }
+  function getLink() {}
 
   function download() {}
 
