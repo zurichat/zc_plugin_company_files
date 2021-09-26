@@ -9,7 +9,7 @@ function Document({ file }) {
       </div>
       <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
         <span className="w-full truncate text-[14px]">{file.fileName}</span>
-        <span className="text-gray-400 text-[13px]">
+        <span className="text-gray-400 truncate text-[13px]">
           {dayjs(file.dateAdded).fromNow()}
         </span>
       </div>

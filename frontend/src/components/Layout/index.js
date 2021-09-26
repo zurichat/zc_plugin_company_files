@@ -5,7 +5,7 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen gap-3">
+    <div className="flex items-center justify-center min-h-screen">
       <div>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />
