@@ -1,4 +1,5 @@
 const { unlink: deleteFile, stat: getFileDetails } = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
