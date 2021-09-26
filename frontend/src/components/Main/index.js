@@ -38,7 +38,6 @@ const Main = () => {
             </Route>
             {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
-<<<<<<< HEAD
             </Route> */}
             <Route path="/files" exact>
               <Files />
@@ -46,12 +45,10 @@ const Main = () => {
             <Route path="/test" exact>
               <Test />
             </Route>
-=======
           </Route> */}
             <Route path="/files" exact>
               <Files />
             </Route>
->>>>>>> 6a395cf8691079a08894b40f60ad45984149c0a5
             <Route path="/starred" exact>
               <Starred />
             </Route>
