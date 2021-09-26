@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function useFetch(url, del, res, empty, notEmpty) {
+function useFetch(url, del, res, empty) {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,7 +36,7 @@ function useFetch(url, del, res, empty, notEmpty) {
         }
       });
     return () => abortCont.abort();
-  }, [del, res, empty, notEmpty]);
+  }, [del, res, empty]);
 
   return { data, error, isLoading, setData, setError };
 }
