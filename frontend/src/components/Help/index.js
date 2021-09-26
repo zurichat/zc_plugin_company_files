@@ -16,8 +16,8 @@ const Help = () => {
     const searchData = (input) => {
         if(input.length > 0) {
         const _searchResult = joinData.filter((el) => {
-            const queryString = el.title + el.answer
-            return queryString.includes(input)
+            const queryString = el.title + ' ' + el.answer
+            return queryString.toLowerCase().includes(input.toLowerCase())
         })
 
         setSearchResult(_searchResult)
