@@ -9,7 +9,7 @@ const {
   fileDetails,
   fileDelete,
   deleteMultipleFiles,
-  getNonDeletedFiles,
+  // getNonDeletedFiles,
   deleteTemporarily,
   restoreFile,
   getAllFiles,
@@ -17,10 +17,9 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
-  searchFileByIsDeleted,
+  // searchFileByIsDeleted,
   getAllDeletedFiles,
   isDuplicate,
-  getAllDuplicates,
   setEditPermission,
   searchBySize,
   searchByType,
@@ -46,8 +45,8 @@ router.get("/all", getAllFiles);
 // GET A SPECIFIC FILE TYPE
 router.get("/type/:type", getFileByType);
 
-// SEARCH FOR ALL DELETED FILES
-router.get("/searchByisDeleted", searchFileByIsDeleted);
+// SEARCH FOR ALL DELETED FILES - DELETED
+// router.get("/searchByisDeleted", searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get("/read/:id", fileDetails);
@@ -73,14 +72,11 @@ router.get("/deletedFiles", getAllDeletedFiles);
 // GET ALL THE FILES WITH THE SAME FOLDER ID
 router.get("/id/:id", getFilesWithSameFolderId);
 
-// GET NON DELETED FILES
-router.get("/NonDeletedFiles", getNonDeletedFiles);
+// GET NON DELETED FILES - DELETED
+// router.get("/NonDeletedFiles", getNonDeletedFiles);
 
 // CHECK IF FILE IS A DUPLICATE
 router.post("/isDuplicate", isDuplicate);
-
-// GET DUPLICATE FILES
-router.get("/duplicateFiles", getAllDuplicates);
 
 // EDIT FILE
 router.put("/write/:id", fileUpdate);
