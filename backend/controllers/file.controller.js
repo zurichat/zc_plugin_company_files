@@ -1,4 +1,5 @@
 const { unlink: deleteFile, stat: getFileDetails } = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
@@ -358,7 +359,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 
   await RealTime.publish('deletedFiles', deletedFiles);
 
-  return (data.length < 1)
+  return (deletedFiles.length < 1)
     ? res.status(200).send(appResponse('No file deleted yet!', [], true))
     : res.status(200).send(appResponse('Deleted files', deletedFiles, true));
 }
