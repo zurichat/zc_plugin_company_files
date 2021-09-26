@@ -82,3 +82,5 @@ if (cluster.isMaster) {
     server.close(() => process.exit(1));
   });
 }
+
+module.exports = app;
