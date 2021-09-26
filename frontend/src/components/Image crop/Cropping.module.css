@@ -108,6 +108,10 @@
             color: #FFFFFF;
         }
         
+        .cropbtn:active {
+            animation: shake .3s;
+        }
+        
         .rotatebtn:active {
             animation: shake .3s;
         }
@@ -181,7 +185,7 @@
         .close {
             position: fixed;
             left: 33%;
-            bottom: 9.6%;
+            bottom: 16.6%;
             color: #C4C4C4;
             background-color: Black;
             font-family: Lato;
@@ -209,7 +213,6 @@
         }
         
         .text {
-            z-index: 10;
             color: white;
             position: absolute;
             top: 20%;
@@ -217,6 +220,12 @@
             width: 17%;
             text-align: center;
             z-index: 0;
+            font-size: 90%;
+        }
+        
+        .Done {
+            height: 80px;
+            display: none;
         }
         
         .times {
@@ -239,31 +248,14 @@
         
         @media(max-width:1200px) {
             .container {
-                width: 320px;
-                top: 60px;
-                flex-direction: column-reverse;
-                height: 70%;
-            }
-            .preview {
-                display: none;
-            }
-            .previewcontainer {
-                display: none;
+                width: 700px;
+                height: 570px;
             }
             .cancel {
                 display: none;
             }
             .first {
-                flex-direction: row;
-                justify-content: space-between;
-                width: 100%;
-                height: 20%;
-                margin-left: 10%
-            }
-            .second {
-                width: 100%;
-                margin-left: 10%;
-                height: 60%;
+                height: 90%;
             }
             .cropbtn {
                 margin: 0;
@@ -280,23 +272,22 @@
             .imagetobecropped {
                 width: 100%;
                 margin: 0;
-                height: 100%;
-            }
-            .savebtn {
-                display: none;
+                height: 60%;
             }
             .close {
-                display: none;
+                left: 25%;
+                padding: 0;
+                bottom: 15%;
+                background-color: transparent;
             }
-            .text {
-                display: none;
-            }
+            .text {}
             .times {
                 display: block;
                 left: 34%;
                 padding: 0;
                 bottom: 70%;
                 background-color: transparent;
+                display: none;
             }
         }
         
@@ -360,9 +351,24 @@
             }
             .times {
                 display: block;
-                left: 33%;
+                left: 32%;
                 padding: 0;
-                bottom: 70%;
+                bottom: 65%;
+                background-color: transparent
+            }
+            .Done {
+                display: block;
+                margin-left: 180px;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media(max-width:320px) {
+            .times {
+                display: block;
+                left: 17%;
+                padding: 0;
+                bottom: 65%;
                 background-color: transparent
             }
         }

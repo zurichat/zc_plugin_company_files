@@ -1,14 +1,10 @@
-const axios = require("axios");
-const { response } = require("express");
+const axios = require("../utils/axios.helper");
 
-const databaseWriteUrl = "https://api.zuri.chat/data/write";
 const databaseReadUrl = "https://api.zuri.chat/data/read";
+const databaseWriteUrl = "https://api.zuri.chat/data/write";
 const databaseDeleteUrl = "https://api.zuri.chat/data/delete";
 
-// const databaseWriteUrl = "https://zccore.herokuapp.com/data/write";
-// const databaseReadUrl = "https://zccore.herokuapp.com/data/read";
-
-class DatabaseConnection {
+class DatabaseOps {
   constructor(collection_name) {
     this.data = {
       plugin_id: "6134c6a40366b6816a0b75cd",
@@ -19,6 +15,7 @@ class DatabaseConnection {
       filter: {},
       payload: {},
     };
+
     this.delete_data = {
       plugin_id: "6134c6a40366b6816a0b75cd",
       organization_id: "6133c5a68006324323416896",
@@ -30,59 +27,39 @@ class DatabaseConnection {
   }
 
   create = async (payload) => {
-    try {
-      this.data.payload = payload;
+    this.data.payload = payload;
+    const response = await axios.post(databaseWriteUrl, this.data);
 
-      const response = await axios.post(databaseWriteUrl, this.data);
-
-      return response.data;
-    } catch (error) {
-      return error;
-    }
+    return response.data;
   };
 
   fetchAll = async (filter = {}) => {
-    try {
-      this.data.filter = filter;
-      const response = await axios.get(
-        `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
-      );
+    this.data.filter = filter;
+    const { data } = await axios.get(
+      `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
+    );
 
-      return response.data;
-    } catch (error) {
-      return error;
-    }
+    return data;
   };
 
   fetchOne = async (query) => {
-    try {
-      const response = await axios.get(
-        `${databaseReadUrl}/${this.data.plugin_id}/${
-          this.data.collection_name
-        }/${this.data.organization_id}?${Object.keys(query)}=${Object.values(
-          query
-        )}`
-      );
+    const { data } = await axios.get(
+      `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${
+        this.data.organization_id
+      }?${Object.keys(query)}=${Object.values(query)}`
+    );
 
-      return response.data;
-    } catch (error) {
-      return error;
-    }
+    return data;
   };
 
   update = async (id, payload) => {
-    try {
-      this.data.payload = payload;
-      this.data.object_id = id;
+    this.data.payload = payload;
+    this.data.object_id = id;
 
-      const response = await axios.put(databaseWriteUrl, this.data);
+    const { data } = await axios.put(databaseWriteUrl, this.data);
 
-      return response.data;
-    } catch (error) {
-      return error;
-    }
+    return data;
   };
-
   patch = async (id, payload) => {
     try {
       this.data.payload = payload;
@@ -95,30 +72,22 @@ class DatabaseConnection {
       return error;
     }
   };
-
   delete = async (id) => {
-    try {
-      // delete multiple files
-      let obj_id = id;
-      if (obj_id instanceof Array) {
-        let delItems = await Promise.all(
-          obj_id.map(async (val) => {
-            this.delete_data.object_id = val;
-            let info = this.delete_data;
-            let response = await axios.post(databaseDeleteUrl, info);
-            return response.data;
-          })
-        );
-        return delItems;
-      } else {
-        this.delete_data.object_id = id;
-        const response = await axios.post(databaseDeleteUrl, this.delete_data);
-        return response.data;
-      }
-    } catch (error) {
-      return error;
+    if (id instanceof Array) {
+      const deletedItems = await Promise.all(
+        id.map((_id) => {
+          this.delete_data.object_id = _id;
+          return axios.post(databaseDeleteUrl, this.delete_data);
+        })
+      );
+      return deletedItems;
+    } else {
+      this.delete_data.object_id = id;
+      const { data } = await axios.post(databaseDeleteUrl, this.delete_data);
+
+      return data;
     }
   };
 }
 
-module.exports = DatabaseConnection;
+module.exports = DatabaseOps;

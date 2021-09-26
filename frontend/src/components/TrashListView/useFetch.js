@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;

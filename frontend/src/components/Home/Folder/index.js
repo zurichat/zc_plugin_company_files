@@ -1,123 +1,41 @@
 import React from "react";
-import folderYellow from "../../../../public/Icons/folder/yellow.svg";
-import options from "../../../../public/Icons/more-vertical/active.svg";
-import user2 from "../../../../public/Icons/folder-user2.svg";
-import user from "../../../../public/Icons/folder-user.svg";
-import addUser from "../../../../public/Icons/plus/active.svg";
+import useSWR from "swr";
+import axios from "axios";
+import FolderComponent from "./Folder";
+
+async function fetcher(url) {
+  const res = await axios.get(url);
+  return res.data;
+}
+
+const API_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5500/api/v1"
+  : "https://companyfiles.zuri.chat/api/v1";
 
 const index = () => {
+  const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
+  
+  if (error)
+    return (
+      <div className="text-3xl flex items-center justify-center text-red-600">
+        failed to load
+      </div>
+    );
+
+  if (!data)
+    return (
+      <div className="text-3xl flex items-center justify-center">
+        loading...
+      </div>
+    );
+
   return (
     <div className="w-full p-10 ">
-      <h2 className=" mb-8 text-sm text-gray-700">Folders</h2>
+      <h2 className=" mb-8 text-xl ">Folders</h2>
       <div className="flex flex-wrap justify-between">
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
-          <div className="card flex justify-between mb-6">
-            <div className="icons">
-              <img src={folderYellow} alt="" />
-            </div>
-            <div className="icons">
-              <img src={options} alt="" />
-            </div>
-          </div>
-          <div className="card text-sm flex justify-between items-center text-[13px]">
-            <div className="w-32">
-              <span className="block truncate">Design Files</span>
-              <span className="block text-gray-400">140 people</span>
-            </div>
-            <div className="icons flex">
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user} alt="folder user" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user2} alt="" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
-                <img src={addUser} alt="add user" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
-          <div className="card flex justify-between mb-6">
-            <div className="icons">
-              <img src={folderYellow} alt="" />
-            </div>
-            <div className="icons">
-              <img src={options} alt="" />
-            </div>
-          </div>
-          <div className="card text-sm flex justify-between items-center text-[13px]">
-            <div className="w-32">
-              <span className="block truncate">Programming Document</span>
-              <span className="block text-gray-400">140 people</span>
-            </div>
-            <div className="icons flex">
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user} alt="folder user" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user2} alt="" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
-                <img src={addUser} alt="add user" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
-          <div className="card flex justify-between mb-6">
-            <div className="icons">
-              <img src={folderYellow} alt="" />
-            </div>
-            <div className="icons">
-              <img src={options} alt="" />
-            </div>
-          </div>
-          <div className="card text-sm flex justify-between items-center text-[13px]">
-            <div className="w-32">
-              <span className="block truncate">My Favorites</span>
-              <span className="block text-gray-400">140 people</span>
-            </div>
-            <div className="icons flex">
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user} alt="folder user" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user2} alt="" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
-                <img src={addUser} alt="add user" />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="folderCard w-full sm:w-56 mb-10 px-6 py-7 flex flex-col bg-white rounded-md shadow-md">
-          <div className="card flex justify-between mb-6">
-            <div className="icons">
-              <img src={folderYellow} alt="" />
-            </div>
-            <div className="icons">
-              <img src={options} alt="" />
-            </div>
-          </div>
-          <div className="card text-sm flex justify-between items-center text-[13px]">
-            <div className="w-32">
-              <span className="block truncate">Media Folder</span>
-              <span className="block text-gray-400">140 people</span>
-            </div>
-            <div className="icons flex">
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user} alt="folder user" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 rounded-full object-fill">
-                <img src={user2} alt="" />
-              </div>
-              <div className="avi w-6 h-6 -m-1 border-2 border-gray-300 border-dashed bg-white rounded-full flex justify-around">
-                <img src={addUser} alt="add user" />
-              </div>
-            </div>
-          </div>
-        </div>
+        {data.data.slice(0, 4).map((folder) => (
+          <FolderComponent key={folder.id} folder={folder} />
+        ))}
       </div>
     </div>
   );
