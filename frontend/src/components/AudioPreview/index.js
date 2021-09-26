@@ -82,7 +82,7 @@ function index({ file, setOpenStatus }) {
   }, []);
 
   return (
-    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 absolute z-10 top-0 left-0 bottom-0 right-0">
+    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 fixed z-30 top-0 left-0 bottom-0 right-0">
       <Nav file={file} setOpenStatus={setOpenStatus} />
       <div className="flex flex-col justify-between items-center h-3/4 w-full">
         <div className="flex h-full w-full md:px-6 px-2 justify-center">

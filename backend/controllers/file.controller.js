@@ -1,15 +1,14 @@
-const fs = require('fs');
-const os = require('os');
+const { unlink: deleteFile, stat: getFileDetails } = require('fs/promises');
 const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
-const { promisify } = require('util');
 const mimeTypes = require('mime-types');
 
 const axios = require('axios');
 
 const DatabaseConnection = require('../utils/database.helper');
 const File = new DatabaseConnection('File');
+
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
@@ -17,9 +16,8 @@ const { BadRequestError, InternalServerError, NotFoundError } = require('../util
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 
-const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), `\\uploads\\file~~${fileId}~~${fileName}`));
-const getFileDetails = promisify(fs.stat);
-const deleteFile = promisify(fs.unlink);
+const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
+
 
 exports.fileUploadRequest = (req, res) => {
   const { fileName } = req.body;
@@ -33,8 +31,8 @@ exports.fileUploadRequest = (req, res) => {
   }
 }
 
-exports.fileUploadStatus = (req, res) => {
 
+exports.fileUploadStatus = (req, res) => {
   if (req.query && req.query.fileName && req.query.fileId) {
     getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
       .then(stats => {
@@ -46,7 +44,6 @@ exports.fileUploadStatus = (req, res) => {
   } else {
     return res.status(400).json({ status: 'failure', message: 'Invalid "Content-Range" format', credentials: { ...req.query } });
   }
-
 }
 
 
@@ -72,7 +69,7 @@ exports.fileUpload = async (req, res) => {
 
   const busboy = new Busboy({ headers: req.headers });
 
-  busboy.on('file', (_, file, fileName, encoding, mimetype) => {
+  busboy.on('file', (_, file, fileName) => {
     const filePath = getFilePath(fileName, fileId);
 
     if (!fileId) req.pause();
@@ -128,51 +125,89 @@ exports.fileUpload = async (req, res) => {
   req.pipe(busboy);
 }
 
-// get all files and also by type
-exports.getAllFiles = async (req, res) => {
 
+exports.cropImage = async (req, res) => {
+  // Upload cropped file to cloudinary
+  const cropImage = req.files.image;
+  const id = req.body.id;
+
+  // Check if file is image
+  const check = /image/.test(cropImage.mimetype);
+
+  if (check) {
+    const newImage = await MediaUpload.uploadFile(cropImage.tempFilePath);
+    // Get previous image details
+    const previousImage = await File.fetchOne({ _id: id });
+
+    if (newImage.size !== previousImage.size) { // Image crop occured
+      const updateParams = { url: newImage.url, cloudinaryId: newImage.cloudinaryId, size: newImage.size }
+      await Promise.all([
+        await MediaUpload.deleteFromCloudinary(previousImage.cloudinaryId),
+        File.update(id, updateParams),
+        deleteFile(cropImage.tempFilePath)
+      ])
+
+      const updatedCroppedImage = await File.fetchOne({ _id: id });
+    
+      res.status(200).send(appResponse('Image cropped successfully!', updatedCroppedImage, true));
+    } else { // Image crop did not occur
+      await Promise.all([
+        MediaUpload.deleteFromCloudinary(newImage.cloudinaryId),
+        deleteFile(cropImage.tempFilePath)
+      ]);
+      throw new BadRequestError(`Image crop didn't occur!`);
+    }
+  } else {
+    await deleteFile(cropImage.tempFilePath);
+    throw new BadRequestError('Only images are allowed!');  
+  }
+}
+
+
+// Get all non-deleted files
+exports.getAllFiles = async (req, res) => {
   const data = await File.fetchAll();
-  await RealTime.publish('allFiles', data);
   
   // setTimeout( async () => {
   //   await axios.get('http://localhost:5500/api/v1/files/all');
   // }, (1000 * 30));
 
-  res.status(200).send(appResponse(null, data, true));
-  
-};
+  const nonDeletedFiles = data.filter(file => !file.isDeleted);
 
+  await RealTime.publish('allFiles', nonDeletedFiles);
+
+  res.status(200).send(appResponse(null, nonDeletedFiles, true));
+}
+
+
+// Get all files by type
 exports.getFileByType = async (req, res) => {
-  // type from params
+  // Type from params
   const { type } = req.params;
-  // console.log(`type: ${type}`);
-  const matchedFiles = []
-  // filter from response to get type
   const data = await File.fetchAll();
-  data.data.filter((resp) => {
-    return new RegExp(`\\b${type}\\b`).test(resp.type) ? matchedFiles.push(resp) : null
-  })
+
+  const matchedFiles = data.filter(file => new RegExp(`\\b${type}\\b`).test(file.type));
 
   await RealTime.publish(`${type}Files`, data); 
   res.status(200).send(appResponse(null, matchedFiles, true));
-
 }
 
 exports.fileDetails = async (req, res) => {
 
   const data = await File.fetchOne({ _id: req.params.id });
+
   await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
 }
 
+
 exports.fileUpdate = async (req, res) => {
   const { id: fileId } = req.params;
-  const { data: [file] } = await File.fetchOne({ _id: fileId });
+  const file = await File.fetchOne({ _id: fileId });
   
   if (!file) throw new NotFoundError();
-
-  await File.update(fileId, body);
+  await File.update(fileId, req.body);
 
   const { data: [updatedFile] } = await File.fetchOne({ _id: fileId });
   await RealTime.publish('fileUpdate', data);
@@ -196,115 +231,83 @@ exports.fileDelete = async (req, res) => {
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
-// delete multiple files 
+// Delete multiple files 
 exports.deleteMultipleFiles = async (req, res) => {
-  const [...ids] = req.body.ids;
+  const { ids } = req.body;
 
-  [...ids].map(async id => {
-    const { data } = await File.fetchOne({ '_id': id });
-    MediaUpload.deleteFromCloudinary(data.cloudinaryId)
-  })
+  const [response] = await Promise.all([
+    await File.delete(ids),
+    ...ids.map(async id => {
+      const data = await File.fetchOne({ '_id': id });
+      return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
+    })
+  ]);
 
-  const response = await File.delete(ids);
+  if (!response) throw new InternalServerError();
 
-  if (!response) throw new InternalServerError()
-
-  res.status(200).send(appResponse('Multiple Files deleted successfully!', response, true));
+  res.status(200).send(appResponse('Multiple files deleted successfully!', response, true));
 }
 
-// send to trash
-exports.deleteTemporarily = async (req, res) => {
-  const { data } = await File.fetchOne({ _id: req.params.id });
-  let toggler
-  if (data.isDeleted === false) {
-    toggler = true
 
-    const response = await File.update(req.params.id, { isDeleted: toggler });
+// Send to trash
+exports.deleteTemporarily = async (req, res) => {
+  const data = await File.fetchOne({ _id: req.params.id });
+  
+  if (data.isDeleted === false) {
+    const response = await File.update(req.params.id, { isDeleted: true });
+
     res.status(200).send(appResponse('File sent to trash!', response, true));
 
   } else {
-    throw new BadRequestError()
+    throw new BadRequestError();
   }
 }
 
-// restore file
-exports.restoreFile = async (req, res) => {
-  const { data } = await File.fetchOne({ _id: req.params.id });
-  let toggler
-  if (data.isDeleted === true) {
-    toggler = false
 
-    const response = await File.update(req.params.id, { isDeleted: toggler });
+// find files with the same folder id
+exports.getFilesWithSameFolderId = async (req, res) => {
+  const { id } = req.params;
+  if (id === "" || id === undefined) throw new BadRequestError('Missing "id" parameter');
+
+  const data = await File.fetchAll({ folderId: id });
+  if (!data) throw new NotFoundError();
+
+  const matchingFolderId = data.filter(file => file.folderId === id);
+  // if (matchingFolderId.length === 0) throw new NotFoundError();
+
+  res.status(200).send(appResponse(null, matchingFolderId, true));
+};
+
+// Restore file
+exports.restoreFile = async (req, res) => {
+  const data = await File.fetchOne({ _id: req.params.id });
+  
+  if (data.isDeleted === true) {
+    const response = await File.update(req.params.id, { isDeleted: false });
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
-    throw new BadRequestError()
+    throw new BadRequestError();
   }
 }
 
-exports.searchFileByIsDeleted = async (req, res) => {
-
-  try {
-
-    const isDeleted = true;
-    let response = await File.fetchAll();
-
-    const deletedFiles = response.data.filter((file) => {
-      return file.isDeleted === isDeleted;
-    })
-
-    await RealTime.publish('deleted_files', deletedFiles)
-
-    res.status(200).send({ message: "Trash files fetched successfully" })
-
-  } catch (error) {
-
-    throw new BadRequestError()
-
-  }
-
-}
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  
   if (!allFiles) throw new InternalServerError()
 
-  const data = allFiles.data.filter(file => {
-
-    return file.isStarred === true;
-
-  })
+  const data = allFiles.filter(file => file.isStarred);
   
+  await RealTime.publish('starredFiles', data);
 
-  if (data.length < 1) {
-
-    await RealTime.publish('starredFiles', {})
-
-    // setTimeout( async () => {
-    //   await axios.get('http://localhost:5500/api/v1/files/searchStarredFiles');
-    // }, (1000 * 30));
-
-    return res.status(200).send(appResponse('No Starred File(s)!', {}, true));
-
-  } else {
-
-    await RealTime.publish('starredFiles', data)
-
-    // setTimeout( async () => {
-    //   await axios.get('http://localhost:5500/api/v1/files/searchStarredFiles');
-    // }, (1000 * 30));
-
-    res.status(200).send(appResponse("Starred files", data, true));
-
-  }
-
-};
+  return (data.length < 1)
+    ? res.status(200).send(appResponse('No starred file!', [], true))
+    : res.status(200).send(appResponse('Starred files', data, true));
+}
 
 exports.searchByDate = async (req, res) => {
-
   try {
     const { data } = await File.fetchAll();
     const { pickDate } = req.query;
@@ -329,68 +332,33 @@ exports.searchByDate = async (req, res) => {
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
-  try {
-    const allFiles = await File.fetchAll();
-
-    //   Validate Response Status
-    if (allFiles.status === 200) {
-
-      const archives = [];
-      allFiles.data.map((file) => {
-        return file.isArchived ? archives.push(file) : null;
-      });
-
-      await RealTime.publish('archived_files', archives)
-
-      return res.status(200).json({ status: 200, statusText: 'success', archives });
-    }
-  } catch (error) {
-    return res.send({ ...error });
-  }
-};
-
-
-// get all deleted files
-exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-
-  if (!allFiles) throw new InternalServerError()
-
-  const data = allFiles.data.filter(file => {
-    return file.isDeleted === true;
-  })
-
-  if ((data.length)<1) {
-    return res.status(200).send(appResponse('No file deleted yet!', {}, true));
-  }
-
-  await RealTime.publish('deletedFiles', data);
-
-  res.status(200).send(appResponse(null, data, true));
-};
-
-// get all files that are not deleted
-exports.getNonDeletedFiles = async (req, res) => {
-
-  const allFiles = await File.fetchAll();
-
   if (!allFiles) throw new InternalServerError();
 
-  const data = allFiles.data.filter(file => {
-
-    return file.isDeleted === false;
-
-  })
+  const data = allFiles.filter(file => file.isArchived);
   
+  await RealTime.publish('archivedFiles', data);
 
-  if ((data.length)<1) {
-    return res.status(200).send(appResponse('No file uploaded yet!', {}, true));
-  }
+  return data.length < 1
+    ? res.status(200).send(appResponse('No archived file!', [], true))
+    : res.status(200).send(appResponse('Archived files', data, true));
+}
 
-  await RealTime.publish('nonDeletedFiles', data);
-  
-  res.status(200).send(appResponse(null, data, true));
-};
+
+// Get all deleted files
+exports.getAllDeletedFiles = async (req, res) => {
+  const allFiles = await File.fetchAll();
+  if (!allFiles) throw new InternalServerError();
+
+  const deletedFiles = allFiles.filter(file => file.isDeleted);
+
+  await RealTime.publish('deletedFiles', deletedFiles);
+
+  return (data.length < 1)
+    ? res.status(200).send(appResponse('No file deleted yet!', [], true))
+    : res.status(200).send(appResponse('Deleted files', deletedFiles, true));
+}
+
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {
@@ -419,35 +387,28 @@ exports.isDuplicate = async (req, res) => {
 
 // get all duplicate files
 exports.getAllDuplicates = async (req, res) => {
-  try {
-    const { data } = await File.fetchAll();
-    const duplicateFiles = [];
-    const duplicateHash = [];
-    // loop through response object and check if md5Hash value exist
-    data.forEach(fileObject => {
-      if (!duplicateHash.includes(fileObject.md5Hash)) {
-        duplicateHash.push(fileObject.md5Hash);
-      } else {
-        duplicateFiles.push(fileObject);
-      }
-    });
 
-    await RealTime.publish('duplicateFiles', { 
-      duplicate: deletedFiles, 
-      message: `${duplicateHash.length} ${(duplicateHash.length > 1) ? ' Files' : ' File'} has duplicates` 
-    })
+  const { md5Hash } = req.body;
+  const allFiles = await File.fetchAll();
 
-    return res
-      .status(200)
-      .json({
-        status: 200,
-        message: `${duplicateHash.length} ${(duplicateHash.length > 1) ? ' Files' : ' File'} has duplicates`,
-      });
-  } catch (error) {
-    res.status(500).json(error);
+  if (!allFiles) throw new InternalServerError();
+
+  const [fileExists] = allFiles.filter(file => file.md5Hash === md5Hash);
+
+  if (fileExists) {
+    res.status(400).send(appResponse('File exists'));
+  } else {
+    res.status(200).send(appResponse('File does not exist', null, true));
   }
-};
+}
 
+/*******************************
+ * =============================
+ * 
+ * UNCHECKED!
+ * 
+ * =============================
+ *******************************/
 
 // set edit permission
 exports.setEditPermission = async (req, res) => {
