@@ -46,7 +46,7 @@ export default function Modal({
                   </h3>
                 </div>
                 {/*body*/}
-                <div className="relative pb-3 px-5 md:pr-20 ">
+                <div className="relative px-5 md:pr-20 ">
                   <p className="mt-3 mb-4 itemsTrash text-sm text-center md:text-left">
                     Are you sure you want to restore File?
                   </p>
@@ -93,7 +93,7 @@ export default function Modal({
                   </h3>
                 </div>
                 {/*body*/}
-                <div className="relative pb-3 px-5 md:pr-20 ">
+                <div className="relative px-5 md:pr-20 ">
                   <p className="mt-3 mb-4 itemsTrash text-sm text-center md:text-left">
                     Are you sure you want to Delete File Permanently?
                   </p>

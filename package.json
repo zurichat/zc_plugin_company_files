@@ -12,7 +12,7 @@
     "build:local-npm": "npm run build:npm && cd root-config && node generateDevTestFile",
     "client:dev": "concurrently \"yarn start --prefix root-config\" \"yarn start --prefix frontend\"",
     "dev": "nodemon .",
-    "install-setup": "yarn install && cd frontend && yarn install",
+    "install-setup": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "install-setup:npm": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "yarn lint:backend -- --fix",
@@ -37,7 +37,6 @@
   },
   "homepage": "https://github.com/zurichat/zc_plugin_company_files#readme",
   "dependencies": {
-    "archiver": "^5.3.0",
     "axios": "^0.21.1",
     "busboy": "^0.3.1",
     "cloudinary": "^1.26.3",
@@ -53,9 +52,6 @@
     "joi": "^17.4.2",
     "joi-objectid": "^3.0.1",
     "mime-types": "^2.1.32",
-    "react-error-boundary": "^3.1.3",
-    "react-helmet": "^6.1.0",
-    "react-range": "^1.8.11",
     "slugify": "^1.6.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"

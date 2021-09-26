@@ -30,7 +30,6 @@ function useFetch(url, del, res, empty) {
       })
       .catch((err) => {
         if (err.name === "AbortError") {
-          // console.log("Fetch Aborted");
         } else {
           setisLoading(false);
           setError(err.message);

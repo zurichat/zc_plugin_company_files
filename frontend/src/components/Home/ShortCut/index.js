@@ -2,6 +2,7 @@ import React from "react";
 import AllFiles from "../../../../public/Icons/AllFiles.svg";
 import Shared from "../../../../public/Icons/shared.svg";
 import Starred from "../../../../public/Icons/starred.svg";
+import Star from "../../../../public/Icons/Star.svg";
 import Trash from "../../../../public/Icons/homeTrash.svg";
 import Help from "../../../../public/Icons/Help.svg";
 import { Link } from "react-router-dom";
@@ -49,9 +50,9 @@ const index = () => {
             <div className="w-20 h-20 md:w-28 md:h-28 lg:w-44 lg:h-44 flex justify-around bg-green-100 rounded-md transition-all duration-150 shadow-md hover:bg-green-200">
               <img
                 className="icon"
-                src={Starred}
+                src={Star}
                 alt="image icon"
-                className=" w-1/3"
+                className="w-1/3"
               />
             </div>
             <div className="mt-5">

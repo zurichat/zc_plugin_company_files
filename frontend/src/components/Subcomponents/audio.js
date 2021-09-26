@@ -3,6 +3,7 @@ import Aud from "../../../public/Icons/music/active.svg";
 import dayjs from "dayjs";
 import AudioPreview from "../AudioPreview/index"
 import FileMenu from "./FileMenu";
+import { BsMusicNoteBeamed } from 'react-icons/bs'
 
 function audio({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -23,16 +24,16 @@ function audio({ file }) {
   return (
     <>
       <div
-        className="flex"
+        className="flex items-center w-52 mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
       >
-        <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
-          <img src={Aud} alt="audio" className="" />
+        <div className="fileIcon w-14 h-12 flex justify-center items-center bg-blue-100 rounded-md">
+          <BsMusicNoteBeamed className="text-2xl text-blue-500" />
         </div>
-        <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-          <span className="w-full truncate text-[14px]">{file.fileName}</span>
-          <span className="text-gray-400 truncate text-[13px]">
+        <div className="fileInfo sm:w-20 md:w-30 lg:w-40  overflow-hidden flex flex-col mx-3">
+          <span className="w-full truncate text-sm font-semibold">{file.fileName}</span>
+          <span className="text-gray-400 truncate text-sm">
             {dayjs(file.dateAdded).fromNow()}
           </span>
         </div>
