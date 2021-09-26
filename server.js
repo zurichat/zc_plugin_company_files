@@ -17,6 +17,8 @@ const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
+const { NotFoundError } = require('./backend/utils/appError');
+
 
 
 app.use(compression()); // Node.js compression middleware
@@ -46,6 +48,10 @@ if (isProduction) {
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 
+// Handle resource not found error on backend
+app.use('/api/*', (req,res,next)=>{
+  next(new NotFoundError);
+})
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
   isProduction
