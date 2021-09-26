@@ -3,8 +3,12 @@ const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
 const mimeTypes = require('mime-types');
-const DatabaseOps = require('../utils/database.helper');
-const File = new DatabaseOps('File');
+
+const axios = require('axios');
+
+const DatabaseConnection = require('../utils/database.helper');
+const File = new DatabaseConnection('File');
+
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
@@ -103,6 +107,8 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
         // Send (file) info to FE using Centrifugo
+
+        // normal response without data.
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
       });
     }).catch(e => {
@@ -161,6 +167,11 @@ exports.cropImage = async (req, res) => {
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
   const data = await File.fetchAll();
+
+  // setTimeout( async () => {
+  //   await axios.get('http://localhost:5500/api/v1/files/all');
+  // }, (1000 * 30));
+
   const nonDeletedFiles = data.filter(file => !file.isDeleted);
 
   await RealTime.publish('allFiles', nonDeletedFiles);
@@ -181,12 +192,14 @@ exports.getFileByType = async (req, res) => {
   res.status(200).send(appResponse(null, matchedFiles, true));
 }
 
-
 exports.fileDetails = async (req, res) => {
+
   const data = await File.fetchOne({ _id: req.params.id });
-  await RealTime.publish('fileDetail', data);
+
+  await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
+
 }
 
 
@@ -197,7 +210,10 @@ exports.fileUpdate = async (req, res) => {
   if (!file) throw new NotFoundError();
   await File.update(fileId, req.body);
 
-  const updatedFile = await File.fetchOne({ _id: fileId });
+  const { data: [updatedFile] } = await File.fetchOne({ _id: fileId });
+  await RealTime.publish('fileUpdate', data);
+
+  // const updatedFile = await File.fetchOne({ _id: fileId });
 
   res.status(200).send(appResponse('File details updated!', updatedFile, true));
 }
@@ -216,7 +232,6 @@ exports.fileDelete = async (req, res) => {
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
-
 
 // Delete multiple files 
 exports.deleteMultipleFiles = async (req, res) => {
@@ -244,6 +259,7 @@ exports.deleteTemporarily = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: true });
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
+
   } else {
     throw new BadRequestError();
   }
@@ -281,6 +297,7 @@ exports.restoreFile = async (req, res) => {
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
+
   const allFiles = await File.fetchAll();
   if (!allFiles) throw new InternalServerError()
 
@@ -292,7 +309,6 @@ exports.searchStarredFiles = async (req, res) => {
     ? res.status(200).send(appResponse('No starred file!', [], true))
     : res.status(200).send(appResponse('Starred files', data, true));
 }
-
 
 exports.searchByDate = async (req, res) => {
   try {
@@ -308,16 +324,18 @@ exports.searchByDate = async (req, res) => {
       });
       rd.length === 0
         ? res.status(404).json(`no files found on ${pickDate}`)
-        : res.status(200).json(rd);
+        : ( res.status(200).json(rd) && await RealTime.publish('fileDateSearch', rd) );
       console.log(rd);
     }
+
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
+
   const allFiles = await File.fetchAll();
   if (!allFiles) throw new InternalServerError();
 
@@ -361,7 +379,6 @@ exports.isDuplicate = async (req, res) => {
   }
 }
 
-
 /*******************************
  * =============================
  * 
@@ -380,6 +397,7 @@ exports.setEditPermission = async (req, res) => {
       res.send(fileData.map((files) => {
         return files.permission = 'edit'
       }))
+      
     } else {
       res.send(fileData.map((files) => {
         return files.permission = 'view'
@@ -403,34 +421,38 @@ exports.searchByType = async (req, res) => {
       });
 
       if (fileSearch.length === 0) {
+        // await RealTime.publish('fileTypeSearch', { message: `Sorry, there is no file type: ${fileType}` })
         return res.status(404).json(`Sorry, there is no file type: ${fileType}`);
       }
 
+      await RealTime.publish('fileTypeSearch', fileSearch);
       return res.status(200).json(fileSearch);
+
     }
   } catch (error) {
     return res.status(500).json(error);
   }
-}
+};
 
 
 exports.fileRename = async (req, res) => {
-  const { body } = req;
-  // Get single file
-  const data = await File.fetchAll();
-  const fileDetails = {};
+  try {
+    const { body: { name } } = req;
 
-  // gets file details
-  files = await data.data;
-  files.forEach((file) => {
-    if (file._id == req.params.id) {
-      fileDetails = file;
-    }
-  });
-  fileDetails.name = body.name;
-  // updates file name
-  const response = await File.update(req.params.id, fileDetails);
-  res.send({ response });
+    // Get single file
+    const file = await File.fetchOne({ _id: req.params.id });
+    file.name = name;
+
+    // updates file name
+    const response = await File.update(req.params.id, file);
+
+    res.send({ response });
+
+  } catch (error) {
+
+    res.send({ error });
+
+  }
 }
 
 // Search Files By Size
@@ -441,6 +463,7 @@ exports.searchBySize = async (req, res) => {
     const sizeRangePlus = Number(size) + 500;
     const sizeRangeMinus = Number(size) - 500;
     const files = [];
+
     for (i = 0; i < data.length; i++) {
       if (data[i].size) {
         if ((data[i].size >= sizeRangeMinus) && (data[i].size <= size)) {
@@ -450,10 +473,12 @@ exports.searchBySize = async (req, res) => {
         }
       }
     }
-  files.length > 0 ?  
-  res.status(200).json(files) : 
-  res.status(404).json('No matches')
+
+    files.length > 0 ?  
+    ( res.status(200).json(files) && await RealTime.publish('fileSizeSearch', { files }) ) : 
+    res.status(404).json('No matches')
+
   } catch (err) {
   res.status(500).json(err);
   }
-}
+};

@@ -1,4 +1,5 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import RealTime from "../../helpers/realtime.helper";
 import {
   faEllipsisV,
   faEye,
@@ -28,6 +29,20 @@ import px2 from './px2.png';
 import px3 from './px3.png';
 
 const index = () => {
+
+  const [starredFiles, setStarredFiles] = useState([]);
+
+  const fetchData = () => {
+    RealTime.subscribe('starredFiles', 'files/searchStarredFiles', 
+      (response) => setStarredFiles(response.data)
+    )
+  };
+
+  useEffect(() => {
+    fetchData();
+    console.log(starredFiles)
+  }, [starredFiles]);
+
   const [isModal, setIsModal] = useState(false);
   const [showFileIdx, setShowFileIdx] = useState(false);
 
