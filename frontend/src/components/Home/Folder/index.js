@@ -13,8 +13,8 @@ const API_URL = window.location.hostname.includes("localhost")
   : "https://companyfiles.zuri.chat/api/v1";
 
 const index = () => {
-  const { data, error } = useSWR(`${API_URL}/folders/read`, fetcher);
-
+  const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
+  
   if (error)
     return (
       <div className="text-3xl flex items-center justify-center text-red-600">

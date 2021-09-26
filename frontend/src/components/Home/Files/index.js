@@ -23,7 +23,7 @@ const API_URL = window.location.hostname.includes("localhost")
   : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
   const { data, error } = useSWR(
-    `${API_URL}/files/NonDeletedFiles`,
+    `${API_URL}/files/all`,
     fetcher
   );
 
@@ -52,7 +52,7 @@ const index = () => {
 
       <div className="project-box-wrapper">
         <div className="project-box w-full py-5 flex flex-wrap">
-          {data.data.length ? (
+          {data.data.length > 0 ? (
             data.data.slice(0, 30).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div

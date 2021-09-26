@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function useFetch(url, del, res, empty) {
+function useFetch(url, del, res, empty, notEmpty) {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,26 +18,25 @@ function useFetch(url, del, res, empty) {
         return res.json();
       })
       .then((data) => {
-        if (isEmpty(data)) {
+        if (isEmpty(data.data)) {
           setData([]);
           setisLoading(false);
           return;
         } else {
-          setData(data);
+          setData(data.data);
           setError(null);
           setisLoading(false);
         }
       })
       .catch((err) => {
         if (err.name === "AbortError") {
-          // console.log("Fetch Aborted");
         } else {
           setisLoading(false);
           setError(err.message);
         }
       });
     return () => abortCont.abort();
-  }, [del, res, empty]);
+  }, [del, res, empty, notEmpty]);
 
   return { data, error, isLoading, setData, setError };
 }

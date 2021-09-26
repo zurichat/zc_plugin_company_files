@@ -11,13 +11,14 @@ function TrashApp() {
   const [fileDel, setFileDel] = useState(null);
   const [restore, setRestore] = useState(null);
   const [emptyTrash, setEmptyTrash] = useState(null);
+
   const {
     data = [],
     setData,
     isLoading,
     error,
   } = useFetch(
-    `${API_BASE_URL}/files/deletedFiLes`,
+    `${API_BASE_URL}/files/deletedFiles`,
     restore,
     fileDel,
     emptyTrash
