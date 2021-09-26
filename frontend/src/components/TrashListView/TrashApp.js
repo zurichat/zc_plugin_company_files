@@ -17,7 +17,7 @@ function TrashApp() {
     isLoading,
     error,
   } = useFetch(
-    `${API_BASE_URL}/files/deletedFiLes`,
+    `${API_BASE_URL}/files/deletedFiles`,
     restore,
     fileDel,
     emptyTrash

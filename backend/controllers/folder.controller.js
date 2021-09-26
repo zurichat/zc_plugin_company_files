@@ -21,7 +21,7 @@ exports.folderCreate = async (req, res) => {
 };
 
 exports.getAllFolders = async (req, res) => {
-  const { data } = await Folders.fetchAll();
+  const  data  = await Folders.fetchAll();
   const response = await RealTime.publish('allFolders', data);
 
   res.status(200).send(appResponse(null, data, true, {
