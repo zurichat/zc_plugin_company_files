@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -41,19 +42,16 @@ const index = () => {
     );
 
   return (
-    <div className="w-full px-10 flex-auto">
-      <div className="top flex justify-between">
-        <h2 className="text-2xl md:text-[20px]">Files</h2>
-
-        <a href="/" className="text-gray-400 hover:text-green-400">
-          View All
-        </a>
+    <div className="w-full py-10">
+      <div className="w-full flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-gray-900">Files</h2>
+        <Link to="./" className="text-green-500 text-lg font-semibold hover:text-green-600" >View All</Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box w-full py-5 flex flex-wrap">
+        <div className="project-box w-full py-5 flex flex-wrap justify-between -mx-2">
           {data.data.length > 0 ? (
-            data.data.slice(0, 30).map((file) => {
+            data.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}

@@ -12,7 +12,7 @@ const Accordion = ({ data }) => {
     const accId = `${data.id}`;
 
     // assigning unique IDs to chevrons-down icon to ensure only the chevron-down icon for the targeted accordion is rotated when clicked
-    
+
     const imgId = `img${data.id}`;
     const toggle = () => {
         const ans = document.getElementById(accId);
@@ -21,7 +21,6 @@ const Accordion = ({ data }) => {
         ans.classList.toggle('hide')
         img.classList.toggle('chevronIcon')
     }
-    console.log(data.icon)
     return (
         <div className="w-full border border-gray-300 rounded my-3">
             <div className="w-full text-lg flex justify-between cursor-pointer font-semibold border-gray-300 py-1 px-2" onClick={toggle}>
