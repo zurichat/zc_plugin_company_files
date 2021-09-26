@@ -42,13 +42,12 @@ const Main = () => {
             {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
             </Route> */}
-            <Route path="/files" exact>
+            {/* <Route path="/files" exact>
               <Files />
             </Route>
             <Route path="/test" exact>
               <Test />
-            </Route>
-          </Route> */}
+            </Route> */}
             <Route path="/files" exact>
               <Files />
             </Route>
