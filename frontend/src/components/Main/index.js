@@ -10,6 +10,7 @@ import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
 {/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
+import Collaborators from "../Collaborators/Collaborators";
 
 const Main = () => {
   return (
@@ -40,6 +41,9 @@ const Main = () => {
           </Route>
           <Route path="/trashapp" exact>
             <TrashApp />
+          </Route>
+          <Route path="/collaborators" exact>
+            <Collaborators />
           </Route>
         </Switch>
       </div>

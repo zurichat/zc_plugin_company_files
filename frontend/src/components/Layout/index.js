@@ -9,6 +9,7 @@ const Layout = ({ children }) => {
       <div>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />
+        <script src="/frontend/src/components/Collaborators/PermissionSelector.js"></script>
       </div>
 
       {/* <Sidebar /> */}
