@@ -23,9 +23,10 @@ const { NotFoundError } = require('./backend/utils/appError');
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
-app.use(cropFileUpload({ useTempFiles: true }));
+app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS', preflightContinue: false, optionsSuccessStatus: 204 })); // Work in Jesus' name!
+// app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE'})); // Work in Jesus' name!
+app.use(cors()); // Work in Jesus' name!
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
