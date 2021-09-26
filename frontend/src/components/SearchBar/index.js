@@ -265,7 +265,7 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
   return (
     <div
       {...{
-        className: `container flex items-center justify-between py-3 px-6  ${customClass}`,
+        className: `container flex items-center justify-between py-3  ${customClass}`,
         ...restProps,
       }}
     >
