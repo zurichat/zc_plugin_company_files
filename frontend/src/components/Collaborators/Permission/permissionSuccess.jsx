@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import close from "../Collabimages/default.svg";
+import close from "../CollabImages/default.svg";
 
 const permissionSuccess = () => {
   const [showNotification, setShowNotification] = useState(true);
