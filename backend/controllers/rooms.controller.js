@@ -59,14 +59,14 @@ exports.editRoom = async (req, res) => {
 exports.getAllRooms = async (req, res) => {
   const allRooms = await Rooms.fetchAll();
 
-  allRooms.forEach(room => (room.memberCount = room.members.length));
+  allRooms.forEach(room => (room.memberCount = room.length));
 
   // response = await RealTime.publish('allRooms', response);
 
   res.status(200).send(appResponse('All rooms', allRooms, true));
 };
 
-exports.getOne = async (req, res) => {
+exports.getOneRoom = async (req, res) => {
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
