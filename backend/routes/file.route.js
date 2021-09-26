@@ -52,7 +52,7 @@ router.get("/type/:type", getFileByType);
 router.get("/read/:id", fileDetails);
 
 // Renames file
-router.post("/rename/:id", fileRename);
+router.put('/rename/:id', fileRename);
 
 // GET ARCHIVED FILES
 router.get("/archive", getArchivedFiles);
@@ -87,8 +87,8 @@ router.delete("/deleteFile/:id", fileDelete);
 // DELETE MULTIPLE FILES
 router.post("/deleteMultipleFiles", deleteMultipleFiles);
 
-//  TEMPORARILY DELETE FILES TO BIN
-router.put("/deleteToBin/:id", deleteTemporarily);
+// TEMPORARILY DELETE FILES TO BIN
+router.put('/deleteToBin/:id', deleteTemporarily);
 
 // RESTORE FILE FROM BIN
 router.put("/restoreFile/:id", restoreFile);

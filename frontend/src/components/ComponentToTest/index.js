@@ -1,35 +1,20 @@
 // import Button from "../Button";
 import React, { useEffect, useState } from "react";
-
-// import Centrifuge from "centrifuge";
-import axios from "axios";
-
-// const centrifuge = new Centrifuge("ws://localhost:8000/connection/websocket");
-// const centrifuge = new Centrifuge(
-//   "wss://realtime.zuri.chat/connection/websocket"
-// );
-
-// axios.get("http://localhost:5500/api/v1/files/all");
-// centrifuge.on("connect", (data) => {
-//   axios.get("https://companyfiles.zuri.chat/api/v1/files/all");
-//   console.log(data);
-// });
-
-// centrifuge.on("disconnect", (data) => {
-//   console.log(data);
-// });
+import RealTime from "../../helpers/realtime.helper";
 
 const ComponentToTest = () => {
   const [allFiles, setAllFiles] = useState([]);
 
   const fetchData = () => {
-    // centrifuge.connect();
-    // centrifuge.subscribe("allFiles", (response) => setAllFiles(response.data));
+    RealTime.subscribe('allFiles', 'files/all', 
+      (data) => setAllFiles(data)
+    )
   };
 
   useEffect(() => {
     fetchData();
-  }, [allFiles.data]);
+    console.log(allFiles)
+  }, [allFiles]);
 
   // const deleteFile = async (fileId) => {
   //   const deleted = await axios.delete(`http://localhost:5500/api/v1/files/deleteFile/${fileId}`);
@@ -40,29 +25,7 @@ const ComponentToTest = () => {
       className="list-files"
       style={{ display: "flex", flexDirection: "row" }}
     >
-      {allFiles?.data?.map((file, index) => {
-        if (file.url.endsWith(".mp4") || file.url.endsWith(".3gp")) {
-          return (
-            <div style={{ marginBottom: ".2rem" }} key={index}>
-              <video
-                alt={file.fileName}
-                src={file.url}
-                style={{ width: 200 }}
-                controls
-              >
-                <source src={file.url}></source>
-              </video>
-              <p>{file.fileName}</p>
-            </div>
-          );
-        }
-        return (
-          <div style={{ marginBottom: ".2rem" }} key={index}>
-            <img alt={file.fileName} src={file.url} style={{ width: 200 }} />
-            <p>{file.fileName}</p>
-          </div>
-        );
-      })}
+      hello
     </div>
   );
 };
