@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -19,12 +18,12 @@ function useFetch(url, del, res, empty) {
         return res.json();
       })
       .then((data) => {
-        if (isEmpty(data.data)) {
+        if (isEmpty(data)) {
           setData([]);
           setisLoading(false);
           return;
         } else {
-          setData(data.data);
+          setData(data);
           setError(null);
           setisLoading(false);
         }
