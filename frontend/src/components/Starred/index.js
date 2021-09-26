@@ -41,7 +41,7 @@ const index = () => {
   useEffect(() => {
     fetchData();
     console.log(starredFiles)
-  }, [starredFiles.data]);
+  }, [starredFiles]);
 
   const [isModal, setIsModal] = useState(false);
   const [showFileIdx, setShowFileIdx] = useState(false);

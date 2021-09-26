@@ -7,14 +7,14 @@ const ComponentToTest = () => {
 
   const fetchData = () => {
     RealTime.subscribe('allFiles', 'files/all', 
-      (response) => setAllFiles(response.data)
+      (data) => setAllFiles(data)
     )
   };
 
   useEffect(() => {
     fetchData();
     console.log(allFiles)
-  }, [allFiles.data]);
+  }, [allFiles]);
 
   // const deleteFile = async (fileId) => {
   //   const deleted = await axios.delete(`http://localhost:5500/api/v1/files/deleteFile/${fileId}`);

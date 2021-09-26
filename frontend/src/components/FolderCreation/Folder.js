@@ -13,7 +13,7 @@ function Folder() {
   useEffect(() => {
     async function fetchFolder() {
       try {
-        let response = await fetch(`${API_BASE_URL}/folders/read`);
+        let response = await fetch(`${API_BASE_URL}/folders/all`);
         let { data } = await response.json();
         // data = data.slice(data.length - 4, data.length);
         // console.log(data);

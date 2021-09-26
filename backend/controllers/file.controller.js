@@ -167,7 +167,7 @@ exports.cropImage = async (req, res) => {
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
   const data = await File.fetchAll();
-  
+
   // setTimeout( async () => {
   //   await axios.get('http://localhost:5500/api/v1/files/all');
   // }, (1000 * 30));
@@ -199,6 +199,7 @@ exports.fileDetails = async (req, res) => {
   await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
+
 }
 
 
@@ -212,19 +213,20 @@ exports.fileUpdate = async (req, res) => {
   const { data: [updatedFile] } = await File.fetchOne({ _id: fileId });
   await RealTime.publish('fileUpdate', data);
 
+  // const updatedFile = await File.fetchOne({ _id: fileId });
+
   res.status(200).send(appResponse('File details updated!', updatedFile, true));
 }
 
-// delete permanently
+
+// Delete permanently
 exports.fileDelete = async (req, res) => {
+  const data = await File.fetchOne({ '_id': req.params.id });
 
-  const response = undefined;
-  const { data } = await File.fetchOne({ '_id': req.params.id });
-  const deleted = await MediaUpload.deleteFromCloudinary(data.cloudinaryId)
-
-  if (deleted === "ok" || deleted === "Ok" || deleted === "OK") {
-    response = await File.delete(req.params.id);
-  }
+  const [response] = await Promise.all([
+    File.delete(req.params.id),
+    MediaUpload.deleteFromCloudinary(data.cloudinaryId)
+  ]);
   
   if (!response) throw new InternalServerError();
 
@@ -277,6 +279,7 @@ exports.getFilesWithSameFolderId = async (req, res) => {
 
   res.status(200).send(appResponse(null, matchingFolderId, true));
 };
+
 
 // Restore file
 exports.restoreFile = async (req, res) => {
@@ -332,6 +335,7 @@ exports.searchByDate = async (req, res) => {
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
+
   const allFiles = await File.fetchAll();
   if (!allFiles) throw new InternalServerError();
 
@@ -362,35 +366,8 @@ exports.getAllDeletedFiles = async (req, res) => {
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {
-  try {
-    const { md5Hash } = req.body;
-    const { data } = await File.fetchAll();
-    let fileExists = false;
-    // loop through response object and check if md5Hash value exist
-    data.forEach(fileObject => {
-      if (fileObject.md5Hash === md5Hash) fileExists = true;
-    });
-
-    if (fileExists) {
-      return res
-        .status(200)
-        .json({ status: 200, message: 'This is a duplicate file', duplicate: fileExists, });
-    } else {
-      return res
-        .status(200)
-        .json({ status: 200, message: 'This is a new file', duplicate: fileExists, });
-    }
-  } catch (error) {
-    res.status(500).json(error);
-  }
-}
-
-// get all duplicate files
-exports.getAllDuplicates = async (req, res) => {
-
   const { md5Hash } = req.body;
   const allFiles = await File.fetchAll();
-
   if (!allFiles) throw new InternalServerError();
 
   const [fileExists] = allFiles.filter(file => file.md5Hash === md5Hash);
