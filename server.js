@@ -18,10 +18,12 @@ const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 
+
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
+app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS', preflightContinue: false, optionsSuccessStatus: 204 })); // Work in Jesus' name!
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
@@ -36,10 +38,8 @@ app.get('/zuri-root-config.js', (req, res) => {
 });
 
 if (isProduction) {
-  app.use(cors({ origin: ['*'] }));
   app.set('trust proxy', 1); // Trust first proxy
 } else {
-  app.use(cors());
   app.use(require('morgan')('dev')); // Dev logging middleware
 }
 
