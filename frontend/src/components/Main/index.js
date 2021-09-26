@@ -9,6 +9,8 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
+import Help from '../Help/index';
+{/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
 const Main = () => {
   return (
@@ -22,9 +24,9 @@ const Main = () => {
           <Route path="/" exact>
             <Home/>
           </Route>
-          <Route path="/add-new" exact>
+          {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
-          </Route>
+          </Route> */}
           <Route path="/files" exact>
             <Files />
           </Route>
@@ -39,6 +41,9 @@ const Main = () => {
           </Route>
           <Route path="/trashapp" exact>
             <TrashApp />
+          </Route>
+          <Route path="/help" exact>
+            <Help />
           </Route>
         </Switch>
       </div>
