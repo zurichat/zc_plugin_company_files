@@ -14,7 +14,7 @@ const API_URL = window.location.hostname.includes("localhost")
 
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
-  
+
   if (error)
     return (
       <div className="text-3xl flex items-center justify-center text-red-600">
@@ -30,12 +30,20 @@ const index = () => {
     );
 
   return (
-    <div className="w-full p-10 ">
-      <h2 className=" mb-8 text-xl ">Folders</h2>
+    <div className="w-full p-10">
+      <h2 className=" mb-8 text-xl">Folders</h2>
       <div className="flex flex-wrap justify-between">
-        {data.data.slice(0, 4).map((folder) => (
-          <FolderComponent key={folder.id} folder={folder} />
-        ))}
+        {data.data.length ? (
+          data.data
+            .slice(0, 4)
+            .map((folder) => (
+              <FolderComponent key={folder.folderId} folder={folder} />
+            ))
+        ) : (
+          <div className="text-3xl flex items-center justify-center">
+            No Folders
+          </div>
+        )}
       </div>
     </div>
   );

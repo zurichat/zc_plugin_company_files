@@ -10,7 +10,6 @@ function Folder({ folder }) {
   const [openStatus, setOpenStatus] = useState(false);
 
   function openMenu() {
-    console.log("open menu");
     setOpenStatus(!openStatus);
   }
 
