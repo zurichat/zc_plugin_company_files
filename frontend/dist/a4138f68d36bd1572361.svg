@@ -1,0 +1,13 @@
+<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10.8333 2.16663H4.99992C4.07944 2.16663 3.33325 2.91282 3.33325 3.83329V17.1666C3.33325 18.0871 4.07944 18.8333 4.99992 18.8333H14.9999C15.9204 18.8333 16.6666 18.0871 16.6666 17.1666V7.99996L10.8333 2.16663Z" stroke="#00B87C" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="5.49927" y="11.0003" width="8.49452" height="4.89138" stroke="#00B87C"/>
+<line x1="5.27148" y1="12.1102" x2="14.0938" y2="12.1102" stroke="#00B87C" stroke-width="0.5"/>
+<line x1="5.27148" y1="15.8168" x2="14.0938" y2="15.8168" stroke="#00B87C"/>
+<line x1="8.48682" y1="10.5" x2="8.48682" y2="16.3914" stroke="#00B87C"/>
+<line x1="5.51147" y1="10.5" x2="5.51148" y2="16.3914" stroke="#00B87C"/>
+<line x1="11.4622" y1="10.5" x2="11.4622" y2="16.3914" stroke="#00B87C"/>
+<line x1="14.4399" y1="10.5" x2="14.4399" y2="16.3914" stroke="#00B87C"/>
+<line x1="5.31226" y1="13.429" x2="14.1345" y2="13.429" stroke="#00B87C" stroke-width="0.5"/>
+<line x1="5.35034" y1="14.748" x2="14.1726" y2="14.748" stroke="#00B87C" stroke-width="0.5"/>
+<path d="M10.8333 2.16663V7.99996H16.6666" stroke="#00B87C" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
