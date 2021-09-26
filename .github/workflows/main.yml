@@ -19,6 +19,6 @@ jobs:
             git pull origin dev
             npm run install-setup
             npm run build:npm
-            pm2 restart server.js
+            pm2 restart 0
             
  
