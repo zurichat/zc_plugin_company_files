@@ -167,7 +167,11 @@ exports.cropImage = async (req, res) => {
 
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
-  const data = await File.fetchAll();
+  let data = await File.fetchAll();
+
+  data = data.sort((a, b) =>{
+    return new Date(b.dateAdded) - new Date(a.dateAdded);
+  });
 
   // setTimeout( async () => {
   //   await axios.get('http://localhost:5500/api/v1/files/all');
