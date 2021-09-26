@@ -22,6 +22,12 @@ class InternalServerError extends AppError {
 	}
 }
 
+class BadGatewayError extends AppError {
+	constructor(message = 'The server encountered a temporary error & could not complete your request', statusCode = 502) {
+		super(message, statusCode);
+	}
+}
+
 class UnAuthorizedError extends AppError {
 	constructor(message = 'Not authorized', statusCode = 401) {
 		super(message, statusCode);
@@ -61,6 +67,7 @@ class DuplicateError extends AppError {
 module.exports = {
 	BadRequestError,
 	InternalServerError,
+  BadGatewayError,
 	UnAuthorizedError,
 	ForbiddenError,
 	ExpectationFailedError,
