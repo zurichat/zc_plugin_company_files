@@ -86,7 +86,6 @@ exports.deleteRoom = async (req, res) => {
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
   const { userId } = req.body;
-
   if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
     throw new BadRequestError('Invalid user id. Enter a valid object id!');
   }
