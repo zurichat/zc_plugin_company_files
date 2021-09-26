@@ -12,7 +12,7 @@
     "build:local-npm": "npm run build:npm && cd root-config && node generateDevTestFile",
     "client:dev": "concurrently \"yarn start --prefix root-config\" \"yarn start --prefix frontend\"",
     "dev": "nodemon .",
-    "install-setup": "yarn install && cd frontend && yarn install",
+    "install-setup": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "install-setup:npm": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "yarn lint:backend -- --fix",
