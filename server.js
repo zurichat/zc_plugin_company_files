@@ -20,11 +20,11 @@ const ErrorHandler = require('./backend/middlewares/errorHandler');
 
 app.use(cors());
 
+app.use(cors({ origin: ['*'] }));
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use(cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE', preflightContinue: false, optionsSuccessStatus: 204 }));
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
