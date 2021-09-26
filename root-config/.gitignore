@@ -71,3 +71,4 @@ typings/
 *.sln
 *.sw?
 .DS_Store
+dist

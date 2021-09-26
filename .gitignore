@@ -104,3 +104,7 @@ frontend/yarn.lock
 # FuseBox cache
 
 .fusebox/
+
+
+./frontend/dist
+./root-config/dist

@@ -1,5 +1,4 @@
 import List from "./TrashList";
-import { useState } from "react";
 
 function TrashHead({
   error,
@@ -55,8 +54,6 @@ function TrashHead({
         </p>
       </div>
       <List
-        // fileDel={fileDel}
-        // restore={restore}
         setFileDel={setFileDel}
         setRestore={setRestore}
         data={data}
