@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Vertical from "../../../public/Icons/more-vertical/active.svg";
+import FileMenu from "./FileMenu";
 import Vid from "../../../public/Icons/video.svg";
 import VideoPreview from "../VideoPreview/Index";
 
 function Video({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
-  const handlePreview = (e) => {
+
+  const handleContextMenu = (e) => {
     e.preventDefault();
     if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
-      console.log("right click");
-      console.log("clicked");
       setOpenStatus(true);
+    } else if (e.type === "click") {
+      setOpenStatus(false);
     }
   };
 
@@ -19,8 +20,8 @@ function Video({ file }) {
     <>
       <div
         className="flex"
-        onClick={(e) => handlePreview(e)}
-        onContextMenu={(e) => handlePreview(e)}
+        onClick={(e) => handleContextMenu(e)}
+        onContextMenu={(e) => handleContextMenu(e)}
       >
         <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
           <img src={Vid} alt="Video icon" className="" />
@@ -32,7 +33,10 @@ function Video({ file }) {
           </span>
         </div>
       </div>
-      {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />}
+      {/* {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />} */}
+      {openStatus && (
+        <FileMenu file={file} setOpenStatus={setOpenStatus} type={"video"} />
+      )}
     </>
   );
 }

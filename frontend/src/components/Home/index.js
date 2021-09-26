@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
-import Folder from "./Folder";
+import Folder from "./Folder/index";
 import Files from "./Files/index";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
 import FileOptions from "../FileUpload/FileOptions";

@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
 const {
   fileUpload,
@@ -9,7 +9,7 @@ const {
   fileDetails,
   fileDelete,
   deleteMultipleFiles,
-  getNonDeletedFiles,
+  // getNonDeletedFiles,
   deleteTemporarily,
   restoreFile,
   getAllFiles,
@@ -17,86 +17,86 @@ const {
   getArchivedFiles,
   searchByDate,
   searchStarredFiles,
-  searchFileByIsDeleted,
+  // searchFileByIsDeleted,
   getAllDeletedFiles,
   isDuplicate,
-  getAllDuplicates,
   setEditPermission,
   searchBySize,
   searchByType,
+  getFilesWithSameFolderId,
   cropImage
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
-router.post('/uploadRequest', fileUploadRequest);
+router.post("/uploadRequest", fileUploadRequest);
 
 // FILE UPLOAD STATUS
-router.get('/uploadStatus', fileUploadStatus);
+router.get("/uploadStatus", fileUploadStatus);
 
 // UPLOAD A NEW FILE/FILES
-router.post('/upload', fileUpload);
+router.post("/upload", fileUpload);
 
 // CROP IMAGES
 router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
-router.get('/all', getAllFiles);
+router.get("/all", getAllFiles);
 
 // GET A SPECIFIC FILE TYPE
-router.get('/type/:type', getFileByType);
+router.get("/type/:type", getFileByType);
 
-// SEARCH FOR ALL DELETED FILES
-router.get('/searchByisDeleted', searchFileByIsDeleted);
+// SEARCH FOR ALL DELETED FILES - DELETED
+// router.get("/searchByisDeleted", searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
-router.get('/read/:id', fileDetails);
+router.get("/read/:id", fileDetails);
 
 // Renames file
-router.post('/rename/:id', fileRename);
+router.put('/rename/:id', fileRename);
 
 // GET ARCHIVED FILES
-router.get('/archive', getArchivedFiles);
+router.get("/archive", getArchivedFiles);
 
 // SEARCH FILES BY DATE ADDED
-router.get('/searchByDate', searchByDate);
+router.get("/searchByDate", searchByDate);
 
 // SEARCH STARRED FILES
-router.get('/searchStarredFiles', searchStarredFiles)
+router.get("/searchStarredFiles", searchStarredFiles);
 
 // SEARCH FILES BY SIZE
-router.get('/searchBySize/:size', searchBySize)
+router.get("/searchBySize/:size", searchBySize);
 
 // GET DELETED FILES
-router.get('/deletedFiles', getAllDeletedFiles)
+router.get("/deletedFiles", getAllDeletedFiles);
 
-// GET NON DELETED FILES
-router.get('/NonDeletedFiles', getNonDeletedFiles);
+// GET ALL THE FILES WITH THE SAME FOLDER ID
+router.get("/id/:id", getFilesWithSameFolderId);
+
+// GET NON DELETED FILES - DELETED
+// router.get("/NonDeletedFiles", getNonDeletedFiles);
 
 // CHECK IF FILE IS A DUPLICATE
-router.post('/isDuplicate', isDuplicate);
-
-// GET DUPLICATE FILES
-router.get('/duplicateFiles', getAllDuplicates);
+router.post("/isDuplicate", isDuplicate);
 
 // EDIT FILE
-router.put('/write/:id', fileUpdate)
+router.put("/write/:id", fileUpdate);
 
 // DELETE SINGLE FILE
-router.delete('/deleteFile/:id', fileDelete);  
+router.delete("/deleteFile/:id", fileDelete);
 
 // DELETE MULTIPLE FILES
-router.post('/deleteMultipleFiles', deleteMultipleFiles);
+router.post("/deleteMultipleFiles", deleteMultipleFiles);
 
-//  TEMPORARILY DELETE FILES TO BIN
+// TEMPORARILY DELETE FILES TO BIN
 router.put('/deleteToBin/:id', deleteTemporarily);
 
 // RESTORE FILE FROM BIN
-router.put('/restoreFile/:id', restoreFile);
+router.put("/restoreFile/:id", restoreFile);
 
 // SET EDIT PERMISSION
-router.get('/setEdit/:admin', setEditPermission)
+router.get("/setEdit/:admin", setEditPermission);
 
 // SEARCH FILES BY FILE TYPE
-router.get('/searchByType', searchByType);
+router.get("/searchByType", searchByType);
 
 module.exports = router;

@@ -10,11 +10,26 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
-import Help from '../Help/index';
-{/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
+import Activities from "../Activities/Activities";
+import AddNewDoc from "../AddNewDoc/AddNewDoc";
+
+import Test from "../ComponentToTest";
+
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../Error/ErrorFallback";
+
+import Help from "../Help/index";
+import Collaborators from "../Collaborators/Collaborators";
+
 
 const Main = () => {
   return (
+  <ErrorBoundary
+  FallbackComponent={ErrorFallback}
+  onReset={() => {
+    // reset the state of your app so the error doesn't happen again
+  }}
+  >
     <Router basename="/">
       <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
         <SearchBar />
@@ -29,8 +44,17 @@ const Main = () => {
           {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
           </Route> */}
+          <Route path="/add-new" exact>
+            <AddNewDoc />
+          </Route>
+          <Route path="/activities" exact>
+            <Activities />
+          </Route>
           <Route path="/files" exact>
             <Files />
+          </Route>
+          <Route path="/test" exact>
+            <Test />
           </Route>
           <Route path="/starred" exact>
             <Starred />
@@ -47,9 +71,13 @@ const Main = () => {
           <Route path="/help" exact>
             <Help />
           </Route>
+          <Route path="/collaborators" exact>
+            <Collaborators />
+          </Route>
         </Switch>
       </div>
     </Router>
+    </ErrorBoundary>
   );
 };
 
