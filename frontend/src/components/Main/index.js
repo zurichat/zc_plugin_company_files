@@ -9,10 +9,10 @@ import Home from "../Home";
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
+import Activities from "../Activities/Activities";
+import AddNewDoc from "../AddNewDoc/AddNewDoc";
 
 import Test from "../ComponentToTest";
-import Help from '../Help/index';
-{/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../Error/ErrorFallback";
@@ -39,15 +39,18 @@ const Main = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            {/* <Route path="/add-new" exact>
-            <AddNewTextDoc />
-            </Route> */}
-            {/* <Route path="/files" exact>
+            <Route path="/add-new" exact>
+              <AddNewDoc />
+            </Route>
+            <Route path="/activities" exact>
+              <Activities />
+            </Route>
+            <Route path="/files" exact>
               <Files />
             </Route>
             <Route path="/test" exact>
               <Test />
-            </Route> */}
+            </Route>
             <Route path="/files" exact>
               <Files />
             </Route>
