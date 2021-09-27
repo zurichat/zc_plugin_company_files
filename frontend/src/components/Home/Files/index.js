@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -23,10 +23,7 @@ const API_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:5500/api/v1"
   : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
-  const { data, error } = useSWR(
-    `${API_URL}/files/all`,
-    fetcher
-  );
+  const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
 
   if (error)
     return (
@@ -45,7 +42,12 @@ const index = () => {
     <div className="w-full py-10">
       <div className="w-full flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-900">Files</h2>
-        <Link to="./" className="text-green-500 text-lg font-semibold hover:text-green-600" >View All</Link>
+        <Link
+          to="/files-all"
+          className="text-green-500 text-lg font-semibold hover:text-green-600"
+        >
+          View All
+        </Link>
       </div>
 
       <div className="project-box-wrapper">

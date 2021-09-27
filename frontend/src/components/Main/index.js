@@ -38,7 +38,7 @@ const Main = () => {
         {/* <ComponentToTest /> */}
 
         <Switch>
-          <Route path="/" exact>
+          <Route path="/companyfiles" exact>
             <Home/>
           </Route>
           {/* <Route path="/add-new" exact>

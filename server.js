@@ -33,6 +33,7 @@ app.use((req, res, next) => {
   if (allowedOrigins.includes(origin)) {
       res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
   }
+  next();
 });
 
 
