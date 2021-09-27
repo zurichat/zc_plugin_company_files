@@ -108,6 +108,7 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
         // Send (file) info to FE using Centrifugo
+        await RealTime.publish('newFile', file);
 
         // normal response without data.
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
