@@ -1,7 +1,7 @@
 require('colors');
 require('dotenv').config();
 require('express-async-errors');
-require('newrelic');
+// require('newrelic');
 
 const path = require('path');
 const cors = require('cors');
