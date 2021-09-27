@@ -17,13 +17,16 @@ const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
+const { NotFoundError } = require('./backend/utils/appError');
+
 
 
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
-app.use(cropFileUpload({ useTempFiles: true }));
+app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE,OPTIONS', preflightContinue: false, optionsSuccessStatus: 204 })); // Work in Jesus' name!
+// app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE'})); // Work in Jesus' name!
+app.use(cors()); // Work in Jesus' name!
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
@@ -46,6 +49,10 @@ if (isProduction) {
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 
+// Handle resource not found error on backend
+app.use('/api/*', (req,res,next)=>{
+  next(new NotFoundError);
+})
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
   isProduction
@@ -76,3 +83,5 @@ if (cluster.isMaster) {
     server.close(() => process.exit(1));
   });
 }
+
+module.exports = app;

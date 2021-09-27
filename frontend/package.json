@@ -95,6 +95,7 @@
     "react-range": "^1.8.11",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "reuse-react-snackbar": "^0.1.20",
     "single-spa-react": "^4.3.1",
     "swr": "^1.0.1",
     "web-vitals": "^1.0.1"
