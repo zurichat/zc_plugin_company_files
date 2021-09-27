@@ -29,8 +29,8 @@ function TrashList({
   const { width } = useViewport();
   const breakpoint = 768;
 
-  //Truncate the length of fetched names
-  const truncateName = () => {
+  //Truncate the length of fetched file names
+  const handleTruncateName = () => {
     let str = data.map((data) => data.fileName.trim());
 
     return str.map((text) => {
@@ -39,14 +39,14 @@ function TrashList({
   };
 
   //Reformat fetched file deleted dates.
-  const newDate = () => {
+  const handleNewDate = () => {
     return data
       .map((date) => date.dateAdded.split("T")[0])
       .map((e) => e.split("-").join("/"));
   };
 
-  //Reformat fetched size
-  const formatSize = (bytes, decimals = 2) => {
+  //Reformat fetched file size
+  const handleFormatSize = (bytes, decimals = 2) => {
     if (bytes === 0) {
       return "0 Bytes";
     }
@@ -109,7 +109,7 @@ function TrashList({
             </p>
           </div>
         ) : null}
-        {!isEmpty(data) && data && !isLoading && !isGrid && (
+        {!isEmpty(data) && !error && !isLoading && !isGrid && (
           <table className='w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate borderSpace tableHide'>
             <thead className='text-left content-box'>
               <tr>
@@ -146,7 +146,7 @@ function TrashList({
                       alt='File icon'
                       className='inline-block'
                     />{" "}
-                    {truncateName()[index]}
+                    {handleTruncateName()[index]}
                   </td>
                   <td className='hidden md:block'></td>
                   <td className='hidden md:block'></td>
@@ -154,7 +154,7 @@ function TrashList({
                   <td></td>
                   <td className='block md:hidden'></td>
                   <td className='py-2 text-xs relative hidden md:block'>
-                    {newDate()[index]}
+                    {handleNewDate()[index]}
 
                     {/* Menu buttons for big screen */}
                     <div
@@ -176,7 +176,7 @@ function TrashList({
                   <td></td>
                   <td></td>
                   <td className='py-2 text-xs relative'>
-                    {formatSize(data.size)}
+                    {handleFormatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
 
@@ -204,8 +204,8 @@ function TrashList({
           <TrashGridView
             fileIcon={fileIcon}
             data={data}
-            truncateName={truncateName}
-            newDate={newDate}
+            truncateName={handleTruncateName}
+            newDate={handleNewDate}
             menuRef={menu}
             handleClick={handleClick}
             Buttons={Buttons}

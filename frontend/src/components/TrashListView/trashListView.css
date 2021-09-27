@@ -11,10 +11,6 @@
   empty-cells: show;
 }
 
-.font {
-  font-family: "Lato", sans-serif;
-}
-
 .light--Green,
 .focus__lightGreen:active {
   background-color: #f0fbf8;

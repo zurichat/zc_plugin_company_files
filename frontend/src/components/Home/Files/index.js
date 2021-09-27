@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom'
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -17,12 +18,13 @@ async function fetcher(url) {
   const res = await axios.get(url);
   return res.data;
 }
-const API_URL = window.location.hostname.includes("zuri.chat")
-  ? "https://companyfiles.zuri.chat/api/v1"
-  : "http://localhost:5500/api/v1";
+
+const API_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5500/api/v1"
+  : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
   const { data, error } = useSWR(
-    "https://companyfiles.zuri.chat/api/v1/files/nonDeletedFiles",
+    `${API_URL}/files/all`,
     fetcher
   );
 
@@ -40,53 +42,79 @@ const index = () => {
     );
 
   return (
-    <div className="w-full px-10 flex-auto">
-      <div className="top flex justify-between">
-        <h2 className="text-2xl md:text-[20px]">Files</h2>
-
-        <a href="/" className="text-gray-400 hover:text-green-400">
-          View All
-        </a>
+    <div className="w-full py-10">
+      <div className="w-full flex justify-between items-center">
+        <h2 className="text-lg font-semibold text-gray-900">Files</h2>
+        <Link to="./" className="text-green-500 text-lg font-semibold hover:text-green-600" >View All</Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box w-full py-5 flex flex-wrap">
-          {data.data.slice(0, 30).map((file, index) => {
-            return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Image file={file} />
-              </div>
-            ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Pdf file={file} />
-              </div>
-            ) : new RegExp("\\b" + "zip" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Zip file={file} />
-              </div>
-            ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Excel file={file} />
-              </div>
-            ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Document file={file} />
-              </div>
-            ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Powerpoint file={file} />
-              </div>
-            ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Audio file={file} />
-              </div>
-            ) : (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Video file={file} />
-              </div>
-            );
-          })}
-
+        <div className="project-box w-full py-5 flex flex-wrap justify-between -mx-2">
+          {data.data.length > 0 ? (
+            data.data.slice(0, 15).map((file) => {
+              return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Image file={file} />
+                </div>
+              ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Pdf file={file} />
+                </div>
+              ) : new RegExp("\\b" + "zip" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Zip file={file} />
+                </div>
+              ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Excel file={file} />
+                </div>
+              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Document file={file} />
+                </div>
+              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Powerpoint file={file} />
+                </div>
+              ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Audio file={file} />
+                </div>
+              ) : (
+                <div
+                  key={file._id}
+                  className="file flex items-center mr-0 my-5 relative"
+                >
+                  <Video file={file} />
+                </div>
+              );
+            })
+          ) : (
+            <div className="text-3xl flex items-center justify-center">
+              No Files
+            </div>
+          )}
         </div>
       </div>
     </div>
