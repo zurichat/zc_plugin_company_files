@@ -27,22 +27,23 @@ app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
 
+const whitelist = ['https://zuri.chat', 'https://www.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
+const corsOptions = {
+  origin(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
+
+
 if (isProduction) {
-  app.use(cors({ origin: ['*'] }));
   app.set('trust proxy', 1); // Trust first proxy
 } else {
   app.use(require('morgan')('dev')); // Dev logging middleware
-  const whitelist = ['https://zuri.chat', 'https://www.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
-  const corsOptions = {
-    origin(origin, callback) {
-      if (whitelist.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  };
-  app.use(cors(corsOptions));
 }
 
 
@@ -63,9 +64,10 @@ app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 
 // Handle resource not found error on backend
-app.use('/api/*', (req,res,next)=>{
+app.use('/api/*', (req,res,next) => {
   next(new NotFoundError);
 })
+
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
   isProduction
