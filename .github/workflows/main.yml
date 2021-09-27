@@ -20,8 +20,7 @@ jobs:
             git reset --hard origin/dev
             git checkout dev
             git pull origin dev
-            npm run install-setup
-            npm run build:npm
+            yarn build
             pm2 restart 0
             
  

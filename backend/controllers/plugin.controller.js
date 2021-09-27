@@ -64,7 +64,7 @@ exports.sidebar = async (req, res) => {
     public_rooms: [{
       room_name: 'Company Files',
       room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
-      room_url: 'https://www.zuri.chat/companyfiles'
+      room_url: '/companyfiles'
     }, ...data]
   }
 
