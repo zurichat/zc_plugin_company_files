@@ -2,6 +2,10 @@ class UploadFiles {
     constructor (files, options) {
       this.fileRequests = new WeakMap()
 
+      
+const API_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5500/api/v1"
+  : "https://companyfiles.zuri.chat/api/v1";
       // this.endpoints = {
       //   UPLOAD: 'http://127.0.0.1:5500/api/v1/files/upload',
       //   UPLOAD_STATUS: 'http://127.0.0.1:5500/api/v1/files/uploadStatus',
@@ -9,9 +13,9 @@ class UploadFiles {
       // }
   
       this.endpoints = {
-        UPLOAD: 'https://companyfiles.zuri.chat/api/v1/files/upload',
-        UPLOAD_STATUS: 'https://companyfiles.zuri.chat/api/v1/files/uploadStatus',
-        UPLOAD_REQUEST: 'https://companyfiles.zuri.chat/api/v1/files/uploadRequest'
+        UPLOAD: `${API_URL}/files/upload`,
+        UPLOAD_STATUS: `${API_URL}/files/uploadStatus`,
+        UPLOAD_REQUEST: `${API_URL}/files/uploadRequest`
       }
   
       this.defaultOptions = {

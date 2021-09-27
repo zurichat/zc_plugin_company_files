@@ -4,6 +4,7 @@ import RealTime from "../../helpers/realtime.helper";
 
 const ComponentToTest = () => {
   const [allFiles, setAllFiles] = useState([]);
+  const [newFile, setNewFile] = useState({});
 
   const fetchData = () => {
     RealTime.subscribe('allFiles', 'files/all', 
@@ -11,10 +12,20 @@ const ComponentToTest = () => {
     )
   };
 
+  const fetchNewData = () =>{
+    RealTime.subscribe('newFile',"",(data) => setNewFile(data));
+  }
+
+
   useEffect(() => {
     fetchData();
-    console.log(allFiles)
+    console.log(allFiles);
   }, [allFiles]);
+
+  useEffect(() => {
+    fetchNewData();
+    console.log(newFile);
+  }, [newFile]);
 
   // const deleteFile = async (fileId) => {
   //   const deleted = await axios.delete(`http://localhost:5500/api/v1/files/deleteFile/${fileId}`);

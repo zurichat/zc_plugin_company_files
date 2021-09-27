@@ -59,14 +59,14 @@ exports.editRoom = async (req, res) => {
 exports.getAllRooms = async (req, res) => {
   const allRooms = await Rooms.fetchAll();
 
-  allRooms.forEach(room => (room.memberCount = room.members.length));
+  allRooms.forEach(room => (room.memberCount = room.length));
 
   // response = await RealTime.publish('allRooms', response);
 
   res.status(200).send(appResponse('All rooms', allRooms, true));
 };
 
-exports.getOne = async (req, res) => {
+exports.getOneRoom = async (req, res) => {
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
@@ -86,7 +86,6 @@ exports.deleteRoom = async (req, res) => {
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
   const { userId } = req.body;
-
   if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
     throw new BadRequestError('Invalid user id. Enter a valid object id!');
   }

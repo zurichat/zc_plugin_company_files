@@ -18,7 +18,11 @@
     "lint:backend:fix": "yarn lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
-    "test": "jest --testTimeout=10000 --detectOpenHandles"
+    "test": "jest --testTimeout=10000 --detectOpenHandles",
+    "test:debug": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --verbose",
+    "test:watch": "cross-env NODE_ENV=test jest --watch --verbose",
+    "test:cover": "cross-env NODE_ENV=test jest --coverage",
+    "test:ci": "cross-env NODE_ENV=test jest --coverage --verbose && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "testEnvironment": "node",
@@ -59,6 +63,7 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
