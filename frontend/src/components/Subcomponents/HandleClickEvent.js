@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export function InfoBox(props) {
+export function HandleClickEvent(props) {
   let ref = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -11,16 +11,18 @@ export function InfoBox(props) {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener("contextmenu", handleClickOutside, true);
     return () => {
       document.removeEventListener("click", handleClickOutside, true);
-    };
+      document.removeEventListener("contextMenu", handleClickOutside, true);
+    }
   });
 
   if (!props.show) return null;
 
   return (
-    <div ref={ref} className="info-box">
-      {props.message}
+    <div ref={ref}>
+      {props.children}
     </div>
   );
 }

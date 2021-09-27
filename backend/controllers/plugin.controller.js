@@ -14,7 +14,7 @@ exports.info = (req, res) => {
 
   res.status(200).json({
     status: 'success',
-    pluginId: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
+    pluginId: PLUGIN_ID || '61518d6c9d521e488c59745f',
     pluginName,
     pluginUrl: `${baseUrl}`,
     sidebarUrl: `${baseUrl}/api/v1/sidebar`,
@@ -55,7 +55,7 @@ exports.sidebar = async (req, res) => {
   const sidebarListObject = {
     name: 'Company Files',
     description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
-    plugin_id: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
+    plugin_id: PLUGIN_ID || '61518d6c9d521e488c59745f',
     organisation_id: org,
     user_id: user,
     group_name: 'Company Files',

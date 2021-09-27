@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Aud from "../../../public/Icons/music/active.svg";
 import dayjs from "dayjs";
-import AudioPreview from "../AudioPreview/index"
+import AudioPreview from "../AudioPreview/index";
 import FileMenu from "./FileMenu";
-import { BsMusicNoteBeamed } from 'react-icons/bs'
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import { HandleClickEvent } from "./HandleClickEvent";
 
 function audio({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -12,14 +13,10 @@ function audio({ file }) {
     e.preventDefault();
     if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
       setOpenStatus(true);
-    } else if (e.type === "click" && openStatus) {
-      setOpenStatus(false)
-    }
+    } 
   };
 
   // if openStatus is true and there is a click, then make openStatus false
-
-
 
   return (
     <>
@@ -32,14 +29,18 @@ function audio({ file }) {
           <BsMusicNoteBeamed className="text-2xl text-blue-500" />
         </div>
         <div className="fileInfo sm:w-20 md:w-30 lg:w-40  overflow-hidden flex flex-col mx-3">
-          <span className="w-full truncate text-sm font-semibold">{file.fileName}</span>
+          <span className="w-full truncate text-sm font-semibold">
+            {file.fileName}
+          </span>
           <span className="text-gray-400 truncate text-sm">
             {dayjs(file.dateAdded).fromNow()}
           </span>
         </div>
       </div>
       {/* {openStatus && <AudioPreview file={file} setOpenStatus={setOpenStatus} />} */}
-      {openStatus && <FileMenu file={file} setOpenStatus={setOpenStatus} type={"audio"} />}
+      {openStatus && (
+        <FileMenu file={file} setOpenStatus={setOpenStatus} openStatus={openStatus} type={"audio"} />
+      )}
     </>
   );
 }
