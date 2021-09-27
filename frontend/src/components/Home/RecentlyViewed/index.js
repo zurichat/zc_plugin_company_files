@@ -17,7 +17,7 @@ const RecentlyViewed = () => {
         <div className="flex items-center">
           <BsArrowUpDown className="text-gray-400 text-lg mx-2 hover:text-gray-500 cursor-pointer"/>
           <BsGrid3X2 className="text-gray-400 mx-2 text-2xl hover:text-gray-500 cursor-pointer"/>
-          <button class="mx-4 py-2 px-4 bg-green-500 text-white text-sm rounded hover:bg-green-600">See Activities</button>
+          <button className="mx-4 py-2 px-4 bg-green-500 text-white text-sm rounded hover:bg-green-600">See Activities</button>
         </div>
       </div>
       

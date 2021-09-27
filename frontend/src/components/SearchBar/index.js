@@ -16,7 +16,7 @@ import searchIcon from "../../../public/Icons/search.svg";
 import { useState } from "react";
 import videoCat from "../../../public/Icons/video-cat.svg";
 
-import {AiOutlineClose} from 'react-icons/Ai'
+import {AiOutlineClose} from 'react-icons/ai/index'
 
 const SEARCH_CATEGORY_LIST = [
   {
