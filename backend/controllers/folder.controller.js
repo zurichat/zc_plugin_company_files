@@ -14,16 +14,16 @@ exports.folderCreate = async (req, res) => {
 
   const folder = await FolderSchema.validateAsync(body);
   const createdFolder = await Folders.create(folder);
-  const { data } = createdFolder;
+  const data = createdFolder;
   const createdFolderObject = await Folders.fetchOne({ _id: data?.object_id });
 
   res.status(201).json(createdFolderObject);
 };
 
 exports.getAllFolders = async (req, res) => {
-  const { data } = await Folders.fetchAll();
-  const response = await RealTime.publish('all_folders', data);
-
+  const  data  = await Folders.fetchAll();
+  const response = await RealTime.publish('allFolders', data);
+ 
   res.status(200).send(appResponse(null, data, true, {
       ...response,
       count: data.length,
@@ -32,7 +32,7 @@ exports.getAllFolders = async (req, res) => {
 
 exports.folderDetails = async (req, res) => {
   const { id } = req.params;
-  const { data } = await Folders.fetchOne({ _id: id });
+  const  data  = await Folders.fetchOne({ _id: id });
 
   if (data === null) {
     throw new NotFoundError();

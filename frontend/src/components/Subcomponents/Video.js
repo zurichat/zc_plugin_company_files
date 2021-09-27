@@ -1,38 +1,43 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import Vertical from "../../../public/Icons/more-vertical/active.svg";
+import FileMenu from "./FileMenu";
 import Vid from "../../../public/Icons/video.svg";
 import VideoPreview from "../VideoPreview/Index";
+import {RiVideoLine} from 'react-icons/ri'
 
 function Video({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
-  const handlePreview = (e) => {
+
+  const handleContextMenu = (e) => {
     e.preventDefault();
     if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
-      console.log("right click");
-      console.log("clicked");
       setOpenStatus(true);
+    } else if (e.type === "click") {
+      setOpenStatus(false);
     }
   };
 
   return (
     <>
       <div
-        className="flex"
-        onClick={(e) => handlePreview(e)}
-        onContextMenu={(e) => handlePreview(e)}
+        className="flex  items-center w-52 mx-2"
+        onClick={(e) => handleContextMenu(e)}
+        onContextMenu={(e) => handleContextMenu(e)}
       >
-        <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
-          <img src={Vid} alt="Video icon" className="" />
+        <div className="fileIcon w-14 h-12 flex justify-center items-center bg-green-100 rounded-md">
+          <RiVideoLine className="text-3xl text-green-500" />
         </div>
-        <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-          <span className="w-full truncate text-[14px]">{file.fileName}</span>
-          <span className="text-gray-400 truncate text-[13px]">
+        <div className="fileInfo sm:w-20 md:w-30 lg:w-40 overflow-hidden flex flex-col mx-3">
+          <span className="w-full truncate text-sm font-semibold">{file.fileName}</span>
+          <span className="text-gray-400 truncate text-sm">
             {dayjs(file.dateAdded).fromNow()}
           </span>
         </div>
       </div>
-      {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />}
+      {/* {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />} */}
+      {openStatus && (
+        <FileMenu file={file} setOpenStatus={setOpenStatus} type={"video"} />
+      )}
     </>
   );
 }

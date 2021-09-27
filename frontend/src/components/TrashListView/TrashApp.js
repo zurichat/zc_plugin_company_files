@@ -1,4 +1,4 @@
-import Trash from "./TrashHead";
+import TrashHead from "./TrashHead";
 import "./trashListView.css";
 import { useState } from "react";
 import useFetch from "./useFetch";
@@ -19,7 +19,7 @@ function TrashApp() {
     isLoading,
     error,
   } = useFetch(
-    `${API_BASE_URL}/files/deletedFiLes`,
+    `${API_BASE_URL}/files/deletedFiles`,
     restore,
     fileDel,
     emptyTrash
@@ -27,9 +27,7 @@ function TrashApp() {
 
   return (
     <div className='TrashApp h-full w-full'>
-      <Trash
-        // fileDel={fileDel}
-        // restore={restore}
+      <TrashHead
         setFileDel={setFileDel}
         setRestore={setRestore}
         setEmptyTrash={setEmptyTrash}

@@ -15,10 +15,13 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/zc_plugin_company_files
-            git restore .
-            git pull
+            git stash
+            git fetch --all
+            git reset --hard origin/dev
+            git checkout dev
+            git pull origin dev
             npm run install-setup
-            npm run build
-            pm2 restart server.js
+            npm run build:npm
+            pm2 restart 0
             
  
