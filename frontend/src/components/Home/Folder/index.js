@@ -1,14 +1,5 @@
 import React from "react";
-// import { Link } from 'react-router-dom'
-// import folderYellow from "../../../../public/Icons/folder/yellow.svg";
-// import options from "../../../../public/Icons/more-vertical/active.svg";
-// import user2 from "../../../../public/Icons/folder-user2.svg";
-// import user from "../../../../public/Icons/folder-user.svg";
-// import addUser from "../../../../public/Icons/plus/active.svg";
-// import folderUsers from "../../../../public/Icons/folderUsers.png";
-
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
 import FolderComponent from "./Folder";
@@ -43,7 +34,12 @@ const index = () => {
     <div className="w-full py-10 ">
       <div className="w-full flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
-        <Link to="./" className="text-green-500 text-lg font-semibold hover:text-green-600" >View All</Link>
+        <Link
+          to="/folders"
+          className="text-green-500 text-lg font-semibold hover:text-green-600"
+        >
+          View All
+        </Link>
       </div>
       <div className="flex flex-wrap justify-between">
         {data.data.length ? (
@@ -57,10 +53,8 @@ const index = () => {
             No Folders
           </div>
         )}
-
-        
-            </div>
-        </div>
+      </div>
+    </div>
   );
 };
 

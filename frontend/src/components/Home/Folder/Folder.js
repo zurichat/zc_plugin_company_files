@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import folderYellow from "../../../../public/Icons/folder/yellow.svg";
 import options from "../../../../public/Icons/more-vertical/active.svg";
-import user2 from "../../../../public/Icons/folder-user2.svg";
-import user from "../../../../public/Icons/folder-user.svg";
-import addUser from "../../../../public/Icons/plus/active.svg";
 import FolderMenu from "../../Subcomponents/FolderMenu";
-import folderUsers from "../../../../public/Icons/folderUsers.png"
+import folderUsers from "../../../../public/Icons/folderUsers.png";
 
 function Folder({ folder }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -27,17 +24,29 @@ function Folder({ folder }) {
         </div>
         <div className="card text-sm w-full flex flex-col justify-between items-center text-[13px]">
           <div className="w-full">
-            <span className="block font-semibold truncate">{folder.folderName}</span>
+            <span className="block font-semibold truncate">
+              {folder.folderName}
+            </span>
           </div>
 
           <div className="icons mt-1 w-full flex items-start justify-between">
-              <span className="block text-gray-400">140 Files</span>
-              <div className="avi w-16 cursor-pointer">
-                <img src={folderUsers} alt="folder user" className="-mr-4 w-full" />
-              </div>
+            <span className="block text-gray-400">140 Files</span>
+            <div className="avi w-16 cursor-pointer">
+              <img
+                src={folderUsers}
+                alt="folder user"
+                className="-mr-4 w-full"
+              />
             </div>
+          </div>
         </div>
-        {openStatus && <FolderMenu folder={folder} />}
+        {openStatus && (
+          <FolderMenu
+            folder={folder}
+            openStatus={openStatus}
+            setOpenStatus={setOpenStatus}
+          />
+        )}
       </div>
     </>
   );

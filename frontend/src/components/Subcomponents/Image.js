@@ -3,7 +3,8 @@ import dayjs from "dayjs";
 import FileMenu from "./FileMenu";
 import Img from "../../../public/Icons/imgfile.svg";
 import ImagePreview from "../ImagePreview/index";
-import { BsCardImage } from 'react-icons/bs'
+import { BsCardImage } from "react-icons/bs";
+import { HandleClickEvent } from "./HandleClickEvent";
 
 function Image({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -12,8 +13,6 @@ function Image({ file }) {
     e.preventDefault();
     if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
       setOpenStatus(true);
-    } else if (e.type === "click") {
-      setOpenStatus(false);
     }
   };
 
@@ -28,7 +27,9 @@ function Image({ file }) {
           <BsCardImage className="text-2xl text-red-500" />
         </div>
         <div className="fileInfo sm:w-20 md:w-30 lg:w-40 overflow-hidden flex flex-col mx-3">
-          <span className="w-full truncate text-sm font-semibold">{file.fileName}</span>
+          <span className="w-full truncate text-sm font-semibold">
+            {file.fileName}
+          </span>
           <span className="text-gray-400 truncate text-sm">
             {dayjs(file.dateAdded).fromNow()}
           </span>
@@ -36,7 +37,7 @@ function Image({ file }) {
       </div>
       {/* {openStatus && <ImagePreview file={file} setOpenStatus={setOpenStatus} />} */}
       {openStatus && (
-        <FileMenu file={file} setOpenStatus={setOpenStatus} type={"image"} />
+        <FileMenu file={file} setOpenStatus={setOpenStatus} openStatus={openStatus} type={"image"} />
       )}
     </>
   );
