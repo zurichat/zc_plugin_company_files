@@ -20,7 +20,7 @@ const ErrorHandler = require('./backend/middlewares/errorHandler');
 const { NotFoundError } = require('./backend/utils/appError');
 
 
-
+app.use(cors());
 app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
