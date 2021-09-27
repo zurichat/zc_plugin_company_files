@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
 import {
   HiOutlineFolderRemove,
@@ -22,7 +23,7 @@ import PdfPreview from "../Preview/PdfPreview";
 import PptPreview from "../Preview/PdfPreview";
 import ExcelPreview from "../Preview/ExcelPreview";
 
-function FileMenu({ file, setOpenStatus, type }) {
+function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
   function previewCmd() {
@@ -53,92 +54,102 @@ function FileMenu({ file, setOpenStatus, type }) {
 
   return (
     <>
-      <div className="bg-white py-3 w-60 absolute left-5 z-20">
-        <FileMenuButton name="Preview" cmd={previewCmd}>
-          <AiOutlineEye
-            className="mr-3 flex self-center text-xl"
-            title="preview"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Get link" cmd={getLink}>
-          <HiOutlineLink
-            className="mr-3 flex self-center text-xl"
-            title="link"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Download" cmd={download}>
-          <BsDownload
-            className="mr-3 flex self-center text-xl"
-            title="download"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Share" cmd={share}>
-          <HiOutlineShare
-            className="mr-3 flex self-center text-xl"
-            title="share"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Select" cmd={select}>
-          <BsCheckBox className="mr-3 flex self-center text-xl" title="selct" />
-        </FileMenuButton>
-        <FileMenuButton name="Copy" cmd={copy}>
-          <FiCopy className="mr-3 flex self-center text-xl" title="copy" />
-        </FileMenuButton>
-        <FileMenuButton name="Cut" cmd={cut}>
-          <GrCut className="mr-3 flex self-center text-xl" title="cut" />
-        </FileMenuButton>
-        <FileMenuButton name="Move to" cmd={moveTo}>
-          <HiOutlineFolderRemove
-            className="mr-3 flex self-center text-xl"
-            title="move"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Add to starred" cmd={addStar}>
-          <AiOutlineStar
-            className="mr-3 flex self-center text-xl"
-            title="star"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Rename" cmd={rename}>
-          <AiOutlineEdit
-            className="mr-3 flex self-center text-xl"
-            title="title"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Properties" cmd={properties}>
-          <RiErrorWarningLine
-            className="mr-3 flex self-center text-xl"
-            title="properties"
-          />
-        </FileMenuButton>
-        <FileMenuButton name="Delete" cmd={deleteCmd}>
-          <RiDeleteBinLine
-            className="mr-3 flex self-center text-xl"
-            title="delete"
-          />
-        </FileMenuButton>
-      </div>
-      {openPreview ? (
-        type === "audio" ? (
-          <AudioPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "video" ? (
-          <VideoPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "image" ? (
-          <ImagePreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "pdf" ? (
-          <PdfPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "word" ? (
-          <DocumentPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "powerpoint" ? (
-          <PptPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : type === "excel" ? (
-          <ExcelPreview file={file} setOpenStatus={setOpenStatus} />
-        ) : (
-          <div>
-            <p>Can't preview this file</p>
-          </div>
-        )
-      ) : null}
+      <HandleClickEvent
+        show={openStatus}
+        onClickOutside={() => {
+          setOpenStatus(false);
+        }}
+      >
+        <div className="bg-white py-3 w-60 absolute left-5 z-20">
+          <FileMenuButton name="Preview" cmd={previewCmd}>
+            <AiOutlineEye
+              className="mr-3 flex self-center text-xl"
+              title="preview"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Get link" cmd={getLink}>
+            <HiOutlineLink
+              className="mr-3 flex self-center text-xl"
+              title="link"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Download" cmd={download}>
+            <BsDownload
+              className="mr-3 flex self-center text-xl"
+              title="download"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Share" cmd={share}>
+            <HiOutlineShare
+              className="mr-3 flex self-center text-xl"
+              title="share"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Select" cmd={select}>
+            <BsCheckBox
+              className="mr-3 flex self-center text-xl"
+              title="selct"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Copy" cmd={copy}>
+            <FiCopy className="mr-3 flex self-center text-xl" title="copy" />
+          </FileMenuButton>
+          <FileMenuButton name="Cut" cmd={cut}>
+            <GrCut className="mr-3 flex self-center text-xl" title="cut" />
+          </FileMenuButton>
+          <FileMenuButton name="Move to" cmd={moveTo}>
+            <HiOutlineFolderRemove
+              className="mr-3 flex self-center text-xl"
+              title="move"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Add to starred" cmd={addStar}>
+            <AiOutlineStar
+              className="mr-3 flex self-center text-xl"
+              title="star"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Rename" cmd={rename}>
+            <AiOutlineEdit
+              className="mr-3 flex self-center text-xl"
+              title="title"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Properties" cmd={properties}>
+            <RiErrorWarningLine
+              className="mr-3 flex self-center text-xl"
+              title="properties"
+            />
+          </FileMenuButton>
+          <FileMenuButton name="Delete" cmd={deleteCmd}>
+            <RiDeleteBinLine
+              className="mr-3 flex self-center text-xl"
+              title="delete"
+            />
+          </FileMenuButton>
+        </div>
+        {openPreview ? (
+          type === "audio" ? (
+            <AudioPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "video" ? (
+            <VideoPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "image" ? (
+            <ImagePreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "pdf" ? (
+            <PdfPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "word" ? (
+            <DocumentPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "powerpoint" ? (
+            <PptPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "excel" ? (
+            <ExcelPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : (
+            <div>
+              <p>Can't preview this file</p>
+            </div>
+          )
+        ) : null}
+      </HandleClickEvent>
     </>
   );
 }

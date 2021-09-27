@@ -14,7 +14,7 @@ exports.info = (req, res) => {
 
   res.status(200).json({
     status: 'success',
-    pluginId: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
+    pluginId: PLUGIN_ID || '61518d6c9d521e488c59745f',
     pluginName,
     pluginUrl: `${baseUrl}`,
     sidebarUrl: `${baseUrl}/api/v1/sidebar`,
@@ -55,16 +55,20 @@ exports.sidebar = async (req, res) => {
   const sidebarListObject = {
     name: 'Company Files',
     description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
-    plugin_id: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
+    plugin_id: PLUGIN_ID || '61518d6c9d521e488c59745f',
     organisation_id: org,
     user_id: user,
     group_name: 'Company Files',
     show_group: true,
-    joined_rooms: [],
+    joined_rooms: [{
+      room_name: 'All Company Files',
+      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
+      room_url: '/companyfiles'
+    }],
     public_rooms: [{
       room_name: 'Company Files',
       room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
-      room_url: 'https://www.zuri.chat/companyfiles'
+      room_url: '/companyfiles'
     }, ...data]
   }
 

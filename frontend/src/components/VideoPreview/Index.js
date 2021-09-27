@@ -6,11 +6,9 @@ import Vertical from "../../../public/Icons/more-vertical/active.svg";
 import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
 import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
-import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
-import { useHistory } from "react-router";
+import ZoomOut from "../../../public/Icons/zoom-out/active.svg";
 
 function index({ file, setOpenStatus }) {
-  const history = useHistory();
 
   return (
     <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 fixed z-30 top-0 left-0 bottom-0 right-0">

@@ -3,7 +3,8 @@ import dayjs from "dayjs";
 import FileMenu from "./FileMenu";
 import Vid from "../../../public/Icons/video.svg";
 import VideoPreview from "../VideoPreview/Index";
-import {RiVideoLine} from 'react-icons/ri'
+import { RiVideoLine } from "react-icons/ri";
+import { HandleClickEvent } from "./HandleClickEvent";
 
 function Video({ file }) {
   const [openStatus, setOpenStatus] = useState(false);
@@ -12,8 +13,6 @@ function Video({ file }) {
     e.preventDefault();
     if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
       setOpenStatus(true);
-    } else if (e.type === "click") {
-      setOpenStatus(false);
     }
   };
 
@@ -28,7 +27,9 @@ function Video({ file }) {
           <RiVideoLine className="text-3xl text-green-500" />
         </div>
         <div className="fileInfo sm:w-20 md:w-30 lg:w-40 overflow-hidden flex flex-col mx-3">
-          <span className="w-full truncate text-sm font-semibold">{file.fileName}</span>
+          <span className="w-full truncate text-sm font-semibold">
+            {file.fileName}
+          </span>
           <span className="text-gray-400 truncate text-sm">
             {dayjs(file.dateAdded).fromNow()}
           </span>
@@ -36,7 +37,7 @@ function Video({ file }) {
       </div>
       {/* {openStatus && <VideoPreview file={file} setOpenStatus={setOpenStatus} />} */}
       {openStatus && (
-        <FileMenu file={file} setOpenStatus={setOpenStatus} type={"video"} />
+        <FileMenu file={file} setOpenStatus={setOpenStatus} openStatus={openStatus} type={"video"} />
       )}
     </>
   );

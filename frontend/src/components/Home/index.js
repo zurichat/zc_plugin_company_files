@@ -1,20 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder/index";
 import Files from "./Files/index";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
 import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
+import RealTime from "../../helpers/realtime.helper";
+
 
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+import SnackBar from "reuse-react-snackbar";
 
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
+  const [newFile, setNewFile] = useState({ data: {} });
+
   // let progress = useRef(false)
+
+  useLayoutEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("newFile", "", (data) => setNewFile(data));
+    };
+    fetchNewData();
+    console.log(newFile);
+  }, [newFile]);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -49,7 +62,9 @@ const Index = () => {
 
   return (
     <div
-      className={(upload ? " overflow-y-hidden" : "") + " w-full py-4 px-10 z-auto"}
+      className={
+        (upload ? " overflow-y-hidden" : "") + " w-full py-4 px-10 z-auto"
+      }
     >
       <button
         onClick={showOptions}
@@ -57,6 +72,7 @@ const Index = () => {
       >
         Add File
       </button>
+
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
@@ -69,6 +85,27 @@ const Index = () => {
           hideUploadModal={hideUploadModal}
           showProgressModal={showProgressModal}
           hideProgressModal={hideProgressModal}
+        />
+      )}
+      {Object.keys(newFile.data).length && (
+        <SnackBar
+          message={newFile.data.fileName + " added successfully"}
+          mode="SUCCESS"
+          open={true}
+          timeout={10000}
+          style={{
+            textStyle: {
+              color: "white",
+            },
+            buttonStyle: {
+              backgroundColor: "white",
+              color: "black",
+            },
+            containerStyle: {
+              background: "grey",
+              boxShadow: "black 6px 7px 12px -4px",
+            },
+          }}
         />
       )}
     </div>

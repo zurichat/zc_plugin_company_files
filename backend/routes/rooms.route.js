@@ -2,6 +2,7 @@ const router = require('express').Router();
 const {
   createRoom,
   getAllRooms,
+  getOneRoom,
   deleteRoom,
   addToRoom,
   removeFromRoom,
@@ -14,7 +15,7 @@ const {
 router.get('/all', getAllRooms);
 
 // GET A ROOM
-// router.get('/:roomId', getRoom);
+router.get('/:roomId',getOneRoom);
 
 // CREATE A NEW ROOM
 router.post('/create', createRoom);
