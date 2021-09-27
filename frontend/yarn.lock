@@ -11574,6 +11574,11 @@ retry@^0.13.1:
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.13.1.tgz#185b1587acf67919d63b357349e03537b2484658"
   integrity sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==
 
+reuse-react-snackbar@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/reuse-react-snackbar/-/reuse-react-snackbar-0.1.20.tgz#8b4ca8dd1e107adb0e43abb7eca941cbaaef2c7a"
+  integrity sha512-SfcMg9bGwXMFRTGi/0TbYMMC2tpYhIN1pFpjkAIZCLq3x5qIET2eqbvluRJbqSa9vd+MJ2VAJ2YJMSt3FSFFgw==
+
 reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
