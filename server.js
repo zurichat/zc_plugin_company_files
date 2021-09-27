@@ -32,7 +32,7 @@ if (isProduction) {
   app.set('trust proxy', 1); // Trust first proxy
 } else {
   app.use(require('morgan')('dev')); // Dev logging middleware
-  const whitelist = ['https://zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
+  const whitelist = ['https://zuri.chat', 'https://www.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
   const corsOptions = {
     origin(origin, callback) {
       if (whitelist.indexOf(origin) !== -1 || !origin) {
