@@ -60,7 +60,11 @@ exports.sidebar = async (req, res) => {
     user_id: user,
     group_name: 'Company Files',
     show_group: true,
-    joined_rooms: [],
+    joined_rooms: [{
+      room_name: 'All Company Files',
+      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
+      room_url: '/companyfiles'
+    }],
     public_rooms: [{
       room_name: 'Company Files',
       room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
