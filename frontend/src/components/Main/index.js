@@ -8,6 +8,7 @@ import Home from "../Home";
 
 import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
+import PdfPreview from "../PdfPreview/Index";
 import Starred from "../Starred/index";
 {/* import AddNewTextDoc from "../AddNewTextDoc/AddNewTextDoc" */}
 
@@ -40,6 +41,9 @@ const Main = () => {
           </Route>
           <Route path="/trashapp" exact>
             <TrashApp />
+          </Route>
+          <Route path="/pdfpreview" exact>
+            <PdfPreview />
           </Route>
         </Switch>
       </div>

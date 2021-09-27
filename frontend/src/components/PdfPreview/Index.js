@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 
 
 
-function Index({ file, setOpenStatus }) {
+function PdfPreview({ file, setOpenStatus }) {
   const history = useHistory();
 
   pdfjs.GlobalWorkerOptions.workerSrc = 
@@ -92,4 +92,4 @@ function Index({ file, setOpenStatus }) {
   );
 }
 
-export default Index;
+export default PdfPreview;
