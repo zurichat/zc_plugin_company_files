@@ -25,8 +25,26 @@ app.use(compression()); // Node.js compression middleware
 app.use(express.json()); // For parsing application/json
 app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
-// app.use(cors({ origin: ['*'], methods: 'GET,PUT,PATCH,POST,DELETE'})); // Work in Jesus' name!
-app.use(cors()); // Work in Jesus' name!
+
+
+if (isProduction) {
+  app.use(cors({ origin: ['*'] }));
+  app.set('trust proxy', 1); // Trust first proxy
+} else {
+  app.use(require('morgan')('dev')); // Dev logging middleware
+  const whitelist = ['https://zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
+  const corsOptions = {
+    origin(origin, callback) {
+      if (whitelist.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  };
+  app.use(cors(corsOptions));
+}
+
 
 // To serve frontend build files
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
@@ -40,11 +58,6 @@ app.get('/zuri-root-config.js', (req, res) => {
   res.sendFile(path.join(__dirname, 'root-config/dist/zuri-root-config.js'));
 });
 
-if (isProduction) {
-  app.set('trust proxy', 1); // Trust first proxy
-} else {
-  app.use(require('morgan')('dev')); // Dev logging middleware
-}
 
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
