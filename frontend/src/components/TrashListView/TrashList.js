@@ -5,6 +5,7 @@ import fileIcon from "./file-icon.png";
 import bin from "./bin 1.png";
 import Modal from "./Modal";
 import Loader from "./Loader";
+import TrashGridView from "./TrashGridView";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
@@ -15,6 +16,7 @@ function TrashList({
   setData,
   setFileDel,
   setRestore,
+  isGrid,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -93,65 +95,65 @@ function TrashList({
     <>
       <div>
         {error && (
-          <div className="flex justify-center text-center mt-60 tracking-wider font-semibold itemsTrash">
+          <div className='flex justify-center text-center mt-60 tracking-wider font-semibold itemsTrash'>
             {error}
           </div>
         )}
         {isLoading && <Loader />}
         {isEmpty(data) && !isLoading && !error ? (
-          <div className="text-center flex flex-col justify-center items-center h-96">
-            <img src={bin} alt="Bin icon" />
-            <h3 className="itemsTrash font-semibold pt-2">No items</h3>
-            <p className="itemsTrash pt-2">
+          <div className='text-center flex flex-col justify-center items-center h-96'>
+            <img src={bin} alt='Bin icon' />
+            <h3 className='itemsTrash font-semibold pt-2'>No items</h3>
+            <p className='itemsTrash pt-2'>
               items moved to the trash will appear here
             </p>
           </div>
         ) : null}
-        {!isEmpty(data) && data && !isLoading ? (
-          <table className="w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate     borderSpace tableHide">
-            <thead className="text-left content-box">
+        {!isEmpty(data) && data && !isLoading && !isGrid && (
+          <table className='w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate borderSpace tableHide'>
+            <thead className='text-left content-box'>
               <tr>
-                <th className="font-semibold trashTheading">Name</th>
-                <th className="hidden md:block"></th>
-                <th className="hidden md:block"></th>
+                <th className='font-semibold trashTheading'>Name</th>
+                <th className='hidden md:block'></th>
+                <th className='hidden md:block'></th>
                 <th></th>
                 <th></th>
-                <th className="block md:hidden"></th>
-                <th className="font-semibold trashTheading whitespace-nowrap hidden md:block">
+                <th className='block md:hidden'></th>
+                <th className='font-semibold trashTheading whitespace-nowrap hidden md:block'>
                   Date Deleted
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th className="font-semibold trashTheading whitespace-nowrap pr-3 sm:pr-0">
-                  <span className="hidden sm:inline">File </span>Size
+                <th className='font-semibold trashTheading whitespace-nowrap pr-3 sm:pr-0'>
+                  <span className='hidden sm:inline'>File </span>Size
                 </th>
               </tr>
             </thead>
-            <tbody className="itemsTrash">
+            <tbody className='itemsTrash'>
               {data.map((data, index) => (
                 <tr
                   key={data._id}
                   onClick={() => handleClick(index, data._id)}
-                  className="lightGrayHover cursor-pointer hover:bg-gray-100"
+                  className='lightGrayHover cursor-pointer hover:bg-gray-100'
                 >
                   <td
-                    className="
-                      py-2 whitespace-nowrap text-sm lowercase"
+                    className='
+                      py-2 whitespace-nowrap text-sm lowercase'
                   >
                     <img
                       src={fileIcon}
-                      alt="File icon"
-                      className="inline-block"
+                      alt='File icon'
+                      className='inline-block'
                     />{" "}
                     {truncateName()[index]}
                   </td>
-                  <td className="hidden md:block"></td>
-                  <td className="hidden md:block"></td>
+                  <td className='hidden md:block'></td>
+                  <td className='hidden md:block'></td>
                   <td></td>
                   <td></td>
-                  <td className="block md:hidden"></td>
-                  <td className="py-2 text-xs relative hidden md:block">
+                  <td className='block md:hidden'></td>
+                  <td className='py-2 text-xs relative hidden md:block'>
                     {newDate()[index]}
 
                     {/* Menu buttons for big screen */}
@@ -162,7 +164,7 @@ function TrashList({
                           ? [...menu.current, el]
                           : [el])
                       }
-                      className="absolute top-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none"
+                      className='absolute top-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none'
                     >
                       <Buttons
                         setShowModal={setShowModal}
@@ -173,7 +175,7 @@ function TrashList({
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="py-2 text-xs relative">
+                  <td className='py-2 text-xs relative'>
                     {formatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
@@ -183,7 +185,7 @@ function TrashList({
                       <div
                         //assign the created reference to each array item
                         ref={(el) => (menu.current[index] = el)}
-                        className="absolute top-0 right-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none"
+                        className='absolute top-0 right-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none'
                       >
                         <Buttons
                           setShowModal={setShowModal}
@@ -196,7 +198,21 @@ function TrashList({
               ))}
             </tbody>
           </table>
-        ) : null}
+        )}
+        {/* Show grid view if isGrid is true */}
+        {!isEmpty(data) && data && !isLoading && isGrid && (
+          <TrashGridView
+            fileIcon={fileIcon}
+            data={data}
+            truncateName={truncateName}
+            newDate={newDate}
+            menuRef={menu}
+            handleClick={handleClick}
+            Buttons={Buttons}
+            setShowModal={setShowModal}
+            setDeleteModal={setDeleteModal}
+          />
+        )}
       </div>
       <Modal
         setShowModal={setShowModal}
