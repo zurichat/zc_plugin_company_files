@@ -5,16 +5,16 @@ import ZipImg from "../../../public/Icons/zip.svg";
 function Zip({ file }) {
   return (
     <>
-      <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
-        <img src={ZipImg} alt="" className="w-7" />
+      <div className="fileIcon tw-w-14 tw-h-14 tw-flex tw-justify-around tw-bg-red-100 tw-rounded-md">
+        <img src={ZipImg} alt="" className="tw-w-7" />
       </div>
-      <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-        <span className="w-full truncate text-[14px] font-semibold">{file.fileName}</span>
-        <span className="text-gray-400 truncate text-[13px]">
+      <div className="fileInfo sm:tw-w-20 md:tw-w-30 lg:tw-w-40 tw-flex tw-flex-col tw-mx-3">
+        <span className="tw-w-full tw-truncate tw-text-[14px] tw-font-semibold">{file.fileName}</span>
+        <span className="ttw-ext-gray-400 tw-truncate tw-text-[13px]">
           {dayjs(file.dateAdded).fromNow()}
         </span>
       </div>
-      <div className="options self-start mx-3">
+      <div className="options tw-self-start tw-mx-3">
         <img src="/Icons/more-vertical/active.svg" alt="" />
       </div>
     </>

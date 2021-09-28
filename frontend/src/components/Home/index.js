@@ -63,12 +63,12 @@ const Index = () => {
   return (
     <div
       className={
-        (upload ? " overflow-y-hidden" : "") + " w-full py-4 px-10 z-auto"
+        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-py-4 tw-px-10 tw-z-auto"
       }
     >
       <button
         onClick={showOptions}
-        className="mt-4 px-3 py-2 text-sm text-green-500 border rounded border-green-500 hover:text-white hover:bg-green-500 outline-none"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
       >
         Add File
       </button>

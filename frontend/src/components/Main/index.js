@@ -32,7 +32,11 @@ const Main = () => {
   }}
   >
     <Router basename="/companyfiles">
+<<<<<<< HEAD
       <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
+=======
+      <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center tw-overflow-y-auto ">
+>>>>>>> f9692f3c702031d4e2d313413703dfd0328c2463
         <SearchBar />
         <Header />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
@@ -72,10 +76,10 @@ const Main = () => {
           <Route path="/trashapp" exact>
             <TrashApp />
           </Route>
-          <Route path="/help" exact>
+          <Route path="/help/" exact>
             <Help />
           </Route>
-          <Route path="/collaborators" exact>
+          <Route path="/collaborators/" exact>
             <Collaborators />
           </Route>
         </Switch>

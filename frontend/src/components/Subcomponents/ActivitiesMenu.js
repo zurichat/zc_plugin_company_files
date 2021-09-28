@@ -9,22 +9,22 @@ function ActivitiesMenu() {
   function deleteCmd() {}
   return (
     <>
-      <div className="bg-white py-3 w-52 absolute left-20 z-20">
+      <div className="tw-bg-white tw-py-3 tw-w-52 tw-absolute tw-left-20 tw-z-20">
         <ActivitiesMenuButton name="Pin" cmd={pin}>
           <RiPushpinLine
-            className="mr-3 flex self-center text-xl"
+            className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
             title="pin"
           />
         </ActivitiesMenuButton>
         <ActivitiesMenuButton name="Mark as read" cmd={markRead}>
           <MdPlaylistAddCheck
-            className="mr-3 flex self-center text-xl"
+            className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
             title="mark"
           />
         </ActivitiesMenuButton>
         <ActivitiesMenuButton name="Delete" cmd={deleteCmd}>
           <RiDeleteBinLine
-            className="mr-3 flex self-center text-xl"
+            className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
             title="delete"
           />
         </ActivitiesMenuButton>

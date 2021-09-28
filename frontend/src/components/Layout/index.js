@@ -5,7 +5,7 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="tw-flex tw-items-center tw-justify-center tw-min-h-screen">
       <div>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />
@@ -13,7 +13,7 @@ const Layout = ({ children }) => {
       </div>
 
       {/* <Sidebar /> */}
-      <main className="flex flex-start items-center justify-center w-full">
+      <main className="tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full">
         {children}
       </main>
 
