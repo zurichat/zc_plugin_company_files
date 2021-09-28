@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import CustomIcon from "../CustomIcon";
 import PropTypes from "prop-types";
 import React from "react";
@@ -21,44 +21,45 @@ import {AiOutlineClose} from 'react-icons/ai/index';
 const SEARCH_CATEGORY_LIST = [
   {
     iconLink: docCat,
-    title: "Document",
-    ext: "doc",
+    title: "Text Documents",
+    extensions: ["doc"],
   },
   {
     iconLink: pdfCat,
     bgColor: "bg-red-100",
-    title: "Pdf",
-    ext: "pdf",
+    title: "PDF files",
+    extensions: ["pdf"],
   },
   {
     iconLink: psCat,
     title: "Photoshop",
-    ext: "ps",
+    extensions: "ps",
   },
   {
     iconLink: ppCat,
     bgColor: "bg-orange",
     title: "Powerpoint",
-    ext: "pp",
+    extensions: "pp",
   },
   {
     iconLink: excelCat,
     bgColor: "bg-green-100",
-    title: "Excel",
-    ext: "xls",
+    title: "Spreadsheets",
+    extensions: ["application/vnd.ms-excel"],
   },
   {
     iconLink: videoCat,
     bgColor: "bg-red-50",
-    title: "Video",
-    ext: "mp4",
+    title: "Videos",
+    extensions: ["video/1d-interleaved-parityfec","video/3gpp","video/3gpp-tt","video/3gpp2","video/av1","video/bmpeg","video/bt656","video/celb","video/dv","video/encaprtp","video/ffv1","video/flexfec","video/h261","video/h263","video/h263-1998","video/h263-2000","video/h264","video/h264-rcdo","video/h264-svc","video/h265","video/iso.segment","video/jpeg","video/jpeg2000","video/jpm","video/jxsv","video/mj2","video/mp1s","video/mp2p","video/mp2t","video/mp4","video/mp4v-es","video/mpeg","video/mpeg4-generic","video/mpv","video/nv","video/ogg","video/parityfec","video/pointer","video/quicktime","video/raptorfec","video/raw","video/rtp-enc-aescm128","video/rtploopback","video/rtx","video/scip","video/smpte291","video/smpte292m","video/ulpfec","video/vc1","video/vc2","video/vnd.cctv","video/vnd.dece.hd","video/vnd.dece.mobile","video/vnd.dece.mp4","video/vnd.dece.pd","video/vnd.dece.sd","video/vnd.dece.video","video/vnd.directv.mpeg","video/vnd.directv.mpeg-tts","video/vnd.dlna.mpeg-tts","video/vnd.dvb.file","video/vnd.fvt","video/vnd.hns.video","video/vnd.iptvforum.1dparityfec-1010","video/vnd.iptvforum.1dparityfec-2005","video/vnd.iptvforum.2dparityfec-1010","video/vnd.iptvforum.2dparityfec-2005","video/vnd.iptvforum.ttsavc","video/vnd.iptvforum.ttsmpeg2","video/vnd.motorola.video","video/vnd.motorola.videop","video/vnd.mpegurl","video/vnd.ms-playready.media.pyv","video/vnd.nokia.interleaved-multimedia","video/vnd.nokia.mp4vr","video/vnd.nokia.videovoip","video/vnd.objectvideo","video/vnd.radgamettools.bink","video/vnd.radgamettools.smacker","video/vnd.sealed.mpeg1","video/vnd.sealed.mpeg4","video/vnd.sealed.swf","video/vnd.sealedmedia.softseal.mov","video/vnd.uvvu.mp4","video/vnd.vivo","video/vnd.youtube.yt","video/vp8","video/vp9","video/webm","video/x-f4v","video/x-fli","video/x-flv","video/x-m4v","video/x-matroska","video/x-mng","video/x-ms-asf","video/x-ms-vob","video/x-ms-wm","video/x-ms-wmv","video/x-ms-wmx","video/x-ms-wvx","video/x-msvideo","video/x-sgi-movie","video/x-smv"]
   },
   {
     iconLink: imgCat,
-    title: "Image",
-    ext: "png",
+    title: "Images",
+    extensions: ["image/aces","image/apng","image/avci","image/avcs","image/avif","image/bmp","image/cgm","image/dicom-rle","image/emf","image/fits","image/g3fax","image/gif","image/heic","image/heic-sequence","image/heif","image/heif-sequence","image/hej2k","image/hsj2","image/ief","image/jls","image/jp2","image/jpeg","image/jph","image/jphc","image/jpm","image/jpx","image/jxr","image/jxra","image/jxrs","image/jxs","image/jxsc","image/jxsi","image/jxss","image/ktx","image/ktx2","image/naplps","image/pjpeg","image/png","image/prs.btif","image/prs.pti","image/pwg-raster","image/sgi","image/svg+xml","image/t38","image/tiff","image/tiff-fx","image/vnd.adobe.photoshop","image/vnd.airzip.accelerator.azv","image/vnd.cns.inf2","image/vnd.dece.graphic","image/vnd.djvu","image/vnd.dvb.subtitle","image/vnd.dwg","image/vnd.dxf","image/vnd.fastbidsheet","image/vnd.fpx","image/vnd.fst","image/vnd.fujixerox.edmics-mmr","image/vnd.fujixerox.edmics-rlc","image/vnd.globalgraphics.pgb","image/vnd.microsoft.icon","image/vnd.mix","image/vnd.mozilla.apng","image/vnd.ms-dds","image/vnd.ms-modi","image/vnd.ms-photo","image/vnd.net-fpx","image/vnd.pco.b16","image/vnd.radiance","image/vnd.sealed.png","image/vnd.sealedmedia.softseal.gif","image/vnd.sealedmedia.softseal.jpg","image/vnd.svf","image/vnd.tencent.tap","image/vnd.valve.source.texture","image/vnd.wap.wbmp","image/vnd.xiff","image/vnd.zbrush.pcx","image/webp","image/wmf","image/x-3ds","image/x-cmu-raster","image/x-cmx","image/x-freehand","image/x-icon","image/x-jng","image/x-mrsid-image","image/x-ms-bmp","image/x-pcx","image/x-pict","image/x-portable-anymap","image/x-portable-bitmap","image/x-portable-graymap","image/x-portable-pixmap","image/x-rgb","image/x-tga","image/x-xbitmap","image/x-xcf","image/x-xpixmap","image/x-xwindowdump"]
   },
 ];
+
 const RECENT_SEARCH_ITEMS = [
   {
     name: "design101.doc",
@@ -67,11 +68,12 @@ const RECENT_SEARCH_ITEMS = [
     name: "project.xlsx",
   },
 ];
-const getCatExt = (cat) => {
+
+const getCategoryExtension = (cat) => {
   if (!cat) return null;
   return SEARCH_CATEGORY_LIST?.find(
     (elm) => cat?.toLowerCase() === elm?.title?.toLowerCase()
-  )?.ext;
+  )?.extensions;
 };
 
 const SearchResultCategory = ({ iconLink, bgColor, title, ...restProps }) => {
@@ -159,13 +161,11 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
   const [showSearchWindow, setShowSearchWindow] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [selectedCategory, selectCategory] = useState(false);
-  const fetchUrl = `https://companyfiles.zuri.chat/api/v1/search${
-    !searchInputValue
-      ? ""
-      : `/filter?filename=${searchInputValue}&filetype=${
-          getCatExt(selectedCategory || "") || "all"
-        }`
-  }`;
+  const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+    ? 'http://127.0.0.1:5500/api/v1'
+    : 'https://companyfiles.zuri.chat/api/v1';
+
+  const fetchUrl = `${API_URL}/search?fileName=${searchInputValue}&fileType=${getCategoryExtension(selectedCategory || "") || ""}`;
 
   const onChangeHandler = (e) => {
     setSearchInputValue(e?.target?.value);
@@ -181,20 +181,20 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     selectCategory(false);
   };
   const onSubmit = () => {
-    return Axios.get(fetchUrl)
-      .then((data) => console.log(`Search data`, data))
-      .catch((err) => console.log(err));
+    return axios.get(fetchUrl)
+      .then(data => console.log(`Search data`, data))
+      .catch(error => console.log(error));
   };
   const handleSubmit = (e) => {
     if (!e) e = window.event;
-    var keyCode = e.code || e.key;
+    const keyCode = e.code || e.key;
     if (keyCode == "Enter") {
       return onSubmit();
     }
   };
   SearchInput.handleClickOutside = onBlurHandler;
-  const selectCategoryHandler = (cat) => {
-    selectCategory(cat);
+  const selectCategoryHandler = (category) => {
+    selectCategory(category);
   };
   return (
     <div className="flex flex-col w-full relative">
