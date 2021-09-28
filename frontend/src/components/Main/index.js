@@ -30,15 +30,15 @@ const Main = () => {
     // reset the state of your app so the error doesn't happen again
   }}
   >
-    <Router basename="/">
-      <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
+    <Router basename="/companyfiles">
+      <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center tw-overflow-y-auto ">
         <SearchBar />
         <Header />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
         {/* <ComponentToTest /> */}
 
         <Switch>
-          <Route path="/companyfiles" exact>
+          <Route path="/" exact>
             <Home/>
           </Route>
           {/* <Route path="/add-new" exact>
@@ -68,10 +68,10 @@ const Main = () => {
           <Route path="/trashapp" exact>
             <TrashApp />
           </Route>
-          <Route path="/help" exact>
+          <Route path="/help/" exact>
             <Help />
           </Route>
-          <Route path="/collaborators" exact>
+          <Route path="/collaborators/" exact>
             <Collaborators />
           </Route>
         </Switch>

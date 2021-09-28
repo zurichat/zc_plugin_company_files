@@ -265,16 +265,16 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
   return (
     <div
       {...{
-        className: `w-full flex items-center justify-between py-3 px-10 ${customClass}`,
+        className: `tw-w-full tw-flex tw-items-center tw-justify-between tw-py-3 tw-px-10 ${customClass}`,
         ...restProps,
       }}
     >
-      <div className="flex items-center gap-4 w-full lg:w-2/3 xl:w-3/5">
-        <SearchInputWithOnclick className="flex-1" />
+      <div className="tw-flex tw-items-center tw-gap-4 tw-w-full lg:tw-w-2/3 xl:tw-w-3/5">
+        <SearchInputWithOnclick className="tw-flex-1" />
       </div>
       <CustomIcon
         {...{ src: onlineUserIcon, alt: "profile image" }}
-        className="h-10 ml-2 -mr-2 hidden md:inline-flex"
+        className="tw-h-10 tw-ml-2 -tw-mr-2 tw-hidden md:tw-inline-flex"
       />
     </div>
   );
