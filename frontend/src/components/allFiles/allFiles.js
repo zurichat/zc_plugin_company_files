@@ -1,17 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import Image from "../../Subcomponents/Image";
-import Pdf from "../../Subcomponents/Pdf";
-import Zip from "../../Subcomponents/Zip";
-import Excel from "../../Subcomponents/Excel";
-import Video from "../../Subcomponents/Video";
-import Powerpoint from "../../Subcomponents/Powerpoint";
-import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio";
+import Image from "../Subcomponents/Image";
+import Pdf from "../Subcomponents/Pdf";
+import Zip from "../Subcomponents/Zip";
+import Excel from "../Subcomponents/Excel";
+import Video from "../Subcomponents/Video";
+import Powerpoint from "../Subcomponents/Powerpoint";
+import Document from "../Subcomponents/Document";
+import Audio from "../Subcomponents//audio";
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
@@ -22,6 +21,8 @@ async function fetcher(url) {
 const API_URL = window.location.hostname.includes("localhost")
   ? "http://localhost:5500/api/v1"
   : "https://companyfiles.zuri.chat/api/v1";
+
+  
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
 
@@ -42,18 +43,12 @@ const index = () => {
     <div className="w-full py-10">
       <div className="w-full flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-900">Files</h2>
-        <Link
-          to="/allfiles"
-          className="text-green-500 text-lg font-semibold hover:text-green-600"
-        >
-          View All
-        </Link>
       </div>
 
       <div className="project-box-wrapper">
         <div className="project-box w-full py-5 flex flex-wrap justify-between -mx-2">
           {data.data.length > 0 ? (
-            data.data.slice(0, 15).map((file) => {
+            data.data.map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}

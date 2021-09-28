@@ -32,7 +32,7 @@ export const popData = [
     },
     {
         id: 'p4',
-        title: 'Can i export my files from the cloud storage?git ',
+        title: 'Can i export my files from the cloud storage?',
         answer: 'Yes, you can export your files from the cloud by using the download option',
         icon: <BsCloudUpload />
     },
