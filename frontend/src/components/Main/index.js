@@ -4,6 +4,7 @@ import Header from '../Help/Header'
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Files from "../Home/Files";
+import AllFiles from "../allFiles/index";
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
@@ -30,7 +31,7 @@ const Main = () => {
     // reset the state of your app so the error doesn't happen again
   }}
   >
-    <Router basename="/">
+    <Router basename="/companyfiles">
       <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
         <SearchBar />
         <Header />
@@ -38,7 +39,7 @@ const Main = () => {
         {/* <ComponentToTest /> */}
 
         <Switch>
-          <Route path="/companyfiles" exact>
+          <Route path="/" exact>
             <Home/>
           </Route>
           {/* <Route path="/add-new" exact>
@@ -52,6 +53,9 @@ const Main = () => {
           </Route>
           <Route path="/files" exact>
             <Files />
+          </Route>
+          <Route path="/allfiles" exact>
+            <AllFiles />
           </Route>
           <Route path="/test" exact>
             <Test />
