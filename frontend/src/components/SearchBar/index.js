@@ -22,30 +22,25 @@ const SEARCH_CATEGORY_LIST = [
   {
     iconLink: docCat,
     title: "Text Documents",
-    extensions: ["doc"],
+    extensions: ["application/msword", "application/vnd.stardivision.math", "application/vnd.lotus-organizer", "application/vnd.oasis.opendocument.text-master", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "text/troff", "application/vnd.google-apps.document", "application/msword", "application/rtf", "text/plain", "text/prs.lines.tag", "application/vnd.ms-works", "application/vnd.oasis.opendocument.text-template", "application/vnd.ms-word.document.macroenabled.12", "text/troff", "application/pgp-signature", "application/x-tex", "application/vnd.wordperfect", "text/richtext", "application/vnd.lotus-screencam", "application/pgp-signature", "application/pgp-signature", "application/vnd.ms-works", "application/vnd.apple.pages", "application/vnd.oasis.opendocument.text", "application/x-research-info-systems", "message/rfc822", "application/x-makeself", "application/vnd.ms-outlook", "application/x-mswrite", "application/fdt+xml", "application/x-latex", "application/mbox", "application/vnd.google-apps.presentation", "application/x-abiword", "text/x-nfo", "application/vnd.yamaha.smaf-audio", "text/sgml", "application/vnd.rim.cod", "application/vnd.sun.xml.writer.template", "application/x-dvi", "application/pkcs7-signature", "application/vnd.sun.xml.writer", "application/vnd.kde.kontour", "application/vnd.wordperfect", "application/dash+xml", "text/markdown", "application/gzip", "application/vnd.fdf", "application/vnd.ms-wpl", "application/vnd.wordperfect", "text/x-vcard", "application/vnd.lotus-wordpro", "application/atsc-dwd+xml", "text/x-setext", "application/mathematica", "text/vnd.graphviz", "application/vnd.stardivision.writer", "application/vnd.sun.xml.writer.global", "application/vnd.kde.kword", "application/vnd.spotfire.dxp", "application/x-pkcs12", "image/emf", "application/vnd.oasis.opendocument.presentation"]
   },
   {
     iconLink: pdfCat,
     bgColor: "bg-red-100",
-    title: "PDF files",
-    extensions: ["pdf"],
-  },
-  {
-    iconLink: psCat,
-    title: "Photoshop",
-    extensions: "ps",
+    title: "Page Layout files",
+    extensions: ["application/vnd.ms-word.template.macroenabled.12", "application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "text/mathml", "application/vnd.mif", "application/vnd.micrografx.flo", "application/x-director", "application/vnd.framemaker", "application/x-netcdf", "application/x-mspublisher", "application/vnd.frogans.ltf", "application/vnd.adobe.formscentral.fcdt", "application/vnd.hp-pcl", "application/vnd.balsamiq.bmml+xml", "application/msword", "application/vnd.ms-xpsdocument", "application/vnd.quark.quarkxpress", "application/oxps", "application/vnd.ibm.modcap", "application/vnd.framemaker", "image/vnd.ms-modi", "image/vnd.xiff", "audio/vnd.dra", "application/x-futuresplash", "application/vnd.quark.quarkxpress", "application/vnd.framemaker", "application/vnd.fujixerox.docuworks", "application/rpki-manifest", "application/vnd.quark.quarkxpress", "image/x-pict", "application/vnd.kde.kivio", "application/fdt+xml", "text/x-processing"]
   },
   {
     iconLink: ppCat,
     bgColor: "bg-orange",
-    title: "Powerpoint",
-    extensions: "pp",
+    title: "Presentations",
+    extensions: ["application/vnd.google-apps.presentation","application/vnd.ms-powerpoint.presentation.macroenabled.12","application/vnd.oasis.opendocument.presentation","application/vnd.oasis.opendocument.presentation-template","application/vnd.openxmlformats-officedocument.presentationml.presentation","application/vnd.openxmlformats-officedocument.presentationml.slide","application/vnd.openxmlformats-officedocument.presentationml.slideshow", "application/vnd.openxmlformats-officedocument.presentationml.template"]
   },
   {
     iconLink: excelCat,
     bgColor: "bg-green-100",
     title: "Spreadsheets",
-    extensions: ["application/vnd.ms-excel"],
+    extensions: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel.sheet.macroenabled.12", "application/vnd.ms-excel", "application/vnd.lotus-1-2-3", "application/x-gnumeric", "application/vnd.ms-excel.template.macroenabled.12", "application/vnd.apple.numbers", "application/mathematica", "application/vnd.ms-excel.sheet.binary.macroenabled.12", "application/vnd.sun.xml.calc", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.spreadsheet-template", "application/octet-stream", "application/vnd.accpac.simply.imp", "application/vnd.xara", "application/rdf+xml", "application/vnd.stardivision.calc", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.google-apps.spreadsheet", "application/vnd.framemaker", "application/vnd.ms-works", "application/vnd.mobius.dis", "application/vnd.novadigm.edx", "application/vnd.ms-works", "application/vnd.sun.xml.calc.template", "application/vnd.isac.fcs"]
   },
   {
     iconLink: videoCat,
