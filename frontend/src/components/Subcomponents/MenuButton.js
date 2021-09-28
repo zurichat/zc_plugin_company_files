@@ -5,7 +5,7 @@ function MenuButton({ name, children, cmd }) {
 
   return (
     <button
-      className="btn btn-outline-primary btn-block hover:bg-green-400 text-gray-500 py-2 px-6 w-full flex items-start"
+      className="tw-btn tw-btn-outline-primary tw-btn-block hover:tw-bg-green-400 tw-text-gray-500 tw-py-2 tw-px-6 tw-w-full tw-flex tw-items-start"
       onClick={() => cmd()}
     >
       {children}

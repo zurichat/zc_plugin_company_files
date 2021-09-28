@@ -13,38 +13,38 @@ import Crop from "../Image crop/index";
 function index({ file, setOpenStatus }) {
   const [showPreview, setShowPreview] = useState(false);
   return (
-    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 fixed z-30 top-0 left-0 bottom-0 right-0">
+    <div className="tw-bg-gray-800 tw-bg-opacity-70 tw-overflow-auto tw-h-full tw-w-full tw-flex-auto tw-flex tw-flex-col tw-justify-between tw-pb-6 tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bottom-0 tw-right-0">
       <Nav file={file} setOpenStatus={setOpenStatus} />
 
-      <div className="flex flex-col justify-between items-center h-3/4 w-full">
-        <div className="flex justify-between h-full w-full md:px-6 px-2">
-          <div className="flex self-center">
+      <div className="tw-flex tw-flex-col tw-justify-between tw-items-center tw-h-3/4 tw-w-full">
+        <div className="tw-flex tw-justify-between tw-h-full tw-w-full md:tw-px-6 tw-px-2">
+          <div className="tw-flex tw-self-center">
             <img
               src={LeftArrow}
               alt="left-arrow"
-              className="bg-black rounded-full md:h-14 md:w-14 w-5 h-5 p-1 md:p-3"
+              className="tw-bg-black tw-rounded-full md:tw-h-14 md:tw-w-14 tw-w-5 tw-h-5 tw-p-1 md:tw-p-3"
             />
           </div>
 
-          <div className="flex items-center justify-center">
+          <div className="tw-flex tw-items-center tw-justify-center">
             <img
               src={file.url}
               alt="image"
-              className="max-w-sm h-96 md:max-w-lg md:h-2/4 lg:max-w-lg lg:h-3/4"
+              className="tw-max-w-sm tw-h-96 md:tw-max-w-lg md:tw-h-2/4 lg:tw-max-w-lg lg:tw-h-3/4"
             />
           </div>
-          <div className="flex self-center">
+          <div className="tw-flex tw-self-center">
             <img
               src={RightArrow}
               alt="right-arrow"
-              className="bg-black rounded-full md:h-14 md:w-14 w-5 h-5 p-1 md:p-3"
+              className="tw-bg-black tw-rounded-full md:tw-h-14 md:tw-w-14 tw-w-5 tw-h-5 tw-p-1 md:tw-p-3"
             />
             <div></div>
           </div>
         </div>
-        <div className="bg-black py-3 px-7 flex justify-between mt-5">
-          <img src={ZoomIn} alt="zoom-in" className="md:w-10 w-7 mr-4" />
-          <img src={ZoomOut} alt="zoom-out" className="md:w-10 w-7" />
+        <div className="tw-bg-black tw-py-3 tw-px-7 tw-flex tw-justify-between tw-mt-5">
+          <img src={ZoomIn} alt="zoom-in" className="md:tw-w-10 tw-w-7 tw-mr-4" />
+          <img src={ZoomOut} alt="zoom-out" className="md:tw-w-10 tw-w-7" />
           <div>
             <div>
               <button

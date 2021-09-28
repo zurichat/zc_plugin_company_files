@@ -82,74 +82,74 @@ function index({ file, setOpenStatus }) {
   }, []);
 
   return (
-    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 fixed z-30 top-0 left-0 bottom-0 right-0">
+    <div className="tw-bg-gray-800 tw-bg-opacity-70 tw-overflow-auto tw-h-full tw-w-full tw-flex-auto tw-flex tw-flex-col tw-justify-between tw-pb-6 tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bottom-0 tw-right-0">
       <Nav file={file} setOpenStatus={setOpenStatus} />
-      <div className="flex flex-col justify-between items-center h-3/4 w-full">
-        <div className="flex h-full w-full md:px-6 px-2 justify-center">
-          <div className="flex w-3/5 items-center justify-center relative bg-black px-4 md:px-48">
+      <div className="tw-flex tw-flex-col tw-justify-between tw-items-center tw-h-3/4 tw-w-full">
+        <div className="tw-flex tw-h-full tw-w-full md:tw-px-6 tw-px-2 tw-justify-center">
+          <div className="tw-flex w-3/5 tw-items-center tw-justify-center tw-relative tw-bg-black tw-px-4 md:tw-px-48">
             <img
               src="https://images.unsplash.com/photo-1548032885-b5e38734688a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2455&q=80"
               alt="music"
-              className="h-60 w-96"
+              className="tw-h-60 tw-w-96"
             />
-            <div className="absolute bottom-7 w-full px-3">
+            <div className="tw-absolute tw-bottom-7 tw-w-full tw-px-3">
               <div
-                className="bg-green-100 min-w-max h-1"
+                className="tw-bg-green-100 tw-min-w-max tw-h-1"
                 onClick={(e) => setPosition(e)}
               >
                 <div
-                  className="bg-green-400 h-1"
+                  className="tw-bg-green-400 tw-h-1"
                   style={{ width: `${progress}%` }}
                 ></div>
               </div>
-              <div className="flex justify-between mt-3">
-                <div className="flex items-center">
+              <div className="tw-flex tw-justify-between tw-mt-3">
+                <div className="tw-flex tw-items-center">
                   {!isMuted ? (
                     <GiSpeaker
-                      className="text-white text-xl"
+                      className="tw-text-white tw-text-xl"
                       onClick={() => muteUnmute()}
                       title="Mute"
                     />
                   ) : (
                     <GiSpeakerOff
-                      className="text-white text-xl"
+                      className="tw-text-white tw-text-xl"
                       onClick={() => muteUnmute()}
                       title="Unmute"
                     />
                   )}
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="tw-flex tw-flex-row tw-items-center">
                   <FaUndo
-                    className="text-white text-sm: md:text-xl mr-2"
+                    className="tw-text-white tw-text-sm md:tw-text-xl tw-mr-2"
                     onClick={() => restart()}
                     title="Restart"
                   />
                   <FaBackward
-                    className="text-white text-sm: md:text-xl hover:text-green-300 mr-2"
+                    className="tw-text-white tw-text-sm md:tw-text-xl hover:tw-text-green-300 tw-mr-2"
                     onClick={() => backward()}
                     title="Backward"
                   />
                   {!isPlaying ? (
                     <FaPlay
-                      className="text-green-500 text-sm: md:text-xl mr-2"
+                      className="tw-text-green-500 tw-text-sm: md:tw-text-xl tw-mr-2"
                       onClick={() => playPause()}
                       title="Play"
                     />
                   ) : (
                     <FaPause
-                      className="text-green-500 text-sm: md:text-xl mr-2"
+                      className="tw-text-green-500 tw-text-sm: md:tw-text-xl tw-mr-2"
                       onClick={() => playPause()}
                       title="Pause"
                     />
                   )}
                   <FaForward
-                    className="text-white text-sm: md:text-xl hover:text-green-300 mr-2"
+                    className="tw-text-white tw-text-sm: md:tw-text-xl hover:tw-text-green-300 tw-mr-2"
                     onClick={() => forward()}
                     title="Forward"
                   />
-                  <span className="text-white text-sm: md:text-xl">{time}</span>
+                  <span className="tw-text-white tw-text-sm: md:tw-text-xl">{time}</span>
                 </div>
-                <div className="flex items-center">
+                <div className="tw-flex tw-items-center">
                   <img src={Minimize} alt="minimize" title="minimize" />
                 </div>
               </div>

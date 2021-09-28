@@ -9,8 +9,8 @@ import users from '../../../public/Icons/users.png';
 
 const Header = () =>{
     return (
-        <div className="w-full px-6 py-1.5 bg-green-500 flex justify-between">
-            <Link to='/' className="text-white flex items-center">
+        <div className="tw-w-full tw-px-6 tw-py-1.5 tw-bg-green-500 tw-flex tw-justify-between">
+            <Link to='/' className="tw-text-white tw-flex tw-items-center">
                 # Files <BsChevronDown className="ml-2"/>
             </Link>
             <div>

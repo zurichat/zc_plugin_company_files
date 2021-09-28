@@ -21,6 +21,8 @@ import ErrorFallback from "../Error/ErrorFallback";
 
 import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
+import AllFolders from "../Home/Folder/AllFolders";
+import AllFiles from "../Home/Files/AllFiles";
 
 
 const Main = () => {
@@ -32,7 +34,7 @@ const Main = () => {
   }}
   >
     <Router basename="/companyfiles">
-      <div className="bg-white h-screen flex flex-1 flex-col items-center overflow-y-auto ">
+      <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center tw-overflow-y-auto ">
         <SearchBar />
         <Header />
         {/* <div className="block w-full h-11 bg-primary"></div> */}
@@ -51,8 +53,11 @@ const Main = () => {
           <Route path="/activities" exact>
             <Activities />
           </Route>
-          <Route path="/files" exact>
-            <Files />
+          <Route path="/all-files" exact>
+            <AllFiles />
+          </Route>
+          <Route path="/all-folders" exact>
+            <AllFolders />
           </Route>
           <Route path="/allfiles" exact>
             <AllFiles />
@@ -72,10 +77,10 @@ const Main = () => {
           <Route path="/trashapp" exact>
             <TrashApp />
           </Route>
-          <Route path="/help" exact>
+          <Route path="/help/" exact>
             <Help />
           </Route>
-          <Route path="/collaborators" exact>
+          <Route path="/collaborators/" exact>
             <Collaborators />
           </Route>
         </Switch>
