@@ -20,6 +20,8 @@ import ErrorFallback from "../Error/ErrorFallback";
 
 import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
+import AllFolders from "../Home/Folder/AllFolders";
+import AllFiles from "../Home/Files/AllFiles";
 
 
 const Main = () => {
@@ -50,8 +52,11 @@ const Main = () => {
           <Route path="/activities" exact>
             <Activities />
           </Route>
-          <Route path="/files" exact>
-            <Files />
+          <Route path="/all-files" exact>
+            <AllFiles />
+          </Route>
+          <Route path="/all-folders" exact>
+            <AllFolders />
           </Route>
           <Route path="/test" exact>
             <Test />

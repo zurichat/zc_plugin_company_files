@@ -27,7 +27,7 @@ const Index = () => {
     };
     fetchNewData();
     console.log(newFile);
-  }, [newFile]);
+  }, []);
 
   const showOptions = (e) => {
     setOptions(!options);

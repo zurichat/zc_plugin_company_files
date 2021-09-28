@@ -5,7 +5,7 @@ import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="tw-flex tw-items-center tw-justify-center tw-min-h-screen">
+    <div className="tw-flex tw-items-center">
       <div>
         <title>Company files</title>
         <link rel="icon" href="/favicon.ico" />

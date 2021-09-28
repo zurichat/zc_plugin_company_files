@@ -53,70 +53,70 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
           setOpenStatus(false);
         }}
       >
-        <div className="bg-white py-3 w-60 absolute top-1/3 z-20">
+        <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-top-1/3 tw-z-20">
           <FolderMenuButton name="Open" cmd={openCmd}>
             <AiOutlineEye
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="open"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Get link" cmd={getLink}>
             <HiOutlineLink
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="link"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Download" cmd={download}>
             <BsDownload
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="download"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Share" cmd={share}>
             <HiOutlineShare
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="share"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Select" cmd={select}>
             <BsCheckBox
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="selct"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Copy" cmd={copy}>
-            <FiCopy className="mr-3 flex self-center text-xl" title="copy" />
+            <FiCopy className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="copy" />
           </FolderMenuButton>
           <FolderMenuButton name="Cut" cmd={cut}>
-            <GrCut className="mr-3 flex self-center text-xl" title="cut" />
+            <GrCut className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="cut" />
           </FolderMenuButton>
           <FolderMenuButton name="Move to" cmd={moveTo}>
             <HiOutlineFolderRemove
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="move"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Add to starred" cmd={addStar}>
             <AiOutlineStar
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="star"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Rename" cmd={rename}>
             <AiOutlineEdit
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="title"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Properties" cmd={properties}>
             <RiErrorWarningLine
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="properties"
             />
           </FolderMenuButton>
           <FolderMenuButton name="Delete" cmd={deleteCmd}>
             <RiDeleteBinLine
-              className="mr-3 flex self-center text-xl"
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="delete"
             />
           </FolderMenuButton>
