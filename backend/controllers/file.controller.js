@@ -199,13 +199,11 @@ exports.getFileByType = async (req, res) => {
 }
 
 exports.fileDetails = async (req, res) => {
-
   const data = await File.fetchOne({ _id: req.params.id });
 
   await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
-
 }
 
 
