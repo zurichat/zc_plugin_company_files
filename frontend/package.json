@@ -5,7 +5,7 @@
     "start:standalone": "webpack serve --env standalone",
     "build": "concurrently yarn:build:*",
     "build-npm": "concurrently npm:build:*",
-    "build:webpack": "cross-env NODE_ENV=production webpack --mode=production",
+    "build:webpack": "NODE_ENV=production webpack --mode=production",
     "analyze": "webpack --mode=production --env analyze",
     "lint": "eslint src --ext js",
     "format": "prettier --write .",
