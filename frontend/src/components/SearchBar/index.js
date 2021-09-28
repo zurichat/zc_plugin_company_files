@@ -1,3 +1,4 @@
+import {AiOutlineClose} from 'react-icons/ai/index';
 import Axios from "axios";
 import CustomIcon from "../CustomIcon";
 import PropTypes from "prop-types";
@@ -16,8 +17,6 @@ import searchIcon from "../../../public/Icons/search.svg";
 import { useState } from "react";
 import videoCat from "../../../public/Icons/video-cat.svg";
 
-import {AiOutlineClose} from 'react-icons/ai/index';
-
 const SEARCH_CATEGORY_LIST = [
   {
     iconLink: docCat,
@@ -26,7 +25,7 @@ const SEARCH_CATEGORY_LIST = [
   },
   {
     iconLink: pdfCat,
-    bgColor: "bg-red-100",
+    bgColor: "tw-bg-red-100",
     title: "Pdf",
     ext: "pdf",
   },
@@ -37,19 +36,19 @@ const SEARCH_CATEGORY_LIST = [
   },
   {
     iconLink: ppCat,
-    bgColor: "bg-orange",
+    bgColor: "tw-bg-orange",
     title: "Powerpoint",
     ext: "pp",
   },
   {
     iconLink: excelCat,
-    bgColor: "bg-green-100",
+    bgColor: "tw-bg-green-100",
     title: "Excel",
     ext: "xls",
   },
   {
     iconLink: videoCat,
-    bgColor: "bg-red-50",
+    bgColor: "tw-bg-red-50",
     title: "Video",
     ext: "mp4",
   },
@@ -76,8 +75,8 @@ const getCatExt = (cat) => {
 
 const SearchResultCategory = ({ iconLink, bgColor, title, ...restProps }) => {
   return (
-    <div className="flex items-center gap-3 cursor-pointer" {...restProps}>
-      <div className={`min-w-max p-2 rounded-lg ${bgColor || "bg-blue-100"}`}>
+    <div className="tw-flex tw-items-center tw-gap-3 tw-cursor-pointer" {...restProps}>
+      <div className={`tw-min-w-max tw-p-2 tw-rounded-lg ${bgColor || "tw-bg-blue-100"}`}>
         <img {...{ src: iconLink, alt: "icon" }} />
       </div>
       <span className="">{title}</span>
@@ -91,9 +90,9 @@ SearchResultCategory.propTypes = {
 };
 const SearchResultCategoryList = ({ list = [], selectCategoryHandler }) => {
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-text-200">I&apos;m searching for...</h2>
-      <div className="grid grid-flow-row sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-8">
+    <div className="tw-flex tw-flex-col tw-gap-6">
+      <h2 className="tw-text-text-200">I&apos;m searching for...</h2>
+      <div className="tw-grid tw-grid-flow-row tw-sm:tw-grid-cols-2 tw-lg:tw-grid-cols-3 tw-auto-rows-max tw-gap-8">
         {list?.map((elm, ind) => (
           <SearchResultCategory
             key={ind}
@@ -111,9 +110,9 @@ SearchResultCategoryList.propTypes = {
 
 const RecentSearchItem = ({ name = "file_name.txt" }) => {
   return (
-    <div className="flex items-center gap-3 cursor-pointer">
+    <div className="tw-flex tw-items-center tw-gap-3 tw-cursor-pointer">
       <img {...{ src: clockIcon, alt: "icon" }} />
-      <span className="text-sm text-text-300">{name}</span>
+      <span className="tw-text-sm tw-text-text-300">{name}</span>
     </div>
   );
 };
@@ -122,8 +121,8 @@ RecentSearchItem.propTypes = {
 };
 const RecentSearchList = ({ list = [] }) => {
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-text-200 mb-1">Recent searches</h2>
+    <div className="tw-flex tw-flex-col tw-gap-3">
+      <h2 className="tw-text-text-200 tw-mb-1">Recent searches</h2>
       {list?.map((elm, ind) => (
         <RecentSearchItem key={ind} {...elm} />
       ))}
@@ -136,7 +135,7 @@ RecentSearchList.propTypes = {
 
 const SelectedCategory = ({ category = "Document", selectCategoryHandler }) => {
   return (
-    <div className="flex items-center justify-center mr-2 py-1 px-3 bg-blue-50 gap-3">
+    <div className="tw-flex tw-items-center tw-justify-center tw-mr-2 tw-py-1 tw-px-3 tw-bg-blue-50 tw-gap-3">
       {category}
       <CustomIcon
         {...{
@@ -197,23 +196,23 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     selectCategory(cat);
   };
   return (
-    <div className="flex flex-col w-full relative">
+    <div className="tw-flex tw-flex-col tw-w-full tw-relative">
       <div
         {...{
-          className: `flex items-center justify-between py-1.5 px-2 border border-gray-200 rounded ${customClass}`,
+          className: `tw-flex tw-items-center tw-justify-between tw-py-1.5 tw-px-2 tw-border tw-border-gray-200 tw-rounded ${customClass}`,
           ...restProps,
         }}
       >
         {!selectedCategory ? (
           <p> </p>
         ) : (
-          <SelectedCategory className="mr-4"
+          <SelectedCategory className="tw-mr-4"
             {...{ category: selectedCategory || "", selectCategoryHandler }}
           />
         )}
 
         <input
-          className="flex-1 text-sm justify-start focus:outline-none"
+          className="tw-flex-1 tw-text-sm tw-justify-start tw-focus:tw-outline-none"
           {...{
             value: searchInputValue,
             type: "text",
@@ -228,7 +227,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
           <p> </p>
         ) : (
 
-          <AiOutlineClose className="text-gray-500 cursor-pointer" onClick={clearInput}/>
+          <AiOutlineClose className="tw-text-gray-500 tw-cursor-pointer" onClick={clearInput}/>
           // <CustomIcon
           //   {...{ src: cancelIcon, alt: "cancel icon", onClick: clearInput }}
           // />
@@ -237,7 +236,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
         
       </div>
       {!!showSearchWindow && (
-        <div className="bg-white z-20 w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
+        <div className="tw-bg-white tw-z-20 tw-w-full tw-absolute tw-top-full tw-mt-1 tw-py-5 tw-px-5 tw-shadow-md tw-flex tw-flex-col tw-gap-10">
           {!!selectedCategory ? null : (
             <SearchResultCategoryList
               {...{ list: SEARCH_CATEGORY_LIST, selectCategoryHandler }}
@@ -269,12 +268,12 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
         ...restProps,
       }}
     >
-      <div className="tw-flex tw-items-center tw-gap-4 tw-w-full lg:tw-w-2/3 xl:tw-w-3/5">
+      <div className="tw-flex tw-items-center tw-gap-4 tw-w-full tw-lg:tw-w-2/3 tw-xl:tw-w-3/5">
         <SearchInputWithOnclick className="tw-flex-1" />
       </div>
       <CustomIcon
         {...{ src: onlineUserIcon, alt: "profile image" }}
-        className="tw-h-10 tw-ml-2 -tw-mr-2 tw-hidden md:tw-inline-flex"
+        className="tw-h-10 tw-ml-2 -tw-mr-2 tw-hidden tw-md:tw-inline-flex"
       />
     </div>
   );
