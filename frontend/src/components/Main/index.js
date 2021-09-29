@@ -25,7 +25,7 @@ import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
 
 const headerConfig = {
-  name: "CompanyFiles Plugin",
+  name: "# Files",
   logo: "https://www.pngfind.com/pngs/m/19-194225_png-file-svg-hashtag-icon-png-transparent-png.png",
   thumbnailUrl: [
     "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
@@ -34,7 +34,9 @@ const headerConfig = {
   ],
   userCount: 300,
   eventTitle: () => {
-    window.history.back();
+    // window.history.back();
+    const currentState = history.state;
+    history.pushState(currentState, '', '/companyfiles');
   },
   eventThumbnail: () => {
     //Block of code to be triggered on thumbnail click
@@ -66,19 +68,16 @@ const Main = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            {/* <Route path="/add-new" exact>
-            <AddNewTextDoc />
-          </Route> */}
-            <Route path="/add-new" exact>
+            <Route path="/addNew" exact>
               <AddNewDoc />
             </Route>
             <Route path="/activities" exact>
               <Activities />
             </Route>
-            <Route path="/all-files" exact>
+            <Route path="/allFiles" exact>
               <AllFiles />
             </Route>
-            <Route path="/all-folders" exact>
+            <Route path="/allFolders" exact>
               <AllFolders />
             </Route>
             <Route path="/test" exact>
@@ -93,13 +92,13 @@ const Main = () => {
             <Route path="/newfolder" exact>
               <NewFolder />
             </Route>
-            <Route path="/trashapp" exact>
+            <Route path="/trash" exact>
               <TrashApp />
             </Route>
-            <Route path="/help/" exact>
+            <Route path="/help" exact>
               <Help />
             </Route>
-            <Route path="/collaborators/" exact>
+            <Route path="/collaborators" exact>
               <Collaborators />
             </Route>
           </Switch>

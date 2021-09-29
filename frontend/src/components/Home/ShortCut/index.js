@@ -29,7 +29,7 @@ const index = () => {
           altName={"Starred"}
         />
         <Shortcuts
-          link={"trashapp"}
+          link={"trash"}
           image={Trash}
           name={"Trash"}
           altName={"trash"}
