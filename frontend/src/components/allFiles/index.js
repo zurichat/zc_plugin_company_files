@@ -1,10 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
-import RecentlyViewed from "./RecentlyViewed";
-import Folder from "./Folder/index";
-import Files from "./Files/index";
+import Files from "./AllFiles";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
-import FileOptions from "../FileUpload/FileOptions";
-import ShortCut from "./ShortCut";
 import RealTime from "../../helpers/realtime.helper";
 
 
@@ -12,7 +8,7 @@ import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
 import { useSnackbar } from 'react-simple-snackbar';
 
-const Index = () => {
+const AllFiles = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
@@ -27,7 +23,7 @@ const Index = () => {
 
   useLayoutEffect(() => {
     const fetchNewData = () => {
-      RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
+      RealTime.subscribe("newFile", "", (data) => setNewFile(data));
     };
     fetchNewData();
     console.log(newFile);
@@ -67,20 +63,15 @@ const Index = () => {
   return (
     <div
       className={
-        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-py-4 tw-px-10 tw-z-auto"
+        (upload ? " overflow-y-hidden" : "") + " w-full py-4 px-10 z-auto"
       }
     >
       <button
         onClick={showOptions}
-        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
+        className="mt-4 px-3 py-2 text-sm text-green-500 border rounded border-green-500 hover:text-white hover:bg-green-500 outline-none"
       >
         Add File
       </button>
-
-      <FileOptions options={options} showUploadModal={showUploadModal} />
-      <ShortCut />
-      <RecentlyViewed />
-      <Folder />
       <Files />
       {upload && (
         <FileUpload
@@ -96,4 +87,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default AllFiles;
