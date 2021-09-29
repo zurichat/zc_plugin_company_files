@@ -18,7 +18,7 @@ const Activities = () => {
       return classes.filter(Boolean).join(' ')
     }
    return (
-      <div className="mt-12 xl:px-2 w-full h-full">
+      <div className="tw-mt-12 tw-xl:px-2 tw-w-full tw-h-full">
          {/*<div className="flex relative w-128 p-12 m-6 items-center">
             <div className="flex items-center absolute top-0 right-0">
                <div className="br-white flex items-center  h-12 w-96 border-2 shadow-xl">
@@ -39,30 +39,30 @@ const Activities = () => {
             </div>
             
          </div>*/}
-      <div className=" md:flex">
+      <div className=" tw-md:flex">
          
-         <div className="border-r-2 xl:ml-12">
-            <div className="flex justify-between pl-3 pr-6 mb-8 xl:-ml-8">
-               <div className="flex">
-                  <Link to='/'><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg></Link>
+         <div className="tw-border-r-2 tw-xl:ml-12">
+            <div className="tw-flex tw-justify-between tw-pl-3 tw-pr-6 tw-mb-8 tw-xl:-ml-8">
+               <div className="tw-flex">
+                  <Link to='/'><svg xmlns="http://www.w3.org/2000/svg" className="tw-h-6 tw-w-6 tw-mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg></Link>
                   <h1>All Activities</h1>
                </div>
-               <div className="flex">
+               <div className="tw-flex">
                   <img src= {Pin} alt="pin" />
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-6 tw-w-6 tw-ml-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                </div>
             </div>
-            <div className="mr-12 mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12 tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>4 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32"><i>4 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
@@ -76,19 +76,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -96,14 +96,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -111,16 +111,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -133,18 +133,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div>  
-            <div className="mr-12 mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12 tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>5 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32"><i>5 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -157,7 +157,7 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
                         <div className="py-1">
                            <Menu.Item>        
                            {({ active }) => ( 

@@ -31,17 +31,17 @@ const index = () => {
     );
 
   return (
-    <div className="w-full py-10 ">
-      <div className="w-full flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
+    <div className="tw-w-full tw-py-10 ">
+      <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
         <Link
           to="/folders"
-          className="text-green-500 text-lg font-semibold hover:text-green-600"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:text-green-600"
         >
           View All
         </Link>
       </div>
-      <div className="flex flex-wrap justify-between">
+      <div className="tw-flex tw-flex-wrap tw-justify-between">
         {data.data.length ? (
           data.data
             .slice(0, 4)
@@ -49,7 +49,7 @@ const index = () => {
               <FolderComponent key={folder.folderId} folder={folder} />
             ))
         ) : (
-          <div className="text-3xl flex items-center justify-center">
+          <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
             No Folders
           </div>
         )}

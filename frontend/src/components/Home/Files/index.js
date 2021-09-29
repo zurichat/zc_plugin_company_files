@@ -43,13 +43,8 @@ const index = () => {
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
-<<<<<<< HEAD
-          to="/allfiles"
-          className="text-green-500 text-lg font-semibold hover:text-green-600"
-=======
           to="/files-all"
           className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
->>>>>>> f9692f3c702031d4e2d313413703dfd0328c2463
         >
           View All
         </Link>
