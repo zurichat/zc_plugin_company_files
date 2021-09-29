@@ -12,13 +12,17 @@
     "build:local-npm": "npm run build:npm && cd root-config && node generateDevTestFile",
     "client:dev": "concurrently \"yarn start --prefix root-config\" \"yarn start --prefix frontend\"",
     "dev": "nodemon .",
-    "install-setup": "yarn install && cd frontend && yarn install",
+    "install-setup": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "install-setup:npm": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
     "lint:backend:fix": "yarn lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
-    "test": "jest --testTimeout=10000 --detectOpenHandles"
+    "test": "jest --testTimeout=10000 --detectOpenHandles",
+    "test:debug": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --verbose",
+    "test:watch": "cross-env NODE_ENV=test jest --watch --verbose",
+    "test:cover": "cross-env NODE_ENV=test jest --coverage",
+    "test:ci": "cross-env NODE_ENV=test jest --coverage --verbose && cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "testEnvironment": "node",
@@ -37,7 +41,6 @@
   },
   "homepage": "https://github.com/zurichat/zc_plugin_company_files#readme",
   "dependencies": {
-    "archiver": "^5.3.0",
     "axios": "^0.21.1",
     "busboy": "^0.3.1",
     "cloudinary": "^1.26.3",
@@ -53,6 +56,7 @@
     "joi": "^17.4.2",
     "joi-objectid": "^3.0.1",
     "mime-types": "^2.1.32",
+    "newrelic": "^8.3.0",
     "slugify": "^1.6.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"
@@ -60,6 +64,7 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",

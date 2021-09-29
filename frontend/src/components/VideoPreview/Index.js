@@ -5,44 +5,17 @@ import downloadIcon from "../../../public/Icons/download/active.svg";
 import Vertical from "../../../public/Icons/more-vertical/active.svg";
 import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
-import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
-import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
-import { useHistory } from "react-router";
+import ZoomIn from "../../../public/Icons/zoom-in/active.svg";
+import ZoomOut from "../../../public/Icons/zoom-out/active.svg";
+import Nav from "../Subcomponents/nav";
 
 function index({ file, setOpenStatus }) {
-  const history = useHistory();
-
   return (
-    <div className="bg-gray-800 bg-opacity-70 overflow-auto h-full w-full flex-auto flex flex-col justify-between pb-6 fixed z-30 top-0 left-0 bottom-0 right-0">
-      <nav className="h-10 w-full flex flex-row justify-between py-3 px-3 md:px-5 lg:px-7">
-        <div className="flex">
-          <div>
-            <img
-              src={active}
-              alt="arrow-left"
-              className="mr-5"
-              onClick={() => setOpenStatus(false)}
-            />
-          </div>
-          <div>
-            <div className="flex flex-row">
-              <img src={imageIcon} alt="image-icon" className="mr-2" />
-              <p className="text-white">{file.fileName}</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex">
-          <div>
-            <img src={downloadIcon} alt="download-icon" />
-          </div>
-          <div>
-            <img src={Vertical} alt="more-icon" className="ml-2" />
-          </div>
-        </div>
-      </nav>
-      <div className="flex flex-col justify-between items-center w-full">
-        <div className="flex justify-between w-full md:px-6 px-2">
-          <div className="flex self-center">
+    <div className="tw-bg-gray-800 tw-bg-opacity-70 tw-overflow-auto tw-h-full tw-w-full tw-flex-auto tw-flex tw-flex-col tw-justify-between tw-pb-6 tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bottom-0 tw-right-0">
+      <Nav file={file} setOpenStatus={setOpenStatus} />
+      <div className="tw-flex tw-flex-col justify-between items-center w-full">
+        <div className="tw-flex justify-between w-full md:px-6 px-2">
+          <div className="tw-flex tw-self-center">
             <img
               src={LeftArrow}
               alt="left-arrow"
@@ -55,8 +28,12 @@ function index({ file, setOpenStatus }) {
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             /> */}
-            <video className="md:min-w-0 min-w-full w-60 md:w-10/12" src={file.url}  controls  autoPlay />
-            
+            <video
+              className="md:min-w-0 min-w-full w-60 md:w-10/12"
+              src={file.url}
+              controls
+              autoPlay
+            />
           </div>
           <div className="flex self-center">
             <img
@@ -67,16 +44,8 @@ function index({ file, setOpenStatus }) {
           </div>
         </div>
         <div className="bg-black py-3 px-7 flex justify-between mt-5">
-          <img
-            src={ZoomIn}
-            alt="zoom-in"
-            className="md:w-10 w-7 mr-4"
-          />
-          <img
-            src={ZoomOut}
-            alt="zoom-out"
-            className="md:w-10 w-7"
-          />
+          <img src={ZoomIn} alt="zoom-in" className="md:w-10 w-7 mr-4" />
+          <img src={ZoomOut} alt="zoom-out" className="md:w-10 w-7" />
         </div>
       </div>
     </div>

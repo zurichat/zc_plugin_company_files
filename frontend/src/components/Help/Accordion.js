@@ -12,7 +12,7 @@ const Accordion = ({ data }) => {
     const accId = `${data.id}`;
 
     // assigning unique IDs to chevrons-down icon to ensure only the chevron-down icon for the targeted accordion is rotated when clicked
-    
+
     const imgId = `img${data.id}`;
     const toggle = () => {
         const ans = document.getElementById(accId);
@@ -21,24 +21,29 @@ const Accordion = ({ data }) => {
         ans.classList.toggle('hide')
         img.classList.toggle('chevronIcon')
     }
-    console.log(data.icon)
     return (
-        <div className="w-full border border-gray-300 rounded my-3">
-            <div className="w-full text-lg flex justify-between cursor-pointer font-semibold border-gray-300 py-1 px-2" onClick={toggle}>
-                <div className="flex items-center p-1">
-                    <div className="questionIcon rounded p-2 text-green-500 text-xl font-medium">
-                        {data.icon}
-                        {/* <img src={data.icon} className="w-4 m-2" /> */}
-                    </div>
-                    <p className='text-base text-gray-700 ml-4 font-semibold'>{data.title}</p>
-                </div>
-                <img src={toggleIcon} id={imgId} className="w-5 mr-6" />
+      <div className='tw-w-full tw-border tw-border-gray-300 tw-rounded tw-my-3'>
+        <div
+          className='tw-w-full tw-text-lg tw-flex tw-justify-between tw-cursor-pointer tw-font-semibold tw-border-gray-300 tw-py-1 tw-px-2'
+          onClick={toggle}
+        >
+          <div className='tw-flex tw-items-center tw-p-1'>
+            <div className='questionIcon tw-rounded tw-p-2 tw-text-green-500 tw-text-xl tw-font-medium'>
+              {data.icon}
+              {/* <img src={data.icon} className="tw-w-4 tw-m-2" /> */}
             </div>
-            <div id={accId} className="accordion-answers px-12 border-t border-gray-300">
-                <p className="p-4 text-gray-500">{data.answer}</p>
-            </div>
+            <p className='tw-text-base tw-text-gray-700 tw-ml-4 tw-font-semibold'>{data.title}</p>
+          </div>
+          <img src={toggleIcon} id={imgId} className='tw-w-5 tw-mr-6' />
         </div>
-    )
+        <div
+          id={accId}
+          className='accordion-answers tw-px-12 tw-border-t tw-border-gray-300'
+        >
+          <p className='tw-p-4 tw-text-gray-500'>{data.answer}</p>
+        </div>
+      </div>
+    );
 }
 
 export default Accordion

@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -31,7 +30,6 @@ function useFetch(url, del, res, empty) {
       })
       .catch((err) => {
         if (err.name === "AbortError") {
-          // console.log("Fetch Aborted");
         } else {
           setisLoading(false);
           setError(err.message);

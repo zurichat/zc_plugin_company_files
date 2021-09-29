@@ -1,14 +1,11 @@
 const { unlink: deleteFile, stat: getFileDetails } = require('fs/promises');
+const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
 const mimeTypes = require('mime-types');
-
-const axios = require('axios');
-
 const DatabaseConnection = require('../utils/database.helper');
 const File = new DatabaseConnection('File');
-
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
@@ -107,6 +104,7 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
         // Send (file) info to FE using Centrifugo
+        await RealTime.publish('newFile', file);
 
         // normal response without data.
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
@@ -166,11 +164,11 @@ exports.cropImage = async (req, res) => {
 
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
-  const data = await File.fetchAll();
+  let data = await File.fetchAll();
 
-  // setTimeout( async () => {
-  //   await axios.get('http://localhost:5500/api/v1/files/all');
-  // }, (1000 * 30));
+  data = data.sort((a, b) =>{
+    return new Date(b.dateAdded) - new Date(a.dateAdded);
+  });
 
   const nonDeletedFiles = data.filter(file => !file.isDeleted);
 
@@ -192,14 +190,13 @@ exports.getFileByType = async (req, res) => {
   res.status(200).send(appResponse(null, matchedFiles, true));
 }
 
-exports.fileDetails = async (req, res) => {
 
+exports.fileDetails = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });
 
   await RealTime.publish('fileDetail', data)
 
   res.status(200).send(appResponse(null, data, true));
-
 }
 
 
@@ -358,7 +355,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 
   await RealTime.publish('deletedFiles', deletedFiles);
 
-  return (data.length < 1)
+  return (deletedFiles.length < 1)
     ? res.status(200).send(appResponse('No file deleted yet!', [], true))
     : res.status(200).send(appResponse('Deleted files', deletedFiles, true));
 }
