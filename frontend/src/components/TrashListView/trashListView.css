@@ -1,9 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap");
-
-.TrashApp {
-  font-family: "Lato", sans-serif;
-}
-
 .borderSpace {
   border-spacing: 0 1.5em;
 }
@@ -11,36 +5,36 @@
   empty-cells: show;
 }
 
-.light--Green,
+/* .light--Green,
 .focus__lightGreen:active {
   background-color: #f0fbf8;
-}
+} */
 
-.durationGray {
+/* .durationGray {
   color: #616161;
-}
+} */
 
-.itemsTrash {
+/* .itemsTrash {
   color: #4a4a4a;
-}
+} */
 
 /* .lightGrayHover:hover {
   background-color: #fafafa;
 } */
 
-.trashModal__cancel {
+/* .trashModal__cancel {
   border-color: #00b87c;
-}
+} */
 
-.trashModal__cancel,
+/* .trashModal__cancel,
 .emptyTrash,
 .preloader .loading {
   color: #00b87c;
-}
+} */
 
-.modal__menu {
+/* .modal__menu {
   background-color: #00b87c;
-}
+} */
 
 .trashTheading {
   font-size: 0.9375rem;
@@ -49,12 +43,6 @@
 .emptyTrash {
   font-size: 0.8125rem;
 }
-
-/* .preloader {
-  margin: 100px auto 0;
-  width: 66px;
-  height: 12px;
-} */
 
 .preloader .line {
   width: 1px;
