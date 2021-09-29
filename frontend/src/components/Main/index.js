@@ -4,7 +4,7 @@ import Header from "../Help/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Files from "../Home/Files";
-import AllFiles from "../AllFiles/index";
+// import AllFiles from "../AllFiles/index";
 import FileUpload from "../Home/index";
 import Home from "../Home";
 

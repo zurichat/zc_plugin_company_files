@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .tooltip {
+    @apply invisible absolute;
+  }
+}
+
+@layer base {
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50;
+  }
+}
+
 .App {
   text-align: center;
 }
@@ -40,5 +52,3 @@
     transform: rotate(360deg);
   }
 }
-
-
