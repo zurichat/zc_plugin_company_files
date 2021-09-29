@@ -3,7 +3,7 @@ import React from "react";
 function Loader() {
   return (
     <div className="tw-text-center tw-mt-60 preloader">
-      <div className="tw-text-center tw-uppercase tw-tracking-widest tw-text-xs loading">
+      <div className="tw-text-center tw-uppercase tw-tracking-widest tw-text-xs tw-text-primary">
         Loading...
       </div>
       <span className="tw-mx-1 tw-inline-block line line1"></span>

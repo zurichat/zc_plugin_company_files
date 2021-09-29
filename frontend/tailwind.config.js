@@ -16,6 +16,7 @@ module.exports = {
         bg: {
           lightGrey: "#F6F6F6",
           white: "#FFFFFF",
+          lightGreen: "#f0fbf8",
         },
         success: "#008B5E",
         text: {
@@ -36,10 +37,18 @@ module.exports = {
           xls: "#D7FCEB",
           ppt: "#FCE7DE",
         },
+        trashDur: "#616161",
       },
-      fontFamily: {
-        lato: ["Lato"],
+      avatar: {
+        one: "#F7E0FF",
+        two: "#F8FFCD",
+        three: "#FFF0F0",
+        four: "#ACFFE6",
+        five: "#E3EEFF",
       },
+    },
+    fontFamily: {
+      lato: ["Lato"],
     },
   },
   variants: {

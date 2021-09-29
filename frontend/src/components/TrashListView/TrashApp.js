@@ -25,7 +25,7 @@ function TrashApp() {
   );
 
   return (
-    <div className="TrashApp tw-h-full tw-w-full">
+    <div className="TrashApp tw-h-full tw-w-full tw-font-lato">
       <TrashHead
         setFileDel={setFileDel}
         setRestore={setRestore}

@@ -70,8 +70,10 @@ const AllFolders = () => {
     setProgress(false);
   };
 
-  function goBack() {
-    window.history.back();
+  const goBack = () => {
+    // window.history.back();
+    const currentState = history.state;
+    history.pushState(currentState, '', '/companyfiles');
   }
 
   if (error)

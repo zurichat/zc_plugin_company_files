@@ -1,4 +1,5 @@
 import React, {useEffect, useState } from "react";
+import Loader from 'react-loader-spinner';
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
@@ -10,9 +11,9 @@ async function fetcher(url) {
   return res.data;
 }
 
-const API_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:5500/api/v1"
-  : "https://companyfiles.zuri.chat/api/v1";
+const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://127.0.0.1:5500/api/v1'
+  : 'https://companyfiles.zuri.chat/api/v1';
 
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
@@ -31,26 +32,31 @@ const index = () => {
 
   if (error)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 py-4">
+      <div className="text-3xl flex items-center justify-center text-red-600">
         failed to load
       </div>
     );
 
   if (!data)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center py-4">
-        loading...
+      <div className="tw-w-full tw-py-10 ">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+          <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+            View All
+          </Link>
+        </div>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
+          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+        </div>
       </div>
     );
 
   return (
     <div className="tw-w-full tw-py-10 ">
-      <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+      <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
-        <Link
-          to="/all-folders"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
-        >
+        <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
           View All
         </Link>
       </div>

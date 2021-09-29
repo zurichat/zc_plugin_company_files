@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Loader from 'react-loader-spinner';
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -11,7 +12,7 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio";
+import Audio from "../../Subcomponents/audio";
 import { FaArrowLeft } from "react-icons/fa/index";
 import { BsArrowUpDown } from "react-icons/bs";
 import { BsGrid3X2 } from "react-icons/bs";
@@ -26,9 +27,9 @@ async function fetcher(url) {
   return res.data;
 }
 
-const API_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:5500/api/v1"
-  : "https://companyfiles.zuri.chat/api/v1";
+const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://127.0.0.1:5500/api/v1'
+  : 'https://companyfiles.zuri.chat/api/v1';
 
 const AllFiles = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
@@ -79,8 +80,10 @@ const AllFiles = () => {
     setProgress(false);
   };
 
-  function goBack() {
-    window.history.back();
+  const goBack = () => {
+    // window.history.back();
+    const currentState = history.state;
+    history.pushState(currentState, '', '/companyfiles');
   }
 
   if (error)
@@ -92,8 +95,8 @@ const AllFiles = () => {
 
   if (!data)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-h-screen tw-w-full">
-        loading...
+      <div className="tw-h-96 tw-flex tw-items-center tw-justify-center tw-h-screen tw-w-full">
+        <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
       </div>
     );
 

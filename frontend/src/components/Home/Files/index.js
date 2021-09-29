@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Loader from 'react-loader-spinner';
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useSWR from "swr";
@@ -25,9 +26,10 @@ async function fetcher(url) {
   return res.data;
 }
 
-const API_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:5500/api/v1"
-  : "https://companyfiles.zuri.chat/api/v1";
+const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://127.0.0.1:5500/api/v1'
+  : 'https://companyfiles.zuri.chat/api/v1';
+
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
 
@@ -66,13 +68,21 @@ const index = () => {
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4">
-        failed to load
+        failed to load...
       </div>
     );
   if (!data)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-py-4">
-        loading...
+      <div className="tw-w-full tw-py-10">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
+          <Link to="/allFiles" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+            View All
+          </Link>
+        </div>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
+          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+        </div>
       </div>
     );
 
@@ -81,8 +91,8 @@ const index = () => {
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
-          to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
+          to="/allFiles"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
         >
           View All
         </Link>
@@ -118,23 +128,18 @@ const index = () => {
                 new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
-                  className="file tw-flex tw-items-center mr-0 my-5 relative"
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Excel file={file} />
                 </div>
-              ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "wordprocessingml" + "\\b").test(
-                  file.type
-                ) ||
-                new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Document file={file} />
                 </div>
-              ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "presentationml" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
