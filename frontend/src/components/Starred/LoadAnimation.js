@@ -2,16 +2,16 @@ import React from "react";
 
 const LoadAnimation = () => {
   return (
-    <div className="text-center mt-60 preloader">
-      <div className="p-3 flex items-center">
+    <div className="tw-text-center tw-mt-60 tw-preloader">
+      <div className="tw-p-3 tw-flex tw-items-center">
       
-       <svg class="animate-bounce h-5 w-5 mr-3 bg-green-600 rounded-full" viewBox="0 0 24 24">
+       <svg class="tw-animate-bounce tw-h-5 tw-w-5 tw-mr-3 tw-bg-green-600 tw-rounded-full" viewBox="0 0 24 24">
         </svg>
-       <svg class="animate-bounce h-4 w-4 mr-3 bg-green-500 rounded-full" viewBox="0 0 24 24">
+       <svg class="tw-animate-bounce tw-h-4 tw-w-4 tw-mr-3 tw-bg-green-500 tw-rounded-full" viewBox="0 0 24 24">
         </svg>
-       <svg class="animate-bounce h-3 w-3 mr-3 bg-green-400 rounded-full" viewBox="0 0 24 24">
+       <svg class="tw-animate-bounce tw-h-3 tw-w-3 tw-mr-3 tw-bg-green-400 tw-rounded-full" viewBox="0 0 24 24">
         </svg>
-       <svg class="animate-bounce h-2 w-2 mr-3 bg-green-300 rounded-full" viewBox="0 0 24 24">
+       <svg class="tw-animate-bounce tw-h-2 tw-w-2 tw-mr-3 tw-bg-green-300 tw-rounded-full" viewBox="0 0 24 24">
         </svg>
              </div>
      

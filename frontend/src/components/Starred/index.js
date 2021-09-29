@@ -24,7 +24,7 @@ function index() {
   );
 
   return (
-    <div className="StarredApp h-full w-full">
+    <div className="StarredApp tw-h-full tw-w-full">
       <StarredHead
         setFileDel={setFileDel}
         setEmptyTrash={setEmptyStarred}

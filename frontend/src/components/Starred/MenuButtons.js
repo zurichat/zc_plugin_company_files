@@ -3,12 +3,12 @@ import React from "react";
 function MenuButtons({ setShowModal, setDeleteModal }) {
   return (
     <div>
-      <button
-        className="block py-4 pl-3 pr-12 md:pr-10 w-full text-left hover:bg-gray-100 focus__lightGreen"
+      {/* <button
+        className="tw-block tw-py-4 tw-pl-3 tw-pr-12 md:tw-pr-10 tw-w-full tw-text-left hover:tw-bg-gray-100 focus__lightGreen"
         onClick={() => setShowModal(true)}
       >
         <svg
-          className="inline-block"
+          className="tw-inline-block"
           width="16"
           height="13"
           viewBox="0 0 16 13"
@@ -20,14 +20,14 @@ function MenuButtons({ setShowModal, setDeleteModal }) {
             fill="#999999"
           />
         </svg>{" "}
-        &nbsp; Restore
-      </button>
+        &nbsp; remove
+      </button> */}
       <button
         onClick={() => setDeleteModal(true)}
-        className="block py-4 pl-3 pr-12 md:pr-10 w-full md:w-max text-left hover:bg-gray-100 focus__lightGreen whitespace-nowrap"
+        className="tw-block tw-py-4 tw-pl-3 tw-pr-12 md:tw-pr-10 tw-w-full md:tw-w-max tw-text-left hover:tw-bg-gray-100 focus__lightGreen tw-whitespace-nowrap"
       >
         <svg
-          className="inline-block"
+          className="tw-inline-block"
           width="17"
           height="17"
           viewBox="0 0 17 17"

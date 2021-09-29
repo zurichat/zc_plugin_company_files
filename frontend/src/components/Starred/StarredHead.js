@@ -21,11 +21,11 @@ function StarredHead({
   };
 
   return (
-    <div className="md:mx-10 mx-4 pt-5">
-      <div className="flex justify-between pt-4 pb-5">
-        <h3 className="font-semibold text-xl itemsStarred">Starred</h3>
+    <div className="md:tw-mx-10 tw-mx-4 tw-pt-5">
+      <div className="tw-flex tw-justify-between tw-pt-4 tw-pb-5">
+        <h3 className="tw-font-semibold tw-text-xl itemsStarred">Starred</h3>
         <p>
-          <span className="pr-2">
+          <span className="tw-pr-2">
             <svg
               width="26"
               height="18"
@@ -41,12 +41,12 @@ function StarredHead({
           </span>
         </p>
       </div>
-      <div className="flex flex-col sm:flex-row justify-between light--Green">
-        <p className="px-2 sm:px-5 py-4 durationGray text-sm">
+      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between light--Green">
+        <p className="tw-px-2 sm:tw-px-5 tw-py-4 durationGray tw-text-sm">
         All starred Files/Folders can be located here. 
         </p>
         <p
-          className="px-2 sm:px-5 py-4 cursor-pointer font-semibold emptyStarred"
+          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold emptyStarred"
           onClick={handleEmptyStarred}
         >
           Add
