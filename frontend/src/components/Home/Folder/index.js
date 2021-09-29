@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import React from "react";
 import Loader from "react-loader-spinner";
+=======
+import React, {useEffect, useState } from "react";
+import Loader from 'react-loader-spinner';
+>>>>>>> beedfb183c60ea45fd27a60a125b25ed1908c164
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
 import FolderComponent from "./Folder";
+import RealTime from "../../../helpers/realtime.helper";
 
 async function fetcher(url) {
   const res = await axios.get(url);
@@ -19,6 +25,18 @@ const API_URL =
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
 
+  const [newFolders, setNewFolders] = useState({ data: {} });
+
+  // let progress = useRef(false)
+
+  useEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+    };
+    fetchNewData();
+    console.log(newFolders);
+  }, []);
+
   if (error)
     return (
       <div className="text-3xl flex items-center justify-center text-red-600">
@@ -30,6 +48,7 @@ const index = () => {
     return (
       <div className="tw-w-full tw-py-10 ">
         <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+<<<<<<< HEAD
           <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
             Folders
           </h2>
@@ -37,6 +56,10 @@ const index = () => {
             to="/folders"
             className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
           >
+=======
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+          <Link to="/all-folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+>>>>>>> beedfb183c60ea45fd27a60a125b25ed1908c164
             View All
           </Link>
         </div>
@@ -55,6 +78,7 @@ const index = () => {
   return (
     <div className="tw-w-full tw-py-10 ">
       <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+<<<<<<< HEAD
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
           Folders
         </h2>
@@ -62,6 +86,10 @@ const index = () => {
           to="/folders"
           className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
         >
+=======
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+        <Link to="/all-folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+>>>>>>> beedfb183c60ea45fd27a60a125b25ed1908c164
           View All
         </Link>
       </div>

@@ -5,7 +5,7 @@ import SnackbarProvider from "react-simple-snackbar";
 const Layout = ({ children }) => {
   return (
     <SnackbarProvider>
-      <div className="tw-flex tw-items-center tw-justify-center tw-min-h-screen">
+      <div className="tw-flex tw-justify-center tw-min-h-screen">
         <div>
           <title>Company Files</title>
           <link rel="icon" href="/favicon.ico" />
