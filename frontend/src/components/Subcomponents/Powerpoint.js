@@ -23,7 +23,8 @@ function Powerpoint({ file }) {
         <FileType
           file={file}
           IconName={GrDocumentPpt}
-          bgColor={"tw-bg-green-400"}
+          bgColor={"tw-bg-file-ppt"}
+          textColor={"tw-text-red-700"}
         />
       </div>
       {openStatus && (

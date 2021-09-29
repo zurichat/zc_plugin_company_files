@@ -23,7 +23,8 @@ function Video({ file }) {
         <FileType
           file={file}
           IconName={RiVideoLine}
-          bgColor={"tw-bg-red-300"}
+          bgColor={"tw-bg-green-300"}
+          textColor={"tw-text-red-300"}
         />
       </div>
       {openStatus && (
