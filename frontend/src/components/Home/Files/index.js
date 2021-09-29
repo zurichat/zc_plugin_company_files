@@ -37,18 +37,19 @@ const index = () => {
     );
   if (!data)
     return (
-<<<<<<< HEAD
-      <div className="w-full py-10">
-        <div className="w-full flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Files</h2>
+      <div className="tw-w-full tw-py-10">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+            Files
+          </h2>
           <Link
-            to="/allfiles"
-            className="text-green-500 text-lg font-semibold hover:text-green-600"
+            to="/allFiles"
+            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
           >
             View All
           </Link>
         </div>
-        <div className="h-48 flex items-center justify-center">
+        <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
             type="ThreeDots"
             color="#00B87C"
@@ -56,17 +57,6 @@ const index = () => {
             width={100}
             visible="true"
           />
-=======
-      <div className="tw-w-full tw-py-10">
-        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
-          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
-          <Link to="/allFiles" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
-            View All
-          </Link>
-        </div>
-        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
-          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
->>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
         </div>
       </div>
     );
@@ -84,11 +74,7 @@ const index = () => {
       </div>
 
       <div className="project-box-wrapper">
-<<<<<<< HEAD
-        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw-mx-2">
-=======
         <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw--mx-2">
->>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
           {data.data.length > 0 ? (
             data.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (

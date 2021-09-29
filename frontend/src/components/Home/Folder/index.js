@@ -28,18 +28,19 @@ const index = () => {
 
   if (!data)
     return (
-<<<<<<< HEAD
-      <div className="w-full py-10 ">
-        <div className="w-full flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
+      <div className="tw-w-full tw-py-10 ">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+            Folders
+          </h2>
           <Link
             to="/folders"
-            className="text-green-500 text-lg font-semibold hover:text-green-600"
+            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
           >
             View All
           </Link>
         </div>
-        <div className="h-48 flex items-center justify-center">
+        <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
             type="ThreeDots"
             color="#00B87C"
@@ -47,36 +48,20 @@ const index = () => {
             width={100}
             visible="true"
           />
-=======
-      <div className="tw-w-full tw-py-10 ">
-        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
-          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
-          <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
-            View All
-          </Link>
-        </div>
-        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
-          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
->>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
         </div>
       </div>
     );
 
   return (
-<<<<<<< HEAD
-    <div className="w-full py-10 ">
-      <div className="w-full flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
-        <Link
-          to="/folders"
-          className="text-green-500 text-lg font-semibold hover:text-green-600"
-        >
-=======
     <div className="tw-w-full tw-py-10 ">
       <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
-        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
-        <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
->>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+          Folders
+        </h2>
+        <Link
+          to="/folders"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+        >
           View All
         </Link>
       </div>

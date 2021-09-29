@@ -3,7 +3,7 @@ import "./trashListView.css";
 import { useState } from "react";
 import useFetch from "./useFetch";
 
-function TrashApp() {
+function Trash() {
   const API_BASE_URL = location.hostname.includes("zuri.chat")
     ? "https://companyfiles.zuri.chat/api/v1"
     : "http://localhost:5500/api/v1";
@@ -40,4 +40,4 @@ function TrashApp() {
   );
 }
 
-export default TrashApp;
+export default Trash;
