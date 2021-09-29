@@ -21,13 +21,14 @@ const index = () => {
 
   if (error)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 py-4">
+      <div className="text-3xl flex items-center justify-center text-red-600">
         failed to load
       </div>
     );
 
   if (!data)
     return (
+<<<<<<< HEAD
       <div className="w-full py-10 ">
         <div className="w-full flex justify-between items-center mb-4">
           <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
@@ -46,11 +47,23 @@ const index = () => {
             width={100}
             visible="true"
           />
+=======
+      <div className="tw-w-full tw-py-10 ">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+          <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+            View All
+          </Link>
+        </div>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
+          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+>>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
         </div>
       </div>
     );
 
   return (
+<<<<<<< HEAD
     <div className="w-full py-10 ">
       <div className="w-full flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
@@ -58,6 +71,12 @@ const index = () => {
           to="/folders"
           className="text-green-500 text-lg font-semibold hover:text-green-600"
         >
+=======
+    <div className="tw-w-full tw-py-10 ">
+      <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+        <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+>>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
           View All
         </Link>
       </div>

@@ -4,12 +4,8 @@ const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
 const mimeTypes = require('mime-types');
-
-const axios = require('axios');
-
 const DatabaseConnection = require('../utils/database.helper');
 const File = new DatabaseConnection('File');
-
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
@@ -174,10 +170,6 @@ exports.getAllFiles = async (req, res) => {
     return new Date(b.dateAdded) - new Date(a.dateAdded);
   });
 
-  // setTimeout( async () => {
-  //   await axios.get('http://localhost:5500/api/v1/files/all');
-  // }, (1000 * 30));
-
   const nonDeletedFiles = data.filter(file => !file.isDeleted);
 
   await RealTime.publish('allFiles', nonDeletedFiles);
@@ -197,6 +189,7 @@ exports.getFileByType = async (req, res) => {
   await RealTime.publish(`${type}Files`, data); 
   res.status(200).send(appResponse(null, matchedFiles, true));
 }
+
 
 exports.fileDetails = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });

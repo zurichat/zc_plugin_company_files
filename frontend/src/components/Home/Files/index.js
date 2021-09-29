@@ -32,11 +32,12 @@ const index = () => {
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4">
-        failed to load
+        failed to load...
       </div>
     );
   if (!data)
     return (
+<<<<<<< HEAD
       <div className="w-full py-10">
         <div className="w-full flex justify-between items-center">
           <h2 className="text-lg font-semibold text-gray-900">Files</h2>
@@ -55,6 +56,17 @@ const index = () => {
             width={100}
             visible="true"
           />
+=======
+      <div className="tw-w-full tw-py-10">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
+          <Link to="/allFiles" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+            View All
+          </Link>
+        </div>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
+          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+>>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
         </div>
       </div>
     );
@@ -64,15 +76,19 @@ const index = () => {
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
-          to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
+          to="/allFiles"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
         >
           View All
         </Link>
       </div>
 
       <div className="project-box-wrapper">
+<<<<<<< HEAD
         <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw-mx-2">
+=======
+        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw--mx-2">
+>>>>>>> 30082eaed79c1ea21acb33273d0e38c0d23e0b44
           {data.data.length > 0 ? (
             data.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
@@ -96,27 +112,21 @@ const index = () => {
                 >
                   <Zip file={file} />
                 </div>
-              ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
-                  className="file tw-flex tw-items-center mr-0 my-5 relative"
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Excel file={file} />
                 </div>
-              ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "wordprocessingml" + "\\b").test(
-                  file.type
-                ) ||
-                new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Document file={file} />
                 </div>
-              ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "presentationml" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
