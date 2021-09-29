@@ -9,7 +9,7 @@ const CustomIcon = ({
   return (
     <img
       {...{
-        className: `${!customHeight ? "h-8" : ""} w-auto ${customClass}`,
+        className: `${!customHeight ? "tw-h-8" : ""} tw-w-auto ${customClass}`,
         ...restProps,
       }}
     />
