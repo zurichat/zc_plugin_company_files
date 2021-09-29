@@ -1,21 +1,40 @@
-import React from "react";
-import dayjs from "dayjs";
+import React, { useState } from "react";
+import { GrDocumentPpt } from "react-icons/gr";
+import FileType from "./FileType";
+import FileMenu from "./FileMenu";
 
 function Powerpoint({ file }) {
+  const [openStatus, setOpenStatus] = useState(false);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
+      setOpenStatus(true);
+    }
+  };
+
   return (
     <>
-      <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
-        <img src="/Icons/docfile.svg" alt="" className="w-7" />
+      <div
+        className="tw-flex tw-items-center tw-w-52 tw-mx-2"
+        onClick={(e) => handleContextMenu(e)}
+        onContextMenu={(e) => handleContextMenu(e)}
+      >
+        <FileType
+          file={file}
+          IconName={GrDocumentPpt}
+          bgColor={"tw-bg-file-ppt"}
+          textColor={"tw-text-red-700"}
+        />
       </div>
-      <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-        <span className="w-full truncate text-[14px] font-semibold">{file.fileName}</span>
-        <span className="text-gray-400 truncate text-[13px]">
-          {dayjs(file.dateAdded).fromNow()}
-        </span>
-      </div>
-      <div className="options self-start mx-3">
-        <img src="/Icons/more-vertical/active.svg" alt="" />
-      </div>
+      {openStatus && (
+        <FileMenu
+          file={file}
+          setOpenStatus={setOpenStatus}
+          openStatus={openStatus}
+          type={"powerpoint"}
+        />
+      )}
     </>
   );
 }

@@ -26,25 +26,25 @@ const SEARCH_CATEGORY_LIST = [
   },
   {
     iconLink: pdfCat,
-    bgColor: "bg-red-100",
+    bgColor: "tw-bg-red-100",
     title: "Page Layout files",
     extensions: ["application/vnd.ms-word.template.macroenabled.12", "application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "text/mathml", "application/vnd.mif", "application/vnd.micrografx.flo", "application/x-director", "application/vnd.framemaker", "application/x-netcdf", "application/x-mspublisher", "application/vnd.frogans.ltf", "application/vnd.adobe.formscentral.fcdt", "application/vnd.hp-pcl", "application/vnd.balsamiq.bmml+xml", "application/msword", "application/vnd.ms-xpsdocument", "application/vnd.quark.quarkxpress", "application/oxps", "application/vnd.ibm.modcap", "application/vnd.framemaker", "application/x-futuresplash", "application/vnd.quark.quarkxpress", "application/vnd.framemaker", "application/vnd.fujixerox.docuworks", "application/rpki-manifest", "application/vnd.quark.quarkxpress", "image/x-pict", "application/vnd.kde.kivio", "application/fdt+xml", "text/x-processing"]
   },
   {
     iconLink: ppCat,
-    bgColor: "bg-orange",
+    bgColor: "tw-bg-orange",
     title: "Presentations",
     extensions: ["application/vnd.google-apps.presentation","application/vnd.ms-powerpoint.presentation.macroenabled.12","application/vnd.oasis.opendocument.presentation","application/vnd.oasis.opendocument.presentation-template","application/vnd.openxmlformats-officedocument.presentationml.presentation","application/vnd.openxmlformats-officedocument.presentationml.slide","application/vnd.openxmlformats-officedocument.presentationml.slideshow", "application/vnd.openxmlformats-officedocument.presentationml.template"]
   },
   {
     iconLink: excelCat,
-    bgColor: "bg-green-100",
+    bgColor: "tw-bg-green-100",
     title: "Spreadsheets",
     extensions: ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel.sheet.macroenabled.12", "application/vnd.ms-excel", "application/vnd.lotus-1-2-3", "application/x-gnumeric", "application/vnd.ms-excel.template.macroenabled.12", "application/vnd.apple.numbers", "application/mathematica", "application/vnd.ms-excel.sheet.binary.macroenabled.12", "application/vnd.sun.xml.calc", "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.spreadsheet-template", "application/octet-stream", "application/vnd.accpac.simply.imp", "application/vnd.xara", "application/rdf+xml", "application/vnd.stardivision.calc", "application/vnd.openxmlformats-officedocument.spreadsheetml.template", "application/vnd.google-apps.spreadsheet", "application/vnd.framemaker", "application/vnd.ms-works", "application/vnd.mobius.dis", "application/vnd.novadigm.edx", "application/vnd.ms-works", "application/vnd.sun.xml.calc.template", "application/vnd.isac.fcs"]
   },
   {
     iconLink: videoCat,
-    bgColor: "bg-red-50",
+    bgColor: "tw-bg-red-50",
     title: "Videos",
     extensions: ["video/1d-interleaved-parityfec","video/3gpp","video/3gpp-tt","video/3gpp2","video/av1","video/bmpeg","video/bt656","video/celb","video/dv","video/encaprtp","video/ffv1","video/flexfec","video/h261","video/h263","video/h263-1998","video/h263-2000","video/h264","video/h264-rcdo","video/h264-svc","video/h265","video/iso.segment","video/jpeg","video/jpeg2000","video/jpm","video/jxsv","video/mj2","video/mp1s","video/mp2p","video/mp2t","video/mp4","video/mp4v-es","video/mpeg","video/mpeg4-generic","video/mpv","video/nv","video/ogg","video/parityfec","video/pointer","video/quicktime","video/raptorfec","video/raw","video/rtp-enc-aescm128","video/rtploopback","video/rtx","video/scip","video/smpte291","video/smpte292m","video/ulpfec","video/vc1","video/vc2","video/vnd.cctv","video/vnd.dece.hd","video/vnd.dece.mobile","video/vnd.dece.mp4","video/vnd.dece.pd","video/vnd.dece.sd","video/vnd.dece.video","video/vnd.directv.mpeg","video/vnd.directv.mpeg-tts","video/vnd.dlna.mpeg-tts","video/vnd.dvb.file","video/vnd.fvt","video/vnd.hns.video","video/vnd.iptvforum.1dparityfec-1010","video/vnd.iptvforum.1dparityfec-2005","video/vnd.iptvforum.2dparityfec-1010","video/vnd.iptvforum.2dparityfec-2005","video/vnd.iptvforum.ttsavc","video/vnd.iptvforum.ttsmpeg2","video/vnd.motorola.video","video/vnd.motorola.videop","video/vnd.mpegurl","video/vnd.ms-playready.media.pyv","video/vnd.nokia.interleaved-multimedia","video/vnd.nokia.mp4vr","video/vnd.nokia.videovoip","video/vnd.objectvideo","video/vnd.radgamettools.bink","video/vnd.radgamettools.smacker","video/vnd.sealed.mpeg1","video/vnd.sealed.mpeg4","video/vnd.sealed.swf","video/vnd.sealedmedia.softseal.mov","video/vnd.uvvu.mp4","video/vnd.vivo","video/vnd.youtube.yt","video/vp8","video/vp9","video/webm","video/x-f4v","video/x-fli","video/x-flv","video/x-m4v","video/x-matroska","video/x-mng","video/x-ms-asf","video/x-ms-vob","video/x-ms-wm","video/x-ms-wmv","video/x-ms-wmx","video/x-ms-wvx","video/x-msvideo","video/x-sgi-movie","video/x-smv"]
   },
@@ -73,8 +73,8 @@ const getCategoryExtension = (cat) => {
 
 const SearchResultCategory = ({ iconLink, bgColor, title, ...restProps }) => {
   return (
-    <div className="flex items-center gap-3 cursor-pointer" {...restProps}>
-      <div className={`min-w-max p-2 rounded-lg ${bgColor || "bg-blue-100"}`}>
+    <div className="tw-flex tw-items-center tw-gap-3 tw-cursor-pointer" {...restProps}>
+      <div className={`tw-min-w-max tw-p-2 tw-rounded-lg ${bgColor || "tw-bg-blue-100"}`}>
         <img {...{ src: iconLink, alt: "icon" }} />
       </div>
       <span className="">{title}</span>
@@ -88,9 +88,9 @@ SearchResultCategory.propTypes = {
 };
 const SearchResultCategoryList = ({ list = [], selectCategoryHandler }) => {
   return (
-    <div className="flex flex-col gap-6">
-      <h2 className="text-text-200">I&apos;m searching for...</h2>
-      <div className="grid grid-flow-row sm:grid-cols-2 lg:grid-cols-3 auto-rows-max gap-8">
+    <div className="tw-flex tw-flex-col tw-gap-6">
+      <h2 className="tw-text-text-200">I&apos;m searching for...</h2>
+      <div className="tw-grid tw-grid-flow-row sm:tw-grid-cols-2 lg:tw-grid-cols-3 tw-auto-rows-max tw-gap-8">
         {list?.map((elm, ind) => (
           <SearchResultCategory
             key={ind}
@@ -108,9 +108,9 @@ SearchResultCategoryList.propTypes = {
 
 const RecentSearchItem = ({ name = "file_name.txt" }) => {
   return (
-    <div className="flex items-center gap-3 cursor-pointer">
+    <div className="tw-flex tw-items-center tw-gap-3 tw-cursor-pointer">
       <img {...{ src: clockIcon, alt: "icon" }} />
-      <span className="text-sm text-text-300">{name}</span>
+      <span className="tw-text-sm tw-text-text-300">{name}</span>
     </div>
   );
 };
@@ -119,8 +119,8 @@ RecentSearchItem.propTypes = {
 };
 const RecentSearchList = ({ list = [] }) => {
   return (
-    <div className="flex flex-col gap-3">
-      <h2 className="text-text-200 mb-1">Recent searches</h2>
+    <div className="tw-flex tw-flex-col tw-gap-3">
+      <h2 className="tw-text-text-200 tw-mb-1">Recent searches</h2>
       {list?.map((elm, ind) => (
         <RecentSearchItem key={ind} {...elm} />
       ))}
@@ -133,7 +133,7 @@ RecentSearchList.propTypes = {
 
 const SelectedCategory = ({ category = "Document", selectCategoryHandler }) => {
   return (
-    <div className="flex items-center justify-center mr-2 py-1 px-3 bg-blue-50 gap-3">
+    <div className="tw-flex tw-items-center tw-justify-center tw-mr-2 tw-py-1 tw-px-3 tw-bg-blue-50 tw-gap-3">
       {category}
       <CustomIcon
         {...{
@@ -192,23 +192,23 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     selectCategory(category);
   };
   return (
-    <div className="flex flex-col w-full relative">
+    <div className="tw-flex tw-flex-col tw-w-full tw-relative">
       <div
         {...{
-          className: `flex items-center justify-between py-1.5 px-2 border border-gray-200 rounded ${customClass}`,
+          className: `tw-flex tw-items-center tw-justify-between tw-py-1.5 tw-px-2 tw-border tw-border-gray-200 tw-rounded ${customClass}`,
           ...restProps,
         }}
       >
         {!selectedCategory ? (
           <p> </p>
         ) : (
-          <SelectedCategory className="mr-4"
+          <SelectedCategory className="tw-mr-4"
             {...{ category: selectedCategory || "", selectCategoryHandler }}
           />
         )}
 
         <input
-          className="flex-1 text-sm justify-start focus:outline-none"
+          className="tw-flex-1 tw-text-sm tw-justify-start focus:tw-outline-none"
           {...{
             value: searchInputValue,
             type: "text",
@@ -223,7 +223,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
           <p> </p>
         ) : (
 
-          <AiOutlineClose className="text-gray-500 cursor-pointer" onClick={clearInput}/>
+          <AiOutlineClose className="tw-text-gray-500 tw-cursor-pointer" onClick={clearInput}/>
           // <CustomIcon
           //   {...{ src: cancelIcon, alt: "cancel icon", onClick: clearInput }}
           // />
@@ -232,7 +232,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
         
       </div>
       {!!showSearchWindow && (
-        <div className="bg-white z-20 w-full absolute top-full mt-1 py-5 px-5 shadow-md flex flex-col gap-10">
+        <div className="tw-bg-white tw-z-20 tw-w-full tw-absolute tw-top-full tw-mt-1 tw-py-5 tw-px-5 tw-shadow-md tw-flex tw-flex-col tw-gap-10">
           {!!selectedCategory ? null : (
             <SearchResultCategoryList
               {...{ list: SEARCH_CATEGORY_LIST, selectCategoryHandler }}
@@ -260,16 +260,16 @@ const SearchBar = ({ className: customClass, ...restProps }) => {
   return (
     <div
       {...{
-        className: `w-full flex items-center justify-between py-3 px-10 ${customClass}`,
+        className: `tw-w-full tw-flex tw-items-center tw-justify-between tw-py-3 tw-px-10 ${customClass}`,
         ...restProps,
       }}
     >
-      <div className="flex items-center gap-4 w-full lg:w-2/3 xl:w-3/5">
+      <div className="tw-flex tw-items-center tw-gap-4 tw-w-full lg:tw-w-2/3 xl:tw-w-3/5">
         <SearchInputWithOnclick className="flex-1" />
       </div>
       <CustomIcon
         {...{ src: onlineUserIcon, alt: "profile image" }}
-        className="h-10 ml-2 -mr-2 hidden md:inline-flex"
+        className="tw-h-10 tw-ml-2 tw--mr-2 tw-hidden md:tw-inline-flex"
       />
     </div>
   );

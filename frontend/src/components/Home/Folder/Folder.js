@@ -13,29 +13,29 @@ function Folder({ folder }) {
 
   return (
     <>
-      <div className="w-full md:w-60 mb-10 px-4 py-7 flex flex-col bg-white rounded-md shadow-md relative">
-        <div className="card flex justify-between mb-6">
+      <div className="tw-w-full md:tw-w-60 tw-mb-10 tw-px-4 tw-py-7 tw-flex tw-flex-col tw-bg-white tw-rounded-md tw-shadow-md tw-relative">
+        <div className="tw-flex tw-justify-between tw-mb-6">
           <div className="icons">
             <img src={folderYellow} alt="folder" />
           </div>
           <div className="icons" onClick={() => openMenu()}>
-            <img src={options} alt="options" className="cursor-pointer" />
+            <img src={options} alt="options" className="tw-cursor-pointer" />
           </div>
         </div>
-        <div className="card text-sm w-full flex flex-col justify-between items-center text-[13px]">
-          <div className="w-full">
-            <span className="block font-semibold truncate">
+        <div className="tw-text-sm tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-text-[13px]">
+          <div className="tw-w-full">
+            <span className="tw-block tw-font-semibold tw-truncate">
               {folder.folderName}
             </span>
           </div>
 
-          <div className="icons mt-1 w-full flex items-start justify-between">
-            <span className="block text-gray-400">140 Files</span>
-            <div className="avi w-16 cursor-pointer">
+          <div className="icons tw-mt-1 tw-w-full tw-flex tw-items-start tw-justify-between">
+            <span className="tw-block tw-text-gray-400">140 Files</span>
+            <div className="avi tw-w-16 tw-cursor-pointer">
               <img
                 src={folderUsers}
                 alt="folder user"
-                className="-mr-4 w-full"
+                className="tw--mr-4 tw-w-full"
               />
             </div>
           </div>

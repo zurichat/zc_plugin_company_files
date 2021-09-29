@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import Loader from 'react-loader-spinner';
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
 import FolderComponent from "./Folder";
+import RealTime from "../../../helpers/realtime.helper";
 
 async function fetcher(url) {
   const res = await axios.get(url);
@@ -17,6 +18,18 @@ const API_URL = window.location.hostname.includes('localhost') || window.locatio
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
 
+  const [newFolders, setNewFolders] = useState({ data: {} });
+
+  // let progress = useRef(false)
+
+  useEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+    };
+    fetchNewData();
+    console.log(newFolders);
+  }, []);
+
   if (error)
     return (
       <div className="text-3xl flex items-center justify-center text-red-600">
@@ -26,28 +39,28 @@ const index = () => {
 
   if (!data)
     return (
-      <div className="w-full py-10 ">
-        <div className="w-full flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
-          <Link to="/folders" className="text-green-500 text-lg font-semibold hover:text-green-600">
+      <div className="tw-w-full tw-py-10 ">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+          <Link to="/all-folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
             View All
           </Link>
         </div>
-        <div className='h-48 flex items-center justify-center'>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
           <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
         </div>
       </div>
     );
 
   return (
-    <div className="w-full py-10 ">
-      <div className="w-full flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Folders</h2>
-        <Link to="/folders" className="text-green-500 text-lg font-semibold hover:text-green-600">
+    <div className="tw-w-full tw-py-10 ">
+      <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
+        <Link to="/all-folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
           View All
         </Link>
       </div>
-      <div className="flex flex-wrap justify-between">
+      <div className="tw-flex tw-flex-wrap tw-justify-between">
         {data.data.length ? (
           data.data
             .slice(0, 4)
@@ -55,7 +68,7 @@ const index = () => {
               <FolderComponent key={folder.folderId} folder={folder} />
             ))
         ) : (
-          <div className="text-3xl flex items-center justify-center">
+          <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
             No Folders
           </div>
         )}
