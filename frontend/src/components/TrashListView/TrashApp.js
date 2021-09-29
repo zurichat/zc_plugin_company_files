@@ -11,6 +11,7 @@ function TrashApp() {
   const [fileDel, setFileDel] = useState(null);
   const [restore, setRestore] = useState(null);
   const [emptyTrash, setEmptyTrash] = useState(null);
+  const [isGrid, setIsGrid] = useState(false);
 
   const {
     data = [],
@@ -25,7 +26,7 @@ function TrashApp() {
   );
 
   return (
-    <div className="TrashApp tw-h-full tw-w-full tw-font-lato">
+    <div className='TrashApp tw-h-full tw-w-full tw-font-lato'>
       <TrashHead
         setFileDel={setFileDel}
         setRestore={setRestore}
@@ -35,6 +36,8 @@ function TrashApp() {
         isLoading={isLoading}
         error={error}
         apiBase={API_BASE_URL}
+        isGrid={isGrid}
+        setIsGrid={setIsGrid}
       />
     </div>
   );

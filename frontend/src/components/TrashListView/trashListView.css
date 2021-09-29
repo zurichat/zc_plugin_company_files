@@ -50,6 +50,38 @@
 .preloader .line12 {
   animation-delay: 800ms;
 }
+.trashList-gridView {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4;
+  @apply pt-4;
+}
+
+.trashList-gridView_trashItem {
+  @apply relative;
+  @apply flex flex-row flex-nowrap gap-2;
+  @apply cursor-pointer;
+  @apply p-2;
+  @apply hover:bg-bgLight;
+}
+.trashList-gridView_trashItem_img {
+  @apply flex-shrink-0 w-1/5 p-2 bg-avatar-five rounded-lg;
+}
+
+.trashList-gridView_trashItem_desc {
+  @apply flex-shrink-0 w-4/5;
+  @apply flex flex-col;
+}
+.trashList-gridView_trashItem_desc_name,
+.trashList-gridView_trashItem_desc_date {
+  @apply h-1/2;
+  @apply flex items-center;
+}
+
+.trashList-gridView_trashItem_desc_name {
+  @apply font-bold text-sm;
+}
+.trashList-gridView_trashItem_desc_date {
+  @apply font-normal text-xs text-text-navbar;
+}
 
 @keyframes opacity-1 {
   0% {

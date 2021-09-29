@@ -5,6 +5,7 @@ import fileIcon from "./file-icon.png";
 import bin from "./bin 1.png";
 import Modal from "./Modal";
 import Loader from "./Loader";
+import TrashGridView from "./TrashGridView";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
@@ -15,6 +16,7 @@ function TrashList({
   setData,
   setFileDel,
   setRestore,
+  isGrid,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -93,22 +95,34 @@ function TrashList({
     <>
       <div>
         {error && (
+<<<<<<< HEAD
           <div className="tw-flex tw-justify-center tw-text-center tw-mt-60 tw-tracking-wider tw-font-semibold tw-text-text-grey">
+=======
+          <div className='flex justify-center text-center mt-60 tracking-wider font-semibold itemsTrash'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
             {error}
           </div>
         )}
         {isLoading && <Loader />}
         {isEmpty(data) && !isLoading && !error ? (
+<<<<<<< HEAD
           <div className="tw-text-center tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-96">
             <img src={bin} alt="Bin icon" />
             <h3 className="tw-text-text-grey tw-font-semibold tw-pt-2">
               No items
             </h3>
             <p className="tw-text-text-grey tw-pt-2">
+=======
+          <div className='text-center flex flex-col justify-center items-center h-96'>
+            <img src={bin} alt='Bin icon' />
+            <h3 className='itemsTrash font-semibold pt-2'>No items</h3>
+            <p className='itemsTrash pt-2'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
               items moved to the trash will appear here
             </p>
           </div>
         ) : null}
+<<<<<<< HEAD
         {!isEmpty(data) && !error && !isLoading ? (
           <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate    borderSpace tableHide">
             <thead className="tw-text-left tw-content-box">
@@ -120,21 +134,44 @@ function TrashList({
                 <th></th>
                 <th className="tw-block md:tw-hidden"></th>
                 <th className="tw-font-semibold trashTheading tw-whitespace-nowrap tw-hidden md:tw-block">
+=======
+        {!isEmpty(data) && !error && !isLoading && !isGrid && (
+          <table className='w-full table-fixed mt-2 pb-14 px-2 sm:pl-5 border-separate borderSpace tableHide'>
+            <thead className='text-left content-box'>
+              <tr>
+                <th className='font-semibold trashTheading'>Name</th>
+                <th className='hidden md:block'></th>
+                <th className='hidden md:block'></th>
+                <th></th>
+                <th></th>
+                <th className='block md:hidden'></th>
+                <th className='font-semibold trashTheading whitespace-nowrap hidden md:block'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
                   Date Deleted
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
+<<<<<<< HEAD
                 <th className="tw-font-semibold trashTheading tw-whitespace-nowrap tw-pr-3 sm:tw-pr-0">
                   <span className="tw-hidden sm:tw-inline">File </span>Size
                 </th>
               </tr>
             </thead>
             <tbody className="tw-text-text-grey">
+=======
+                <th className='font-semibold trashTheading whitespace-nowrap pr-3 sm:pr-0'>
+                  <span className='hidden sm:inline'>File </span>Size
+                </th>
+              </tr>
+            </thead>
+            <tbody className='itemsTrash'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
               {data.map((data, index) => (
                 <tr
                   key={data._id}
                   onClick={() => handleClick(index, data._id)}
+<<<<<<< HEAD
                   className="lightGrayHover tw-cursor-pointer hover:tw-bg-gray-100"
                 >
                   <td
@@ -154,14 +191,44 @@ function TrashList({
                   <td></td>
                   <td className="tw-block md:tw-hidden"></td>
                   <td className="tw-py-2 tw-text-xs tw-relative tw-hidden md:tw-block">
+=======
+                  className='lightGrayHover cursor-pointer hover:bg-gray-100'
+                >
+                  <td
+                    className='
+                      py-2 whitespace-nowrap text-sm lowercase'
+                  >
+                    <img
+                      src={fileIcon}
+                      alt='File icon'
+                      className='inline-block'
+                    />{" "}
+                    {handleTruncateName()[index]}
+                  </td>
+                  <td className='hidden md:block'></td>
+                  <td className='hidden md:block'></td>
+                  <td></td>
+                  <td></td>
+                  <td className='block md:hidden'></td>
+                  <td className='py-2 text-xs relative hidden md:block'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
                     {handleNewDate()[index]}
 
                     {/* Menu buttons for big screen */}
                     <div
                       //assign the created reference to each array item
+<<<<<<< HEAD
 
                       ref={(el) => (menu.current[index] = el)}
                       className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
+=======
+                      ref={(el) =>
+                        (menu.current = menu.current
+                          ? [...menu.current, el]
+                          : [el])
+                      }
+                      className='absolute top-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none'
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
                     >
                       <Buttons
                         setShowModal={setShowModal}
@@ -172,7 +239,11 @@ function TrashList({
                   <td></td>
                   <td></td>
                   <td></td>
+<<<<<<< HEAD
                   <td className="tw-py-2 tw-text-xs tw-relative">
+=======
+                  <td className='py-2 text-xs relative'>
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
                     {handleFormatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
@@ -182,7 +253,11 @@ function TrashList({
                       <div
                         //assign the created reference to each array item
                         ref={(el) => (menu.current[index] = el)}
+<<<<<<< HEAD
                         className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
+=======
+                        className='absolute top-0 right-0 z-10 bg-white rounded shadow-md opacity-0 text-sm md:block pointer-events-none'
+>>>>>>> 739cd0e4bf0dc706cea97fcabd8ce0c9b89c6d89
                       >
                         <Buttons
                           setShowModal={setShowModal}
@@ -195,7 +270,21 @@ function TrashList({
               ))}
             </tbody>
           </table>
-        ) : null}
+        )}
+        {/* Show grid view if isGrid is true */}
+        {!isEmpty(data) && data && !isLoading && isGrid && (
+          <TrashGridView
+            fileIcon={fileIcon}
+            data={data}
+            truncateName={handleTruncateName}
+            newDate={handleNewDate}
+            menuRef={menu}
+            handleClick={handleClick}
+            Buttons={Buttons}
+            setShowModal={setShowModal}
+            setDeleteModal={setDeleteModal}
+          />
+        )}
       </div>
       <Modal
         setShowModal={setShowModal}
