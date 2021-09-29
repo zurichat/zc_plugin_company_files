@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentExcel } from "react-icons/gr";
+import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,8 +22,9 @@ function Excel({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentExcel}
-          bgColor={"tw-bg-green-400"}
+          IconName={BsFileEarmarkSpreadsheet}
+          bgColor={"tw-bg-file-xls"}
+          textColor={"tw-text-green-700"}
         />
       </div>
       {openStatus && (
