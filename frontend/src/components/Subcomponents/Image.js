@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import FileMenu from "./FileMenu";
-import Img from "../../../public/Icons/imgfile.svg";
-import ImagePreview from "../ImagePreview/index";
 import { BsCardImage } from "react-icons/bs";
-import { HandleClickEvent } from "./HandleClickEvent";
 import FileType from "./FileType";
 
 function Image({ file }) {
@@ -24,10 +20,19 @@ function Image({ file }) {
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
       >
-        <FileType file={file} IconName={BsCardImage} />
+        <FileType
+          file={file}
+          IconName={BsCardImage}
+          bgColor={"tw-bg-blue-300"}
+        />
       </div>
       {openStatus && (
-        <FileMenu file={file} setOpenStatus={setOpenStatus} openStatus={openStatus} type={"image"} />
+        <FileMenu
+          file={file}
+          setOpenStatus={setOpenStatus}
+          openStatus={openStatus}
+          type={"image"}
+        />
       )}
     </>
   );

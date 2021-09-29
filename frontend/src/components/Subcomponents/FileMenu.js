@@ -18,15 +18,13 @@ import { FiCopy } from "react-icons/fi/index";
 import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
-import DocumentPreview from "../Preview/DocumentPreview";
-import PdfPreview from "../Preview/PdfPreview";
-import PptPreview from "../Preview/PdfPreview";
-import ExcelPreview from "../Preview/ExcelPreview";
+import Preview from "../Preview/Preview";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
   function previewCmd() {
+    console.log(file)
     setOpenPreview(true);
   }
 
@@ -92,10 +90,16 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             />
           </FileMenuButton>
           <FileMenuButton name="Copy" cmd={copy}>
-            <FiCopy className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="copy" />
+            <FiCopy
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="copy"
+            />
           </FileMenuButton>
           <FileMenuButton name="Cut" cmd={cut}>
-            <GrCut className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="cut" />
+            <GrCut
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="cut"
+            />
           </FileMenuButton>
           <FileMenuButton name="Move to" cmd={moveTo}>
             <HiOutlineFolderRemove
@@ -135,14 +139,8 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             <VideoPreview file={file} setOpenStatus={setOpenStatus} />
           ) : type === "image" ? (
             <ImagePreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "pdf" ? (
-            <PdfPreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "word" ? (
-            <DocumentPreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "powerpoint" ? (
-            <PptPreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "excel" ? (
-            <ExcelPreview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "pdf" || "word" || "powerpoint" || "excel" || "txt" ? (
+            <Preview file={file} setOpenStatus={setOpenStatus} />
           ) : (
             <div>
               <p>Can't preview this file</p>
