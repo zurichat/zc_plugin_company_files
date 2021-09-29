@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory,
 } from "react-router-dom";
 
 import FileUpload from "../Home/index";
@@ -26,15 +25,11 @@ import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
 import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
-import ScrollRestoration from "../Subcomponents/ScrollRestoration"
+import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
 
 const Main = () => {
-  const history = useHistory();
-  function goHome() {
-    history.push("/companyfiles");
-  }
   const headerConfig = {
     name: "CompanyFiles Plugin",
     logo: "https://www.pngfind.com/pngs/m/19-194225_png-file-svg-hashtag-icon-png-transparent-png.png",
@@ -45,7 +40,8 @@ const Main = () => {
     ],
     userCount: 300,
     eventTitle: () => {
-      goHome();
+      const currentState = history.state;
+      history.pushState(currentState, "", "/companyfiles");
     },
     eventThumbnail: () => {
       //Block of code to be triggered on thumbnail click
@@ -83,10 +79,10 @@ const Main = () => {
             <Route path="/activities" exact>
               <Activities />
             </Route>
-            <Route path="/allFiles" exact>
+            <Route path="/all-files" exact>
               <AllFiles />
             </Route>
-            <Route path="/allFolders" exact>
+            <Route path="/all-folders" exact>
               <AllFolders />
             </Route>
             <Route path="/test" exact>

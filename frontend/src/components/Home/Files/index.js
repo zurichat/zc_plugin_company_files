@@ -91,7 +91,7 @@ const index = () => {
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
-          to="/allFiles"
+          to="/all-files"
           className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
         >
           View All
