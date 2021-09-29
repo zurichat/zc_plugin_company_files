@@ -1,10 +1,6 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
-import RecentlyViewed from "./RecentlyViewed";
-import Folder from "./Folder/index";
-import Files from "./Files/index";
+import Files from "./AllFiles";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
-import FileOptions from "../FileUpload/FileOptions";
-import ShortCut from "./ShortCut";
 import RealTime from "../../helpers/realtime.helper";
 
 
@@ -12,7 +8,7 @@ import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
 import { useSnackbar } from 'react-simple-snackbar';
 
-const Index = () => {
+const AllFiles = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
@@ -76,11 +72,6 @@ const Index = () => {
       >
         Add File
       </button>
-
-      <FileOptions options={options} showUploadModal={showUploadModal} />
-      <ShortCut />
-      <RecentlyViewed />
-      <Folder />
       <Files />
       {upload && (
         <FileUpload
@@ -96,4 +87,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default AllFiles;
