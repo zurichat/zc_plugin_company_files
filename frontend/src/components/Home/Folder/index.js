@@ -18,14 +18,14 @@ const index = () => {
 
   if (error)
     return (
-      <div className="text-3xl flex items-center justify-center text-red-600">
+      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 py-4">
         failed to load
       </div>
     );
 
   if (!data)
     return (
-      <div className="text-3xl flex items-center justify-center">
+      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center py-4">
         loading...
       </div>
     );
@@ -35,8 +35,13 @@ const index = () => {
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
         <Link
+<<<<<<< HEAD
           to="/folders"
           className="tw-text-green-500 tw-text-lg tw-font-semibold hover:text-green-600"
+=======
+          to="/all-folders"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
+>>>>>>> db92099c98944f4d3884d39409cb4a5e9c52fc5e
         >
           View All
         </Link>

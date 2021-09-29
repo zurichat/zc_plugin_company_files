@@ -271,20 +271,20 @@ const UploadProgressModal = ({
   const [ totalUploadedChunkSize, setTotalUploadedChunkSize ] = useState(0);
 
   return (
-    <div className="absolute bottom-12 right-12 z-30">
+    <div className="tw-absolute tw-bottom-12 tw-right-12 tw-z-30">
       {progress && (
-        <div style={{ minWidth: "400px", padding: "24px", maxWidth: "420px" }} className="w-[420px] h-[380px] px-[24px] py-[24px] bg-white shadow-2xl rounded-2xl">
-          <div className="w-full flex items-center justify-between mb-4">
-            <div className="text-gray-500">
+        <div style={{ minWidth: "400px", padding: "24px", maxWidth: "420px" }} className="tw-w-[420px] tw-h-[380px] tw-px-[24px] tw-py-[24px] tw-bg-white tw-shadow-2xl tw-rounded-2xl">
+          <div className="tw-w-full tw-flex tw-items-center tw-justify-between tw-mb-4">
+            <div className="tw-text-gray-500">
               <p>Your Uploads</p>
-              <div className="flex justify-between text-gray-400 my-1 ">
-                <span className="mr-3">40%</span>
-                <span style={{ width: "24px" }} className="inline-block h-[24px] mx-1 text-center rounded-full bg-green-500 text-white">
+              <div className="tw-flex tw-justify-between tw-text-gray-400 tw-my-1 ">
+                <span className="tw-mr-3">40%</span>
+                <span style={{ width: "24px" }} className="tw-inline-block tw-h-[24px] tw-mx-1 tw-text-center tw-rounded-full tw-bg-green-500 tw-text-white">
                   &#x2713;
                 </span>
                 
-                <span className=" mx-1">{totalUploadedFiles}</span>
-                <span style={{ width: "24px" }} className="inline-block h-[24px] mx-1 text-center rounded-full bg-red-500 text-white">
+                <span className="tw-mx-1">{totalUploadedFiles}</span>
+                <span style={{ width: "24px" }} className="tw-inline-block tw-h-[24px] tw-mx-1 tw-text-center tw-rounded-full tw-bg-red-500 tw-text-white">
                 
                   &#10005;
                 </span>
@@ -293,13 +293,13 @@ const UploadProgressModal = ({
             </div>
             <button
               onClick={hideUploadModal}
-              className="px-3 py-1 bg-white border-2 border-green-400 text-green-400 text-[12px] rounded-md"
+              className="tw-px-3 tw-py-1 tw-bg-white tw-border-2 tw-border-green-400 tw-text-green-400 tw-text-[12px] tw-rounded-md"
             >
               Close
             </button>
           </div>
           {files && (
-            <div className="w-full mb-4 h-[280px] overflow-y-auto shadow-inner" style={{ overflowX: "visible"}}>
+            <div className="tw-w-full tw-mb-4 tw-h-[280px] tw-overflow-y-auto tw-shadow-inner" style={{ overflowX: "visible"}}>
               <ProgressWrapper files={files} progress={progress}
                 setTotalUploadedFiles = {setTotalUploadedFiles}
                 setTotalUploadingFiles = {setTotalUploadingFiles}

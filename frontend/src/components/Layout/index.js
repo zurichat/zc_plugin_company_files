@@ -1,18 +1,9 @@
 import PropTypes from "prop-types";
-// import Head from "next/head";
 import React from "react";
-// import Sidebar from "../Sidebar";
 
 const Layout = ({ children }) => {
   return (
-    <div className="tw-flex tw-items-center tw-justify-center tw-min-h-screen">
-      <div>
-        <title>Company files</title>
-        <link rel="icon" href="/favicon.ico" />
-        <script src="/frontend/src/components/Collaborators/PermissionSelector.js"></script>
-      </div>
-
-      {/* <Sidebar /> */}
+    <div className="tw-flex tw-items-center">
       <main className="tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full">
         {children}
       </main>
