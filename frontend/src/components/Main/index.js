@@ -3,6 +3,8 @@ import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import Files from "../Home/Files";
+import AllFiles from "../AllFiles/index";
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
@@ -66,20 +68,17 @@ const Main = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            {/* <Route path="/add-new" exact>
-            <AddNewTextDoc />
-          </Route> */}
             <Route path="/add-new" exact>
               <AddNewDoc />
             </Route>
             <Route path="/activities" exact>
               <Activities />
             </Route>
-            <Route path="/all-files" exact>
-              <AllFiles />
+            <Route path="/files" exact>
+              <Files />
             </Route>
-            <Route path="/all-folders" exact>
-              <AllFolders />
+            <Route path="/allfiles" exact>
+              <AllFiles />
             </Route>
             <Route path="/test" exact>
               <Test />
@@ -96,10 +95,10 @@ const Main = () => {
             <Route path="/trashapp" exact>
               <TrashApp />
             </Route>
-            <Route path="/help/" exact>
+            <Route path="/help" exact>
               <Help />
             </Route>
-            <Route path="/collaborators/" exact>
+            <Route path="/collaborators" exact>
               <Collaborators />
             </Route>
           </Switch>

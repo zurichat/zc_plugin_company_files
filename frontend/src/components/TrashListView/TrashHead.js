@@ -49,9 +49,12 @@ function TrashHead({
           Items in trash are deleted forever after 30 days
         </p>
         <p
-          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-text-primary emptyTrash"
+          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-text-primary tw-has-tooltip emptyTrash"
           onClick={handleEmptyTrash}
         >
+          <span class="tw-tooltip tw-rounded tw-shadow-lg tw-p-1 tw-bg-gray-100 tw-text-red-500 tw--mt-8">
+            Some Nice Tooltip Text
+          </span>
           Empty Trash
         </p>
       </div>

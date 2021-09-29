@@ -10,7 +10,7 @@ import RealTime from "../../helpers/realtime.helper";
 
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
-import SnackBar from "reuse-react-snackbar";
+import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
   const [upload, setUpload] = useState(false);
@@ -18,6 +18,10 @@ const Index = () => {
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
   const [newFile, setNewFile] = useState({ data: {} });
+  const [SnackBar] = useSnackbar({
+    position: 'bottom-center',
+    style: { backgroundColor: '#00B87C', color: '#fff' }
+  });
 
   // let progress = useRef(false)
 
@@ -87,27 +91,7 @@ const Index = () => {
           hideProgressModal={hideProgressModal}
         />
       )}
-      {Object.keys(newFile.data).length && (
-        <SnackBar
-          message={newFile.data.fileName + " added successfully"}
-          mode="SUCCESS"
-          open={true}
-          timeout={10000}
-          style={{
-            textStyle: {
-              color: "white",
-            },
-            buttonStyle: {
-              backgroundColor: "white",
-              color: "black",
-            },
-            containerStyle: {
-              background: "grey",
-              boxShadow: "black 6px 7px 12px -4px",
-            },
-          }}
-        />
-      )}
+      {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)}
     </div>
   );
 };
