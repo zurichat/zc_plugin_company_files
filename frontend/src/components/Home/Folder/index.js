@@ -42,7 +42,7 @@ const index = () => {
       <div className="tw-w-full tw-py-10 ">
         <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
           <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Folders</h2>
-          <Link to="/folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+          <Link to="/all-folders" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
             View All
           </Link>
         </div>
