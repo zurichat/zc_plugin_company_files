@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
 import FolderComponent from "./Folder";
+import RealTime from "../../../helpers/realtime.helper";
 
 async function fetcher(url) {
   const res = await axios.get(url);
@@ -15,6 +16,18 @@ const API_URL = window.location.hostname.includes("localhost")
 
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
+
+  const [newFolders, setNewFolders] = useState({ data: {} });
+
+  // let progress = useRef(false)
+
+  useEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+    };
+    fetchNewData();
+    console.log(newFolders);
+  }, []);
 
   if (error)
     return (

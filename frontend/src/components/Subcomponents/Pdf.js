@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentPdf } from "react-icons/gr";
+import { AiOutlineFilePdf } from "react-icons/ai";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,8 +22,9 @@ function Pdf({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentPdf}
-          bgColor={"tw-bg-green-400"}
+          IconName={AiOutlineFilePdf}
+          bgColor={"tw-bg-file-pdf"}
+          textColor={"tw-text-red-800"}
         />
       </div>
       {openStatus && (

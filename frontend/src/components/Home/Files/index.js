@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useSWR from "swr";
@@ -12,6 +12,12 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
+import RealTime from "../../../helpers/realtime.helper";
+import {
+  SubscribeToChannel,
+  GetWorkspaceUsers,
+  GetUserInfo,
+} from "@zuri/control";
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
@@ -24,6 +30,38 @@ const API_URL = window.location.hostname.includes("localhost")
   : "https://companyfiles.zuri.chat/api/v1";
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
+
+  const [newFiles, setNewFiles] = useState();
+  const [fileSubscription, setFileSubscription] = useState();
+
+  useEffect(() => {
+    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+      console.log(stuff.data.event, me, you);
+      setFileSubscription(stuff.data.event);
+    });
+    console.log(fileSubscription);
+    (async function () {
+      try {
+        const info = await GetUserInfo();
+        console.log(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    (async function () {
+      try {
+        const users = await GetWorkspaceUsers();
+        console.log(users);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
+  }, []);
 
   if (error)
     return (
@@ -52,7 +90,7 @@ const index = () => {
 
       <div className="project-box-wrapper">
         <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw-mx-2">
-        {data.data.length > 0 ? (
+          {data.data.length > 0 ? (
             data.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
@@ -76,7 +114,8 @@ const index = () => {
                   <Zip file={file} />
                 </div>
               ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ? (
+                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center mr-0 my-5 relative"
