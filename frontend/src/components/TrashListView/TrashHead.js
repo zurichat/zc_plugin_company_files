@@ -24,7 +24,7 @@ function TrashHead({
   return (
     <div className="md:tw-mx-10 tw-mx-4 tw-pt-5">
       <div className="tw-flex tw-justify-between tw-pt-4 tw-pb-5">
-        <h3 className="tw-font-semibold tw-text-xl tw-text-grey">
+        <h3 className="tw-font-semibold tw-text-lg tw-text-text-grey">
           Items in my trash
         </h3>
         <p>

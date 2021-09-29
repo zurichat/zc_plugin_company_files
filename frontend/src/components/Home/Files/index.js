@@ -52,7 +52,7 @@ const index = () => {
 
       <div className="project-box-wrapper">
         <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw-mx-2">
-          {data.data.length > 0 ? (
+        {data.data.length > 0 ? (
             data.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
@@ -75,21 +75,27 @@ const index = () => {
                 >
                   <Zip file={file} />
                 </div>
-              ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center mr-0 my-5 relative"
                 >
                   <Excel file={file} />
                 </div>
-              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "wordprocessingml" + "\\b").test(
+                  file.type
+                ) ||
+                new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Document file={file} />
                 </div>
-              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "presentationml" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"

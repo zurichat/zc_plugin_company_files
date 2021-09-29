@@ -87,7 +87,7 @@ const AllFiles = () => {
     );
 
   return (
-    <div className="tw-w-full tw-py-10">
+    <div className="tw-w-full tw-py-2 tw-px-2 md:tw-px-5 tw-items-center">
       <button
         onClick={showOptions}
         className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
@@ -96,9 +96,9 @@ const AllFiles = () => {
       </button>
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2">
-        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900 tw-flex tw-flex-row">
           <FaArrowLeft
-            className="tw-text-lg tw-text-black tw-mr-3"
+            className="tw-text-lg tw-text-black tw-mr-3 tw-self-center"
             onClick={() => goBack()}
           />
           All Files
@@ -146,21 +146,27 @@ const AllFiles = () => {
                 >
                   <Zip file={file} />
                 </div>
-              ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center mr-0 my-5 relative"
                 >
                   <Excel file={file} />
                 </div>
-              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "wordprocessingml" + "\\b").test(
+                  file.type
+                ) ||
+                new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Document file={file} />
                 </div>
-              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "presentationml" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"

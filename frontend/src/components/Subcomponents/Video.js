@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import FileMenu from "./FileMenu";
-import Vid from "../../../public/Icons/video.svg";
-import VideoPreview from "../VideoPreview/Index";
 import { RiVideoLine } from "react-icons/ri";
-import { HandleClickEvent } from "./HandleClickEvent";
 import FileType from "./FileType";
 
 function Video({ file }) {
@@ -24,10 +20,19 @@ function Video({ file }) {
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
       >
-        <FileType file={file} IconName={RiVideoLine} />
+        <FileType
+          file={file}
+          IconName={RiVideoLine}
+          bgColor={"tw-bg-red-300"}
+        />
       </div>
       {openStatus && (
-        <FileMenu file={file} setOpenStatus={setOpenStatus} openStatus={openStatus} type={"video"} />
+        <FileMenu
+          file={file}
+          setOpenStatus={setOpenStatus}
+          openStatus={openStatus}
+          type={"video"}
+        />
       )}
     </>
   );

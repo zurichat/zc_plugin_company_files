@@ -3,8 +3,6 @@ import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Files from "../Home/Files";
-// import AllFiles from "../allFiles/index";
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
@@ -23,6 +21,26 @@ import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
 import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
+import Parcel from "single-spa-react/parcel";
+import { pluginHeader } from "@zuri/plugin-header";
+
+const headerConfig = {
+  name: "CompanyFiles Plugin",
+  logo: "https://www.pngfind.com/pngs/m/19-194225_png-file-svg-hashtag-icon-png-transparent-png.png",
+  thumbnailUrl: [
+    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
+    "https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg",
+    "https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png",
+  ],
+  userCount: 300,
+  eventTitle: () => {
+    window.history.back();
+  },
+  eventThumbnail: () => {
+    //Block of code to be triggered on thumbnail click
+  },
+  hasThumbnail: true,
+};
 
 const Main = () => {
   return (
@@ -35,7 +53,12 @@ const Main = () => {
       <Router basename="/companyfiles">
         <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center tw-overflow-y-auto ">
           <SearchBar />
-          <Header />
+          <Parcel
+            config={pluginHeader}
+            wrapWith="div"
+            wrapStyle={{ width: "100%" }}
+            headerConfig={headerConfig}
+          />
           {/* <div className="block w-full h-11 bg-primary"></div> */}
           {/* <ComponentToTest /> */}
 
@@ -57,9 +80,6 @@ const Main = () => {
             </Route>
             <Route path="/all-folders" exact>
               <AllFolders />
-            </Route>
-            <Route path="/allfiles" exact>
-              <AllFiles />
             </Route>
             <Route path="/test" exact>
               <Test />

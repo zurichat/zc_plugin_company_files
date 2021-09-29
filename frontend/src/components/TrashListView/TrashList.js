@@ -159,11 +159,8 @@ function TrashList({
                     {/* Menu buttons for big screen */}
                     <div
                       //assign the created reference to each array item
-                      ref={(el) =>
-                        (menu.current = menu.current
-                          ? [...menu.current, el]
-                          : [el])
-                      }
+
+                      ref={(el) => (menu.current[index] = el)}
                       className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
                     >
                       <Buttons
@@ -184,12 +181,7 @@ function TrashList({
                     {width <= breakpoint ? (
                       <div
                         //assign the created reference to each array item
-                        ref={(el) =>
-                          (menu.current = menu.current
-                            ? [...menu.current, el]
-                            : [el])
-                        }
-                        // ref={(el) => (menu.current[index] = el)}
+                        ref={(el) => (menu.current[index] = el)}
                         className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
                       >
                         <Buttons

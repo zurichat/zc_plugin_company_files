@@ -5,43 +5,9 @@
   empty-cells: show;
 }
 
-/* .light--Green,
-.focus__lightGreen:active {
-  background-color: #f0fbf8;
-} */
-
-/* .durationGray {
-  color: #616161;
-} */
-
-/* .itemsTrash {
-  color: #4a4a4a;
-} */
-
-/* .lightGrayHover:hover {
-  background-color: #fafafa;
-} */
-
-/* .trashModal__cancel {
-  border-color: #00b87c;
-} */
-
-/* .trashModal__cancel,
-.emptyTrash,
-.preloader .loading {
-  color: #00b87c;
-} */
-
-/* .modal__menu {
-  background-color: #00b87c;
-} */
-
-.trashTheading {
-  font-size: 0.9375rem;
-}
-
+.trashTheading,
 .emptyTrash {
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
 }
 
 .preloader .line {
