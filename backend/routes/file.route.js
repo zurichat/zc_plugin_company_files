@@ -25,7 +25,10 @@ const {
   searchByType,
   getFilesWithSameFolderId,
   cropImage,
-  recentlyViewed
+  recentlyViewed,
+  starFile,
+  unStarFile,
+  cropImage
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -103,5 +106,10 @@ router.get("/searchByType", searchByType);
 // GET RECENTLY VIEWED FILES
 router.get("/recentlyViewed", recentlyViewed);
 
+// STAR A FILE
+router.put('/starFile/:id', starFile);
+
+// UNSTAR A FILE
+router.put('/unStarFile/:id', unStarFile);
 
 module.exports = router;

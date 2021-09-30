@@ -3,7 +3,7 @@ const FolderSchema = require('../models/Folder.js');
 const appResponse = require('../utils/appResponse');
 const DatabaseConnection = require('../utils/database.helper');
 const RealTime = require('../utils/realtime.helper');
-const { NotFoundError } = require('../utils/appError');
+const { NotFoundError, BadRequestError, InternalServerError } = require('../utils/appError');
 
 const Folders = new DatabaseConnection('Folder');
 
@@ -91,3 +91,44 @@ exports.recentlyViewed = async(req, res) => {
   res.status(200).json(data.slice(0, 5))
 } 
 
+// search starred folder
+exports.searchStarredFolders = async (req, res) => {
+
+  const allFolders = await Folders.fetchAll();
+  if (!allFolders) throw new InternalServerError()
+
+  const data = allFolders.filter(folder => folder.isStarred);
+  
+  await RealTime.publish('starredFolders', data);
+
+  return (data.length < 1)
+    ? res.status(200).send(appResponse('No starred folder!', [], true))
+    : res.status(200).send(appResponse('Starred folders', data, true));
+}
+
+// Star a folder
+exports.starFolder = async (req, res) => {
+  const data = await Folders.fetchOne({ _id: req.params.id });
+  
+  if (data.isStarred === false ) {
+    const response = await Folders.update(req.params.id, { isStarred: true });
+
+    res.status(200).send(appResponse('Folder has been starred!', response, true));
+  } else {
+    throw new BadRequestError();
+  }
+}
+
+
+// unStar a folder
+exports.unStarFolder = async (req, res) => {
+  const data = await Folders.fetchOne({ _id: req.params.id });
+  
+  if (data.isStarred === true) {
+    const response = await Folders.update(req.params.id, { isStarred: false });
+
+    res.status(200).send(appResponse('Folder has been unstarred!', response, true));
+  } else {
+    throw new BadRequestError();
+  }
+}

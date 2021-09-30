@@ -383,6 +383,34 @@ exports.isDuplicate = async (req, res) => {
   }
 }
 
+// Star a file
+exports.starFile = async (req, res) => {
+  const data = await File.fetchOne({ _id: req.params.id });
+  
+  if (data.isStarred === false) {
+    const response = await File.update(req.params.id, { isStarred: true });
+
+    res.status(200).send(appResponse('File has been starred!', response, true));
+  } else {
+    throw new BadRequestError();
+  }
+}
+
+
+// Unstar a file
+exports.unStarFile = async (req, res) => {
+  const data = await File.fetchOne({ _id: req.params.id });
+  
+  if (data.isStarred === true) {
+    const response = await File.update(req.params.id, { isStarred: false });
+
+    res.status(200).send(appResponse('File has been starred!', response, true));
+  } else {
+    throw new BadRequestError();
+  }
+}
+
+
 /*******************************
  * =============================
  * 
