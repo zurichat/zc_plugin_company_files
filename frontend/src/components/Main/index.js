@@ -30,8 +30,6 @@ import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
 
 const Main = () => {
-<<<<<<< HEAD
-=======
   const headerConfig = {
     name: "CompanyFiles Plugin",
     logo: "https://www.pngfind.com/pngs/m/19-194225_png-file-svg-hashtag-icon-png-transparent-png.png",
@@ -51,7 +49,6 @@ const Main = () => {
     hasThumbnail: true,
   };
 
->>>>>>> beedfb183c60ea45fd27a60a125b25ed1908c164
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}

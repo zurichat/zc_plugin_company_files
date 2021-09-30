@@ -92,11 +92,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-<<<<<<< HEAD
-          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-text-green-600"
-=======
           className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
->>>>>>> beedfb183c60ea45fd27a60a125b25ed1908c164
         >
           View All
         </Link>
