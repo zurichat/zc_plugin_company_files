@@ -18,9 +18,8 @@ function index() {
     error,
   } = useFetch(
     `${API_BASE_URL}/files/searchStarredFiles`,
-    restore,
     fileDel,
-    emptyTrash
+ 
   );
 
   return (
