@@ -24,7 +24,8 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
-  cropImage
+  cropImage,
+  recentlyViewed
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -98,5 +99,9 @@ router.get("/setEdit/:admin", setEditPermission);
 
 // SEARCH FILES BY FILE TYPE
 router.get("/searchByType", searchByType);
+
+// GET RECENTLY VIEWED FILES
+router.get("/recentlyViewed", recentlyViewed);
+
 
 module.exports = router;
