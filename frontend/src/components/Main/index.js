@@ -68,9 +68,6 @@ const Main = () => {
             <Route path="/" exact>
               <Home />
             </Route>
-            <Route path="/files" exact>
-              <Files />
-            </Route>
             <Route path="/addNew" exact>
               <AddNewDoc />
             </Route>
