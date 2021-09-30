@@ -3,11 +3,6 @@ import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-<<<<<<< HEAD
-import Files from "../Home/Files";
-import AllFiles from "../allFiles/index";
-=======
->>>>>>> db92099c98944f4d3884d39409cb4a5e9c52fc5e
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
@@ -74,44 +69,6 @@ const Main = () => {
             {/* <Route path="/add-new" exact>
             <AddNewTextDoc />
           </Route> */}
-<<<<<<< HEAD
-          <Route path="/add-new" exact>
-            <AddNewDoc />
-          </Route>
-          <Route path="/activities" exact>
-            <Activities />
-          </Route>
-          <Route path="/files" exact>
-            <Files />
-          </Route>
-          <Route path="/allfiles" exact>
-            <AllFiles />
-          </Route>
-          <Route path="/test" exact>
-            <Test />
-          </Route>
-          <Route path="/starred" exact>
-            <Starred />
-          </Route>
-          <Route path="/upload" exact>
-            <FileUpload />
-          </Route>
-          <Route path="/newfolder" exact>
-            <NewFolder />
-          </Route>
-          <Route path="/trashapp" exact>
-            <TrashApp />
-          </Route>
-          <Route path="/help/" exact>
-            <Help />
-          </Route>
-          <Route path="/collaborators/" exact>
-            <Collaborators />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-=======
             <Route path="/add-new" exact>
               <AddNewDoc />
             </Route>
@@ -148,7 +105,6 @@ const Main = () => {
           </Switch>
         </div>
       </Router>
->>>>>>> db92099c98944f4d3884d39409cb4a5e9c52fc5e
     </ErrorBoundary>
   );
 };

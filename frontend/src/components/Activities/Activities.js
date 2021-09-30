@@ -158,18 +158,18 @@ const Activities = () => {
                      leaveTo="transform opacity-0 scale-95"
                      >
                      <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
-                        <div className="py-1">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -177,14 +177,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -192,16 +192,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -214,18 +214,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>6 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32"><i>6 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -238,19 +238,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -258,14 +258,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -273,16 +273,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -295,18 +295,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>7 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32"><i>7 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -319,19 +319,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -339,14 +339,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -354,16 +354,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -376,18 +376,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32"><i>8 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32"><i>8 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -400,19 +400,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -420,14 +420,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -435,16 +435,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -457,18 +457,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6 tw-text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>8 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32 tw-text-opacity-0"><i>8 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -481,19 +481,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -501,14 +501,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -516,16 +516,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -538,18 +538,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6text-opacity-0"> Reavel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6 tw-text-opacity-0"> Reavel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>9 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32 tw-text-opacity-0"><i>9 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -562,19 +562,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -582,14 +582,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -597,8 +597,8 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -606,7 +606,7 @@ const Activities = () => {
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -619,18 +619,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel created <strong>design file.png</strong> in <strong>Starred files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6 tw-text-opacity-0">Damilola Emmanuel created <strong>design file.png</strong> in <strong>Starred files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>9 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32 tw-text-opacity-0"><i>9 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -643,19 +643,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -663,14 +663,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -678,16 +678,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -700,18 +700,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6 tw-text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>10 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32 tw-text-opacity-0"><i>10 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -724,19 +724,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -744,14 +744,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -759,16 +759,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -781,18 +781,18 @@ const Activities = () => {
                   </div>  
                </div>
             </div> 
-            <div className="mr-12  mb-1 pl-1 shadow">
-               <div className="flex justify-between">
-                  <div className="flex items-center">
+            <div className="tw-mr-12  tw-mb-1 tw-pl-1 tw-shadow">
+               <div className="tw-flex tw-justify-between">
+                  <div className="tw-flex tw-items-center">
                      <img src= {pic1} alt="user picture" />
-                     <p className="ml-4 mr-28 pr-6 text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
+                     <p className="tw-ml-4 tw-mr-28 tw-pr-6 tw-text-opacity-0">Damilola Emmanuel deleted <strong>design file.png</strong> from <strong>Company files</strong></p>
                   </div>
-                  <div className="flex items-center xl:w-96 justify-end">
-                  <p className="w-32 text-opacity-0"><i>10 hours ago</i></p>
-                     <Menu as="div" className="relative inline-block">
+                  <div className="tw-flex tw-items-center tw-xl:w-96 tw-justify-end">
+                  <p className="tw-w-32 tw-text-opacity-0"><i>10 hours ago</i></p>
+                     <Menu as="div" className="tw-relative tw-inline-block">
                      <div>
-                        <Menu.Button className=" justify-center px-4 py-2 bg-transparent ">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
+                        <Menu.Button className=" tw-justify-center tw-px-4 tw-py-2 tw-bg-transparent ">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" /></svg>
                         </Menu.Button>
                      </div>
 
@@ -805,19 +805,19 @@ const Activities = () => {
                      leaveFrom="transform opacity-100 scale-100"
                      leaveTo="transform opacity-0 scale-95"
                      >
-                     <Menu.Items className="origin-top-right absolute right-8 top-8 w-52 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                        <div className="py-1">
+                     <Menu.Items className="tw-origin-top-right tw-absolute tw-right-8 tw-top-8 tw-w-52 tw-rounded-md tw-shadow-lg tw-bg-white tw-ring-1 tw-ring-black tw-ring-opacity-5 tw-divide-y tw-divide-gray-100 tw-focus:outline-none">
+                        <div className="tw-py-1">
                            <Menu.Item>        
                            {({ active }) => ( 
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'items-center flex text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-items-center tw-flex tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                  <img src= {Pin} alt="pin" />
                               <a                        
                                  href="#"
                                  >
-                                 <span className="ml-2">Pin</span>
+                                 <span className="tw-ml-2">Pin</span>
                               </a>
                               </div>
                            )}
@@ -825,14 +825,14 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
                                     <img src= {read} alt="mark" />
                                     <a
                                  href="#"                           
                               >                           
-                                 <span className="ml-4">Mark as read</span>
+                                 <span className="tw-ml-4">Mark as read</span>
                               </a>
                               </div>                        
                            )}
@@ -840,16 +840,16 @@ const Activities = () => {
                            <Menu.Item>
                            {({ active }) => (
                               <div  className={classNames(
-                                 active ? 'flex items-center bg-green-200 text-gray-900' : 'flex items-center text-gray-700',
-                                 'block px-5 py-2 text-sm'
+                                 active ? 'tw-flex tw-items-center tw-bg-green-200 tw-text-gray-900' : 'tw-flex tw-items-center tw-text-gray-700',
+                                 'tw-block tw-px-5 tw-py-2 tw-text-sm'
                                  )}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="tw-h-5 tw-w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                  <a
                                  href="#"                          
                               >                           
-                                 <span className="ml-4">Delete</span>
+                                 <span className="tw-ml-4">Delete</span>
                               </a>
                               </div>                       
                            )}
@@ -866,47 +866,47 @@ const Activities = () => {
          </div>
          <vr/>
          
-         <div className="p-8 xl:-mt-8 ">
+         <div className="tw-p-8 tw-xl:-mt-8 ">
             <img src= {memory} alt="memory" />
-            <hr className="-mt-10"/>
+            <hr className="tw-mt-10"/>
             <div>
-               <div className="flex justify-between mb-6 mt-6 items-center">
-                  <h1 className="text-2xl"><strong>Collaborators</strong></h1>
+               <div className="tw-flex tw-justify-between tw-mb-6 tw-mt-6 tw-items-center">
+                  <h1 className="tw-text-2xl"><strong>Collaborators</strong></h1>
                   <img src= {collabNum}  alt="number of collaborators" width={30} height={30}  />
                </div>
             </div>
-            <div className="flex mb-4">
+            <div className="tw-flex mb-4">
                <img src= {pic2} alt="collaborator picture" width={60} height={4} />
-               <div className="ml-4">
-                  <p className="text-sm "><strong>Damilola Emmanuel</strong></p>
+               <div className="tw-ml-4">
+                  <p className="tw-text-sm "><strong>Damilola Emmanuel</strong></p>
                   <p>damilolaemma02@hotmail.com</p>
                </div>
             </div>
-            <div className="flex mb-4">
+            <div className="tw-flex mb-4">
                <img src= {pic2} alt="collaborator picture" width={50} height={5} />
-               <div className="ml-4">
-                  <p className="text-sm "><strong>Damilola Emmanuel</strong></p>
+               <div className="tw-ml-4">
+                  <p className="tw-text-sm "><strong>Damilola Emmanuel</strong></p>
                   <p>damilolaemma02@hotmail.com</p>
                </div>
             </div>
-            <div className="flex mb-4">
+            <div className="tw-flex tw-mb-4">
                <img src= {pic2} alt="collaborator picture" width={50} height={0} />
-               <div className="ml-4">
-                  <p className="text-sm "><strong>Damilola Emmanuel</strong></p>
+               <div className="tw-ml-4">
+                  <p className="tw-text-sm "><strong>Damilola Emmanuel</strong></p>
                   <p>damilolaemma02@hotmail.com</p>
                </div>
             </div>
-            <div className="flex mb-4">
+            <div className="tw-flex mb-4">
                <img src= {pic2} alt="collaborator picture" width={50} height={0} />
-               <div className="ml-4">
-                  <p className="text-sm "><strong>Damilola Emmanuel</strong></p>
+               <div className="tw-ml-4">
+                  <p className="tw-text-sm "><strong>Damilola Emmanuel</strong></p>
                   <p>damilolaemma02@hotmail.com</p>
                </div>
             </div>
-            <div className="flex mb-4">
+            <div className="tw-flex tw-mb-4">
                <img src= {pic2} alt="collaborator picture" width={50} height={0} />
-               <div className="ml-4">
-                  <p className="text-sm "><strong>Damilola Emmanuel</strong></p>
+               <div className="tw-ml-4">
+                  <p className="tw-text-sm "><strong>Damilola Emmanuel</strong></p>
                   <p>damilolaemma02@hotmail.com</p>
                </div>
             </div>
