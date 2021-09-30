@@ -25,13 +25,13 @@ const Index = () => {
 
   // let progress = useRef(false)
 
-  useLayoutEffect(() => {
-    const fetchNewData = () => {
-      RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
-    };
-    fetchNewData();
-    console.log(newFile);
-  }, [newFile]);
+  // useLayoutEffect(() => {
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFile);
+  // }, []);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -74,7 +74,7 @@ const Index = () => {
         onClick={showOptions}
         className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
       >
-        Add File
+        Add New
       </button>
 
       <FileOptions options={options} showUploadModal={showUploadModal} />
@@ -91,7 +91,7 @@ const Index = () => {
           hideProgressModal={hideProgressModal}
         />
       )}
-      {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)}
+      {/* {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)} */}
     </div>
   );
 };

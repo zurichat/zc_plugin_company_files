@@ -9,7 +9,7 @@ import FileOption from "./FileOption"
 const FileOptions = ({ options, showUploadModal }) => {
   return (
     options && (
-      <div className="tw-bg-white tw-w-52 tw--mt-3 text-left shadow-md rounded-sm">
+      <div className="tw-bg-white tw-absolute tw-w-52 tw--mt-3 text-left shadow-md rounded-sm">
         <FileOption image={folder} altText={"folder"} name={"Folder"} cmd={""} />
         <FileOption image={fileText} altText={"document"} name={"Document"} cmd={""} />
         <FileOption image={filePlus} altText={"file-plus"} name={"File Upload"} cmd={showUploadModal} />

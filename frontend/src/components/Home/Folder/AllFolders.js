@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
-import axios from "axios";
 import FolderComponent from "./Folder";
 import { FaArrowLeft } from "react-icons/fa/index";
 import { BsArrowUpDown } from "react-icons/bs";
@@ -10,18 +8,14 @@ import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import FileUpload from "../../FileUpload/index";
 import FileOptions from "../../FileUpload/FileOptions";
 import RealTime from "../../../helpers/realtime.helper";
-
-async function fetcher(url) {
-  const res = await axios.get(url);
-  return res.data;
-}
-
-const API_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:5500/api/v1"
-  : "https://companyfiles.zuri.chat/api/v1";
+import ReactPaginate from "react-paginate";
+import Loader from "react-loader-spinner";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchFolders } from "../../../actions/folderAction";
 
 const AllFolders = () => {
-  const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
+  const dispatch = useDispatch();
+  const {loading, error, folders } = useSelector((state) => state.rootReducer.folderReducer);
 
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -30,14 +24,16 @@ const AllFolders = () => {
   const [newFiles, setNewFiles] = useState({ data: {} });
 
   useEffect(() => {
+    dispatch(fetchFolders());
+  }, [dispatch])
+
+  useEffect(() => {
     const fetchNewData = () => {
       RealTime.subscribe("allFiles", "", (data) => setNewFiles(data));
     };
     fetchNewData();
     console.log(newFiles);
   }, []);
-
-  
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -71,22 +67,28 @@ const AllFolders = () => {
   };
 
   const goBack = () => {
-    // window.history.back();
     const currentState = history.state;
-    history.pushState(currentState, '', '/companyfiles');
-  }
+    history.pushState(currentState, "", "/companyfiles");
+  };
 
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4 tw-h-screen tw-w-full">
-        failed to load
+        Error failed
+
       </div>
     );
 
-  if (!data)
+  if (loading)
     return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-py-4 tw-h-screen tw-w-full">
-        loading...
+      <div className="tw-flex tw-items-center tw-justify-center tw-py-4 tw-h-screen tw-w-full">
+        <Loader
+          type="ThreeDots"
+          color="#00B87C"
+          height={100}
+          width={100}
+          visible="true"
+        />
       </div>
     );
 
@@ -96,7 +98,7 @@ const AllFolders = () => {
         onClick={showOptions}
         className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
       >
-        Add File
+        Add New
       </button>
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2 tw-mb-4">
@@ -108,8 +110,14 @@ const AllFolders = () => {
           All Folders
         </h2>
         <div className="tw-flex tw-items-center">
-          <BsArrowUpDown title="sort" className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer" />
-          <BsGrid3X2 title="grid" className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer" />
+          <BsArrowUpDown
+            title="sort"
+            className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer"
+          />
+          <BsGrid3X2
+            title="grid"
+            className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer"
+          />
           <Link
             to="/activities"
             className="tw-mx-4 tw-py-2 tw-px-4 tw-bg-green-500 tw-text-white tw-text-sm tw-rounded hover:tw-bg-green-600"
@@ -118,9 +126,9 @@ const AllFolders = () => {
           </Link>
         </div>
       </div>
-      <div className="tw-flex tw-flex-wrap tw-justify-between">
-        {data.data.length ? (
-          data.data.map((folder) => (
+      <div className="tw-grid tw-grid-cols-auto">
+        {folders.data.length ? (
+          folders.data.map((folder) => (
             <FolderComponent key={folder.folderId} folder={folder} />
           ))
         ) : (
@@ -129,6 +137,18 @@ const AllFolders = () => {
           </div>
         )}
       </div>
+      {/* <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+        /> */}
       {upload && (
         <FileUpload
           upload={upload}

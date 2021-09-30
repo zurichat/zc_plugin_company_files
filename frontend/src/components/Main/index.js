@@ -1,11 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import FileUpload from "../Home/index";
 import Home from "../Home";
@@ -28,10 +24,15 @@ import AllFiles from "../Home/Files/AllFiles";
 import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
+import {
+  SubscribeToChannel,
+} from "@zuri/control";
+import {getUserInfo, getWorkspaceUser, getWorkspaceUsers } from '../../actions/workspaceInfo'
+import { useDispatch, useSelector } from "react-redux";
 
 const Main = () => {
   const headerConfig = {
-    name: "CompanyFiles Plugin",
+    name: "#  Files",
     logo: "https://www.pngfind.com/pngs/m/19-194225_png-file-svg-hashtag-icon-png-transparent-png.png",
     thumbnailUrl: [
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
@@ -48,6 +49,16 @@ const Main = () => {
     },
     hasThumbnail: true,
   };
+
+  const dispatch = useDispatch();
+  const {loading, error, users, user, info} = useSelector((state) => state.rootReducer.workspaceReducer);
+  console.log({loading, error, users, user, info})
+
+  useEffect(() => {
+    dispatch(getUserInfo());
+    dispatch(getWorkspaceUser("billmal071@gmail.com"));
+    dispatch(getWorkspaceUsers());
+  }, [dispatch]);
 
   return (
     <ErrorBoundary
