@@ -24,6 +24,8 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
+  starFile,
+  unStarFile,
   cropImage
 } = require('../controllers/file.controller');
 
@@ -98,5 +100,11 @@ router.get("/setEdit/:admin", setEditPermission);
 
 // SEARCH FILES BY FILE TYPE
 router.get("/searchByType", searchByType);
+
+// STAR A FILE
+router.put('/starFile/:id', starFile);
+
+// UNSTAR A FILE
+router.put('/unStarFile/:id', unStarFile);
 
 module.exports = router;
