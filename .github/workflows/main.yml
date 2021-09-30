@@ -1,7 +1,7 @@
 name: Continuous integration
 on:
   push:
-    branches: [switch]
+    branches: [dev]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -15,10 +15,12 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /var/www/zc_plugin_company_files
-            git restore .
-            git pull
-            npm run install-setup
-            npm run build
-            pm2 restart server.js
+            git stash
+            git fetch --all
+            git reset --hard origin/dev
+            git checkout dev
+            git pull origin dev
+            yarn build
+            pm2 restart 0
             
  

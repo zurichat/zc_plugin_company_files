@@ -1,24 +1,42 @@
-import React from 'react'
-import Aud from "../../../public/Icons/music/active.svg";
-import Vertical from "../../../public/Icons/more-vertical/active.svg";
+import React, { useState } from "react";
+import FileMenu from "./FileMenu";
+import { BsMusicNoteBeamed } from "react-icons/bs";
+import FileType from "./FileType";
 
-function audio() {
+function audio({ file }) {
+  const [openStatus, setOpenStatus] = useState(false);
+
+  const handleContextMenu = (e) => {
+    e.preventDefault();
+    if (e.type === "contextmenu" || e.nativeEvent.which === 3) {
+      setOpenStatus(true);
+    }
+  };
+
   return (
     <>
-    <div className="fileIcon w-14 h-14 flex justify-around  bg-red-100 rounded-md">
-      <img src={Aud} alt="" className="" />
-    </div>
-    <div className="fileInfo sm:w-20 md:w-30 lg:w-40  flex flex-col mx-3">
-      <span className="w-full truncate text-[14px]">{file.fileName}</span>
-      <span className="text-gray-400 text-[13px]">
-        {dayjs(file.dateAdded).fromNow()}
-      </span>
-    </div>
-    <div className="options self-start mx-3">
-      <img src={Vertical} alt="" />
-    </div>
-  </>
-  )
+      <div
+        className="tw-flex tw-items-center tw-w-52 tw-mx-2"
+        onClick={(e) => handleContextMenu(e)}
+        onContextMenu={(e) => handleContextMenu(e)}
+      >
+        <FileType
+          file={file}
+          IconName={BsMusicNoteBeamed}
+          bgColor={"tw-bg-green-400"}
+          textColor={"tw-text-black"}
+        />
+      </div>
+      {openStatus && (
+        <FileMenu
+          file={file}
+          setOpenStatus={setOpenStatus}
+          openStatus={openStatus}
+          type={"audio"}
+        />
+      )}
+    </>
+  );
 }
 
-export default audio
+export default audio;

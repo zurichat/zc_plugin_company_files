@@ -3,7 +3,8 @@ const pluginName = 'Company Files Management Plug-In';
 const { BadRequestError, UnAuthorizedError } = require('../utils/appError');
 const RealTime = require('../utils/realtime.helper');
 const DatabaseConnection = require('../utils/database.helper');
-const Rooms = new DatabaseConnection('NewRooms');
+// const Rooms = new DatabaseConnection('NewRooms');
+const Rooms = new DatabaseConnection('TheNewRooms');
 const { PLUGIN_ID } =  process.env;
 const authCheck = require('../utils/authcheck.helper');
 
@@ -13,7 +14,7 @@ exports.info = (req, res) => {
 
   res.status(200).json({
     status: 'success',
-    pluginId: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
+    pluginId: PLUGIN_ID || '61518d6c9d521e488c59745f',
     pluginName,
     pluginUrl: `${baseUrl}`,
     sidebarUrl: `${baseUrl}/api/v1/sidebar`,
@@ -27,38 +28,48 @@ exports.info = (req, res) => {
 
 
 exports.sidebar = async (req, res) => {
-  const { org, user, token } = req.query;
+  const { org, user } = req.query;
 
-  if (!org || !user || !token) {
-    throw new BadRequestError('One or more query parameters are missing! Valid parameters are: org, user & token.');
+  if (!org || !user) {
+    throw new BadRequestError('One or more query parameters are missing! Valid parameters are: org & user.');
   }
 
-  const isUserValidated = await authCheck(org, user, token);
+  // const isUserValidated = await authCheck(org, user, token);
 
-  if (!isUserValidated) throw new UnAuthorizedError();
+  // if (!isUserValidated) throw new UnAuthorizedError();
 
-  const { data: allRooms } = await Rooms.fetchAll();
+  let data = await Rooms.fetchAll();
+  data = data.map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
 
-  allRooms.forEach(room => room.memberCount = room.members.length);
+  // allRooms.forEach(room => room.memberCount = room.members.length);
 
   // Fetch ALL public rooms
-  const publicRooms = allRooms.filter(room => room.roomType === 'channel' && room.isPrivate === false);
+  // const publicRooms = allRooms.filter(room => room.roomType === 'channel' && room.isPrivate === false);
 
   // Fetch rooms a user is in
-  const joinedRooms = allRooms.filter(room => room.members.indexOf(user) !== -1);
+  // const joinedRooms = allRooms.filter(room => room.members.indexOf(user) !== -1);
 
   // Fetch plugin rooms
-  const pluginRooms = allRooms.filter(room => room.roomType === 'plugin' && room.isPrivate === false);
+  // const pluginRooms = allRooms.filter(room => room.roomType === 'plugin' && room.isPrivate === false);
 
   const sidebarListObject = {
-    status: 'success',
-    pluginId: PLUGIN_ID || '6134c6a40366b6816a0b75cd',
-    pluginName,
-    organisationId: org,
-    userId: user,
-    joinedRooms,
-    publicRooms,
-    pluginRooms
+    name: 'Company Files',
+    description: 'An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.',
+    plugin_id: PLUGIN_ID || '61518d6c9d521e488c59745f',
+    organisation_id: org,
+    user_id: user,
+    group_name: 'Company Files',
+    show_group: true,
+    joined_rooms: [{
+      room_name: 'All Company Files',
+      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
+      room_url: '/companyfiles'
+    }],
+    public_rooms: [{
+      room_name: 'Company Files',
+      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
+      room_url: '/companyfiles'
+    }, ...data]
   }
 
   await RealTime.publish('sidebar', sidebarListObject)

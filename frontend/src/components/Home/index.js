@@ -1,18 +1,37 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import RecentlyViewed from "./RecentlyViewed";
-import Folder from "./Folder";
+import Folder from "./Folder/index";
 import Files from "./Files/index";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
 import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
-// import UploadProgressModal from "../FileUpload/UploadProgressModal";
+import RealTime from "../../helpers/realtime.helper";
+
+
+import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+import { useSnackbar } from 'react-simple-snackbar';
+
 const Index = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
+  const [newFile, setNewFile] = useState({ data: {} });
+  const [SnackBar] = useSnackbar({
+    position: 'bottom-center',
+    style: { backgroundColor: '#00B87C', color: '#fff' }
+  });
+
   // let progress = useRef(false)
+
+  useLayoutEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
+    };
+    fetchNewData();
+    console.log(newFile);
+  }, [newFile]);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -47,14 +66,17 @@ const Index = () => {
 
   return (
     <div
-      className={(upload ? " overflow-y-hidden" : "") + "w-full py-10 z-auto"}
+      className={
+        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-py-4 tw-px-10 tw-z-auto"
+      }
     >
       <button
         onClick={showOptions}
-        className="ml-10 mt-10 px-4 py-2 text-4 text-green-400 border-2 rounded-sm border-green-400 hover:text-white hover:bg-green-400 outline-none rounded-md"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
       >
         Add File
       </button>
+
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
@@ -69,6 +91,7 @@ const Index = () => {
           hideProgressModal={hideProgressModal}
         />
       )}
+      {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)}
     </div>
   );
 };

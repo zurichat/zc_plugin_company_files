@@ -5,7 +5,7 @@ const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders }
 router.post('/write', folderCreate);
 
 // FETCH ALL THE FOLDERS FROM THE ENDPOINT
-router.get('/read', getAllFolders);
+router.get('/all', getAllFolders);
 
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
 router.get('/read/:id', folderDetails);

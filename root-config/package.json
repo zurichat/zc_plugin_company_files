@@ -1,13 +1,14 @@
 {
   "name": "@zuri/root-config",
   "scripts": {
-    "start": "webpack serve --port 9000 --env isLocal",
+    "start": "webpack serve --port 9000 --env isLocal --open",
     "lint": "eslint src --ext js",
     "test": "cross-env BABEL_ENV=test jest --passWithNoTests",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
     "build": "concurrently yarn:build:*",
-    "build:webpack": "webpack --mode=production"
+    "build-npm": "concurrently npm:build:*",
+    "build:webpack": "NODE_ENV=production webpack --mode=production"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",

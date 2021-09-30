@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Loader from 'react-loader-spinner';
+import { Link } from "react-router-dom";
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -10,7 +12,13 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio"
+import Audio from "../../Subcomponents//audio";
+import RealTime from "../../../helpers/realtime.helper";
+import {
+  SubscribeToChannel,
+  GetWorkspaceUsers,
+  GetUserInfo,
+} from "@zuri/control";
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
@@ -18,72 +26,147 @@ async function fetcher(url) {
   return res.data;
 }
 
+const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
+  ? 'http://127.0.0.1:5500/api/v1'
+  : 'https://companyfiles.zuri.chat/api/v1';
+
 const index = () => {
-  const { data, error } = useSWR(
-    "http://localhost:5500/api/v1/files/NonDeletedFiles",
-    fetcher
-  );
+  const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
+
+  const [newFiles, setNewFiles] = useState();
+  const [fileSubscription, setFileSubscription] = useState();
+
+  useEffect(() => {
+    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+      console.log(stuff.data.event, me, you);
+      setFileSubscription(stuff.data.event);
+    });
+    console.log(fileSubscription);
+    (async function () {
+      try {
+        const info = await GetUserInfo();
+        console.log(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    (async function () {
+      try {
+        const users = await GetWorkspaceUsers();
+        console.log(users);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
+  }, []);
 
   if (error)
     return (
-      <div className="text-3xl flex items-center justify-center text-red-600">
-        failed to load
+      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4">
+        failed to load...
       </div>
     );
   if (!data)
     return (
-      <div className="text-3xl flex items-center justify-center">
-        loading...
+      <div className="tw-w-full tw-py-10">
+        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
+          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
+          <Link to="/all-files" className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600">
+            View All
+          </Link>
+        </div>
+        <div className='tw-h-48 tw-flex tw-items-center tw-justify-center'>
+          <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+        </div>
       </div>
     );
 
   return (
-    <div className="w-full px-10 flex-auto">
-      <div className="top flex justify-between">
-        <h2 className="text-2xl md:text-[20px]">Files</h2>
-
-        <a href="/" className="text-gray-400 hover:text-green-400">
+    <div className="tw-w-full tw-py-10">
+      <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
+        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
+        <Link
+          to="/all-files"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+        >
           View All
-        </a>
+        </Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box w-full py-5 flex flex-wrap justify-between">
-          {data.data.slice(0, 10).map((file, index) => {
-            return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Image file={file} />
-              </div>
-            ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Pdf file={file} />
-              </div>
-            ) : new RegExp("\\b" + "zip" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Zip file={file} />
-              </div>
-            ) : new RegExp("\\b" + "excel" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Excel file={file} />
-              </div>
-            ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Document file={file} />
-              </div>
-            ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Powerpoint file={file} />
-              </div>
-            ) : new RegExp("\\b" + "audi" + "\\b").test(file.type) ? (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Audio file={file} />
-              </div>
-            ) : (
-              <div key={file._id} className="file flex items-center mr-0 my-5">
-                <Video file={file} />
-              </div>
-            );
-          })}
+        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw-mx-2">
+          {data.data.length > 0 ? (
+            data.data.slice(0, 15).map((file) => {
+              return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Image file={file} />
+                </div>
+              ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Pdf file={file} />
+                </div>
+              ) : new RegExp("\\b" + "zip" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Zip file={file} />
+                </div>
+              ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Excel file={file} />
+                </div>
+              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Document file={file} />
+                </div>
+              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Powerpoint file={file} />
+                </div>
+              ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Audio file={file} />
+                </div>
+              ) : (
+                <div
+                  key={file._id}
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                >
+                  <Video file={file} />
+                </div>
+              );
+            })
+          ) : (
+            <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
+              No Files
+            </div>
+          )}
         </div>
       </div>
     </div>

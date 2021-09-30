@@ -9,10 +9,10 @@ Company Files Management Plugin for Zuri Chat.
 1. Ensure nodejs and git are installed in machine
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
-4. Run setup script to install all packages using `npm run install-setup`
-5. Run build script to get bundled react file `npm run build`
+4. Run setup script to install all packages using `npm run install-setup` or `npm run install-setup:npm`
+5. Run build script to get bundled react file `npm run build:local` or `npm run build:local-npm`
 6. Now run server in development mode with `npm run dev`
-
+7.  Go to [local](http://localhost:5500/)
 
 ### **Project Structure**
 For the BackEnd structure of this project, please refer to this [document](BACKEND_DOC.md).
@@ -56,10 +56,10 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 1. Fork the repository
 2. Clone and then open it up on your prefered code editor
 3. Open your terminal & set the upstream branch: `git remote add upstream https://github.com/zurichat/zc_plugin_company_files.git`
-4. Pull upstream `git pull upstream dev`
+4. Pull upstream `git pull upstream switch`
 5. Create a new branch for the user story you're working on eg : `git checkout -b feat-import-file-from-url`
 6. After making changes, do `git add .`
 7. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
-8. To make sure there are no conflicts : `git pull upstream dev`
+8. To make sure there are no conflicts : `git pull upstream switch`
 9. Push changes to your new branch : `git push origin feat-import-file-from-url`
-10. Create a pull request to the `dev` branch.
+10. Create a pull request to the `switch` branch.

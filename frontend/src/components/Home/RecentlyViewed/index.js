@@ -1,67 +1,62 @@
 import React from "react";
-import imgFile from "../../../../public/Icons/imgfile.svg";
-import video from "../../../../public/Icons/video.svg";
-import documentFile from "../../../../public/Icons/documentfile.svg";
-import zip from "../../../../public/Icons/zip.svg";
+import ImgFile from "../../../../public/Icons/imgfile.svg";
+import Video from "../../../../public/Icons/video.svg";
+import DocumentFile from "../../../../public/Icons/documentfile.svg";
+import Zip from "../../../../public/Icons/zip.svg";
+import vector from "../../../../public/Icons/Vector.png";
+import { BsArrowUpDown } from "react-icons/bs";
+import { BsGrid3X2 } from "react-icons/bs";
+import Viewed from "./viewed";
+import {Link} from "react-router-dom";
 
 const RecentlyViewed = () => {
   return (
-    <div className="w-full px-10 py-12">
-      <h3 className=" mb-8 text-[20px] text-center text-gray-600 sm:text-left">
-        Recently Viewed
-      </h3>
-      <div className="w-full flex flex-wrap justify-between">
-        <div className="flex flex-col">
-          <div className="w-48 h-40 sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-56 xl:h-52 flex justify-around bg-blue-100 rounded-md transition-all duration-150 shadow-md">
-            <img
-              className="icon"
-              src={imgFile}
-              alt="image icon"
-              className="icon w-1/3"
-            />
-          </div>
-          <div className="mt-5">
-            <p className="name text-[18px]">Images</p>
-            <p className="date text-[14px] text-gray-400">Viewed 20 Jul 2020</p>
-          </div>
+    <div className="tw-w-full tw-py-10">
+      <div className="tw-w-full tw-flex tw-justify-between tw-items-start">
+        <h3 className="tw-mb-8 tw-text-lg tw-font-semibold tw-text-center tw-self-end tw-h-full tw-text-gray-900">
+          Recently Viewed
+        </h3>
+        <div className="tw-flex tw-items-center">
+          <BsArrowUpDown title="sort" className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer" />
+          <BsGrid3X2 title="grid" className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer" />
+          <Link
+            to="/activities"
+            className="tw-mx-4 tw-py-2 tw-px-4 tw-bg-green-500 tw-text-white tw-text-sm tw-rounded hover:tw-bg-green-600"
+          >
+            See Activities
+          </Link>
         </div>
-        <div className="flex flex-col ">
-          <div className="w-48 h-40 sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-56 xl:h-52 flex justify-around bg-pink-100 rounded-md transition-all duration-500 shadow-md ">
-            <img
-              className="icon"
-              src={video}
-              alt="video icon"
-              className="icon w-1/3"
-            />
-          </div>
-          <div className="mt-5">
-            <p className="name text-[18px]">Videos</p>
-            <p className="date text-[14px] text-gray-400">Viewed 20 Jul 2020</p>
-          </div>
-        </div>
-        <div className="flex flex-col ">
-          <div className="w-48 h-40 sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-56 xl:h-52 flex justify-around bg-green-200 rounded-md transition-all duration-500  shadow-md">
-            <img className="icon w-1/3" src={documentFile} alt="video icon" />
-          </div>
-          <div className="mt-5">
-            <p className="name text-[18px]">Document</p>
-            <p className="date text-[14px] text-gray-400">Viewed 20 Jul 2020</p>
-          </div>
-        </div>
-        <div className="flex flex-col ">
-          <div className="w-48 h-40 sm:w-32 sm:h-32 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-56 xl:h-52 flex justify-around bg-pink-200 rounded-md transition-all duration-500  shadow-md">
-            <img
-              className="icon"
-              src={zip}
-              alt="pdf ion"
-              className="icon w-1/3"
-            />
-          </div>
-          <div className="mt-5">
-            <p className="name text-[18px]">Compressed</p>
-            <p className="date text-[14px] text-gray-400">Viewed 20 Jul 2020</p>
-          </div>
-        </div>
+      </div>
+
+      <div className="tw-w-full tw-flex tw-flex-wrap tw-justify-between">
+        <Viewed
+          name={"Images"}
+          image={ImgFile}
+          altText={"images"}
+          dateViewed={"20 Jul 2020"}
+          bgColor={"tw-bg-blue-100"}
+        />
+        <Viewed
+          name={"Videos"}
+          image={Video}
+          altText={"videos"}
+          dateViewed={"20 Jul 2020"}
+          bgColor={"tw-bg-pink-100"}
+        />
+        <Viewed
+          name={"Document"}
+          image={DocumentFile}
+          altText={"document"}
+          dateViewed={"20 Jul 2020"}
+          bgColor={"tw-bg-green-200"}
+        />
+        <Viewed
+          name={"Compressed"}
+          image={Zip}
+          altText={"zip"}
+          dateViewed={"20 Jul 2020"}
+          bgColor={"tw-bg-pink-200"}
+        />
       </div>
     </div>
   );

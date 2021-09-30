@@ -1,0 +1,79 @@
+.borderSpace {
+  border-spacing: 0 1.5em;
+}
+.tableHide {
+  empty-cells: show;
+}
+
+.trashTheading,
+.emptyTrash {
+  font-size: 0.9375rem;
+}
+
+.preloader .line {
+  width: 1px;
+  height: 12px;
+  background: #ffb425;
+  animation: opacity-1 1000ms infinite ease-in-out;
+}
+
+.preloader .line1 {
+  animation-delay: 800ms;
+}
+.preloader .line2 {
+  animation-delay: 600ms;
+}
+.preloader .line3 {
+  animation-delay: 400ms;
+}
+.preloader .line4 {
+  animation-delay: 200ms;
+}
+.preloader .line6 {
+  animation-delay: 200ms;
+}
+.preloader .line7 {
+  animation-delay: 400ms;
+}
+.preloader .line8 {
+  animation-delay: 600ms;
+}
+.preloader .line9 {
+  animation-delay: 800ms;
+}
+.preloader .line10 {
+  animation-delay: 800ms;
+}
+.preloader .line11 {
+  animation-delay: 800ms;
+}
+.preloader .line12 {
+  animation-delay: 800ms;
+}
+
+@keyframes opacity-1 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes opacity-2 {
+  0% {
+    opacity: 1;
+    height: 15px;
+  }
+  50% {
+    opacity: 0;
+    height: 12px;
+  }
+  100% {
+    opacity: 1;
+    height: 15px;
+  }
+}

@@ -1,8 +1,9 @@
 const DatabaseConnection = require('../utils/database.helper');
-const Rooms = new DatabaseConnection('NewRooms');
+const Rooms = new DatabaseConnection('TheNewRooms');
 const RealTime = require('../utils/realtime.helper');
 const appResponse = require('../utils/appResponse');
-const RoomSchema = require('../models/Room');
+// const RoomSchema = require('../models/Room');
+const RoomSchema = require('../models/NewRoom');
 const slugify = require('slugify');
 const uuid = require('uuid').v4;
 const {
@@ -13,24 +14,24 @@ const {
 
 exports.createRoom = async (req, res) => {
   const { body } = req;
-  body.roomId = uuid();
+  // body.roomId = uuid();
 
   const room = await RoomSchema.validateAsync(body);
-  room.members = [];
-  room.slug = slugify(room.roomName, {
-    lower: true,
-    remove: /[*+~\/\\.()''!:@]/g,
-  });
+  // room.members = [];
+  // room.slug = slugify(room.roomName, {
+  //   lower: true,
+  //   remove: /[*+~\/\\.()''!:@]/g,
+  // });
 
-  if (room.roomType === 'inbox') {
-    room.isPrivate = true;
-    room.members = [room.ownerId, room.receiverId];
-  } else if (room.roomType === 'group' || room.roomType === 'plugin') {
-    room.members = [room.ownerId, ...room.members];
-    delete room.receiverId;
-  } else if (room.roomType === 'plugin' || room.roomType === 'channel') {
-    room.isPrivate = false;
-  }
+  // if (room.roomType === 'inbox') {
+  //   room.isPrivate = true;
+  //   room.members = [room.ownerId, room.receiverId];
+  // } else if (room.roomType === 'group' || room.roomType === 'plugin') {
+  //   room.members = [room.ownerId, ...room.members];
+  //   delete room.receiverId;
+  // } else if (room.roomType === 'plugin' || room.roomType === 'channel') {
+  //   room.isPrivate = false;
+  // }
 
   // Verify user ids later on...
 
@@ -43,34 +44,30 @@ exports.createRoom = async (req, res) => {
 
 exports.editRoom = async (req, res) => {
   const { body } = req;
-  const {
-    data: [room],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
   if ('members' in body) delete body.members;
 
   await Rooms.update(req.params.roomId, body);
 
-  const [updatedRoom] = await Rooms.fetchOne({ _id: req.params.roomId });
+  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 };
 
 exports.getAllRooms = async (req, res) => {
-  const { data: allRooms } = await Rooms.fetchAll();
+  const allRooms = await Rooms.fetchAll();
 
-  allRooms.forEach((room) => (room.memberCount = room.members.length));
+  allRooms.forEach(room => (room.memberCount = room.length));
 
   // response = await RealTime.publish('allRooms', response);
 
   res.status(200).send(appResponse('All rooms', allRooms, true));
 };
 
-exports.getOne = async (req, res) => {
-  const {
-    data: [room],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+exports.getOneRoom = async (req, res) => {
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -89,15 +86,12 @@ exports.deleteRoom = async (req, res) => {
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
   const { userId } = req.body;
-
   if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
     throw new BadRequestError('Invalid user id. Enter a valid object id!');
   }
 
   // fetch all the rooms available and get the target room with the provided room_id.
-  const {
-    data: [room],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -127,9 +121,7 @@ exports.removeFromRoom = async (req, res) => {
   const { userId } = req.body;
 
   // fetch all the target room with the provided room_id.
-  const {
-    data: [room],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -149,24 +141,16 @@ exports.removeFromRoom = async (req, res) => {
   // send the data to the api endpoint for update.
   await Rooms.update(req.params.roomId, room);
 
-  const {
-    data: [updatedRoom],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res
     .status(200)
-    .send(appResponse(
-        'User has been successfully removed from the room',
-        updatedRoom,
-        true
-      ));
+    .send(appResponse('User has been successfully removed from the room', updatedRoom, true));
 };
 
 exports.setRoomPrivate = async (req, res) => {
   const { userId } = req.body;
-  const {
-    data: [room],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
@@ -178,9 +162,7 @@ exports.setRoomPrivate = async (req, res) => {
 
   await Rooms.update(req.params.roomId, { isPrivate: false });
 
-  const {
-    data: [updatedRoom],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
   res.status(200).send(appResponse('Room set to private!', updatedRoom, true));
 };
