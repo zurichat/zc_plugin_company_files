@@ -24,6 +24,7 @@ function Zip({ file }) {
           file={file}
           IconName={GrDocumentZip}
           bgColor={"tw-bg-green-400"}
+          textColor={"text-bg-green-300"}
         />
       </div>
       {openStatus && (

@@ -18,13 +18,15 @@ function TrashHead({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ids: fileIds }),
     }).then((res) => (res.status === 200 ? setEmptyTrash("") : null));
-    setData((prev) => (prev = []));
+    setData([]);
   };
 
   return (
     <div className="md:tw-mx-10 tw-mx-4 tw-pt-5">
       <div className="tw-flex tw-justify-between tw-pt-4 tw-pb-5">
-        <h3 className="tw-font-semibold tw-text-xl itemsTrash">Items in my trash</h3>
+        <h3 className="tw-font-semibold tw-text-lg tw-text-text-grey">
+          Items in my trash
+        </h3>
         <p>
           <span className="tw-pr-2">
             <svg
@@ -42,12 +44,12 @@ function TrashHead({
           </span>
         </p>
       </div>
-      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between light--Green">
-        <p className="tw-px-2 sm:tw-px-5 tw-py-4 durationGray tw-text-sm">
+      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between tw-bg-bg-lightGreen">
+        <p className="tw-px-2 sm:tw-px-5 tw-py-4 tw-text-text-trashDur tw-text-sm">
           Items in trash are deleted forever after 30 days
         </p>
         <p
-          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold emptyTrash"
+          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-text-primary emptyTrash"
           onClick={handleEmptyTrash}
         >
           Empty Trash

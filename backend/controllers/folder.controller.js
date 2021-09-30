@@ -17,6 +17,7 @@ exports.folderCreate = async (req, res) => {
   const data = createdFolder;
   const createdFolderObject = await Folders.fetchOne({ _id: data?.object_id });
 
+
   res.status(201).json(createdFolderObject);
 };
 

@@ -10,7 +10,7 @@ import RealTime from "../../helpers/realtime.helper";
 
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
-import SnackBar from "reuse-react-snackbar";
+import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
   const [upload, setUpload] = useState(false);
@@ -18,16 +18,20 @@ const Index = () => {
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
   const [newFile, setNewFile] = useState({ data: {} });
+  const [SnackBar] = useSnackbar({
+    position: 'bottom-center',
+    style: { backgroundColor: '#00B87C', color: '#fff' }
+  });
 
   // let progress = useRef(false)
 
   useLayoutEffect(() => {
     const fetchNewData = () => {
-      RealTime.subscribe("newFile", "", (data) => setNewFile(data));
+      RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
     };
     fetchNewData();
     console.log(newFile);
-  }, []);
+  }, [newFile]);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -68,7 +72,7 @@ const Index = () => {
     >
       <button
         onClick={showOptions}
-        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
       >
         Add File
       </button>
@@ -87,27 +91,7 @@ const Index = () => {
           hideProgressModal={hideProgressModal}
         />
       )}
-      {Object.keys(newFile.data).length && (
-        <SnackBar
-          message={newFile.data.fileName + " added successfully"}
-          mode="SUCCESS"
-          open={true}
-          timeout={10000}
-          style={{
-            textStyle: {
-              color: "white",
-            },
-            buttonStyle: {
-              backgroundColor: "white",
-              color: "black",
-            },
-            containerStyle: {
-              background: "grey",
-              boxShadow: "black 6px 7px 12px -4px",
-            },
-          }}
-        />
-      )}
+      {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)}
     </div>
   );
 };

@@ -14,7 +14,7 @@ function Folder({ folder }) {
   return (
     <>
       <div className="tw-w-full md:tw-w-60 tw-mb-10 tw-px-4 tw-py-7 tw-flex tw-flex-col tw-bg-white tw-rounded-md tw-shadow-md tw-relative">
-        <div className="card tw-flex tw-justify-between tw-mb-6">
+        <div className="tw-flex tw-justify-between tw-mb-6">
           <div className="icons">
             <img src={folderYellow} alt="folder" />
           </div>
@@ -22,7 +22,7 @@ function Folder({ folder }) {
             <img src={options} alt="options" className="tw-cursor-pointer" />
           </div>
         </div>
-        <div className="card tw-text-sm tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-text-[13px]">
+        <div className="tw-text-sm tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-text-[13px]">
           <div className="tw-w-full">
             <span className="tw-block tw-font-semibold tw-truncate">
               {folder.folderName}

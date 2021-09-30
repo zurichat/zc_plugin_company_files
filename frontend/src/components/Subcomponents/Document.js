@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentWord } from "react-icons/gr";
+import { GrDocumentText } from "react-icons/gr";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,8 +22,9 @@ function Document({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentWord}
-          bgColor={"tw-bg-green-400"}
+          IconName={GrDocumentText}
+          bgColor={"tw-bg-file-doc"}
+          textColor={"tw-text-blue-600"}
         />
       </div>
       {openStatus && (

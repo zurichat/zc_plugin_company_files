@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useSWR from "swr";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { BsGrid3X2 } from "react-icons/bs";
 import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import FileUpload from "../../FileUpload/index";
 import FileOptions from "../../FileUpload/FileOptions";
+import RealTime from "../../../helpers/realtime.helper";
 
 async function fetcher(url) {
   const res = await axios.get(url);
@@ -26,6 +27,17 @@ const AllFolders = () => {
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
+  const [newFiles, setNewFiles] = useState({ data: {} });
+
+  useEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
+  }, []);
+
+  
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -58,8 +70,10 @@ const AllFolders = () => {
     setProgress(false);
   };
 
-  function goBack() {
-    window.history.back();
+  const goBack = () => {
+    // window.history.back();
+    const currentState = history.state;
+    history.pushState(currentState, '', '/companyfiles');
   }
 
   if (error)

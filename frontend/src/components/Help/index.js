@@ -27,50 +27,43 @@ const Help = () => {
     }
 
     return (
-        <div className="w-full">
-            {/* <Header /> */}
-        <div className="w-full p-6 pr-10">
+      <div className='tw-w-full'>
+        {/* <Header /> */}
+        <div className='tw-w-full tw-p-6 tw-pr-10'>
+          <div className='tw-flex tw-flex-col tw-justify-between'>
+            <h2 className='tw-font-semibold tw-text-2xl'>Help</h2>
+            <SearchBar onSearched={searchData} />
 
-            <div className="flex flex-col justify-between">
-                <h2 className="font-semibold text-2xl">Help</h2>
-                <SearchBar onSearched={searchData} />
+            {/* Fetching the questions and answers from ./accordionData.js as faqs are not supplied by backend */}
+            {searchResult.length > 0 && (
+              <div className='tw-my-4'>
+                <p className='tw-text-lg tw-font-semibold'>Search Results</p>
+                {searchResult.map((data) => (
+                  <Accordion data={data} key={data.id} />
+                ))}
+              </div>
+            )}
 
-                {/* Fetching the questions and answers from ./accordionData.js as faqs are not supplied by backend */}
-                {searchResult.length > 0 && <div className="my-4">
-                    <p className="text-lg font-semibold">Search Results</p>
-                    {
-                        searchResult.map(data => (
-                            <Accordion data={data} key={data.id}/>
-                        ))
-                    }
-                </div>}
-
-                { searchResult.length == 0 && 
-                    <> 
-                    <div className="my-4">
-                    <p className="text-lg font-semibold">Popular Searches</p>
-                    {
-                        popData.map(data => (
-                            <Accordion data={data} key={data.id}/>
-                        ))
-                    }
+            {searchResult.length == 0 && (
+              <>
+                <div className='tw-my-4'>
+                  <p className='tw-text-lg tw-font-semibold'>Popular Searches</p>
+                  {popData.map((data) => (
+                    <Accordion data={data} key={data.id} />
+                  ))}
                 </div>
-                <div className="my-4">
-                    <p className="text-lg font-semibold">More Help</p>
-                    {
-                        moData.map(data => (
-                            <Accordion data={data} key={data.id}/>
-                        ))
-                    }
-                </div> </>}
-
-                
-            </div>
-
-            </div>
-            
+                <div className='tw-my-4'>
+                  <p className='tw-text-lg tw-font-semibold'>More Help</p>
+                  {moData.map((data) => (
+                    <Accordion data={data} key={data.id} />
+                  ))}
+                </div>{' '}
+              </>
+            )}
+          </div>
         </div>
-    )
+      </div>
+    );
 }
 
 export default Help;
