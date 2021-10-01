@@ -192,11 +192,18 @@ exports.getFileByType = async (req, res) => {
 
 
 exports.fileDetails = async (req, res) => {
-  const data = await File.fetchOne({ _id: req.params.id });
+    const {id} = req.params
 
-  await RealTime.publish('fileDetail', data)
+    const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+     await File.update(id, updateLastAccessed);
+     const data = await File.fetchOne({ _id: id });
+     const response = await RealTime.publish('file_detail', data);
 
-  res.status(200).send(appResponse(null, data, true));
+
+     res.status(200).send(appResponse(null, data, true, {
+      ...response,
+      count: data.length,
+    }));
 }
 
 
@@ -507,3 +514,16 @@ exports.searchBySize = async (req, res) => {
   res.status(500).json(err);
   }
 };
+
+exports.recentlyViewed = async (req, res) => {
+
+    const data = await File.fetchAll();  
+    data.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  
+  
+    res.status(200).json(data.slice(0, 5))
+   
+}
