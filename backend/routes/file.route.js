@@ -27,7 +27,9 @@ const {
   cropImage,
   recentlyViewed,
   starFile,
-  unStarFile
+  unStarFile,
+  detectPreview
+
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -110,5 +112,8 @@ router.put('/starFile/:id', starFile);
 
 // UNSTAR A FILE
 router.put('/unStarFile/:id', unStarFile);
+
+// DETECT WHEN A FILE IS PREVIEWED
+router.post('/preview/:id', detectPreview)
 
 module.exports = router;
