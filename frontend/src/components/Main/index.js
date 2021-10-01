@@ -25,9 +25,10 @@ import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
 import {
-  SubscribeToChannel,
-} from "@zuri/control";
-import {getUserInfo, getWorkspaceUser, getWorkspaceUsers } from '../../actions/workspaceInfo'
+  getUserInfo,
+  getWorkspaceUser,
+  getWorkspaceUsers,
+} from "../../actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 const Main = () => {
@@ -51,14 +52,18 @@ const Main = () => {
   };
 
   const dispatch = useDispatch();
-  const {loading, error, users, user, info} = useSelector((state) => state.rootReducer.workspaceReducer);
-  console.log({loading, error, users, user, info})
+  const { loading, error, users, user, info } = useSelector(
+    (state) => state.rootReducer.workspaceReducer
+  );
+  console.log({ loading, error, users, user, info });
 
   useEffect(() => {
-    dispatch(getUserInfo());
-    dispatch(getWorkspaceUser("billmal071@gmail.com"));
-    dispatch(getWorkspaceUsers());
-  }, [dispatch]);
+    (async () => {
+      dispatch(getUserInfo());
+      dispatch(getWorkspaceUser("billmal071@gmail.com")); //takes email as parameter
+      dispatch(getWorkspaceUsers());
+    })();
+  }, []);
 
   return (
     <ErrorBoundary

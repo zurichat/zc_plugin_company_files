@@ -15,7 +15,9 @@ import { fetchFolders } from "../../../actions/folderAction";
 
 const AllFolders = () => {
   const dispatch = useDispatch();
-  const {loading, error, folders } = useSelector((state) => state.rootReducer.folderReducer);
+  const { loading, error, folders } = useSelector(
+    (state) => state.rootReducer.folderReducer
+  );
 
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -24,8 +26,10 @@ const AllFolders = () => {
   const [newFiles, setNewFiles] = useState({ data: {} });
 
   useEffect(() => {
-    dispatch(fetchFolders());
-  }, [dispatch])
+    (async () => {
+      dispatch(fetchFolders());
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchNewData = () => {
@@ -75,7 +79,6 @@ const AllFolders = () => {
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4 tw-h-screen tw-w-full">
         Error failed
-
       </div>
     );
 

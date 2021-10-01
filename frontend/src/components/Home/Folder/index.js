@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
-import axios from "axios";
 import FolderComponent from "./Folder";
 import RealTime from "../../../helpers/realtime.helper";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +15,11 @@ const index = () => {
 
   // let progress = useRef(false)
 
-  useEffect(() => dispatch(fetchFolders()), [dispatch]);
+  useEffect(() => {
+    (async () => {
+      dispatch(fetchFolders());
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchNewData = () => {

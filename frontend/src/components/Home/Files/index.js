@@ -11,11 +11,9 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
-import RealTime from "../../../helpers/realtime.helper";
-import { SubscribeToChannel } from "@zuri/control";
+import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
-import { getWorkspaceUsers } from "../../../actions/workspaceInfo";
 dayjs.extend(relativeTime);
 
 const index = () => {
@@ -28,26 +26,18 @@ const index = () => {
   const [fileSubscription, setFileSubscription] = useState();
 
   useEffect(() => {
-    dispatch(fetchFiles());
-  }, [dispatch]);
-
-  SubscribeToChannel("allFiles", (stuff) => {
-    console.log("centrifugo: " + stuff);
-    setFileSubscription(stuff);
-  });
-  console.log("centrifugo state" + fileSubscription);
+    (async () => {
+      dispatch(fetchFiles());
+    })();
+  }, []);
 
   useEffect(() => {
-    // const interval = setInterval(() => {
-     
-      // const fetchNewData = () => {
-      //   RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
-      // };
-      // fetchNewData();
-      // console.log(newFiles);
-    // }, 3000);
-    // return () => clearInterval(interval);
-  }, [fileSubscription]);
+    RTCSubscription("allFiles", (stuff) => {
+      console.log({ stuff });
+      setFileSubscription(stuff);
+    });
+    console.log({ fileSubscription });
+  }, []);
 
   if (error)
     return (

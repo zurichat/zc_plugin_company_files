@@ -34,8 +34,10 @@ const AllFiles = () => {
   const [openStatus, setOpenStatus] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchFiles());
-  }, [dispatch]);
+    (async () => {
+      dispatch(fetchFiles());
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchNewData = () => {
@@ -130,7 +132,11 @@ const AllFiles = () => {
             className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer"
             onClick={() => setOpenStatus(true)}
           />
-          <SortingMenu file={files} setOpenStatus={setOpenStatus} openStatus={openStatus} />
+          <SortingMenu
+            file={files}
+            setOpenStatus={setOpenStatus}
+            openStatus={openStatus}
+          />
           <BsGrid3X2
             title="grid"
             className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer"
