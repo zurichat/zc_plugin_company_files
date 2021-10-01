@@ -192,7 +192,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
     selectCategory(category);
   };
   return (
-    <div className="tw-flex tw-flex-col tw-w-full tw-relative">
+    <div className="tw-flex tw-flex-col tw-w-9/12 tw-relative">
       <div
         {...{
           className: `tw-flex tw-items-center tw-justify-between tw-py-1.5 tw-px-2 tw-border tw-border-gray-200 tw-rounded ${customClass}`,
@@ -212,7 +212,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
           {...{
             value: searchInputValue,
             type: "text",
-            placeholder: "Search for your files",
+            placeholder: "Search here",
             onChange: onChangeHandler,
             onFocus: onFocusHandler,
             onKeyPress: handleSubmit,
