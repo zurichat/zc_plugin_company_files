@@ -33,7 +33,7 @@ const index = () => {
 
   useEffect(() => {
     RTCSubscription("allFiles", (stuff) => {
-      console.log({ stuff });
+      // console.log({ stuff });
       setFileSubscription(stuff);
     });
     console.log({ fileSubscription });

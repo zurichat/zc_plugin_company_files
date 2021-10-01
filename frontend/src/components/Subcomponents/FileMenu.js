@@ -24,7 +24,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
   function previewCmd() {
-    console.log(file)
+    console.log(file);
     setOpenPreview(true);
   }
 
@@ -46,7 +46,9 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+    console.log("Properties");
+  }
 
   function deleteCmd() {}
 
@@ -119,7 +121,11 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
               title="title"
             />
           </FileMenuButton>
-          <FileMenuButton name="Properties" cmd={properties}>
+          <FileMenuButton
+            name="Properties"
+            cmd={properties}
+            onClick={properties}
+          >
             <RiErrorWarningLine
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="properties"
