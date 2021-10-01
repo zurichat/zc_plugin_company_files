@@ -30,6 +30,7 @@ import {
   getWorkspaceUsers,
 } from "../../actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
+import MemberList from "../MembersList/MemberList";
 
 const Main = () => {
   const headerConfig = {
@@ -121,6 +122,9 @@ const Main = () => {
             </Route>
             <Route path="/collaborators" exact>
               <Collaborators />
+            </Route>
+            <Route path="/member" exact>
+              <MemberList />
             </Route>
           </Switch>
         </div>
