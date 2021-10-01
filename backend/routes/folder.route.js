@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
+const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, recentlyViewed, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
 
 // CREATE A NEW FOLDER
 router.post('/write', folderCreate);
