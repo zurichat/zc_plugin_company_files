@@ -515,17 +515,59 @@ exports.searchBySize = async (req, res) => {
   }
 };
 
-exports.recentlyViewed = async (req, res) => {
+exports.recentlyViewedImages = async (req, res) => {
 
     const data = await File.fetchAll();  
-    data.sort(function (a, b) {
+    const onlyImages = data.filter((data)=>/image/.test(data.type))
+    const sorted = onlyImages.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+   
+}
+
+exports.recentlyViewedVideos = async (req, res) => {
+  const data = await File.fetchAll();  
+    const onlyVideos = data.filter((data)=>/video/.test(data.type))
+    const sorted = onlyVideos.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+}
+
+exports.recentlyViewedDocs = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyDocs = data.filter((data)=>/doc/.test(data.type))
+  const sorted = onlyDocs.sort(function (a, b) {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
       return dateB - dateA
     });
+  res.status(200).json(sorted)
   
+}
+
+exports.recentlyViewedAudio = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyAudio = data.filter((data)=>/audio/.test(data.type))
+  const sorted = onlyAudio.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
   
-    res.status(200).json(data.slice(0, 5))
-   
+}
+
+
+exports.recentlyViewedCompressed = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyZip = data.filter((data)=>/zip/.test(data.type))
+  const sorted = onlyZip.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
 }
 
 exports.detectPreview = async (req, res) => {

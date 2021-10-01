@@ -25,7 +25,11 @@ const {
   searchByType,
   getFilesWithSameFolderId,
   cropImage,
-  recentlyViewed,
+  recentlyViewedImages,
+  recentlyViewedVideos,
+  recentlyViewedCompressed,
+  recentlyViewedDocs,
+  recentlyViewedAudio,
   starFile,
   unStarFile,
   detectPreview
@@ -105,7 +109,15 @@ router.get("/setEdit/:admin", setEditPermission);
 router.get("/searchByType", searchByType);
 
 // GET RECENTLY VIEWED FILES
-router.get("/recentlyViewed", recentlyViewed);
+router.get("/recentlyViewedImages", recentlyViewedImages);
+
+router.get("/recentlyViewedVideos", recentlyViewedVideos);
+
+router.get("/recentlyViewedDocs", recentlyViewedDocs);
+
+router.get("/recentlyViewedCompressed", recentlyViewedCompressed);
+
+router.get("/recentlyViewedAudio", recentlyViewedAudio);
 
 // STAR A FILE
 router.put('/starFile/:id', starFile);
