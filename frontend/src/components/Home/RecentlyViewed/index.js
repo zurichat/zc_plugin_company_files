@@ -28,7 +28,7 @@ const RecentlyViewed = () => {
         </div>
       </div>
 
-      <div className="tw-w-full tw-flex tw-flex-wrap tw-justify-between">
+      <div className="tw-w-full tw-grid tw-grid-cols-auto tw-gap-14">
         <Viewed
           name={"Images"}
           image={ImgFile}
