@@ -5,7 +5,7 @@ function FileType({ file, IconName, bgColor, textColor }) {
   return (
     <>
       <div
-        className={`fileIcon tw-w-14 tw-h-12 tw-flex tw-justify-center tw-items-center ${bgColor} tw-rounded-md`}
+        className={`fileIcon tw-w-14 tw-h-14 tw-flex tw-justify-center tw-items-center ${bgColor} tw-rounded-md`}
       >
         <IconName className={`tw-text-2xl ${textColor}`} />
       </div>

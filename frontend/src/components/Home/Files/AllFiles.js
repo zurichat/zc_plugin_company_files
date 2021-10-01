@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Loader from 'react-loader-spinner';
-import axios from "axios";
-import useSWR from "swr";
+import Loader from "react-loader-spinner";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Image from "../../Subcomponents/Image";
@@ -20,21 +18,26 @@ import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import FileUpload from "../../FileUpload/index";
 import FileOptions from "../../FileUpload/FileOptions";
 import RealTime from "../../../helpers/realtime.helper";
+import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFiles } from "../../../actions/fileAction";
+import SortingMenu from "../../Subcomponents/SortingMenu";
 dayjs.extend(relativeTime);
 
-async function fetcher(url) {
-  const res = await axios.get(url);
-  return res.data;
-}
-
-const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
-  ? 'http://127.0.0.1:5500/api/v1'
-  : 'https://companyfiles.zuri.chat/api/v1';
-
 const AllFiles = () => {
-  const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
+  const dispatch = useDispatch();
+  const { loading, error, files } = useSelector(
+    (state) => state.rootReducer.fileReducer
+  );
 
   const [newFiles, setNewFiles] = useState({ data: {} });
+  const [openStatus, setOpenStatus] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      dispatch(fetchFiles());
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchNewData = () => {
@@ -83,20 +86,26 @@ const AllFiles = () => {
   const goBack = () => {
     // window.history.back();
     const currentState = history.state;
-    history.pushState(currentState, '', '/companyfiles');
-  }
+    history.pushState(currentState, "", "/companyfiles");
+  };
 
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-h-screen tw-w-full">
-        failed to load
+        Error failed
       </div>
     );
 
-  if (!data)
+  if (loading)
     return (
-      <div className="tw-h-96 tw-flex tw-items-center tw-justify-center tw-h-screen tw-w-full">
-        <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+      <div className="tw-flex tw-items-center tw-justify-center tw-h-screen tw-w-full">
+        <Loader
+          type="ThreeDots"
+          color="#00B87C"
+          height={100}
+          width={100}
+          visible="true"
+        />
       </div>
     );
 
@@ -106,7 +115,7 @@ const AllFiles = () => {
         onClick={showOptions}
         className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
       >
-        Add File
+        Add New
       </button>
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2">
@@ -117,10 +126,16 @@ const AllFiles = () => {
           />
           All Files
         </h2>
-        <div className="tw-flex tw-items-center">
+        <div className="tw-flex tw-items-center tw-relative">
           <BsArrowUpDown
             title="sort"
             className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer"
+            onClick={() => setOpenStatus(true)}
+          />
+          <SortingMenu
+            file={files}
+            setOpenStatus={setOpenStatus}
+            openStatus={openStatus}
           />
           <BsGrid3X2
             title="grid"
@@ -136,9 +151,9 @@ const AllFiles = () => {
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between tw--mx-2">
-          {data.data.length > 0 ? (
-            data.data.map((file) => {
+        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto tw-mx-2">
+          {files.data.length > 0 ? (
+            files.data.map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
@@ -211,6 +226,18 @@ const AllFiles = () => {
           )}
         </div>
       </div>
+      {/* <ReactPaginate
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          breakLabel={'...'}
+          breakClassName={'break-me'}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={'pagination'}
+          activeClassName={'active'}
+        /> */}
       {upload && (
         <FileUpload
           upload={upload}
