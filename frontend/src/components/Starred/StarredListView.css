@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap");
+
+.StarredApp {
+  font-family: "Lato", sans-serif;
+}
+
+.borderSpace {
+  border-spacing: 0 1.5em;
+}
+.tableHide {
+  empty-cells: show;
+}
+
+.light--Green,
+.focus__lightGreen:active {
+  background-color: #f0fbf8;
+}
+
+.durationGray {
+  color: #616161;
+}
+
+.itemsStarred {
+  color: #4a4a4a;
+}
+
+.starredModal__cancel {
+  border-color: #00b87c;
+}
+
+.starredModal__cancel,
+.emptyStarred,
+.preloader .loading {
+  color: #00b87c;
+}
+
+.modal__menu {
+  background-color: #00b87c;
+}
+
+.starredThreading {
+  font-size: 0.9375rem;
+}
+
+.emptyStarred {
+  font-size: 0.8125rem;
+}

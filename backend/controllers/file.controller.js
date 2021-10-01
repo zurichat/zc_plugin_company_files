@@ -545,3 +545,10 @@ exports.recentlyViewed = async (req, res) => {
     res.status(200).json(data.slice(0, 5))
    
 }
+
+exports.detectPreview = async (req, res) => {
+  const {id} = req.params;
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+  await File.update(id, updateLastAccessed)
+  res.status(200).json(`Last accessed date updated`)
+}
