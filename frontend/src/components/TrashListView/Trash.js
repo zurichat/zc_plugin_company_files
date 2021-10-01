@@ -40,5 +40,4 @@ const Trash = () => {
   );
 };
 
-// NODE_ENV=production
 export default Trash;

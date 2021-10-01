@@ -54,19 +54,4 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   ) : null;
 };
 
-// {
-//   // const handleDelete = (id) => {
-//   //   fetch("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id, {
-//   //     method: "DELETE",
-//   //   }).then((res) => {
-//   //     // res.status === 200 ? setFileDel("") : null;
-//   //     console.log(res);
-//   //   });
-//   //   // setData((prev) => prev.filter((data) => data.id !== id));
-//   // };
-//   deleteToBin ? (
-
-//   ) : null;
-//   }
-
 export default Modal;
