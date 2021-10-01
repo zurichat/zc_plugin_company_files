@@ -19,12 +19,14 @@ import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
+import Modal from "./DeleteToBinModal";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
+  const [deleteToBin, setDeleteToBin] = useState(false);
 
   function previewCmd() {
-    console.log(file)
+    console.log(file);
     setOpenPreview(true);
   }
 
@@ -48,7 +50,9 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function properties() {}
 
-  function deleteCmd() {}
+  function deleteCmd() {
+    setDeleteToBin(true);
+  }
 
   return (
     <>
@@ -147,6 +151,13 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             </div>
           )
         ) : null}
+        {deleteToBin && (
+          <Modal
+            deleteToBin={deleteToBin}
+            setDeleteToBin={setDeleteToBin}
+            id={file._id}
+          />
+        )}
       </HandleClickEvent>
     </>
   );

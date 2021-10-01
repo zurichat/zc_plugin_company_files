@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Modal({
   showModal,
   setShowModal,
@@ -9,25 +7,27 @@ export default function Modal({
   setData,
   setFileDel,
   setRestore,
+  apiBase,
+  data,
 }) {
   const handleRestore = (id) => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/restoreFile/" + id, {
+    fetch(`${apiBase}/files/restoreFile/` + id, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
       body: "",
     }).then((res) => {
       res.status === 200 ? setRestore("") : null;
     });
-    setData((prev) => prev.filter((data) => data.id !== id));
+    setData(data.filter((data) => data.id !== id));
   };
 
   const handleDelete = (id) => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/deleteFile/" + id, {
+    fetch(`${apiBase}/files/deleteFile/` + id, {
       method: "DELETE",
     }).then((res) => {
       res.status === 200 ? setFileDel("") : null;
     });
-    setData((prev) => prev.filter((data) => data.id !== id));
+    setData(data.filter((data) => data.id !== id));
   };
 
   return (

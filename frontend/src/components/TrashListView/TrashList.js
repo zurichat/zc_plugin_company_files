@@ -8,17 +8,19 @@ import Loader from "./Loader";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function TrashList({
+const TrashList = ({
   error,
   isLoading,
   data,
   setData,
   setFileDel,
   setRestore,
-}) {
+  apiBase,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [id, setId] = useState(null);
+  const [sort, setSort] = useState(true);
 
   // set state to toggle menu button
   const [click, setClick] = useState(false);
@@ -27,12 +29,31 @@ function TrashList({
   const { width } = useViewport();
   const breakpoint = 768;
 
+  const handleSort = () => {
+    setSort(!sort);
+    if (sort) {
+      data.sort((a, b) => {
+        a = a.fileName;
+        b = b.fileName;
+        if (a < b) {
+          return -1;
+        }
+        if (a > b) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      return false;
+    }
+  };
+
   //Truncate the length of fetched file names
   const handleTruncateName = () => {
     let str = data.map((data) => data.fileName.trim());
 
     return str.map((text) => {
-      return text.length > 20 ? text.substring(0, 12) + "..." : text;
+      return text.length > 20 ? text.substring(0, 14) + "..." : text;
     });
   };
 
@@ -101,31 +122,60 @@ function TrashList({
         {isEmpty(data) && !isLoading && !error ? (
           <div className="tw-text-center tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-96">
             <img src={bin} alt="Bin icon" />
-            <h3 className="tw-text-text-grey tw-font-semibold tw-pt-2">
+            <p className="tw-text-text-grey tw-font-semibold tw-pt-2">
               No items
-            </h3>
+            </p>
             <p className="tw-text-text-grey tw-pt-2">
               items moved to the trash will appear here
             </p>
           </div>
         ) : null}
         {!isEmpty(data) && !error && !isLoading ? (
-          <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate    borderSpace tableHide">
-            <thead className="tw-text-left tw-content-box">
+          <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate borderSpace tableHide">
+            <thead className="tw-text-left">
               <tr>
-                <th className="tw-font-semibold trashTheading">Name</th>
+                <th className="tw-font-semibold trashTheading pl-0">
+                  Name
+                  <span
+                    className="tw-inline-block tw-align-middle tw-cursor-pointer"
+                    onClick={handleSort}
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.99991 3.00098V15.001"
+                        stroke="#333333"
+                        stroke-width="1.22693"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M13.4999 10.501L8.99991 15.001L4.49991 10.501"
+                        stroke="#333333"
+                        stroke-width="1.22693"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </th>
                 <th className="tw-hidden md:tw-block"></th>
                 <th className="tw-hidden md:tw-block"></th>
                 <th></th>
                 <th></th>
                 <th className="tw-block md:tw-hidden"></th>
-                <th className="tw-font-semibold trashTheading tw-whitespace-nowrap tw-hidden md:tw-block">
+                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap tw-hidden md:tw-inline-block">
                   Date Deleted
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th className="tw-font-semibold trashTheading tw-whitespace-nowrap tw-pr-3 sm:tw-pr-0">
+                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
                   <span className="tw-hidden sm:tw-inline">File </span>Size
                 </th>
               </tr>
@@ -135,11 +185,11 @@ function TrashList({
                 <tr
                   key={data._id}
                   onClick={() => handleClick(index, data._id)}
-                  className="lightGrayHover tw-cursor-pointer hover:tw-bg-gray-100"
+                  className="tw-cursor-pointer hover:tw-bg-bg-trashRow"
                 >
                   <td
                     className="
-                      tw-py-2 tw-whitespace-nowrap tw-text-sm tw-lowercase"
+                      tw-whitespace-nowrap tw-text-sm tw-py-2 tw-lowercase"
                   >
                     <img
                       src={fileIcon}
@@ -153,7 +203,7 @@ function TrashList({
                   <td></td>
                   <td></td>
                   <td className="tw-block md:tw-hidden"></td>
-                  <td className="tw-py-2 tw-text-xs tw-relative tw-hidden md:tw-block">
+                  <td className="tw-text-xs tw-relative tw-hidden md:tw-block tw-pt-4">
                     {handleNewDate()[index]}
 
                     {/* Menu buttons for big screen */}
@@ -161,7 +211,7 @@ function TrashList({
                       //assign the created reference to each array item
 
                       ref={(el) => (menu.current[index] = el)}
-                      className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
+                      className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
                     >
                       <Buttons
                         setShowModal={setShowModal}
@@ -172,7 +222,7 @@ function TrashList({
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="tw-py-2 tw-text-xs tw-relative">
+                  <td className="tw-text-xs tw-relative">
                     {handleFormatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
@@ -182,7 +232,7 @@ function TrashList({
                       <div
                         //assign the created reference to each array item
                         ref={(el) => (menu.current[index] = el)}
-                        className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
+                        className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
                       >
                         <Buttons
                           setShowModal={setShowModal}
@@ -206,9 +256,11 @@ function TrashList({
         setData={setData}
         setFileDel={setFileDel}
         setRestore={setRestore}
+        apiBase={apiBase}
+        data={data}
       />
     </>
   );
-}
+};
 
 export default TrashList;

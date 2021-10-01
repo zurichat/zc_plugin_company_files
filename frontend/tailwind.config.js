@@ -17,6 +17,7 @@ module.exports = {
           lightGrey: "#F6F6F6",
           white: "#FFFFFF",
           lightGreen: "#f0fbf8",
+          trashRow: "#FAFAFA",
         },
         success: "#008B5E",
         text: {

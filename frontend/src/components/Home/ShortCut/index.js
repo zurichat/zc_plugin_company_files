@@ -16,12 +16,12 @@ const index = () => {
           name={"All Files"}
           altName={"all files"}
         />
-        <Shortcuts
+        {/* <Shortcuts
           link={"shared"}
           image={Shared}
           name={"Shared"}
           altName={"shared"}
-        />
+        /> */}
         <Shortcuts
           link={"starred"}
           image={Star}
