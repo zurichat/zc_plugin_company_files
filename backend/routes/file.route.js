@@ -28,7 +28,7 @@ const {
   recentlyViewed,
   starFile,
   unStarFile,
-  cropImage
+
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
