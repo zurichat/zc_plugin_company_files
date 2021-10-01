@@ -24,7 +24,7 @@ function Folder({ folder }) {
         </div>
         <div className="tw-text-sm tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-text-[13px]">
           <div className="tw-w-full">
-            <span className="tw-block tw-font-semibold tw-truncate">
+            <span className="tw-block tw-font-semibold tw-truncate tw-text-text-grey">
               {folder.folderName}
             </span>
           </div>

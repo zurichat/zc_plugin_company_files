@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
-import axios from "axios";
 import FolderComponent from "./Folder";
 import RealTime from "../../../helpers/realtime.helper";
-
-async function fetcher(url) {
-  const res = await axios.get(url);
-  return res.data;
-}
-
-const API_URL =
-  window.location.hostname.includes("localhost") ||
-  window.location.hostname.includes("127.0.0.1")
-    ? "http://127.0.0.1:5500/api/v1"
-    : "https://companyfiles.zuri.chat/api/v1";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFolders } from "../../../actions/folderAction";
 
 const index = () => {
-  const { data, error } = useSWR(`${API_URL}/folders/all`, fetcher);
-
   const [newFolders, setNewFolders] = useState({ data: {} });
+  const dispatch = useDispatch();
+  const { loading, error, folders } = useSelector(
+    (state) => state.rootReducer.folderReducer
+  );
 
   // let progress = useRef(false)
+
+  useEffect(() => {
+    (async () => {
+      dispatch(fetchFolders());
+    })();
+  }, []);
 
   useEffect(() => {
     const fetchNewData = () => {
@@ -34,12 +31,12 @@ const index = () => {
 
   if (error)
     return (
-      <div className="text-3xl flex items-center justify-center text-red-600">
-        failed to load
+      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600">
+        Error failed
       </div>
     );
 
-  if (!data)
+  if (loading)
     return (
       <div className="tw-w-full tw-py-10 ">
         <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
@@ -69,7 +66,11 @@ const index = () => {
     <div className="tw-w-full tw-py-10 ">
       <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
+<<<<<<< HEAD
           Hello world!
+=======
+          Folders
+>>>>>>> d4a204b59ea8a63e7e49163aaa036c577d6390ad
         </h2>
         <Link
           to="/all-folders"
@@ -79,8 +80,8 @@ const index = () => {
         </Link>
       </div>
       <div className="tw-flex tw-flex-wrap tw-justify-between">
-        {data.data.length ? (
-          data.data
+        {folders.data.length ? (
+          folders.data
             .slice(0, 4)
             .map((folder) => (
               <FolderComponent key={folder.folderId} folder={folder} />
