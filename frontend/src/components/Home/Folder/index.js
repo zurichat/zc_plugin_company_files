@@ -66,11 +66,7 @@ const index = () => {
     <div className="tw-w-full tw-py-10 ">
       <div className="w-full tw-flex tw-justify-between tw-items-center tw-mb-4">
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
-<<<<<<< HEAD
-          Hello world!
-=======
           Folders
->>>>>>> d4a204b59ea8a63e7e49163aaa036c577d6390ad
         </h2>
         <Link
           to="/all-folders"

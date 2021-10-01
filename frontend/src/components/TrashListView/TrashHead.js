@@ -36,7 +36,7 @@ const TrashHead = ({
           className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-text-primary has__toolTip emptyTrash tw-relative"
           onClick={handleEmptyTrash}
         >
-          <span className="toolTip tw-rounded tw-shadow-lg tw-p-1 tw-bg-gray-100 tw-text-primary tw-invisible tw-absolute tw--mt-14">
+          <span className="toolTip tw-rounded tw-shadow-lg tw-p-1 tw-bg-gray-100 tw-text-primary tw-invisible tw-absolute tw--mt-14 md:tw--mt-16">
             Delete files permanently?
           </span>
           Empty Trash

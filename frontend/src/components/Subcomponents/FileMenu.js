@@ -156,6 +156,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             deleteToBin={deleteToBin}
             setDeleteToBin={setDeleteToBin}
             id={file._id}
+            fileName={file.fileName}
           />
         )}
       </HandleClickEvent>

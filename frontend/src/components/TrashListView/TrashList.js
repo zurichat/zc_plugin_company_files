@@ -23,18 +23,18 @@ const TrashList = ({
   const [sort, setSort] = useState(true);
 
   // set state to toggle menu button
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState(true);
 
   // Viewport to change the location of the menu buttons on different screen size
   const { width } = useViewport();
   const breakpoint = 768;
 
+  // Sort the fetched files by name at the click of the drop-down arrow
   const handleSort = () => {
-    setSort(!sort);
     if (sort) {
       data.sort((a, b) => {
-        a = a.fileName;
-        b = b.fileName;
+        a = a.fileName.toLowerCase();
+        b = b.fileName.toLowerCase();
         if (a < b) {
           return -1;
         }
@@ -44,8 +44,9 @@ const TrashList = ({
         return 0;
       });
     } else {
-      return false;
+      data.reverse();
     }
+    setSort(!sort);
   };
 
   //Truncate the length of fetched file names
@@ -87,6 +88,7 @@ const TrashList = ({
   //This displays the Menu button
   const handleClick = (index, id) => {
     setId(id);
+
     // if item is clicked display menu/btn and enable pointer event
     if (click) {
       menu.current[index].style.opacity = 1;
@@ -134,8 +136,8 @@ const TrashList = ({
           <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate borderSpace tableHide">
             <thead className="tw-text-left">
               <tr>
-                <th className="tw-font-semibold trashTheading pl-0">
-                  Name
+                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
+                  Name &nbsp;
                   <span
                     className="tw-inline-block tw-align-middle tw-cursor-pointer"
                     onClick={handleSort}
