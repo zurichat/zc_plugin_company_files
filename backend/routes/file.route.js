@@ -24,6 +24,8 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
+  cropImage,
+  recentlyViewed,
   starFile,
   unStarFile,
   cropImage
@@ -100,6 +102,9 @@ router.get("/setEdit/:admin", setEditPermission);
 
 // SEARCH FILES BY FILE TYPE
 router.get("/searchByType", searchByType);
+
+// GET RECENTLY VIEWED FILES
+router.get("/recentlyViewed", recentlyViewed);
 
 // STAR A FILE
 router.put('/starFile/:id', starFile);

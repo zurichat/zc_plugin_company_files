@@ -33,17 +33,17 @@ exports.getAllFolders = async (req, res) => {
 
 exports.folderDetails = async (req, res) => {
   const { id } = req.params;
-  const  data  = await Folders.fetchOne({ _id: id });
 
-  if (data === null) {
-    throw new NotFoundError();
-  } else {
-    const response = await RealTime.publish('folder_detail', data);
+    //this line of code updates the folder last accessed time to the current date and time 
+    const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+     await Folders.update(id, updateLastAccessed);
+     const data = await Folders.fetchOne({ _id: id });
+     const response = await RealTime.publish('folder_detail', data);
     res.status(200).send(appResponse(null, data, true, {
         ...response,
         count: data.length,
       }));
-  }
+
 };
 
 exports.folderUpdate = async (req, res) => {
@@ -79,6 +79,17 @@ exports.folderDelete = async (req, res) => {
 
   res.status(200).send(appResponse(null, response, true));
 };
+
+exports.recentlyViewed = async(req, res) => {
+  const data = await Folders.fetchAll();
+
+  data.sort(function (a, b) {
+    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+    return dateB - dateA
+  });
+
+  res.status(200).json(data.slice(0, 5))
+} 
 
 // search starred folder
 exports.searchStarredFolders = async (req, res) => {
