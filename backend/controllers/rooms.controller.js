@@ -18,6 +18,7 @@ exports.createRoom = async (req, res) => {
 
   const room = await RoomSchema.validateAsync(body);
   // room.members = [];
+ 
   // room.slug = slugify(room.roomName, {
   //   lower: true,
   //   remove: /[*+~\/\\.()''!:@]/g,
@@ -180,3 +181,24 @@ exports.getUserRooms = async (req, res) => {
   // 6138cb6e99bd9e223a37d8ea
   // 6139fe2859842c7444fb0218
 };
+
+exports.getRoomMembers = async (req, res) => {
+  const {roomId } = req.params;
+
+ 
+  const room = await Rooms.fetchOne({ _id: roomId });
+
+  if (!room) throw new NotFoundError();  
+  
+  const members = room.members.map(({ user_name, status, first_name, last_name }) => ({ user_name, status, first_name, last_name }));
+  const data = {
+    room_name: room.room_name,
+    room_url: room.room_url,
+    room_image: room.room_image,
+    members_count: room.members.length,
+    members
+  }
+
+  return res.status(200).send(appResponse("Room Members Returned Successfully", data, true));
+
+}

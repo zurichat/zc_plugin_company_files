@@ -8,7 +8,8 @@ const {
   removeFromRoom,
   editRoom,
   setRoomPrivate,
-  getUserRooms
+  getUserRooms,
+  getRoomMembers
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS
@@ -37,5 +38,6 @@ router.put('/setPrivate/:roomId', setRoomPrivate);
 
 // GET USER ROOMS
 router.get('/getUserRooms/:userId', getUserRooms);
+router.get('/:roomId/get-room-members', getRoomMembers);
 
 module.exports = router;
