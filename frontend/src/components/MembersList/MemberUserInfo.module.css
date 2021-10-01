@@ -20,8 +20,24 @@
   height: 75vh;
   background: #fff;
   color: #262626;
-  overflow-y: hidden;
+  overflow-y: scroll;
   z-index: 21;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(176, 176, 199) transparent;
+}
+
+.load-user__modal::-webkit-scrollbar {
+  width: 20px;
+}
+
+.load-user__modal::-webkit-scrollbar-track {
+  width: 20px;
+  background-color: transparent;
+}
+
+.load-user__modal::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: rgb(189, 200, 202);
 }
 
 .room_header {
@@ -34,6 +50,13 @@
 .room_para {
   font-size: 1rem;
   margin: 0.5rem 1.5rem;
+}
+
+.room_header_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .room_notification {
@@ -57,8 +80,8 @@
 }
 
 .searchbar {
-  font-size: 0.7rem;
-  padding: 40px, 50px;
+  font-size: 1rem;
+  padding: 0px, 50px;
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
   border-radius: 4px;

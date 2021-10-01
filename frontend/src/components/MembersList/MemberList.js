@@ -48,7 +48,12 @@ const MemberList = () => {
   return (
       <div className={Styles["load-user__backdrop"]}>
         <div className={Styles["load-user__modal"]}>
-          <h3 className={Styles["room_header"]}># Files</h3>
+
+          <div className={Styles["room_header_div"]}>
+            <h3 className={Styles["room_header"]}># Files</h3>
+
+            <button className={Styles["room_header_close"]}>X</button>
+          </div>
 
           <div className={Styles["room_notification"]}>
             <h4 className={Styles["room_notify"]}>Get Notifcation for @ Mentions</h4>
