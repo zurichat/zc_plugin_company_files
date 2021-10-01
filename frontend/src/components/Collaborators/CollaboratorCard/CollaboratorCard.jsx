@@ -1,36 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import searchIcon from "../CollabImages/search-svg.svg";
 import chainIcon from "../CollabImages/chain-green.svg.svg";
 
+import userAPI from "../../../actions/workspaceInfo";
+
 import GivePermission from "../GivePermission/GivePermission";
+import axios from "axios";
 
 const CollaboratorCard = () => {
+  const [users, setUsers] = useState([]);
+  const [text, setText] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    const showUsers = async () => {
+      const res = await axios.get({userAPI});
+      console.log(res.data.data);
+      setUsers(res.data.data);
+    };
+    showUsers();
+  }, []);
+
+  const handleSuggestions = (text) => {
+    setText(text);
+    setSuggestions({});
+  };
+
+  const handleTextChange = (text) => {
+    let matches = [];
+    if (text.lenght > 0) {
+      matches = users.filter((user) => {
+        const regex = new RegExp(`${text}`, "gi");
+        return user.email.match(regex);
+      });
+    }
+    console.log("matches are", matches);
+    setSuggestions(matches);
+    setText(text);
+  };
+
   return (
-    <div className="collab_permission absolute">
+    <div className="collab_permission tw-absolute">
       {/* Nav */}
-      <div className="collab_nav flex justify-between">
-        <div className="collab_search p-2">
-          <form className="flex justify-between">
+      <div className="collab_nav tw-flex tw-justify-between">
+        <div className="collab_search tw-p-2">
+          <form className="tw-flex tw-justify-between">
             <input
-              type="search"
+              type="text"
               placeholder="Search email, name or status"
-              className="bg-none outline-none w-11/12"
+              className="tw-bg-none tw-outline-none tw-w-11/12"
               required="required"
+              onChange={(e) => handleTextChange(e.target.value)}
+              value={text}
+              onBlur={() =>
+                setTimeout(() => {
+                  setSuggestions([]);
+                }, 100)
+              }
             />
+
+            {suggestions &&
+              suggestions.map((suggestion, i) => (
+                <div
+                  key={i}
+                  className="suggestions tw-bg-black
+                 tw-text-white"
+                  onClick={() => handleSuggestions(suggestion.email)}
+                >
+                  {suggestion.email}
+                </div>
+              ))}
 
             <button type="submit">
               <img
                 src={searchIcon}
                 alt="search"
-                className="cursor-pointer flex self-center"
+                className="tw-cursor-pointer tw-flex tw-self-center"
               />
             </button>
           </form>
         </div>
 
         <div>
-          <button className="invite_btn">Send Invite</button>
+          <button className="invite_btn" value={text}>
+            Send Invite
+          </button>
         </div>
       </div>
 
@@ -43,10 +98,10 @@ const CollaboratorCard = () => {
 
       {/* Footer */}
       <hr />
-      <div className="collab_footer py-2">
-        <a href="#" className="copy-link flex">
+      <div className="collab_footer tw-py-2">
+        <a href="#" className="copy-link tw-flex">
           <span> Copy link</span>
-          <span className="imago ml-1">
+          <span className="imago tw-ml-1">
             <img src={chainIcon} alt="copy link" width={16} height={16} />
           </span>
         </a>
@@ -87,6 +142,11 @@ const CollaboratorCard = () => {
             font-size: 12px;
             line-height: 20px;
             font-weight: bold;
+          }
+
+          .invite_btn:hover {
+            background-color: #00b876;
+            color: #fff;
           }
 
           .collab_body {

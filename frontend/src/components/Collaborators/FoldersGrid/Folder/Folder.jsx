@@ -12,14 +12,13 @@ const Folder = () => {
   const openPermissionCard = () => {
     setShowPermissonCard((prev) => !prev);
   };
-
   return (
-    <div className="w1/4 folder_card">
+    <div className="tw-w1/4 folder_card">
       <div className="folder_container flex-bet">
         <img src={FolderIcon} alt="folders" className="folderIcon" />
         <span className="move-up">
           {" "}
-          <img src={menuIcon} alt="menu" className="cursor-pointer" />{" "}
+          <img src={menuIcon} alt="menu" className="tw-cursor-pointer" />{" "}
         </span>
       </div>
       <h3 className="folder_card_title">Design Files</h3>
@@ -27,7 +26,7 @@ const Folder = () => {
       <div className="folder_footer flex-bet">
         <p className="folder_card_info">140 Files</p>
 
-        <div className="flex move-up">
+        <div className="tw-flex move-up">
           <span className="move-left">
             <img src={profile} alt="avater" className="folder_small_avater" />
           </span>
@@ -39,7 +38,7 @@ const Folder = () => {
             <img
               src={plusIcon}
               alt="menu"
-              className="cursor-pointer"
+              className="tw-cursor-pointer"
               onClick={openPermissionCard}
             />
           </span>

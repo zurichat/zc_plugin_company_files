@@ -6,7 +6,7 @@ function FileStatus(props) {
       <span className="file_image">
         <img src={props.icon} alt="File" />
       </span>
-      <h3 className="file_text text-center">{props.title}</h3>
+      <h3 className="file_text tw-text-center">{props.title}</h3>
 
       <style jsx>
         {`
@@ -30,6 +30,16 @@ function FileStatus(props) {
             border-radius: 9px;
             display: flex;
             align-self: center;
+          }
+
+          @media screen and (min-width:320px) and (max-width:700px) {
+            .file_image {
+              padding: 10px;
+            }
+
+            h3 {
+              font-size: 17px;
+            }
           }
         `}
       </style>

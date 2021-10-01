@@ -11,17 +11,17 @@ const UserAllow = (props) => {
   };
 
   return (
-    <div className="flex w-full items-center px-3 space-x-4 h-14">
+    <div className="tw-flex tw-w-full tw-items-center tw-px-3 tw-space-x-4 tw-h-14">
       {props.image}
-      <div className="w-10/12">
-        <h1 className="capitalize w-full text-sm font-semibold">
+      <div className="tw-w-10/12">
+        <h1 className="tw-capitalize tw-w-full tw-text-sm tw-font-semibold">
           {props.name}
         </h1>
-        <span className="text-[14px] text-gray-500">{props.email}</span>
+        <span className="tw-text-[14px] tw-text-gray-500">{props.email}</span>
       </div>
 
-      <div className="w-40 flex justify-between">
-        <span className={`{pr-2 user_roles flex`}>
+      <div className="tw-w-40 tw-flex tw-justify-between">
+        <span className={`{pr-2 user_roles tw-flex`}>
           <div className="custom-select" style={{ width: "119.2px" }}>
             <select>
               <option value="0">Role:</option>
@@ -36,7 +36,7 @@ const UserAllow = (props) => {
             <img
               src={saveIcon}
               alt=""
-              className="cursor-pointer"
+              className="tw-cursor-pointer"
               onClick={displayMessage}
             />
           </div>
@@ -134,6 +134,7 @@ const UserAllow = (props) => {
             position: absolute;
             left: 10%;
             margin-right: 10px;
+            color: #fff;
           }
         `}
 

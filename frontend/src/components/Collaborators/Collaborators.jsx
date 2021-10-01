@@ -6,7 +6,7 @@ import RecentlyViewed from "./RecentlyViewed/RecentlyViewed";
 
 function Collaborators() {
   return (
-    <div className="w-full h-screen collaborator bg-white">
+    <div className="tw-w-full tw-h-screen collaborator tw-bg-white">
       <CollaNavigation />
       <RecentlyViewed />
       <FoldersGrid />
