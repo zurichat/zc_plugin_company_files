@@ -14,6 +14,7 @@ import NewFolder from "../FolderCreation/Folder";
 import TrashApp from "../TrashListView/TrashApp";
 import Starred from "../Starred/index";
 import Activities from "../Activities/Activities";
+import Activity from "../Activities/Activity";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
 
 import Test from "../ComponentToTest";
@@ -78,6 +79,9 @@ const Main = () => {
             </Route>
             <Route path="/activities" exact>
               <Activities />
+            </Route>
+            <Route path="/activity" exact>
+              <Activity />
             </Route>
             <Route path="/all-files" exact>
               <AllFiles />

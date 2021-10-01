@@ -35,6 +35,7 @@ module.exports = (webpackConfigEnv, argv) => {
               paths: [require.resolve("webpack-config-single-spa")],
             }),
             "postcss-loader",
+            "sass-loader",
           ],
         },
       ],
