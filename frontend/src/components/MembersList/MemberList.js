@@ -58,7 +58,7 @@ const MemberList = () => {
           <p className={Styles["room_para"]}>Members</p>
 
           <form className={Styles["load-user__form"]}>
-            <input className={Styles["searchbar"]} type="text" autoComplete="off" name="text" onChange={handleInput} placeholder="Find Members"/>
+            <input className={Styles["searchbar"]} type="text" autoComplete="off" name="text" onChange={handleInput} placeholder="Search members"/>
           </form>
 
           <div className={Styles["load-user__users"]}>
