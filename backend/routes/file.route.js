@@ -28,6 +28,7 @@ const {
   recentlyViewed,
   starFile,
   unStarFile,
+  detectPreview
 
 } = require('../controllers/file.controller');
 
@@ -111,5 +112,8 @@ router.put('/starFile/:id', starFile);
 
 // UNSTAR A FILE
 router.put('/unStarFile/:id', unStarFile);
+
+// DETECT WHEN A FILE IS PREVIEWED
+router.post('/preview/:id', detectPreview)
 
 module.exports = router;
