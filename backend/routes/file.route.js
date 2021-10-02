@@ -21,7 +21,11 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   setEditPermission,
+  searchBySize,
+  searchByType,
+  getFilesWithSameFolderId,
   cropImage,
+  sortFiles,
   recentlyViewed,
   detectPreview,
 } = require('../controllers/file.controller');
@@ -43,6 +47,9 @@ router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
+
+// GET ALL FILES SORTED BY THE FILE PROPERTIES
+router.get("/sort", sortFiles);
 
 // GET A SPECIFIC FILE TYPE
 router.get('/type/:type', getFileByType);

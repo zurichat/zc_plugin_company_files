@@ -22,6 +22,14 @@ const Index = () => {
 
   // let progress = useRef(false)
 
+  // useLayoutEffect(() => {
+    // const fetchNewData = () => {
+    //   RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
+    // };
+    // fetchNewData();
+    // console.log(newFile);
+  // }, [newFile]);
+
   const showOptions = (e) => {
     setOptions(!options);
     e.stopPropagation();

@@ -11,6 +11,12 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
+import RealTime from "../../../helpers/realtime.helper";
+import {
+  SubscribeToChannel,
+  GetWorkspaceUsers,
+  GetUserInfo,
+} from "@zuri/control";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
@@ -52,6 +58,35 @@ const index = () => {
       console.log({ newFile });
     });
   }, [newFile, dispatch]);
+
+  useEffect(() => {
+    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+      console.log(stuff.data.event, me, you);
+      setFileSubscription(stuff.data.event);
+    });
+    console.log(fileSubscription);
+    (async function () {
+      try {
+        const info = await GetUserInfo();
+        console.log(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    (async function () {
+      try {
+        const users = await GetWorkspaceUsers();
+        console.log(users);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
+  }, []);
 
   if (error)
     return (
