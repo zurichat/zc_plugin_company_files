@@ -13,7 +13,7 @@ const Folders = new DatabaseOps('Folder');
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   body.folderId = uuid();
-
+  body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
@@ -73,13 +73,11 @@ exports.folderDetails = async (req, res) => {
   const updateLastAccessed = { lastAccessed: new Date().toISOString() };
 
   await Promise.all([
-    Folders.update(folderId, updateLastAccessed),
-    RealTime.publish(`folderDetail ${data._id}`, data)
+    Folders.update(id, updateLastAccessed),
+    RealTime.publish(`folderDetail${data._id}`, data)
   ])
 
-  const updatedFolderDetails = await Folders.fetchOne({ _id: folderId });
-
-  res.status(200).send(appResponse(null, updatedFolderDetails, true));
+  res.status(200).send(appResponse(null, folderDetail, true));
 }
 
 
@@ -99,7 +97,7 @@ exports.folderUpdate = async (req, res) => {
 //Give folder Access
 exports.giveFolderAccess = async (req, res) => {
   const { body }=req;
-  
+  body.memberId = uuid();
 
     const data_update = {
       plugin_id: '6134c6a40366b6816a0b75cd',
@@ -149,6 +147,50 @@ exports.giveFolderAccess = async (req, res) => {
   );
 };
 
+//Update member folder Access
+exports.updateFolderAccess = async (req, res) => {
+
+  const data_update = {
+    plugin_id: '6134c6a40366b6816a0b75cd',
+    organization_id: '6133c5a68006324323416896',
+    collection_name: "Folder",
+    filter:"",
+    raw_query: {},
+};
+
+
+const { body }=req;
+  //Set query
+  const query = {
+    "$set": {
+        "collaborators.$.role": {
+            role: body.role,    
+        }
+    }
+  }
+  const filterData = {
+		"id": body._id,
+		"collaborators.memberId": body.memberId
+	}
+  //Set Main Data
+  data_update.filter = filterData
+  data_update.raw_query = query
+  //Send update
+  const response = await axios.put(databaseWriteUrl, data_update);
+  //Store response
+  const data = response.data   
+  // Send updated folder info to FE using Centrifugo 
+  const centrifugoResponse = await RealTime.publish("Updated Folder", data);
+  // Send updated folder info to FE 
+  res.status(200).send(
+      appResponse("Folder Access updated!", data, true, 
+          {
+               ...centrifugoResponse,
+              count: data.length,
+          }
+      )
+    );
+};
 
 
 exports.folderDelete = async (req, res) => {
@@ -223,7 +265,7 @@ exports.recentlyViewed = async(req, res) => {
     return dateB - dateA
   });
 
-  res.status(200).json(data.slice(0, 10))
+  res.status(200).json(data.slice(0, 5))
 } 
 
 // search starred folder

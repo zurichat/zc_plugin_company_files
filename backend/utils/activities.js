@@ -12,7 +12,10 @@ module.exports = async (userInfo, operation, filename) => {
 
   if (userInfo.userName || userInfo.imageUrl) {
     const data = {
-      userInfo,
+      userObj: {
+        user_name: userInfo.userName,
+        img_url: userInfo.imageUrl
+      },
       operation,
       filename,
       time: Date.now()
@@ -21,7 +24,7 @@ module.exports = async (userInfo, operation, filename) => {
     await Activity.create(data)
   } else {
     const data = {
-      defaultUserObj,
+      userObj: defaultUserObj,
       operation,
       filename,
       time: Date.now()
