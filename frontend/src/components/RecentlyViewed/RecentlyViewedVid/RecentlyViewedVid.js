@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import axios from 'axios'
 import VideoIcon from '../svg/videoIcon';
 import classes from '../RecentlyViewed.module.css'
+import { format } from "timeago.js";
 
 function RecentlyViewedVideos() {
     const [images, setImages] = useState([])
@@ -64,7 +65,7 @@ function RecentlyViewedVideos() {
                                     {image.fileName}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {image.lastAccessed}
+                                    {format(image.lastAccessed)}
                                 </div>
                             </div>
                         </div>
