@@ -2,7 +2,6 @@ const fileInititalState = {
   loading: true,
   error: null,
   files: {},
-  fileNumber: 0,
 };
 
 export default function fileReducer(state = fileInititalState, action) {
@@ -25,26 +24,6 @@ export default function fileReducer(state = fileInititalState, action) {
         loading: false,
         files: {},
         error: action.payload,
-      };
-    case "GET_TOTAL_NUMBER_OF_FILES_IN_FOLDER_FULFILLED":
-      return {
-        ...state,
-        loading: false,
-        error: null,
-        fileNumber: action.payload,
-      };
-    case "GET_TOTAL_NUMBER_OF_FILES_IN_FOLDER_REJECTED":
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
-        fileNumber: 0,
-      };
-    case "GET_TOTAL_NUMBER_OF_FILES_IN_FOLDER_PENDING":
-      return {
-        ...state,
-        loading: true,
-        error: null,
       };
     case "ADD_FILE_PENDING":
       return {

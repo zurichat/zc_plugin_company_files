@@ -40,7 +40,7 @@ function FileGridView({ sortingMethod }) {
               visible="true"
             />
           </div>
-        ) : files && files.data.length > 0 ? (
+        ) : Object.keys(files).length && files.data.length > 0 ? (
           files.data
             .sort(
               sortingMethod == "name"

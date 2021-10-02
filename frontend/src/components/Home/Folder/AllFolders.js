@@ -162,11 +162,10 @@ const AllFolders = () => {
                   }
                 : (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
             )
-            .map((folder, index) => (
+            .map((folder) => (
               <FolderComponent
                 key={folder.folderId}
                 folder={folder}
-                index={index}
                 view={view}
               />
             ))

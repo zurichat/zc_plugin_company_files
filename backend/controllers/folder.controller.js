@@ -6,6 +6,7 @@ const RealTime = require('../utils/realtime.helper');
 const { NotFoundError, BadRequestError, InternalServerError } = require('../utils/appError');
 
 const Folders = new DatabaseConnection('Folder');
+const Files = new DatabaseConnection('File');
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
@@ -22,14 +23,22 @@ exports.folderCreate = async (req, res) => {
 };
 
 exports.getAllFolders = async (req, res) => {
-  const  data  = await Folders.fetchAll();
-  const response = await RealTime.publish('allFolders', data);
- 
-  res.status(200).send(appResponse(null, data, true, {
-      ...response,
-      count: data.length,
-    }));
-};
+  // get all the folders and also the number of files with the same folder id
+  const folders = await Folders.fetchAll();
+  const allFiles = await Files.fetchAll();
+
+  const data = folders.map((folder) => {
+    const filesWithTheSameFolderId = allFiles.filter((file) => {
+      return file.folderId === folder._id;
+    });
+    return {
+      ...folder,
+      noOfFiles: filesWithTheSameFolderId.length,
+    };
+  });
+
+  res.status(200).send(appResponse(null, data, true));
+}
 
 exports.folderDetails = async (req, res) => {
   const { id } = req.params;
