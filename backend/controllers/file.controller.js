@@ -518,23 +518,6 @@ exports.unStarFile = async (req, res) => {
 }
 
 
-exports.recentlyViewed = async (req, res) => {
-  const data = await File.fetchAll();  
-  data.sort((a, b) => {
-    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
-    return dateB - dateA
-  });
-
-  res.status(200).send(appResponse('Recently viewed files', data.slice(0, 5), true));
-}
-
-exports.detectPreview = async (req, res) => {
-  const { id } = req.params;
-  const updatedLastAccessed = { lastAccessed: new Date().toISOString() }; 
-  await File.update(id, updatedLastAccessed);
-  res.status(200).json(`lastAccessed date updated`);
-}
-
 
 /*******************************
  * =============================
@@ -664,6 +647,7 @@ exports.recentlyViewedVideos = async (req, res) => {
 
 exports.recentlyViewedDocs = async (req, res) => {
   const data = await File.fetchAll();  
+ 
   const onlyDocs = data.filter((data)=>/doc/.test(data.type) || /pdf/.test(data.type) || /spreadsheetml/.test(data.type) || /ppt/.test(data.type))
   const sorted = onlyDocs.sort(function (a, b) {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
