@@ -45,9 +45,6 @@ const index = () => {
     });
   }, []);
 
-  const [newFiles, setNewFiles] = useState();
-  const [fileSubscription, setFileSubscription] = useState();
-
   useEffect(() => {
     SubscribeToChannel("/companyfiles", (stuff, me, you) => {
       console.log(stuff.data.event, me, you);

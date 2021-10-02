@@ -25,17 +25,13 @@ const index = () => {
     })();
   }, []);
 
-  const [newFolders, setNewFolders] = useState({ data: {} });
-
-  // let progress = useRef(false)
-
-  useEffect(() => {
-    const fetchNewData = () => {
-      RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
-    };
-    fetchNewData();
-    console.log(newFolders);
-  }, []);
+  // useEffect(() => {
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFolders);
+  // }, []);
 
   if (error)
     return (

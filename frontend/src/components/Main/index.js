@@ -55,8 +55,6 @@ const Main = () => {
     hasThumbnail: true,
   };
 
-<<<<<<< HEAD
-=======
   const dispatch = useDispatch();
   const { loading, error, users, user, info } = useSelector(
     (state) => state.rootReducer.workspaceReducer
@@ -71,7 +69,6 @@ const Main = () => {
     })();
   }, []);
 
->>>>>>> 54189941cad28dd3c2bc67c4f5c06c025142e782
   return (
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
