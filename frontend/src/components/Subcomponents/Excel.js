@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
+import Xls from "../../../public/Icons/excel-cat.svg"
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,7 +22,7 @@ function Excel({ file }) {
       >
         <FileType
           file={file}
-          IconName={BsFileEarmarkSpreadsheet}
+          IconName={Xls}
           bgColor={"tw-bg-file-xls"}
           textColor={"tw-text-green-700"}
         />
