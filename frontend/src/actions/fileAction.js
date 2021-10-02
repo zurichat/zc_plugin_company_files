@@ -20,6 +20,7 @@ export function fetchFiles() {
   };
 }
 
+
 export function setLoading() {
   return {
     type: 'FETCH_FILES_PENDING' || 'ADD_FILE_PENDING' || 'DELETE_FILE_PENDING' || 'UPDATE_FILE_PENDING',
@@ -35,7 +36,8 @@ export const checkRecentlyViewed = (id) => async (dispatch) => {
   }
 };
 
-export const detectViewedFile = (id) => async (dispatch) => {
+export const fileDetails = (id) => async (dispatch) => {
+
   console.log(file._id);
   try {
     const response = await axios.post(`/files/read/${id}`);
