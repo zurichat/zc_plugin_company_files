@@ -7,7 +7,7 @@ import FileUpload from "../Home/index";
 import Home from "../Home";
 
 import NewFolder from "../FolderCreation/Folder";
-import TrashApp from "../TrashListView/TrashApp";
+import TrashApp from "../TrashListView/Trash";
 import Starred from "../Starred/index";
 import Activities from "../Activities/Activities";
 import Activity from "../Activities/Activity";

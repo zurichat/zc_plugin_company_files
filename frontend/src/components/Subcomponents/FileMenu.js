@@ -19,13 +19,22 @@ import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
+<<<<<<< HEAD
 import axios from 'axios'
+=======
+import Modal from "./DeleteToBinModal";
+>>>>>>> 766db0ff9f3cb07c8a473a8755eb66abd27d38dc
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
+  const [deleteToBin, setDeleteToBin] = useState(false);
 
   function previewCmd() {
+<<<<<<< HEAD
     console.log('file',file._id)
+=======
+    console.log(file);
+>>>>>>> 766db0ff9f3cb07c8a473a8755eb66abd27d38dc
     setOpenPreview(true);
   }
 
@@ -49,7 +58,9 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function properties() {}
 
-  function deleteCmd() {}
+  function deleteCmd() {
+    setDeleteToBin(true);
+  }
 
   function preview(id) {
     setOpenPreview(true);
@@ -155,6 +166,14 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             </div>
           )
         ) : null}
+        {deleteToBin && (
+          <Modal
+            deleteToBin={deleteToBin}
+            setDeleteToBin={setDeleteToBin}
+            id={file._id}
+            fileName={file.fileName}
+          />
+        )}
       </HandleClickEvent>
     </>
   );

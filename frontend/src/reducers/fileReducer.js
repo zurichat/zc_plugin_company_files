@@ -2,89 +2,89 @@ const fileInititalState = {
   loading: true,
   error: null,
   files: {},
-}
+};
 
 export default function fileReducer(state = fileInititalState, action) {
   switch (action.type) {
-    case 'FETCH_FILES_PENDING':
+    case "FETCH_FILES_PENDING":
       return {
         ...state,
         loading: true,
-      }
-    case 'FETCH_FILES_FULFILLED':
+      };
+    case "FETCH_FILES_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
         files: action.payload,
-      }
-    case 'FETCH_FILES_REJECTED':
+      };
+    case "FETCH_FILES_REJECTED":
       return {
         ...state,
         loading: false,
         files: {},
         error: action.payload,
-      }
-    case 'ADD_FILE_PENDING':
+      };
+    case "ADD_FILE_PENDING":
       return {
         ...state,
         loading: true,
-      }
-    case 'ADD_FILE_FULFILLED':
+      };
+    case "ADD_FILE_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
         files: [...state.files, action.payload],
-      }
-    case 'ADD_FILE_REJECTED':
+      };
+    case "ADD_FILE_REJECTED":
       return {
         ...state,
         loading: false,
         error: action.payload,
-      }
-    case 'DELETE_FILE_PENDING':
+      };
+    case "DELETE_FILE_PENDING":
       return {
         ...state,
         loading: true,
-      }
-    case 'DELETE_FILE_FULFILLED':
+      };
+    case "DELETE_FILE_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
-        files: state.files.filter(file => file.id !== action.payload),
-      }
-    case 'DELETE_FILE_REJECTED':
+        files: state.files.filter((file) => file.id !== action.payload),
+      };
+    case "DELETE_FILE_REJECTED":
       return {
         ...state,
         loading: false,
         error: action.payload,
-      }
-    case 'UPDATE_FILE_PENDING':
+      };
+    case "UPDATE_FILE_PENDING":
       return {
         ...state,
         loading: true,
-      }
-    case 'UPDATE_FILE_FULFILLED':
+      };
+    case "UPDATE_FILE_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
-        files: state.files.map(file => {
+        files: state.files.map((file) => {
           if (file.id === action.payload.id) {
-            return action.payload
+            return action.payload;
           }
-          return file
+          return file;
         }),
-      }
-    case 'UPDATE_FILE_REJECTED':
+      };
+    case "UPDATE_FILE_REJECTED":
       return {
         ...state,
         loading: false,
         error: action.payload,
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
