@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Modal({
   showModal,
   setShowModal,
@@ -9,9 +7,15 @@ export default function Modal({
   setData,
   setFileDel,
   setRestore,
+  apiBase,
+  data,
 }) {
+  let fileName = data.map((data) =>
+    data._id === clickedId ? data.fileName : null
+  );
+
   const handleRestore = (id) => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/restoreFile/" + id, {
+    fetch(`${apiBase}/files/restoreFile/` + id, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
       body: "",
@@ -22,7 +26,7 @@ export default function Modal({
   };
 
   const handleDelete = (id) => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/deleteFile/" + id, {
+    fetch(`${apiBase}/files/deleteFile/` + id, {
       method: "DELETE",
     }).then((res) => {
       res.status === 200 ? setFileDel("") : null;
@@ -38,21 +42,21 @@ export default function Modal({
           <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
             <div className="tw-relative tw-w-auto tw-my-6 tw-mx-auto tw-max-w-3xl">
               {/*content*/}
-              <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-px-9 sm:tw-pl-5 sm:tw-pr-11">
+              <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
                 {/*header*/}
-                <div className="sm:tw-p-5 tw-pt-7 tw-text-center sm:tw-text-left">
+                <div className="tw-text-center sm:tw-text-left">
                   <h3 className="tw-text-2xl tw-text-text-grey tw-font-semibold">
                     Restore File
                   </h3>
                 </div>
                 {/*body*/}
-                <div className="tw-relative sm:tw-pr-20 ">
-                  <p className="tw-mt-3 tw-mb-4 sm:tw-pl-5 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
-                    Are you sure you want to restore File?
+                <div className="tw-relative tw-pt-3">
+                  <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
+                    Are you sure you want to restore ${fileName} File?
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-py-6  tw-rounded-b">
+                <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-pt-4  tw-rounded-b">
                   <button
                     className="tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-px-6 tw-py-3 tw-text-sm tw-outline-none focus:tw-outline-none tw-mr-5 tw-mb-1 tw-ease-linear tw-transition-all tw-duration-150"
                     type="button"
@@ -85,21 +89,21 @@ export default function Modal({
           <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
             <div className="tw-relative tw-w-auto tw-my-6 tw-mx-auto tw-max-w-3xl">
               {/*content*/}
-              <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-px-9 sm:tw-pl-5 sm:tw-pr-11">
+              <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
                 {/*header*/}
-                <div className="sm:tw-p-5 tw-pt-7 tw-text-center sm:tw-text-left">
+                <div className="tw-text-center sm:tw-text-left">
                   <h3 className="tw-text-2xl tw-text-text-grey tw-font-semibold">
                     Delete Permanently
                   </h3>
                 </div>
                 {/*body*/}
-                <div className="tw-relative sm:tw-pr-20 ">
-                  <p className="tw-mt-3 tw-mb-4 sm:tw-pl-5 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
-                    Are you sure you want to Delete File Permanently?
+                <div className="tw-relative tw-pt-3">
+                  <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
+                    `Are you sure you want to Delete ${fileName} Permanently?`
                   </p>
                 </div>
                 {/*footer*/}
-                <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-py-6 tw-rounded-b">
+                <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-pt-4 tw-rounded-b">
                   <button
                     className="tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-px-6 tw-py-3 tw-text-sm tw-outline-none focus:tw-outline-none tw-mr-5 tw-mb-1 tw-ease-linear tw-transition-all tw-duration-150"
                     type="button"

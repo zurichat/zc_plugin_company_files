@@ -30,10 +30,7 @@
       "/node_modules/"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zurichat/zc_plugin_company_files.git"
-  },
+  "repository": "git+https://github.com/zurichat/zc_plugin_company_files.git",
   "author": "Team Galileo / HNGi8",
   "license": "MIT",
   "bugs": {
@@ -41,6 +38,7 @@
   },
   "homepage": "https://github.com/zurichat/zc_plugin_company_files#readme",
   "dependencies": {
+    "@outofsync/memory-cache": "^1.4.1",
     "axios": "^0.21.1",
     "busboy": "^0.3.1",
     "cloudinary": "^1.26.3",

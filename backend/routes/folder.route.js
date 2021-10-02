@@ -1,14 +1,20 @@
 const router = require('express').Router();
-const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
+
+const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, getFilesInFolder, recentlyViewed, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
 
 // CREATE A NEW FOLDER
-router.post('/write', folderCreate);
+router.post('/create', folderCreate);
 
 // FETCH ALL THE FOLDERS FROM THE ENDPOINT
 router.get('/all', getAllFolders);
 
+// FETCH ALL THE FILES IN A FOLDER
+router.get('/:folderId/files', getFilesInFolder);
+
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
-router.get('/read/:id', folderDetails);
+router.get('/read/:folderId', folderDetails);
+
+router.get('/recentlyViewed', recentlyViewed)
 
 router.route('/write/:id')
   .put(folderUpdate)
