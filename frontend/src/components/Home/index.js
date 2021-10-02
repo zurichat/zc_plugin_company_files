@@ -22,6 +22,14 @@ const Index = () => {
 
   // let progress = useRef(false)
 
+  // useLayoutEffect(() => {
+    // const fetchNewData = () => {
+    //   RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
+    // };
+    // fetchNewData();
+    // console.log(newFile);
+  // }, [newFile]);
+
   const showOptions = (e) => {
     setOptions(!options);
     e.stopPropagation();
@@ -61,7 +69,7 @@ const Index = () => {
     >
       <button
         onClick={showOptions}
-        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
       >
         Add New
       </button>

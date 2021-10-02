@@ -126,7 +126,8 @@ const CollaboratorCard = (props) => {
             width: 500px;
             z-index: 200;
             margin: 70% auto 30% auto;
-           
+            top: 0;
+            
           }
 
           @media (min-width: 300px) and (max-width: 499px) {

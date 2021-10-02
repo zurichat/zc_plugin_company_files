@@ -27,6 +27,14 @@ exports.info = (req, res) => {
 }
 
 
+function handleRoomUrl(rooms){
+
+   return rooms.map( room => {
+    return room.room_url += `?roomId=${room._id}`
+  })
+
+ 
+}
 exports.sidebar = async (req, res) => {
   const { org, user } = req.query;
 
@@ -38,8 +46,14 @@ exports.sidebar = async (req, res) => {
 
   // if (!isUserValidated) throw new UnAuthorizedError();
 
-  let data = await Rooms.fetchAll();
-  data = data.map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
+  let data = await Rooms.fetchAll({org_id: org});
+  handleRoomUrl(data);
+  const defaultRooms = data.filter(room => room.isDefault)
+  .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
+ 
+
+  data = data.filter(room => room.isDefault == undefined ? true : !room.isDefault)
+  .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
 
   // allRooms.forEach(room => room.memberCount = room.members.length);
 
@@ -60,16 +74,16 @@ exports.sidebar = async (req, res) => {
     user_id: user,
     group_name: 'Company Files',
     show_group: true,
-    joined_rooms: [{
-      room_name: 'All Company Files',
-      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
-      room_url: '/companyfiles'
-    }],
-    public_rooms: [{
-      room_name: 'Company Files',
-      room_image: 'https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg',
-      room_url: '/companyfiles'
-    }, ...data]
+    button_url: "/companyfiles",
+    joined_rooms: [
+      {
+      room_name: "All Company Files",
+      room_url: "/companyfiles?roomId=6157fca687540d8d01ffc2bb",
+      room_image: "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg"
+      },
+      ...defaultRooms
+    ],
+    public_rooms: [...data]
   }
 
   await RealTime.publish('sidebar', sidebarListObject)
@@ -81,3 +95,4 @@ exports.sidebar = async (req, res) => {
 exports.ping = (req, res) => {
   res.status(200).json({ status: 'success', message: 'Server is up & running...' });
 }
+

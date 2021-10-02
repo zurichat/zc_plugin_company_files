@@ -11,9 +11,16 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
+import RealTime from "../../../helpers/realtime.helper";
+import {
+  SubscribeToChannel,
+  GetWorkspaceUsers,
+  GetUserInfo,
+} from "@zuri/control";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
+import { useSnackbar } from "react-simple-snackbar";
 dayjs.extend(relativeTime);
 
 const index = () => {
@@ -21,23 +28,65 @@ const index = () => {
   const { loading, error, files } = useSelector(
     (state) => state.rootReducer.fileReducer
   );
-
-  const [newFiles, setNewFiles] = useState();
-  const [fileSubscription, setFileSubscription] = useState();
+  const [newFile, setNewFile] = useState();
+  const [SnackBar] = useSnackbar({
+    position: "bottom-center",
+    style: { backgroundColor: "#00B87C", color: "#fff" },
+  });
 
   useEffect(() => {
     (async () => {
       dispatch(fetchFiles());
     })();
+    RTCSubscription("allFiles", (allFiles) => {
+      console.log({ allFiles });
+      try {
+        dispatch({
+          type: "FETCH_FILES_FULFILLED",
+          payload: { status: "success", data: [...allFiles.data] },
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    RTCSubscription("allFiles", (stuff) => {
-      console.log({ stuff });
-      setFileSubscription(stuff);
+    RTCSubscription("newFile", (newFile) => {
+      console.log({ newFile });
+      setNewFile(newFile.data);
+      console.log({ newFile });
     });
-    console.log({ fileSubscription });
-  }, []);
+  }, [newFile, dispatch]);
+
+  // useEffect(() => {
+  //   SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+  //     console.log(stuff.data.event, me, you);
+  //     setFileSubscription(stuff.data.event);
+  //   });
+  //   console.log(fileSubscription);
+  //   (async function () {
+  //     try {
+  //       const info = await GetUserInfo();
+  //       console.log(info);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  //   (async function () {
+  //     try {
+  //       const users = await GetWorkspaceUsers();
+  //       console.log(users);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFiles);
+  // }, []);
 
   if (error)
     return (
@@ -54,11 +103,11 @@ const index = () => {
             Files
           </h2>
           <Link
-            to="/all-files"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
-          >
-            View All
-          </Link>
+          to="/all-files"
+          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+        >
+          View All
+        </Link>
         </div>
         <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
@@ -78,15 +127,15 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto tw-mx-2">
-          {files.data.length > 0 ? (
+        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
+          {Object.keys(files).length && files.data.length > 0 ? (
             files.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
@@ -155,6 +204,13 @@ const index = () => {
           )}
         </div>
       </div>
+
+      {newFile != undefined ||
+        (null > 0 &&
+          SnackBar(
+            `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
+            10e3
+          ))}
     </div>
   );
 };

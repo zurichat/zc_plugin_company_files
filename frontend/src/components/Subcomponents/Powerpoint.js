@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentPpt } from "react-icons/gr";
+import PptImg from "../../../public/Icons/pp-cat.svg"
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,7 +22,7 @@ function Powerpoint({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentPpt}
+          IconName={PptImg}
           bgColor={"tw-bg-file-ppt"}
           textColor={"tw-text-red-700"}
         />
