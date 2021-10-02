@@ -1,20 +1,15 @@
-// import useFetch from ////"./useFetch";
+
 import StarredHead from "./StarredHead";
 
-
 const index = ()  => {
-  // const { data, isLoading, error } = useFetch('https://companyfiles.zuri.chat/api/v1/files/searchStarredFiles');
  
-  return (
+   return (
 
-  
-
-    <div className="StarredApp tw-h-full tw-w-full">
+      <div className="StarredApp tw-h-full tw-w-full">
 
       <StarredHead />
       
-      
-    </div>
+          </div>
   );
 }
 

@@ -1,5 +1,6 @@
 import StarredGrid from "./StarredGrid";
 
+
 const StarredHead = ({
   error,
   isLoading,
@@ -49,7 +50,9 @@ const StarredHead = ({
          isLoading={isLoading}
         error={error}
         data={data}
-       />
+       
+      />
+      
     </div>
   );
 }
