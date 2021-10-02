@@ -37,7 +37,7 @@ router.put('/update/:roomId', editRoom);
 router.put('/setPrivate/:roomId', setRoomPrivate);
 
 // GET USER ROOMS
-router.get('/getUserRooms/:userId', getUserRooms);
+router.get('/getUserRooms/:memberId', getUserRooms);
 router.get('/:roomId/get-room-members', getRoomMembers);
 
 module.exports = router;

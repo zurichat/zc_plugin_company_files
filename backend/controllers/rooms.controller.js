@@ -210,10 +210,10 @@ exports.setRoomPrivate = async (req, res) => {
 };
 
 exports.getUserRooms = async (req, res) => {
-  const { data } = await Rooms.fetchAll();
-  const { userId } = req.params;
+  const data  = await Rooms.fetchAll();
+  const { memberId } = req.params;
 
-  const roomFound = data.filter((d) => d.members.includes(userId));
+  const roomFound = data.filter((d) => d.room_member_ids && d.room_member_ids.includes(memberId));
   if (roomFound.length === 0) {
     throw new NotFoundError();
   } else {
