@@ -21,16 +21,23 @@ import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
 
+import { useDispatch } from 'react-redux'
+import { checkRecentlyViewed } from "../../actions/fileAction";
+import { detectViewedFile } from "../../actions/fileAction";
+
 import axios from "axios";
 import FileDownload from "js-file-download";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
+  const dispatch = useDispatch()
 
   function previewCmd() {
-    console.log(file);
     setOpenPreview(true);
+    dispatch(checkRecentlyViewed(file._id))
+    console.log(file);
+    console.log('file',file)
   }
 
   function getLink() {
@@ -62,7 +69,9 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+    dispatch(detectViewedFile(file._id))
+  }
 
   function deleteCmd() {
     setDeleteToBin(true);
