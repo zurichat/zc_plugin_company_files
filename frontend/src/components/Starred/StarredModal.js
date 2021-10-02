@@ -106,7 +106,7 @@ const [isDeleted, setIsDeleted] = useState(false);
                     icon={faArrowRight}
                     className="tw-text-gray-500 tw-mr-3 tw-w-4"
                   />
-                  Move to
+                  Move To
                 </a>
               </li>
               <li className="tw-font-normal tw-flex tw-items-center">
