@@ -17,7 +17,7 @@ const AdminAllow = (props) => {
         </h1>
         <span className="tw-text-[14px] tw-text-gray-500">{props.admin_email}</span>
       </div>
-      <span className=" tw-text-right tw-min-w-min">Admin</span>
+      <span className=" tw-text-right tw-min-w-min tw-text-base">Admin</span>
     </div>
   );
 };

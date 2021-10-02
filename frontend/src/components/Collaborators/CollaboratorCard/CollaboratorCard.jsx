@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 import searchIcon from "../CollabImages/search-svg.svg";
 import chainIcon from "../CollabImages/chain-green.svg.svg";
 
-import userAPI from "../../../actions/workspaceInfo";
+import { getUserInfo } from "../../../actions/workspaceInfo";
 
 import GivePermission from "../GivePermission/GivePermission";
-import axios from "axios";
 
-const CollaboratorCard = () => {
+const CollaboratorCard = (props) => {
   const [users, setUsers] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
     const showUsers = async () => {
-      const res = await axios.get({userAPI});
+      const res = getUserInfo;
       console.log(res.data.data);
       setUsers(res.data.data);
     };
@@ -49,7 +48,7 @@ const CollaboratorCard = () => {
             <input
               type="text"
               placeholder="Search email, name or status"
-              className="tw-bg-none tw-outline-none tw-w-11/12"
+              className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base"
               required="required"
               onChange={(e) => handleTextChange(e.target.value)}
               value={text}
@@ -98,13 +97,23 @@ const CollaboratorCard = () => {
 
       {/* Footer */}
       <hr />
-      <div className="collab_footer tw-py-2">
-        <a href="#" className="copy-link tw-flex">
-          <span> Copy link</span>
-          <span className="imago tw-ml-1">
-            <img src={chainIcon} alt="copy link" width={16} height={16} />
-          </span>
-        </a>
+      <div className="collab_footer tw-py-2 tw-flex tw-justify-between">
+        <div className="fl_link">
+          <a href="#" className="copy-link tw-flex">
+            <span> Copy link</span>
+            <span className="imago tw-ml-1">
+              <img src={chainIcon} alt="copy link" width={16} height={16} />
+            </span>
+          </a>
+        </div>
+        <div>
+          <p
+            className="tw-cursor-pointer tw-text-base tw-mr-3"
+            onClick={props.onCancel}
+          >
+            CLOSE
+          </p>
+        </div>
       </div>
       <style jsx>
         {`
@@ -114,8 +123,16 @@ const CollaboratorCard = () => {
             box-shadow: 0px 2px 10px rgba(125, 177, 224, 0.25),
               0px 6px 28px -3px rgba(165, 165, 165, 0.4);
             border-radius: 9px;
-            width: 537px;
-            z-index: 1000;
+            width: 500px;
+            z-index: 200;
+            margin: 70% auto 30% auto;
+           
+          }
+
+          @media (min-width: 300px) and (max-width: 499px) {
+            .collab_permission {
+              width: 90%;
+            }
           }
 
           .collab_nav {

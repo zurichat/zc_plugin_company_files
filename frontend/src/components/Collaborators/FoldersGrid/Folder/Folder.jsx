@@ -6,12 +6,19 @@ import profile from "../../CollabImages/tosin.PNG";
 import profile2 from "../../CollabImages/damilola-3.png";
 
 import CollaboratorCard from "../../../Collaborators/CollaboratorCard/CollaboratorCard";
+import Backdrop from "../../../FolderRename/ModalDrop";
 
 const Folder = () => {
-  const [showPermissionCard, setShowPermissonCard] = useState(false);
-  const openPermissionCard = () => {
-    setShowPermissonCard((prev) => !prev);
+  const [openModal, setModal] = useState(false);
+
+  const triggerModal = () => {
+    setModal(true);
   };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   return (
     <div className="tw-w1/4 folder_card">
       <div className="folder_container flex-bet">
@@ -39,12 +46,14 @@ const Folder = () => {
               src={plusIcon}
               alt="menu"
               className="tw-cursor-pointer"
-              onClick={openPermissionCard}
+              onClick={triggerModal}
             />
           </span>
         </div>
       </div>
-      {showPermissionCard && <CollaboratorCard />}
+      {/* {showPermissionCard && <CollaboratorCard />} */}
+      {openModal && <CollaboratorCard onCancel={closeModal} />}
+      {openModal && <Backdrop onCancel={closeModal} />}
 
       <style jsx>
         {`
@@ -61,6 +70,7 @@ const Folder = () => {
             margin-top: 20px;
             height: 129px;
             width: 233px;
+            
           }
 
           .folder_card_title {

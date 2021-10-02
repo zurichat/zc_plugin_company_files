@@ -4,12 +4,25 @@ import options from "../../../../public/Icons/more-vertical/active.svg";
 import FolderMenu from "../../Subcomponents/FolderMenu";
 import folderUsers from "../../../../public/Icons/folderUsers.png";
 
+import CollaboratorCard from "../../Collaborators/CollaboratorCard/CollaboratorCard";
+import Backdrop from "../../FolderRename/ModalDrop";
+
 function Folder({ folder }) {
   const [openStatus, setOpenStatus] = useState(false);
 
   function openMenu() {
     setOpenStatus(!openStatus);
   }
+
+  const [openModal, setModal] = useState(false);
+
+  const triggerModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   return (
     <>
@@ -35,7 +48,8 @@ function Folder({ folder }) {
               <img
                 src={folderUsers}
                 alt="folder user"
-                className="tw--mr-4 tw-w-full"
+                className="tw--mr-4 tw-w-full tw-cursor-pointer"
+                onClick={triggerModal}
               />
             </div>
           </div>
@@ -47,6 +61,9 @@ function Folder({ folder }) {
             setOpenStatus={setOpenStatus}
           />
         )}
+
+        {openModal && <CollaboratorCard onCancel={closeModal} />}
+        {openModal && <Backdrop onCancel={closeModal} />}
       </div>
     </>
   );

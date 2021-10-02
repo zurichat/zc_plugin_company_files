@@ -25,7 +25,7 @@ const UserAllow = (props) => {
           <div className="custom-select" style={{ width: "119.2px" }}>
             <select>
               <option value="0">Role:</option>
-              <option value="Admin">Admin</option>
+
               <option value="Editor">Can Edit</option>
               <option value="Viewer">Can View</option>
               <option value="Remove">Remove</option>
@@ -46,10 +46,9 @@ const UserAllow = (props) => {
 
       <style jsx>
         {`
-
-        .user_roles {
-          align-items: center;
-        }
+          .user_roles {
+            align-items: center;
+          }
           .save_icon img {
             width: 15px;
             height: 15px;
@@ -99,10 +98,10 @@ const UserAllow = (props) => {
           /*style the items (options), including the selected item:*/
           .select-items div,
           .select-selected {
-            color: #ffffff;
+            color: #000000;
             padding: 8px 16px;
-            border: 1px solid transparent;
-            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            // border: 1px solid transparent;
+            //border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
             cursor: pointer;
             user-select: none;
             text-align: center;
@@ -111,13 +110,14 @@ const UserAllow = (props) => {
           /*style items (options):*/
           .select-items {
             position: absolute;
-            background-color: #000000;
+            background-color: #ffffff;
             top: 100%;
             left: 0;
             right: 0;
             z-index: 99;
             font-size: 12px;
             line-height: 14.4px;
+            box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
           }
 
           /*hide the items when the select box is closed:*/
@@ -134,7 +134,7 @@ const UserAllow = (props) => {
             position: absolute;
             left: 10%;
             margin-right: 10px;
-            color: #fff;
+            color: #000;
           }
         `}
 
