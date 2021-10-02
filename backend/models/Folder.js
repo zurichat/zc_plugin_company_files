@@ -8,7 +8,7 @@ const FolderSchema = Joi.object({
   description: Joi.string().default(null),
   collaborators: Joi.array().items(
     Joi.object({
-      memberId: Joi.string(),
+      memberId: Joi.string().required(),
       memberName: Joi.string().required(),
       memberPic: Joi.string().required(),
       role: Joi.string().default("owner"),
