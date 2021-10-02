@@ -1,7 +1,12 @@
+
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
+
 import { Link } from "react-router-dom";
 import FolderComponent from "./Folder";
+
+import RealTime from "../../../helpers/realtime.helper";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
 
@@ -19,6 +24,14 @@ const index = () => {
       dispatch(fetchFolders());
     })();
   }, []);
+
+  // useEffect(() => {
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFolders);
+  // }, []);
 
   if (error)
     return (

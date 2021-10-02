@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 import FileUpload from "../Home/index";
 import Home from "../Home";

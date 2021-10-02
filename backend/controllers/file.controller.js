@@ -171,7 +171,7 @@ exports.cropImage = async (req, res) => {
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
   const cache = await getCache(req, { key: 'allFiles' });
-
+  let nonDeletedFiles = [];
   if (cache) {
     res.status(200).send(appResponse(null, JSON.parse([cache]), true));
   } else {
@@ -181,16 +181,64 @@ exports.getAllFiles = async (req, res) => {
       return new Date(b.dateAdded) - new Date(a.dateAdded);
     });
 
-    const nonDeletedFiles = data.filter(file => !file.isDeleted);
+    nonDeletedFiles = data.filter(file => !file.isDeleted);
     await RealTime.publish('allFiles', nonDeletedFiles);
 
     // Cache data in memory
     // setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
-
-    res.status(200).send(appResponse(null, nonDeletedFiles, true));
   }
+
+  res.status(200).send(appResponse(null, nonDeletedFiles, true));
+
 }
 
+
+// sort files by query string
+exports.sortFiles = async (req, res) => {
+  const sortBy = (key, data) => {
+    try {
+      return data.sort((currentItem, nextItem) => {
+
+        let current = currentItem[key], 
+            next = nextItem[key];
+
+        if (key !== "size") {
+          current = currentItem[key].toLowerCase();
+          next = nextItem[key].toLowerCase();
+        }
+  
+        return (current < next) ? -1 : (current > next) ? 1 : 0;
+  
+      })
+    } catch (error) {
+
+      return data;
+
+    }
+  }
+
+  let data = await File.fetchAll();
+  data = data.filter(file => !file.isDeleted).slice(0, 50);
+
+  if (req.query.by !== undefined && req.query.by !== null) {
+    let key = req.query.by;
+    data = sortBy(key, data);
+  }
+
+  res.status(200).send(appResponse(null, data, true));
+
+}
+
+exports.copyFile = async (req, res) => {
+
+  const data = await File.fetchOne({ _id: req.params.id });
+  data.fileName = `${data.fileName}-1`;
+  delete data._id, delete data.dateAdded;
+
+  const response = await File.create(data.data);
+  res.send({ response })
+
+}
 
 // Get all files by type
 exports.getFileByType = async (req, res) => {
@@ -265,8 +313,24 @@ exports.fileDelete = async (req, res) => {
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
+// exports.deleteSomeFiles = async (req, res) => {
+//   let response = await File.fetchAll();
+//   let data = response.slice(0, 10);
+//   data.map(async file => {
+//     try {
+//       await Promise.all([
+//         File.delete(file._id),
+//         MediaUpload.deleteFromCloudinary(file.cloudinaryId)
+//       ]);
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   })
+//   res.status(200).send(appResponse('File deleted successfully!', { count: response.length }, true));
+// }
 
 // Delete multiple files 
+
 exports.deleteMultipleFiles = async (req, res) => {
   const { ids } = req.body;
 
