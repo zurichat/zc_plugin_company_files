@@ -12,6 +12,10 @@ import Starred from "../Starred/index";
 import Activities from "../Activities/Activities";
 import Activity from "../Activities/Activity";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
+import RecentlyViewedDocs from "../RecentlyViewed/RecentlyViewedDocs/RecentlyViewedDocs";
+import RecentlyViewedImg from "../RecentlyViewed/RecentlyViewedImg/RecentlyViewedImg";
+import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewedVid";
+import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
 
 import Test from "../ComponentToTest";
 
@@ -125,6 +129,18 @@ const Main = () => {
             </Route>
             <Route path="/collaborators" exact>
               <Collaborators />
+            </Route>
+            <Route path="/recently-viewed-docs" exact>
+              <RecentlyViewedDocs />
+            </Route>
+            <Route path="/recently-viewed-images" exact>
+              <RecentlyViewedImg />
+            </Route>
+            <Route path="/recently-viewed-videos" exact>
+              <RecentlyViewedVid />
+            </Route>
+            <Route path="/recently-viewed-zips" exact>
+              <RecentlyViewedZip />
             </Route>
           </Switch>
         </div>

@@ -19,12 +19,13 @@ import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
+import axios from 'axios'
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
   function previewCmd() {
-    console.log(file)
+    console.log('file',file._id)
     setOpenPreview(true);
   }
 
@@ -50,6 +51,13 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function deleteCmd() {}
 
+  function preview(id) {
+    setOpenPreview(true);
+    fetch("https://companyfiles.zuri.chat/api/v1/files/preview/" + id, {
+      method: "Post",
+    })
+  }
+
   return (
     <>
       <HandleClickEvent
@@ -59,7 +67,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
         }}
       >
         <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
-          <FileMenuButton name="Preview" cmd={previewCmd}>
+          <FileMenuButton name="Preview" cmd={preview(file._id)}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="preview"

@@ -114,7 +114,7 @@ function Activities() {
                     }
                 </div>
             </div>
-            <div className={classes.activities__right}>
+            {/* <div className={classes.activities__right}>
                 <div className={classes.top}>
                     <div className={classes.chart}>
 
@@ -128,7 +128,7 @@ function Activities() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

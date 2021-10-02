@@ -8,7 +8,7 @@
 
 .activities__left {
   width: 70%;
-  border-right: 1px solid #E5E5E5;
+  margin: 0 auto;
 }
 
 .activities__left .header {

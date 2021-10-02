@@ -8,9 +8,10 @@
     
     &__left {
         width: 70%;
+        margin: 0 auto;
         // height: 100%;
         // background-color: aqua;
-        border-right: 1px solid #E5E5E5;
+        // border-right: 1px solid #E5E5E5;
         
         .header {
             display: flex;
@@ -125,11 +126,11 @@
     &__right {
         width: 30%;
 
-        .top {
-            .chart {
+        // .top {
+        //     // .chart {
 
-            }
-        }
+        //     // }
+        // }
 
         .bottom {
             .collaborators {
@@ -139,9 +140,9 @@
                     // justify-content: space-between;
 
                     span {
-                        &:nth-child(1) {
+                        // &:nth-child(1) {
 
-                        }
+                        // }
 
                         &:nth-child(2) {
                             margin-left: auto;
