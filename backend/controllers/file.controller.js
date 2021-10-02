@@ -636,7 +636,7 @@ exports.recentlyViewedImages = async (req, res) => {
         const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
         return dateB - dateA
       });
-    res.status(200).json(sorted)
+    res.status(200).json(sorted.slice(0, 10))
    
 }
 
@@ -647,7 +647,7 @@ exports.recentlyViewedVideos = async (req, res) => {
         const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
         return dateB - dateA
       });
-    res.status(200).json(sorted)
+    res.status(200).json(sorted.slice(0, 10))
 }
 
 exports.recentlyViewedDocs = async (req, res) => {
@@ -658,7 +658,7 @@ exports.recentlyViewedDocs = async (req, res) => {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
       return dateB - dateA
     });
-  res.status(200).json(sorted)
+  res.status(200).json(sorted.slice(0, 10))
   
 }
 
@@ -681,12 +681,12 @@ exports.recentlyViewedCompressed = async (req, res) => {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
       return dateB - dateA
     });
-  res.status(200).json(sorted)
+  res.status(200).json(sorted.slice(0, 10))
 }
 
 exports.detectPreview = async (req, res) => {
   const {id} = req.params;
-  const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() };  
   await File.update(id, updateLastAccessed)
-  res.status(200).json(`Last accessed date updated`)
+  res.status(200).json("Updated Last aCCessed")
 }
