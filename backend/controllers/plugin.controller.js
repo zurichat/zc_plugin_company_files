@@ -75,7 +75,14 @@ exports.sidebar = async (req, res) => {
     group_name: 'Company Files',
     show_group: true,
     button_url: "/companyfiles",
-    joined_rooms: [...defaultRooms],
+    joined_rooms: [
+      {
+      room_name: "All Company Files",
+      room_url: "/companyfiles?roomId=6157fca687540d8d01ffc2bb",
+      room_image: "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg"
+      },
+      ...defaultRooms
+    ],
     public_rooms: [...data]
   }
 
