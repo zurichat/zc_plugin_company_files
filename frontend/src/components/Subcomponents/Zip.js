@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentZip } from "react-icons/gr";
+import ZipImg from "../../../public/Icons/zip.svg"
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,7 +22,7 @@ function Zip({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentZip}
+          IconName={ZipImg}
           bgColor={"tw-bg-green-400"}
           textColor={"text-bg-green-300"}
         />

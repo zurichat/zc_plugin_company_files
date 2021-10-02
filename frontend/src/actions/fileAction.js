@@ -29,3 +29,21 @@ export function setLoading() {
       "UPDATE_FILE_PENDING",
   };
 }
+
+export const checkRecentlyViewed = (id) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/files/preview/${id}`)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const detectViewedFile = (id) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/files/read/${id}`)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+} 

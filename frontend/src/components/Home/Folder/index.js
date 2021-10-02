@@ -1,7 +1,12 @@
+
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
+
 import { Link } from "react-router-dom";
 import FolderComponent from "./Folder";
+
+import RealTime from "../../../helpers/realtime.helper";
+
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
 
@@ -20,6 +25,14 @@ const index = () => {
     })();
   }, []);
 
+  // useEffect(() => {
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFolders);
+  // }, []);
+
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600">
@@ -36,7 +49,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-folders"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -60,18 +73,22 @@ const index = () => {
           Folders
         </h2>
         <Link
-          to="/all-folders"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
-        >
-          View All
-        </Link>
+            to="/all-folders"
+            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          >
+            View All
+          </Link>
       </div>
       <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12">
         {folders.data.length ? (
           folders.data
             .slice(0, 4)
             .map((folder) => (
-              <FolderComponent key={folder.folderId} folder={folder} view={"grid"} />
+              <FolderComponent
+                key={folder.folderId}
+                folder={folder}
+                view={"grid"}
+              />
             ))
         ) : (
           <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
