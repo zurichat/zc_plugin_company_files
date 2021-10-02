@@ -11,6 +11,12 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents//audio";
+import RealTime from "../../../helpers/realtime.helper";
+import {
+  SubscribeToChannel,
+  GetWorkspaceUsers,
+  GetUserInfo,
+} from "@zuri/control";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
@@ -33,10 +39,40 @@ const index = () => {
 
   useEffect(() => {
     RTCSubscription("allFiles", (stuff) => {
+      const websocketResponse = stuff;
       console.log({ stuff });
-      setFileSubscription(stuff.data);
+      setFileSubscription(websocketResponse.data);
       console.log({ fileSubscription });
     });
+  }, []);
+
+  useEffect(() => {
+    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+      console.log(stuff.data.event, me, you);
+      setFileSubscription(stuff.data.event);
+    });
+    console.log(fileSubscription);
+    (async function () {
+      try {
+        const info = await GetUserInfo();
+        console.log(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    (async function () {
+      try {
+        const users = await GetWorkspaceUsers();
+        console.log(users);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
   }, []);
 
   if (error)
@@ -55,7 +91,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-files"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -78,7 +114,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+          className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>

@@ -143,9 +143,9 @@ function FileListView({ sortingMethod }) {
                     )}
                     {file.fileName.slice(0, file.fileName.lastIndexOf("."))}
                   </td>
-                  <td className="tw-w-1/4 tw-px-[25px]">Me</td>
-                  <td className="tw-w-1/4 tw-px-[25px]">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
-                  <td className="tw-w-1/4 tw-px-[25px]">{convertSize(file.size)}{" "}MB</td>
+                  <td className="tw-w-1/4">Me</td>
+                  <td className="tw-w-1/4">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
+                  <td className="tw-w-1/4">{convertSize(file.size)}{" "}MB</td>
                 </tr>
               ))}
           </tbody>

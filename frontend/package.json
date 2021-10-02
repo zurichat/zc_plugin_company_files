@@ -82,7 +82,11 @@
     "dayjs": "^1.10.7",
     "docx": "^6.0.3",
     "i": "^0.3.6",
+<<<<<<< HEAD
     "node-sass": "4.14",
+=======
+    "js-file-download": "^0.4.12",
+>>>>>>> 792f6fd95af734b6582e79bc05ce868dde3e955d
     "path-browserify": "^1.0.1",
     "postcss": "^7.0.36",
     "prop-types": "^15.7.2",

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 import FileUpload from "../Home/index";
 import Home from "../Home";
@@ -79,8 +83,8 @@ const Main = () => {
     >
       <Router basename="/companyfiles">
         <ScrollRestoration />
-        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center">
-          <SearchBar />
+        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center md:tw-ml-2">
+          {/* <SearchBar /> */}
           <Parcel
             config={pluginHeader}
             wrapWith="div"
