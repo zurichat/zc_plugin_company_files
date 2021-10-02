@@ -13,7 +13,7 @@ const Folders = new DatabaseOps('Folder');
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   body.folderId = uuid();
-
+  body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
@@ -94,6 +94,105 @@ exports.folderUpdate = async (req, res) => {
   res.status(200).send(appResponse(null, updatedFolder, true));
 };
 
+//Give folder Access
+exports.giveFolderAccess = async (req, res) => {
+  const { body }=req;
+  body.memberId = uuid();
+
+    const data_update = {
+      plugin_id: '6134c6a40366b6816a0b75cd',
+      organization_id: '6133c5a68006324323416896',
+      collection_name: "Folder",
+      object_id: "" ,
+      bulk_write: false,
+      raw_query: {},
+  };
+
+    //Set query
+    const query = {
+      "$addToSet": {
+          "collaborators": {
+              memberId: body.memberId,
+              memberName: body.memberName,
+              memberPic: body.memberPic,
+              role: body.role,    
+          }
+      }
+    }
+
+
+  //Set Main Data
+  data_update.raw_query = query
+  data_update.object_id = body._id
+  //Send update
+  const response = await axios.put(databaseWriteUrl, data_update);
+  //Store response
+  const data = response.data   
+  // Send updated folder info to FE using Centrifugo 
+  const centrifugoResponse = await RealTime.publish("Add Folder", data);
+  // Send updated folder info to FE 
+ 
+  //Set Email data
+  // this.data_email.email=body.MemberEmail;
+  // this.data_email.mail_body=`<p>Admin has given you ${body.role} access to ${body.folderName} folder</p>`;
+  // //Send Email
+  // axios.put(databaseEmailUrl, this.data_email).then();
+   res.status(200).send(
+    appResponse("Added Folder Access!", data, true, 
+        {
+             ...centrifugoResponse,
+            count: data.length,
+        }
+    )
+  );
+};
+
+//Update member folder Access
+exports.updateFolderAccess = async (req, res) => {
+
+  const data_update = {
+    plugin_id: '6134c6a40366b6816a0b75cd',
+    organization_id: '6133c5a68006324323416896',
+    collection_name: "Folder",
+    filter:"",
+    raw_query: {},
+};
+
+
+const { body }=req;
+  //Set query
+  const query = {
+    "$set": {
+        "collaborators.$.role": {
+            role: body.role,    
+        }
+    }
+  }
+  const filterData = {
+		"id": body._id,
+		"collaborators.memberId": body.memberId
+	}
+  //Set Main Data
+  data_update.filter = filterData
+  data_update.raw_query = query
+  //Send update
+  const response = await axios.put(databaseWriteUrl, data_update);
+  //Store response
+  const data = response.data   
+  // Send updated folder info to FE using Centrifugo 
+  const centrifugoResponse = await RealTime.publish("Updated Folder", data);
+  // Send updated folder info to FE 
+  res.status(200).send(
+      appResponse("Folder Access updated!", data, true, 
+          {
+               ...centrifugoResponse,
+              count: data.length,
+          }
+      )
+    );
+};
+
+
 exports.folderDelete = async (req, res) => {
   const { id } = req.params;
 
@@ -114,6 +213,49 @@ exports.folderDelete = async (req, res) => {
   addActivity(req.headers.userObj, 'deleted', `${folder.folderName}`)
   res.status(200).send(appResponse(null, response, true));
 };
+
+
+//Delete folder Access
+exports.deleteFolderAccess = async (req, res) => {
+  
+  const data_update = {
+    plugin_id: '6134c6a40366b6816a0b75cd',
+    organization_id: '6133c5a68006324323416896',
+    collection_name: "Folder",
+    object_id: "" ,
+    bulk_write: false,
+    raw_query: {},
+};
+  
+  const { body }=req;
+  //Set query
+  const query = {
+    "$pull": {
+        "collaborators": {
+            memberId: body.memberId,    
+        }
+    }
+  }
+  //Set Main Data
+  data_update.object_id = body._id
+  data_update.raw_query = {query}
+  //Send update
+  const response = await axios.post(databaseWriteUrl, data_update);
+  //Store response
+  const data = response.data   
+  // Send updated folder info to FE using Centrifugo 
+  const centrifugoResponse = await RealTime.publish("Deleted Folder Access", data);
+  // Send updated folder info to FE 
+  res.status(200).send(
+      appResponse("Access deleted!", data, true, 
+          {
+               ...centrifugoResponse,
+              count: data.length,
+          }
+      )
+    );
+};
+
 
 exports.recentlyViewed = async(req, res) => {
   const data = await Folders.fetchAll();
