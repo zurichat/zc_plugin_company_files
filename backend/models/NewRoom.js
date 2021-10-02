@@ -11,7 +11,7 @@ const NewRoomSchema = Joi.object({
   room_created_by: Joi.string(),
   room_created_at: Joi.date().default(new Date().toISOString()),
   room_modified_at: Joi.date().default(new Date().toISOString()),
-  description: Joi.string().required().max(250),
+  description: Joi.string().max(250).default(""),
   isArchived: Joi.boolean().default(false),
   room_domain: Joi.string().required().valid('base', 'files', 'folders', 'personal').messages({
     'any.only': 'Invalid room domain! Try base, files, folders or personal.',

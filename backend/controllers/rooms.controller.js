@@ -13,6 +13,7 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require('../utils/appError');
+const { query } = require('express');
 
 const zuriCoreBaseUrl = "https://api.zuri.chat";
 
@@ -242,20 +243,82 @@ exports.getRoomMembers = async (req, res) => {
     throw new BadRequestError("something went wrong");
   }
   
-  let thumbnail_img_urls = [];
-  room.members.forEach((data,index)=> {
-    if(index < 3) thumbnail_img_urls.push(data.image_url);
-  })
-  const members = room.members.map(({ user_name, status, first_name, last_name }) => ({ user_name, status, first_name, last_name }));
+  
+  const members = room.members.map(({ user_name, status, first_name, last_name,image_url }) => ({ user_name, status, first_name, last_name, image_url }));
   const data = {
     room_name: room.room_name,
     room_url: room.room_url,
     room_image: room.room_image,
     members_count: room.members.length,
     members,
-    thumbnail_img_urls,
   }
 
   return res.status(200).send(appResponse("Room Members Returned Successfully", data, true));
+
+}
+
+
+exports.getOrgDefaultRoomOnDomain = async (req, res) => {
+  const { domain } = req.query;
+  const { orgId } = req.params;
+
+
+  if(!domain ) domain = 'base';
+
+  let room = await Rooms.fetchOne({  room_domain: domain, org_id: orgId});
+
+  // console.log(room)
+  room = room ? room[0] :  null;
+
+  if (!room) throw new NotFoundError();
+
+
+  const data = {
+    room_id: room._id,    
+    room_name: room.room_name,
+    room_url: room.room_url,
+    room_image: room.room_image,
+  }
+
+  return res.status(200).send(appResponse(`Organization default ${domain} room returned successfully`, data, true));
+  
+  
+}
+
+exports.checkMemberInRoom = async (req, res) => {
+  const { memberEmail, orgId } = req.query;
+  // if (!/^[0-9a-fA-F]{24}$/.test(memberId)) {
+  //   throw new BadRequestError('Invalid member id. Enter a valid object id!');
+  // }
+
+  if(!memberEmail || !orgId) throw new BadRequestError('one or more required fields missing in body');
+
+
+  // call zuri core for org member details;
+  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${orgId}/members/?query=${memberEmail}`;
+  let member; 
+  try {
+    const response = await axios.get(getOrgMemberUrl);
+    if(!response.data[0])
+     throw new NotFoundError(`member with email '${memberEmail}' not found`);
+
+    member = response.data[0]; 
+
+  } catch (error) {
+    throw new BadRequestError("something went wrong");
+  }
+
+  // fetch all the rooms available and get the target room with the provided room_id.
+  const room = await Rooms.fetchOne({ _id: req.params.roomId });
+
+  if (!room) throw new NotFoundError();
+
+
+   const isMemberInRoom = room.room_member_ids.filter((id) => id === member._id).length ? true : false;
+
+  
+  const data = { isMemberInRoom }
+
+  return res.status(200).send(appResponse("member room check returned successfully", data, true));
 
 }
