@@ -12,6 +12,7 @@ const MediaUpload = require('../utils/mediaUpload');
 const { BadRequestError, InternalServerError, NotFoundError } = require('../utils/appError');
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
+const addActivity = require('./../utils/activities');
 
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
 
@@ -103,6 +104,9 @@ exports.fileUpload = async (req, res) => {
         // Save file details to zccore & delete file from local disk
         await Promise.all([File.create(file), deleteFile(filePath)]);
 
+        // Save to list of activities
+        await addActivity('added', `${fileData.fileName}`)
+
         // Send (file) info to FE using Centrifugo
         await RealTime.publish('newFile', file);
 
@@ -192,11 +196,18 @@ exports.getFileByType = async (req, res) => {
 
 
 exports.fileDetails = async (req, res) => {
-  const data = await File.fetchOne({ _id: req.params.id });
+    const {id} = req.params
 
-  await RealTime.publish('fileDetail', data)
+    const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+     await File.update(id, updateLastAccessed);
+     const data = await File.fetchOne({ _id: id });
+     const response = await RealTime.publish('file_detail', data);
 
-  res.status(200).send(appResponse(null, data, true));
+
+     res.status(200).send(appResponse(null, data, true, {
+      ...response,
+      count: data.length,
+    }));
 }
 
 
@@ -218,14 +229,18 @@ exports.fileUpdate = async (req, res) => {
 
 // Delete permanently
 exports.fileDelete = async (req, res) => {
-  const data = await File.fetchOne({ '_id': req.params.id });
+  const data = await File.fetchOne({ _id: req.params.id });
 
   const [response] = await Promise.all([
     File.delete(req.params.id),
     MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   ]);
   
+  // Save to list of activities
+  await addActivity('permanently deleted', `${data.fileName}`)
+  
   if (!response) throw new InternalServerError();
+
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
@@ -238,6 +253,10 @@ exports.deleteMultipleFiles = async (req, res) => {
     await File.delete(ids),
     ...ids.map(async id => {
       const data = await File.fetchOne({ '_id': id });
+
+      // Save to list of activities
+      if (data) await addActivity('deleted', `${data.fileName}`)
+
       return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
     })
   ]);
@@ -254,6 +273,9 @@ exports.deleteTemporarily = async (req, res) => {
   
   if (data.isDeleted === false) {
     const response = await File.update(req.params.id, { isDeleted: true });
+
+    // Save to list of activities
+    await addActivity('deleted', `${data.fileName}`)
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
 
@@ -284,6 +306,9 @@ exports.restoreFile = async (req, res) => {
   
   if (data.isDeleted === true) {
     const response = await File.update(req.params.id, { isDeleted: false });
+
+    // Save to list of activities
+    await addActivity('restored', `${data.fileName}`)
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
@@ -507,3 +532,65 @@ exports.searchBySize = async (req, res) => {
   res.status(500).json(err);
   }
 };
+
+exports.recentlyViewedImages = async (req, res) => {
+
+    const data = await File.fetchAll();  
+    const onlyImages = data.filter((data)=>/image/.test(data.type))
+    const sorted = onlyImages.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+   
+}
+
+exports.recentlyViewedVideos = async (req, res) => {
+  const data = await File.fetchAll();  
+    const onlyVideos = data.filter((data)=>/video/.test(data.type))
+    const sorted = onlyVideos.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+}
+
+exports.recentlyViewedDocs = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyDocs = data.filter((data)=>/doc/.test(data.type))
+  const sorted = onlyDocs.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+  
+}
+
+exports.recentlyViewedAudio = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyAudio = data.filter((data)=>/audio/.test(data.type))
+  const sorted = onlyAudio.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+  
+}
+
+
+exports.recentlyViewedCompressed = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyZip = data.filter((data)=>/zip/.test(data.type))
+  const sorted = onlyZip.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+}
+
+exports.detectPreview = async (req, res) => {
+  const {id} = req.params;
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+  await File.update(id, updateLastAccessed)
+  res.status(200).json(`Last accessed date updated`)
+}

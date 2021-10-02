@@ -2,59 +2,36 @@ import { useState, useRef, createRef } from "react";
 import useViewport from "./useViewport";
 import Buttons from "./MenuButtons";
 import fileIcon from "./file-icon.png";
-import bin from "./bin 1.png";
+import emptystarred from "./emptystarred.png";
 import Modal from "./Modal";
-import Loader from "./Loader";
+import Loader from "./LoadAnimation";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-const TrashList = ({
+function StarredGrid({
   error,
   isLoading,
   data,
   setData,
   setFileDel,
-  setRestore,
-  apiBase,
-}) => {
+}) {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [id, setId] = useState(null);
-  const [sort, setSort] = useState(true);
 
   // set state to toggle menu button
-  const [click, setClick] = useState(true);
+  const [click, setClick] = useState(false);
 
   // Viewport to change the location of the menu buttons on different screen size
   const { width } = useViewport();
   const breakpoint = 768;
-
-  // Sort the fetched files by name at the click of the drop-down arrow
-  const handleSort = () => {
-    if (sort) {
-      data.sort((a, b) => {
-        a = a.fileName.toLowerCase();
-        b = b.fileName.toLowerCase();
-        if (a < b) {
-          return -1;
-        }
-        if (a > b) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      data.reverse();
-    }
-    setSort(!sort);
-  };
 
   //Truncate the length of fetched file names
   const handleTruncateName = () => {
     let str = data.map((data) => data.fileName.trim());
 
     return str.map((text) => {
-      return text.length > 20 ? text.substring(0, 14) + "..." : text;
+      return text.length > 20 ? text.substring(0, 12) + "..." : text;
     });
   };
 
@@ -88,7 +65,6 @@ const TrashList = ({
   //This displays the Menu button
   const handleClick = (index, id) => {
     setId(id);
-
     // if item is clicked display menu/btn and enable pointer event
     if (click) {
       menu.current[index].style.opacity = 1;
@@ -116,82 +92,51 @@ const TrashList = ({
     <>
       <div>
         {error && (
-          <div className="tw-flex tw-justify-center tw-text-center tw-mt-60 tw-tracking-wider tw-font-semibold tw-text-text-grey">
+          <div className="tw-flex tw-justify-center tw-text-center tw-mt-60 tw-tracking-wider tw-font-semibold itemsStarred">
             {error}
           </div>
         )}
         {isLoading && <Loader />}
         {isEmpty(data) && !isLoading && !error ? (
           <div className="tw-text-center tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-96">
-            <img src={bin} alt="Bin icon" />
-            <p className="tw-text-text-grey tw-font-semibold tw-pt-2">
-              No items
-            </p>
-            <p className="tw-text-text-grey tw-pt-2">
-              items moved to the trash will appear here
+            <img src={emptystarred} alt="emptystarred icon" />
+            <h3 className="itemsStarred tw-font-semibold tw-pt-2">You currently have no starred</h3>
+            <p className="itemsStarred tw-pt-2">
+            Starred items will appear here
             </p>
           </div>
         ) : null}
         {!isEmpty(data) && !error && !isLoading ? (
-          <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate borderSpace tableHide">
-            <thead className="tw-text-left">
+          <table className="tw-w-full tw-table-fixed tw-mt-2 tw-pb-14 tw-px-2 sm:tw-pl-5 tw-border-separate     tw-borderSpace tw-tableHide">
+            <thead className="text-left content-box">
               <tr>
-                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
-                  Name &nbsp;
-                  <span
-                    className="tw-inline-block tw-align-middle tw-cursor-pointer"
-                    onClick={handleSort}
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 18 18"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M8.99991 3.00098V15.001"
-                        stroke="#333333"
-                        stroke-width="1.22693"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M13.4999 10.501L8.99991 15.001L4.49991 10.501"
-                        stroke="#333333"
-                        stroke-width="1.22693"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </th>
+                <th className="tw-font-semibold starredThreading">Name</th>
                 <th className="tw-hidden md:tw-block"></th>
                 <th className="tw-hidden md:tw-block"></th>
                 <th></th>
                 <th></th>
                 <th className="tw-block md:tw-hidden"></th>
-                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap tw-hidden md:tw-inline-block">
-                  Date Deleted
+                <th className="tw-font-semibold starredThreading tw-whitespace-nowrap tw-hidden md:tw-block">
+                  Date Starred
                 </th>
                 <th></th>
                 <th></th>
                 <th></th>
-                <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
+                <th className="tw-font-semibold starredThreading tw-whitespace-nowrap tw-pr-3 sm:tw-pr-0">
                   <span className="tw-hidden sm:tw-inline">File </span>Size
                 </th>
               </tr>
             </thead>
-            <tbody className="tw-text-text-grey">
+            <tbody className="itemsStarred">
               {data.map((data, index) => (
                 <tr
                   key={data._id}
                   onClick={() => handleClick(index, data._id)}
-                  className="tw-cursor-pointer hover:tw-bg-bg-trashRow"
+                  className="lightGrayHover tw-cursor-pointer hover:tw-bg-gray-100"
                 >
                   <td
                     className="
-                      tw-whitespace-nowrap tw-text-sm tw-py-2 tw-lowercase"
+                      tw-py-2 tw-whitespace-nowrap tw-text-sm tw-lowercase"
                   >
                     <img
                       src={fileIcon}
@@ -205,15 +150,18 @@ const TrashList = ({
                   <td></td>
                   <td></td>
                   <td className="tw-block md:tw-hidden"></td>
-                  <td className="tw-text-xs tw-relative tw-hidden md:tw-block tw-pt-4">
+                  <td className="tw-py-2 tw-text-xs tw-relative tw-hidden md:tw-block">
                     {handleNewDate()[index]}
 
                     {/* Menu buttons for big screen */}
                     <div
                       //assign the created reference to each array item
-
-                      ref={(el) => (menu.current[index] = el)}
-                      className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
+                      ref={(el) =>
+                        (menu.current = menu.current
+                          ? [...menu.current, el]
+                          : [el])
+                      }
+                      className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
                     >
                       <Buttons
                         setShowModal={setShowModal}
@@ -224,7 +172,7 @@ const TrashList = ({
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td className="tw-text-xs tw-relative">
+                  <td className="tw-py-2 tw-text-xs tw-relative">
                     {handleFormatSize(data.size)}
 
                     {/* Menu buttons for small screen */}
@@ -234,7 +182,7 @@ const TrashList = ({
                       <div
                         //assign the created reference to each array item
                         ref={(el) => (menu.current[index] = el)}
-                        className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
+                        className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm md:tw-block tw-pointer-events-none"
                       >
                         <Buttons
                           setShowModal={setShowModal}
@@ -256,13 +204,11 @@ const TrashList = ({
         deleteModal={deleteModal}
         clickedId={id}
         setData={setData}
-        setFileDel={setFileDel}
-        setRestore={setRestore}
-        apiBase={apiBase}
         data={data}
+        setFileDel={setFileDel}
       />
     </>
   );
-};
+}
 
-export default TrashList;
+export default StarredGrid;

@@ -24,9 +24,16 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
+  cropImage,
+  recentlyViewedImages,
+  recentlyViewedVideos,
+  recentlyViewedCompressed,
+  recentlyViewedDocs,
+  recentlyViewedAudio,
   starFile,
   unStarFile,
-  cropImage
+  detectPreview
+
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -101,10 +108,24 @@ router.get("/setEdit/:admin", setEditPermission);
 // SEARCH FILES BY FILE TYPE
 router.get("/searchByType", searchByType);
 
+// GET RECENTLY VIEWED FILES
+router.get("/recentlyViewedImages", recentlyViewedImages);
+
+router.get("/recentlyViewedVideos", recentlyViewedVideos);
+
+router.get("/recentlyViewedDocs", recentlyViewedDocs);
+
+router.get("/recentlyViewedCompressed", recentlyViewedCompressed);
+
+router.get("/recentlyViewedAudio", recentlyViewedAudio);
+
 // STAR A FILE
 router.put('/starFile/:id', starFile);
 
 // UNSTAR A FILE
 router.put('/unStarFile/:id', unStarFile);
+
+// DETECT WHEN A FILE IS PREVIEWED
+router.post('/preview/:id', detectPreview)
 
 module.exports = router;
