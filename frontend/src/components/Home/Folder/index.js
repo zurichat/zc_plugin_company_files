@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import FolderComponent from "./Folder";
-import RealTime from "../../../helpers/realtime.helper";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
 
@@ -19,14 +18,6 @@ const index = () => {
     (async () => {
       dispatch(fetchFolders());
     })();
-  }, []);
-
-  useEffect(() => {
-    const fetchNewData = () => {
-      RealTime.subscribe("allFolders", "", (data) => setNewFolders(data));
-    };
-    fetchNewData();
-    console.log(newFolders);
   }, []);
 
   if (error)
@@ -75,12 +66,12 @@ const index = () => {
           View All
         </Link>
       </div>
-      <div className="tw-flex tw-flex-wrap tw-justify-between">
+      <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12">
         {folders.data.length ? (
           folders.data
             .slice(0, 4)
             .map((folder) => (
-              <FolderComponent key={folder.folderId} folder={folder} />
+              <FolderComponent key={folder.folderId} folder={folder} view={"grid"} />
             ))
         ) : (
           <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
