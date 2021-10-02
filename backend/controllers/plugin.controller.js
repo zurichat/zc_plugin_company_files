@@ -78,7 +78,7 @@ exports.sidebar = async (req, res) => {
     joined_rooms: [
       {
       room_name: "All Company Files",
-      room_url: "/companyfiles?roomId=6157fca687540d8d01ffc2bb",
+      room_url: "/companyfiles",
       room_image: "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg"
       },
       ...defaultRooms
