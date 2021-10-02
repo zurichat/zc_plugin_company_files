@@ -1,48 +1,62 @@
+
+
 .activities {
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: calc(100vh - (44px + 64px));
     font-size: 15px;
     color: #606060;
 
+    .positionRelative {
+        position: relative;
+    }
+
+    .positionStatic {
+        position: static;
+    }
+
+    .header {
+        display: flex;
+        align-items: center;
+        padding: 32px 28px;
+        width: 70%;
+        margin: 0 auto;
+        
+        .backBtn {
+            cursor: pointer;
+        }
+
+        .allActivities {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 15px;
+            color: #4A4A4A;
+            margin-left: 10px;
+        }
+
+        .pushPin {
+            margin-left: auto;
+            cursor: pointer;
+        }
+
+        .trash {
+            margin-left: 23px;
+            cursor: pointer;
+        }
+    }
     
     &__left {
         width: 70%;
         margin: 0 auto;
+        overflow-y: scroll;
+
         // height: 100%;
         // background-color: aqua;
         // border-right: 1px solid #E5E5E5;
         
-        .header {
-            display: flex;
-            align-items: center;
-            padding: 32px 28px;
-            
-            .backBtn {
-                cursor: pointer;
-            }
-    
-            .allActivities {
-                font-size: 18px;
-                font-weight: 700;
-                line-height: 15px;
-                color: #4A4A4A;
-                margin-left: 10px;
-            }
-    
-            .pushPin {
-                margin-left: auto;
-                cursor: pointer;
-            }
-    
-            .trash {
-                margin-left: 23px;
-                cursor: pointer;
-            }
-        }
-
         .activitiesDescription {
-            position: relative;
+            // position: relative;
             
             .container {
                 width: 100%;
@@ -68,6 +82,7 @@
                     margin-left: 22px;
                     font-weight: 400;
                     line-height: 18px;
+                    width: 70%;
 
                     span {
                         font-weight: 700;

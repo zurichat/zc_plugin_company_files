@@ -13,8 +13,7 @@ function Activities() {
          console.log('res', res)
          console.log('resdata', res.data)
          console.log('resdatadata', res.data.data)
-         setActivities(res.data.data)
-         console.log('activities', activities)
+         setActivities(res.data.data.reverse())
       })
       .catch(err => {
          console.log(err)
@@ -24,6 +23,47 @@ function Activities() {
    const goBack = () => {
       const currentState = history.state;
       history.pushState(currentState, '', '/companyfiles');
+   }
+
+   const convertMS = (milliseconds) => {
+      let month, day, hour, minute;
+      const time = Date.now()
+      minute = Math.floor( ((time - milliseconds) / 60000));
+      hour = Math.floor(minute / 60)
+      day = Math.floor(hour / 24);
+      month = Math.floor(day / 30);
+
+      if (minute < 60) {
+         if (minute === 1) {
+            return minute + ' minute ago'
+         } else {
+            return minute + ' minutes ago'
+         }
+      }
+
+      if (hour < 24) {
+         if (hour === 1) {
+            return hour + ' hour ago'
+         } else {
+            return hour + ' hours ago'
+         }
+      }
+
+      if (hour >= 24) {
+         if (day === 1) {
+            return day + ' day ago'
+         } else {
+            return day + ' days ago'
+         }
+      }
+
+      if (day > 30) {
+         if (month === 1) {
+            return month + ' month ago'
+         } else {
+            return month + ' months ago'
+         }
+      }
    }
    
    const backBtn = (
@@ -71,37 +111,42 @@ function Activities() {
          <path d="M16.2056 11.1938L10.6579 16.5737L8.13623 14.1283" stroke="#606060" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
    )
+   console.log('activities', activities)
 
    return (
       <div className={classes.activities}>
+         <div className={classes.header}>
+            <div className={classes.backBtn} onClick={goBack}>
+               {backBtn}
+            </div>
+            <div className={classes.allActivities}>
+               All Activities
+            </div>
+            <div className={classes.pushPin}>
+               {pushPin}
+            </div>
+            <div className={classes.trash}>
+               {trash}
+            </div>
+         </div>
          <div className={classes.activities__left}>
-               <div className={classes.header}>
-                  <div className={classes.backBtn} onClick={goBack}>
-                     {backBtn}
-                  </div>
-                  <div className={classes.allActivities}>
-                     All Activities
-                  </div>
-                  <div className={classes.pushPin}>
-                     {pushPin}
-                  </div>
-                  <div className={classes.trash}>
-                     {trash}
-                  </div>
-               </div>
-               <div className={classes.activitiesDescription}>
+               
+               {
+                  activities.map((activity, idx) => (
+                     <div className={classes.activitiesDescription}>
                   <div className={classes.container}>
                      <div className={classes.img}>
-                           <img src= {userImage} alt="user picture" />
+                           <img src={activity.userObj.img_url} alt="user picture" />
                      </div>
                      <div className={classes.text}>
-                           Damilola Emmanuel deleted 
-                           <span> design file.png </span>
+                           {activity.userObj.user_name} {activity.operation} 
+                           <span> {activity.filename} </span>
                            from
                            <span> Company files</span>
                      </div>
                      <div className={classes.time}>
-                           10 hours ago
+                           {/* {Math.floor((activity.time) / 3600000)} hours ago */}
+                           {convertMS(activity.time)}
                      </div>
                      <div className={classes.options} onClick={() => setDisplay(!display)}>
                            {optionsIcon}
@@ -129,6 +174,8 @@ function Activities() {
                      ) : null
                   }
                </div>
+                  ))
+               }
          </div>
          {/* <div className={classes.activities__right}>
                <div className={classes.top}>
