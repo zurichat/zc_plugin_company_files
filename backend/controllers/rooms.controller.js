@@ -146,21 +146,20 @@ exports.addToRoom = async (req, res) => {
 
   // Add user to room...
   room.room_member_ids.push(member._id);
-  // delete room._id;
+  delete room._id;
+  room.room_modified_at = new Date();
 
   // send the data to the api endpoint for update.
   await Rooms.update(req.params.roomId, room);
 
-  const {
-    data: [updatedRoom],
-  } = await Rooms.fetchOne({ _id: req.params.roomId });
+  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
 
 exports.removeFromRoom = async (req, res) => {
   // the info of the user to be removed from a room
-  const { userId } = req.body;
+  const { memberId } = req.body;
 
   // fetch all the target room with the provided room_id.
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
@@ -168,14 +167,15 @@ exports.removeFromRoom = async (req, res) => {
   if (!room) throw new NotFoundError();
 
   // Check if room type is DM...
-  if (room.roomType === 'inbox' && userId in room.members) {
-    throw new BadRequestError(`You cannot leave a DM!`);
-  } else if (room.roomType === 'inbox' && room.members.indexOf(userId) === -1) {
-    throw new ForbiddenError('Access forbidden! You cannot join an already existing DM!');
-  }
+  // if (room.roomType === 'inbox' && userId in room.members) {
+  //   throw new BadRequestError(`You cannot leave a DM!`);
+  // } else if (room.roomType === 'inbox' && room.members.indexOf(userId) === -1) {
+  //   throw new ForbiddenError('Access forbidden! You cannot join an already existing DM!');
+  // }
 
   // parse the room data and remove the target user data from it.
-  room.members = room.members.filter((member) => member !== userId);
+  room.room_member_ids = room.room_member_ids.filter((id) => id !== memberId);
+  room.room_modified_at = new Date();
 
   // clean up the room data
   delete room._id;
