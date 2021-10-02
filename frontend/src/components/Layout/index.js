@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import SnackbarProvider from 'react-simple-snackbar';
+import SnackbarProvider from "react-simple-snackbar";
 
 const Layout = ({ children }) => {
   return (
@@ -11,8 +11,7 @@ const Layout = ({ children }) => {
           <link rel='icon' href='/favicon.ico' />
           <script src='/frontend/src/components/Collaborators/PermissionSelector.js'></script>
         </div>
-
-        <main className='tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full'>
+        <main className='tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full tw-overflow-hidden'>
           {children}
         </main>
       </div>

@@ -9,9 +9,12 @@ const cluster = require('cluster');
 const express = require('express');
 const compression = require('compression');
 const cropFileUpload = require('express-fileupload');
+let MemoryCache;
+let cacheClient;
 
 const app = express();
 const router = express.Router();
+
 
 const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
@@ -28,10 +31,16 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 
 
 app.use((req, res, next) => {
+  if (!isProduction) {
+    MemoryCache = require('@outofsync/memory-cache');
+    cacheClient = new MemoryCache({ bypassUnsupported: true });
+    req.MemoryCache = cacheClient.createClient();
+  }
+
   const allowedOrigins = ['https://zuri.chat', 'https://www.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+    res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
   }
   next();
 });

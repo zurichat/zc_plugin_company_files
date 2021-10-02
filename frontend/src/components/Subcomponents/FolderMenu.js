@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux'
+import { folderDetails } from "../../actions/folderAction";
 import FolderMenuButton from "./MenuButton";
 import {
   HiOutlineFolderRemove,
@@ -16,11 +18,14 @@ import { GrCut } from "react-icons/gr/index";
 import { FiCopy } from "react-icons/fi/index";
 import { HandleClickEvent } from "./HandleClickEvent";
 
+
 function FolderMenu({ folder, openStatus, setOpenStatus }) {
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false);
 
   function openCmd() {
     setOpen(true);
+    dispatch(folderDetails(folder._id))
   }
 
   function getLink() {}
@@ -41,7 +46,9 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+    dispatch(folderDetails(folder._id))
+  }
 
   function deleteCmd() {}
 

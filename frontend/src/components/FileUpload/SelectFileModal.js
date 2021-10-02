@@ -70,7 +70,7 @@ const SelectFileModal = ({
       <div
         className={
           (progress ? "tw-bg-transparent tw-w-auto " : "tw-bg-black tw-w-full ") +
-          "tw-h-screen tw-absolute tw-top-0 tw-left-0 tw-bg-opacity-75 tw-overflow-y-hidden"
+          "tw-h-screen tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bg-opacity-75 tw-overflow-y-hidden"
         }
       >
         {!progress && (

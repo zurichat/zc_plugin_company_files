@@ -1,33 +1,34 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import Files from "./AllFiles";
 // import SelectFileModal from "../FileUpload/SelectFileModal";
-import RealTime from "../../helpers/realtime.helper";
-
+import { RTCSubscription } from "../../../helpers/RTCSubscription";
 
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
-import { useSnackbar } from 'react-simple-snackbar';
+import { useSnackbar } from "react-simple-snackbar";
 
 const AllFiles = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
-  const [newFile, setNewFile] = useState({ data: {} });
+  const [newFile, setNewFiles] = useState({ data: { } });
   const [SnackBar] = useSnackbar({
-    position: 'bottom-center',
-    style: { backgroundColor: '#00B87C', color: '#fff' }
+    position: "bottom-center",
+    style: { backgroundColor: "#00B87C", color: "#fff" },
   });
 
   // let progress = useRef(false)
 
+  const [newFiles, setNewFiles] = useState({ data: {} });
+
   useLayoutEffect(() => {
-    const fetchNewData = () => {
-      RealTime.subscribe("newFile", "", (data) => setNewFile(data));
-    };
-    fetchNewData();
-    console.log(newFile);
-  }, [newFile]);
+    RTCSubscription("newFile", (stuff) => {
+      console.log({ stuff });
+      //setNewFiles(stuff.data);
+      console.log({ newFiles });
+    });
+  }, []);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -82,7 +83,11 @@ const AllFiles = () => {
           hideProgressModal={hideProgressModal}
         />
       )}
-      {(Object.keys(newFile.data).length > 0) && SnackBar(`"${newFile.data.fileName}"` + " uploaded successfully 🎉!", 10e3)}
+      {Object.keys(newFile.data).length > 0 &&
+        SnackBar(
+          `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
+          10e3
+        )}
     </div>
   );
 };
