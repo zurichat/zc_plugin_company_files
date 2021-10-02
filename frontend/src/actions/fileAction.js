@@ -20,14 +20,7 @@ export function fetchFiles() {
   };
 }
 
-export const detectViewedFile = (id) => async(dispatch) => {
-  try{
-   const resp =  await axios.post(`files/preview/${id}`)
-   console.log(resp)
-  }catch(error){
-    console.log(error)
-  }
-}
+
 
 export function setLoading() {
   return {
@@ -38,3 +31,20 @@ export function setLoading() {
       "UPDATE_FILE_PENDING",
   };
 }
+
+export const checkRecentlyViewed = (id) => async (dispatch) => {
+  try {
+    await axios.post(`/files/preview/${id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const fileDetails = (id) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/files/read/${id}`)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+} 
