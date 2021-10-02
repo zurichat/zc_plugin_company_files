@@ -4,8 +4,9 @@ const path = require('path');
 const uuid = require('uuid').v4;
 const Busboy = require('busboy');
 const mimeTypes = require('mime-types');
-const DatabaseConnection = require('../utils/database.helper');
-const File = new DatabaseConnection('File');
+const DatabaseOps = require('../utils/database.helper');
+const File = new DatabaseOps('File');
+const Folder = new DatabaseOps('Folder');
 const RealTime = require('../utils/realtime.helper');
 const FileSchema = require('../models/File');
 const MediaUpload = require('../utils/mediaUpload');
@@ -13,6 +14,7 @@ const { BadRequestError, InternalServerError, NotFoundError } = require('../util
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 const addActivity = require('./../utils/activities');
+const { getCache, setCache } = require('../utils/cache.helper');
 
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
 
@@ -85,7 +87,7 @@ exports.fileUpload = async (req, res) => {
         // Generate file's md5Hash & upload to Cloudinary
         const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
           md5Generator(filePath),
-          MediaUpload.uploadFile(filePath)
+          MediaUpload.uploadFile(filePath),
         ]);
 
         const fileData = {
@@ -101,26 +103,26 @@ exports.fileUpload = async (req, res) => {
 
         const file = await FileSchema.validateAsync(fileData);
 
-        // Save file details to zccore & delete file from local disk
-        await Promise.all([File.create(file), deleteFile(filePath)]);
-
-        // Save to list of activities
-        await addActivity('added', `${fileData.fileName}`)
-
-        // Send (file) info to FE using Centrifugo
-        await RealTime.publish('newFile', file);
+        // Save file details to zccore, delete file from local disk,
+        // save to list of activities & send (file) info to FE using Centrifugo
+        await Promise.all([
+          File.create(file),
+          deleteFile(filePath),
+          addActivity('added', `${fileData.fileName}`),
+          RealTime.publish('newFile', file)
+        ]);
 
         // normal response without data.
         return res.status(200).send(appResponse('File uploaded successfully!', file, true));
       });
     }).catch(e => {
-      console.error('-- file read failed:', e);
+      // console.error('-- file read failed:', e);
       return res.status(400).send(appResponse(null, 'No file with provided credentials...', false, { credentials: { fileId, fileName } }));
     });
   })
 
   busboy.on('error', e => {
-    console.error('-- file read failed:', e);
+    // console.error('-- file read failed:', e);
     throw new InternalServerError('File read failed!');
   })
 
@@ -168,19 +170,75 @@ exports.cropImage = async (req, res) => {
 
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
-  let data = await File.fetchAll();
+  const cache = await getCache(req, { key: 'allFiles' });
+  let nonDeletedFiles = [];
+  if (cache) {
+    res.status(200).send(appResponse(null, JSON.parse([cache]), true));
+  } else {
+    let data = await File.fetchAll();
 
-  data = data.sort((a, b) =>{
-    return new Date(b.dateAdded) - new Date(a.dateAdded);
-  });
+    data = data.sort((a, b) => {
+      return new Date(b.dateAdded) - new Date(a.dateAdded);
+    });
 
-  const nonDeletedFiles = data.filter(file => !file.isDeleted);
+    nonDeletedFiles = data.filter(file => !file.isDeleted);
+    await RealTime.publish('allFiles', nonDeletedFiles);
 
-  await RealTime.publish('allFiles', nonDeletedFiles);
+    // Cache data in memory
+    // setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
+  }
 
   res.status(200).send(appResponse(null, nonDeletedFiles, true));
+
 }
 
+
+// sort files by query string
+exports.sortFiles = async (req, res) => {
+  const sortBy = (key, data) => {
+    try {
+      return data.sort((currentItem, nextItem) => {
+
+        let current = currentItem[key], 
+            next = nextItem[key];
+
+        if (key !== "size") {
+          current = currentItem[key].toLowerCase();
+          next = nextItem[key].toLowerCase();
+        }
+  
+        return (current < next) ? -1 : (current > next) ? 1 : 0;
+  
+      })
+    } catch (error) {
+
+      return data;
+
+    }
+  }
+
+  let data = await File.fetchAll();
+  data = data.filter(file => !file.isDeleted).slice(0, 50);
+
+  if (req.query.by !== undefined && req.query.by !== null) {
+    let key = req.query.by;
+    data = sortBy(key, data);
+  }
+
+  res.status(200).send(appResponse(null, data, true));
+
+}
+
+exports.copyFile = async (req, res) => {
+
+  const data = await File.fetchOne({ _id: req.params.id });
+  data.fileName = `${data.fileName}-1`;
+  delete data._id, delete data.dateAdded;
+
+  const response = await File.create(data.data);
+  res.send({ response })
+
+}
 
 // Get all files by type
 exports.getFileByType = async (req, res) => {
@@ -196,67 +254,92 @@ exports.getFileByType = async (req, res) => {
 
 
 exports.fileDetails = async (req, res) => {
-    const {id} = req.params
+  const { fileId } = req.params;
+  
+  let data = await File.fetchOne({ _id: fileId });
+  if (!data) throw new NotFoundError();
 
-    const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
-     await File.update(id, updateLastAccessed);
-     const data = await File.fetchOne({ _id: id });
-     const response = await RealTime.publish('file_detail', data);
+  const updatedLastAccessed = { lastAccessed: new Date().toISOString() };
+  data = { ...data, ...updatedLastAccessed };
 
+  await Promise.all([
+    File.update(fileId, updatedLastAccessed),
+    RealTime.publish('fileDetail', data)
+  ])
 
-     res.status(200).send(appResponse(null, data, true, {
-      ...response,
-      count: data.length,
-    }));
+  res.status(200).send(appResponse(null, data, true));
 }
 
 
-exports.fileUpdate = async (req, res) => {
-  const { id: fileId } = req.params;
+exports.fileRename = async (req, res) => {
+  const { fileId } = req.params;
+  let { oldFileName, newFileName } = req.body;
+
+  if (!fileId || !oldFileName || !newFileName) throw new BadRequestError('Please provide the "fileId", "oldFileName" & "newFileName"');
+
+  // Get single file
   const file = await File.fetchOne({ _id: fileId });
-  
-  if (!file) throw new NotFoundError();
-  await File.update(fileId, req.body);
+  if (!file) throw new BadRequestError('Invalid "fileId" provided!');
 
-  const { data: [updatedFile] } = await File.fetchOne({ _id: fileId });
-  await RealTime.publish('fileUpdate', data);
+  if (
+    oldFileName === file.fileName &&
+    newFileName !== file.fileName.substring(0, file.fileName.lastIndexOf('.'))
+  ) {
+    newFileName = newFileName + file.fileName.substr(file.fileName.lastIndexOf('.'));
+    await File.update(fileId, { fileName: newFileName });
 
-  // const updatedFile = await File.fetchOne({ _id: fileId });
-
-  res.status(200).send(appResponse('File details updated!', updatedFile, true));
+    res.status(200).send(appResponse('File renamed successfully!', { ...file, fileName: newFileName }, true));
+  } else {
+    throw new BadRequestError('"oldFileName" cannot be equal to the "newFileName"!');
+  }
 }
 
 
 // Delete permanently
 exports.fileDelete = async (req, res) => {
-  const data = await File.fetchOne({ _id: req.params.id });
+  const data = await File.fetchOne({ '_id': req.params.id });
+  if (!data) throw new NotFoundError();
 
   const [response] = await Promise.all([
     File.delete(req.params.id),
     MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   ]);
   
-  // Save to list of activities
-  await addActivity('permanently deleted', `${data.fileName}`)
-  
   if (!response) throw new InternalServerError();
 
+  // Save to list of activities
+  await addActivity('permanently deleted', `${data.fileName}`);
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
+// exports.deleteSomeFiles = async (req, res) => {
+//   let response = await File.fetchAll();
+//   let data = response.slice(0, 10);
+//   data.map(async file => {
+//     try {
+//       await Promise.all([
+//         File.delete(file._id),
+//         MediaUpload.deleteFromCloudinary(file.cloudinaryId)
+//       ]);
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   })
+//   res.status(200).send(appResponse('File deleted successfully!', { count: response.length }, true));
+// }
+
 // Delete multiple files 
+
 exports.deleteMultipleFiles = async (req, res) => {
   const { ids } = req.body;
 
   const [response] = await Promise.all([
     await File.delete(ids),
     ...ids.map(async id => {
-      const data = await File.fetchOne({ '_id': id });
-
+      const data = await File.fetchOne({ _id: id });
       // Save to list of activities
-      if (data) await addActivity('deleted', `${data.fileName}`)
-
+      if (data) await addActivity('deleted', `${data.fileName}`);
       return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
     })
   ]);
@@ -275,29 +358,13 @@ exports.deleteTemporarily = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: true });
 
     // Save to list of activities
-    await addActivity('deleted', `${data.fileName}`)
+    await addActivity('deleted', `${data.fileName}`);
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
-
   } else {
     throw new BadRequestError();
   }
 }
-
-
-// find files with the same folder id
-exports.getFilesWithSameFolderId = async (req, res) => {
-  const { id } = req.params;
-  if (id === "" || id === undefined) throw new BadRequestError('Missing "id" parameter');
-
-  const data = await File.fetchAll({ folderId: id });
-  if (!data) throw new NotFoundError();
-
-  const matchingFolderId = data.filter(file => file.folderId === id);
-  // if (matchingFolderId.length === 0) throw new NotFoundError();
-
-  res.status(200).send(appResponse(null, matchingFolderId, true));
-};
 
 
 // Restore file
@@ -308,12 +375,34 @@ exports.restoreFile = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: false });
 
     // Save to list of activities
-    await addActivity('restored', `${data.fileName}`)
+    await addActivity('restored', `${data.fileName}`);
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
     throw new BadRequestError();
   }
+}
+
+
+// Cut or move file
+exports.cutOrMoveFile = async (req, res) => {
+  let { fileId, folderId } = req.params;
+  if (!fileId || !folderId) throw new BadRequestError('"fileId" & "folderId" are required!');
+  if (folderId === 'null') folderId = null;
+
+  const [file, folder] = await Promise.all([
+    File.fetchOne({ _id: fileId }),
+    Folder.fetchOne({ _id: folderId })
+  ])
+
+  if (!file) throw new NotFoundError('File not found!');
+  if (!folder && folderId !== null) throw new NotFoundError('Folder not found!');
+
+  if (file.folderId === folderId) throw new BadRequestError(`You can't cut or move a file to the same folder!`);
+
+  await File.update(fileId, { folderId });
+
+  res.status(200).send(appResponse('File cut or moved successfully!', { ...file, folderId }, true));
 }
 
 
@@ -426,6 +515,24 @@ exports.unStarFile = async (req, res) => {
   } else {
     throw new BadRequestError();
   }
+}
+
+
+exports.recentlyViewed = async (req, res) => {
+  const data = await File.fetchAll();  
+  data.sort((a, b) => {
+    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+    return dateB - dateA
+  });
+
+  res.status(200).send(appResponse('Recently viewed files', data.slice(0, 5), true));
+}
+
+exports.detectPreview = async (req, res) => {
+  const { id } = req.params;
+  const updatedLastAccessed = { lastAccessed: new Date().toISOString() }; 
+  await File.update(id, updatedLastAccessed);
+  res.status(200).json(`lastAccessed date updated`);
 }
 
 
