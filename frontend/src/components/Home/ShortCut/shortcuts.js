@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 function shortcuts({ link, image, altName, name }) {
   return (
     <Link to={`/${link}`}>
-      <div className="tw-mb-10 md:tw-mb-0">
-        <div className="tw-w-auto tw-h-48 tw-flex tw-justify-around tw-bg-green-100 tw-rounded-md tw-transition-all tw-duration-150 tw-shadow-md hover:tw-bg-green-200">
+      <div className="tw-mb-2 md:tw-mb-0">
+        <div className="tw-w-auto tw-h-14 md:tw-h-32 lg:tw-h-48 tw-flex tw-justify-around tw-bg-green-100 tw-rounded-md tw-transition-all tw-duration-150 tw-shadow-md hover:tw-bg-green-200">
           <img
             src={image}
             alt={altName}
