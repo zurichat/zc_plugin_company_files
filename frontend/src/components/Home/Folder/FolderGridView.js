@@ -4,10 +4,6 @@ import options from "../../../../public/Icons/more-vertical/active.svg";
 import folderUsers from "../../../../public/Icons/folderUsers.png";
 
 function FolderGridView({ folder, openMenu, fileNumber, index }) {
-  // function to generate random numbers between 0 to 45 and return a whole number
-  const randomNumber = () => {
-    return Math.floor(Math.random() * 45);
-  };  
 
   return (
     <>
@@ -27,7 +23,7 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
         </div>
 
         <div className="icons tw-mt-1 tw-w-full tw-flex tw-items-start tw-justify-between">
-          <span className="tw-block tw-text-gray-400">{randomNumber()}</span>
+          <span className="tw-block tw-text-gray-400">{folder.noOfFiles}</span>
           <div className="avi tw-w-16 tw-cursor-pointer">
             <img
               src={folderUsers}

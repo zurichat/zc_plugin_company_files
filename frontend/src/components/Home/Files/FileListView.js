@@ -43,14 +43,14 @@ function FileListView({ sortingMethod }) {
             visible="true"
           />
         </div>
-      ) : files.data.length > 0 ? (
+      ) : Object.keys(files).length && files.data.length > 0 ? (
         <table className="tw-border-0 tw-border-collapse tw-table-fixed tw-w-full tw-mx-3">
           <thead className="tw-text-base tw-text-text-grey tw-text-left">
             <tr>
-              <th className="tw-w-1/4">Name</th>
-              <th className="tw-w-1/4">Owner</th>
-              <th className="tw-w-1/4">Date Modified</th>
-              <th className="tw-w-1/4">File Size</th>
+              <th className="tw-w-1/4 tw-py-[25px]">Name</th>
+              <th className="tw-w-1/4 tw-py-[25px]">Owner</th>
+              <th className="tw-w-1/4 tw-py-[25px] tw-truncate">Date Modified</th>
+              <th className="tw-w-1/4 tw-py-[25px]">File Size</th>
             </tr>
           </thead>
           <tbody className="tw-text-sm">
@@ -76,7 +76,7 @@ function FileListView({ sortingMethod }) {
               )
               .map((file) => (
                 <tr key={file._id}>
-                  <td className="tw-w-4/5 tw-truncate tw-flex tw-items-center">
+                  <td className="tw-w-4/5 tw-py-[25px] tw-truncate tw-flex tw-items-center">
                     {new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={BsCardImage}
@@ -143,9 +143,9 @@ function FileListView({ sortingMethod }) {
                     )}
                     {file.fileName.slice(0, file.fileName.lastIndexOf("."))}
                   </td>
-                  <td className="tw-w-1/4">Me</td>
-                  <td className="tw-w-1/4">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
-                  <td className="tw-w-1/4">{convertSize(file.size)}{" "}MB</td>
+                  <td className="tw-w-1/4 tw-px-[25px]">Me</td>
+                  <td className="tw-w-1/4 tw-px-[25px]">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
+                  <td className="tw-w-1/4 tw-px-[25px]">{convertSize(file.size)}{" "}MB</td>
                 </tr>
               ))}
           </tbody>

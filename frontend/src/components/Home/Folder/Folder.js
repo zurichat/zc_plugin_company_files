@@ -1,30 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FolderMenu from "../../Subcomponents/FolderMenu";
 import FolderGridView from "./FolderGridView";
 import FolderListView from "./FolderListView";
-import { getTotalNumberOfFilesInFolder } from "../../../actions/fileAction";
-import { useDispatch, useSelector } from "react-redux";
 
-function Folder({ folder, view, index }) {
+function Folder({ folder, view }) {
   const [openStatus, setOpenStatus] = useState(false);
-  const { loading, error, fileNumber } = useSelector(
-    (state) => state.rootReducer.fileReducer
-  );
 
   function openMenu() {
     setOpenStatus(!openStatus);
   }
-
-  useEffect(() => {
-    (async () => {
-      try {
-        dispatch(getTotalNumberOfFilesInFolder(folder.id));
-        console.log({ fileNumber });
-      } catch (err) {
-        throw new Error(err);
-      }
-    })();
-  }, []);
 
   return (
     <>
@@ -33,8 +17,6 @@ function Folder({ folder, view, index }) {
           <FolderGridView
             folder={folder}
             openMenu={openMenu}
-            index={index}
-            fileNumber={fileNumber}
           />
         )}
         {openStatus && (
