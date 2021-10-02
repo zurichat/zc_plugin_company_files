@@ -73,11 +73,13 @@ exports.folderDetails = async (req, res) => {
   const updateLastAccessed = { lastAccessed: new Date().toISOString() };
 
   await Promise.all([
-    Folders.update(id, updateLastAccessed),
-    RealTime.publish(`folderDetail${data._id}`, data)
+    Folders.update(folderId, updateLastAccessed),
+    RealTime.publish(`folderDetails ${data._id}`, data)
   ])
 
-  res.status(200).send(appResponse(null, folderDetail, true));
+  const updatedFolderResponse = await Folders.fetchOne({ _id: folderId });
+
+  res.status(200).send(appResponse(null, updatedFolderResponse, true));
 }
 
 
