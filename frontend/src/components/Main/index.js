@@ -74,8 +74,8 @@ const Main = () => {
     >
       <Router basename="/companyfiles">
         <ScrollRestoration />
-        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center">
-          <SearchBar />
+        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center md:tw-ml-2">
+          {/* <SearchBar /> */}
           <Parcel
             config={pluginHeader}
             wrapWith="div"
