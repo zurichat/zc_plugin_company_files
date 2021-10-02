@@ -73,7 +73,7 @@ const Index = () => {
       >
         Add New
       </button>
-      <Room />
+      {/* <Room /> */}
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
