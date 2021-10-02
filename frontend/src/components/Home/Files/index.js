@@ -68,11 +68,11 @@ const index = () => {
             Files
           </h2>
           <Link
-            to="/all-files"
-            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
-          >
-            View All
-          </Link>
+          to="/all-files"
+          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+        >
+          View All
+        </Link>
         </div>
         <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
@@ -92,7 +92,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-border-2 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
@@ -170,11 +170,12 @@ const index = () => {
         </div>
       </div>
 
-      {newFile != undefined || null > 0 &&
-        SnackBar(
-          `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
-          10e3
-        )}
+      {newFile != undefined ||
+        (null > 0 &&
+          SnackBar(
+            `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
+            10e3
+          ))}
     </div>
   );
 };
