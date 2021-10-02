@@ -1,4 +1,5 @@
 import StarredGrid from "./StarredGrid";
+import StarGridFolder from './StarGridFolder'
 
 
 const StarredHead = ({
@@ -46,7 +47,15 @@ const StarredHead = ({
 
      
 
+           
       <StarredGrid
+         isLoading={isLoading}
+        error={error}
+        data={data}
+       
+      />
+
+<StarGridFolder
          isLoading={isLoading}
         error={error}
         data={data}

@@ -7,6 +7,7 @@ import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+import Room from "./Room/index";
 import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
@@ -14,7 +15,6 @@ const Index = () => {
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
-  const [newFile, setNewFile] = useState({ data: {} });
   const [SnackBar] = useSnackbar({
     position: 'bottom-center',
     style: { backgroundColor: '#00B87C', color: '#fff' }
@@ -73,7 +73,7 @@ const Index = () => {
       >
         Add New
       </button>
-
+      {/* <Room /> */}
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />
