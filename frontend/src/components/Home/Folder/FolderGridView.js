@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import folderYellow from "../../../../public/Icons/folder/yellow.svg";
 import options from "../../../../public/Icons/more-vertical/active.svg";
 import folderUsers from "../../../../public/Icons/folderUsers.png";
 
+import CollaboratorCard from "../../Collaborators/CollaboratorCard/CollaboratorCard";
+
+import Backdrop from "../../FolderRename/ModalDrop";
+
 function FolderGridView({ folder, openMenu, fileNumber, index }) {
+  const [openModal, setModal] = useState(false);
+
+  const triggerModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
 
   return (
     <>
@@ -29,10 +42,14 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
               src={folderUsers}
               alt="folder user"
               className="tw--mr-4 tw-w-full"
+              onClick={triggerModal}
             />
           </div>
         </div>
       </div>
+
+      {openModal && <CollaboratorCard onCancel={closeModal} />}
+      {openModal && <Backdrop onCancel={closeModal} />}
     </>
   );
 }
