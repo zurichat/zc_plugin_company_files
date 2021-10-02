@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import Loader from "react-loader-spinner";
-import { Link } from "react-router-dom";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "../../Subcomponents/Image";
 import Pdf from "../../Subcomponents/Pdf";
 import Zip from "../../Subcomponents/Zip";
@@ -10,20 +7,15 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio";
-import { RTCSubscription } from "../../../helpers/RTCSubscription";
-import { useSelector, useDispatch } from "react-redux";
+import Audio from "../../Subcomponents/audio";
+import Loader from "react-loader-spinner";
 import { fetchFiles } from "../../../actions/fileAction";
-dayjs.extend(relativeTime);
 
-const index = () => {
+function FileGridView({ sortingMethod }) {
   const dispatch = useDispatch();
   const { loading, error, files } = useSelector(
     (state) => state.rootReducer.fileReducer
   );
-
-  const [newFiles, setNewFiles] = useState();
-  const [fileSubscription, setFileSubscription] = useState();
 
   useEffect(() => {
     (async () => {
@@ -31,63 +23,45 @@ const index = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    RTCSubscription("allFiles", (stuff) => {
-      console.log({ stuff });
-      setFileSubscription(stuff.data);
-      console.log({ fileSubscription });
-    });
-  }, []);
-
-  if (error)
-    return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4">
-        Error failed
-      </div>
-    );
-
-  if (loading)
-    return (
-      <div className="tw-w-full tw-py-10">
-        <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
-          <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">
-            Files
-          </h2>
-          <Link
-            to="/all-files"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
-          >
-            View All
-          </Link>
-        </div>
-        <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
-          <Loader
-            type="ThreeDots"
-            color="#00B87C"
-            height={100}
-            width={100}
-            visible="true"
-          />
-        </div>
-      </div>
-    );
-
   return (
-    <div className="tw-w-full tw-py-10">
-      <div className="tw-w-full tw-flex tw-justify-between tw-items-center">
-        <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
-        <Link
-          to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
-        >
-          View All
-        </Link>
-      </div>
-
-      <div className="project-box-wrapper">
-        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
-          {files.data.length > 0 ? (
-            files.data.slice(0, 15).map((file) => {
+    <div className="project-box-wrapper">
+      <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
+        {error ? (
+          <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-h-2/4 tw-w-full">
+            Error failed
+          </div>
+        ) : loading ? (
+          <div className="tw-flex tw-items-center tw-justify-center tw-h-2/4 tw-w-full">
+            <Loader
+              type="ThreeDots"
+              color="#00B87C"
+              height={100}
+              width={100}
+              visible="true"
+            />
+          </div>
+        ) : files && files.data.length > 0 ? (
+          files.data
+            .sort(
+              sortingMethod == "name"
+                ? function (a, b) {
+                    if (a.fileName.toLowerCase() < b.fileName.toLowerCase()) return -1;
+                    if (a.fileName.toLowerCase() > b.fileName.toLowerCase()) return 1;
+                    return 0;
+                  }
+                : sortingMethod == "type"
+                ? function (a, b) {
+                    if (a.type < b.type) return -1;
+                    if (a.type > b.type) return 1;
+                    return 0;
+                  }
+                : sortingMethod == "date"
+                ? (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+                : function (a, b) {
+                    return b.size - a.size;
+                  }
+            )
+            .map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
@@ -114,18 +88,23 @@ const index = () => {
                 new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
-                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
+                  className="file tw-flex tw-items-center mr-0 my-5 relative"
                 >
                   <Excel file={file} />
                 </div>
-              ) : new RegExp("\\b" + "word" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "wordprocessingml" + "\\b").test(
+                  file.type
+                ) ||
+                new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Document file={file} />
                 </div>
-              ) : new RegExp("\\b" + "powerpoint" + "\\b").test(file.type) ? (
+              ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "presentationml" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
@@ -148,15 +127,14 @@ const index = () => {
                 </div>
               );
             })
-          ) : (
-            <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
-              No Files
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
+            No Files
+          </div>
+        )}
       </div>
     </div>
   );
-};
+}
 
-export default index;
+export default FileGridView;

@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <SnackbarProvider>
       <div className='tw-flex tw-justify-center tw-min-h-screen'>
-        <main className='tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full'>
+        <main className='tw-flex tw-flex-start tw-items-center tw-justify-center tw-w-full tw-overflow-hidden'>
           {children}
         </main>
       </div>
