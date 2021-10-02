@@ -72,7 +72,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   function moveTo() {}
 
   function addStar() {
-    SetAddStar(!addStar);
+    SetAddStar(true);
 
   }
 
@@ -227,8 +227,8 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           <StarPutFile
             id={file._id}
             file={file}
-            addStar={addStar}
-            SetAddStar={SetAddStar}
+            // addStar={addStar}
+            // SetAddStar={SetAddStar}
           />
         )}
 

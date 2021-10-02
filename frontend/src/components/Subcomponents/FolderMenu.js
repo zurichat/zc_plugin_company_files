@@ -44,7 +44,7 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
   function moveTo() {}
 
   function addStar() {
-    SetAddStarFolder(!addStarFolder);
+    SetAddStarFolder(true);
   }
 
   function rename() {}
@@ -137,8 +137,8 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
           <StarPutFile
             id={folder._id}
             folder={folder}
-            addStarFolder={addStarFolder}
-            setAddStarFolder={setAddStarFolder}
+            // addStarFolder={addStarFolder}
+            // setAddStarFolder={setAddStarFolder}
           />
         )}
 
