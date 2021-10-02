@@ -59,34 +59,34 @@ const index = () => {
     });
   }, [newFile, dispatch]);
 
-  useEffect(() => {
-    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
-      console.log(stuff.data.event, me, you);
-      setFileSubscription(stuff.data.event);
-    });
-    console.log(fileSubscription);
-    (async function () {
-      try {
-        const info = await GetUserInfo();
-        console.log(info);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-    (async function () {
-      try {
-        const users = await GetWorkspaceUsers();
-        console.log(users);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-    const fetchNewData = () => {
-      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
-    };
-    fetchNewData();
-    console.log(newFiles);
-  }, []);
+  // useEffect(() => {
+  //   SubscribeToChannel("/companyfiles", (stuff, me, you) => {
+  //     console.log(stuff.data.event, me, you);
+  //     setFileSubscription(stuff.data.event);
+  //   });
+  //   console.log(fileSubscription);
+  //   (async function () {
+  //     try {
+  //       const info = await GetUserInfo();
+  //       console.log(info);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  //   (async function () {
+  //     try {
+  //       const users = await GetWorkspaceUsers();
+  //       console.log(users);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   })();
+  //   const fetchNewData = () => {
+  //     RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
+  //   };
+  //   fetchNewData();
+  //   console.log(newFiles);
+  // }, []);
 
   if (error)
     return (
