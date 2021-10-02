@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentText } from "react-icons/gr";
+import DocImg from "../../../public/Icons/doc-cat.svg"
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,7 +22,7 @@ function Document({ file }) {
       >
         <FileType
           file={file}
-          IconName={GrDocumentText}
+          IconName={DocImg}
           bgColor={"tw-bg-file-doc"}
           textColor={"tw-text-blue-600"}
         />
