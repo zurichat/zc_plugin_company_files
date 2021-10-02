@@ -110,9 +110,26 @@ exports.deleteRoom = async (req, res) => {
 
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
-  const { userId } = req.body;
-  if (!/^[0-9a-fA-F]{24}$/.test(userId)) {
-    throw new BadRequestError('Invalid user id. Enter a valid object id!');
+  const { memberEmail, orgId } = req.body;
+  // if (!/^[0-9a-fA-F]{24}$/.test(memberId)) {
+  //   throw new BadRequestError('Invalid member id. Enter a valid object id!');
+  // }
+
+  if(!memberEmail || !orgId) throw new BadRequestError('one or more required fields missing in body');
+
+
+  // call zuri core for org member details;
+  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${orgId}/members/?query=${memberEmail}`;
+  let member; 
+  try {
+    const response = await axios.get(getOrgMemberUrl);
+    if(!response.data[0])
+     throw new NotFoundError(`member with email '${memberEmail}' not found`);
+
+    member = response.data[0]; 
+
+  } catch (error) {
+    throw new BadRequestError("something went wrong");
   }
 
   // fetch all the rooms available and get the target room with the provided room_id.
@@ -120,16 +137,16 @@ exports.addToRoom = async (req, res) => {
 
   if (!room) throw new NotFoundError();
 
-  if (room.isPrivate)
+  if (room.private)
     throw new ForbiddenError(`You can't join a private room!`);
 
-  const isUserInRoom = room.members.filter((id) => id === userId).length;
+  const isMemberInRoom = room.room_member_ids.filter((id) => id === member._id).length;
 
-  if (isUserInRoom) throw new BadRequestError('User is already in room!');
+  if (isMemberInRoom) throw new BadRequestError('user is already in room!');
 
   // Add user to room...
-  room.members.push(userId);
-  delete room._id;
+  room.room_member_ids.push(member._id);
+  // delete room._id;
 
   // send the data to the api endpoint for update.
   await Rooms.update(req.params.roomId, room);
