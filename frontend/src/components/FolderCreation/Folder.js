@@ -4,6 +4,7 @@ import Addnewbtn from "./Addnew/Addnewbtn";
 import Modal from "./Modal/Modal";
 import classes from "./Folder.module.css";
 
+
 function Folder() {
   const [showModal, setShowModal] = useState(false);
   const [folderArray, setFolderArray] = useState([]);
@@ -15,6 +16,7 @@ function Folder() {
       try {
         let response = await fetch(`${API_BASE_URL}/folders/all`);
         let { data } = await response.json();
+
         // data = data.slice(data.length - 4, data.length);
         // console.log(data);
         handleFolder(data);

@@ -20,6 +20,9 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 
+import axios from "axios";
+import FileDownload from "js-file-download";
+
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
@@ -28,9 +31,20 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     setOpenPreview(true);
   }
 
-  function getLink() {}
+  function getLink() {
+    navigator.clipboard.writeText(file.url);
+    alert("Link Copied to clipboard!");
+  }
 
-  function download() {}
+  function download() {
+    axios({
+      url: file.url,
+      method: "GET",
+      responseType: "blob"
+    })
+    .then(res => FileDownload(res.data, file.fileName))
+    .catch(err => alert(`Unable to download: ${file.fileName}, some error just occured!`))
+  }
 
   function share() {}
 
@@ -65,12 +79,14 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
               title="preview"
             />
           </FileMenuButton>
+          
           <FileMenuButton name="Get link" cmd={getLink}>
             <HiOutlineLink
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="link"
             />
           </FileMenuButton>
+
           <FileMenuButton name="Download" cmd={download}>
             <BsDownload
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -132,6 +148,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             />
           </FileMenuButton>
         </div>
+
         {openPreview ? (
           type === "audio" ? (
             <AudioPreview file={file} setOpenStatus={setOpenStatus} />

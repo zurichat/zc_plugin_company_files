@@ -24,6 +24,7 @@ function Image({ file }) {
           file={file}
           IconName={BsCardImage}
           bgColor={"tw-bg-blue-300"}
+          textColor={"tw-text-black"}
         />
       </div>
       {openStatus && (

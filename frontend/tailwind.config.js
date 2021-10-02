@@ -26,19 +26,29 @@ module.exports = {
           grey: "#4A4A4A",
           time: "#C1C1C1",
           lightIcon: "#BEBEBE",
-          trashDur: "#616161",
         },
-        avatar: {
+        file: {
           one: "#F7E0FF",
           two: "#F8FFCD",
           three: "#FFF0F0",
           four: "#ACFFE6",
-          five: "#E3EEFF",
+          doc: "#E3EEFF",
+          pdf: "#FED4D4",
+          xls: "#D7FCEB",
+          ppt: "#FCE7DE",
         },
+        trashDur: "#616161",
       },
-      fontFamily: {
-        lato: ["Lato"],
+      avatar: {
+        one: "#F7E0FF",
+        two: "#F8FFCD",
+        three: "#FFF0F0",
+        four: "#ACFFE6",
+        five: "#E3EEFF",
       },
+    },
+    fontFamily: {
+      lato: ["Lato"],
     },
   },
   variants: {

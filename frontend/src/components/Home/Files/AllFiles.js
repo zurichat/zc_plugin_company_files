@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loader from 'react-loader-spinner';
 import axios from "axios";
@@ -19,6 +19,7 @@ import { BsGrid3X2 } from "react-icons/bs";
 import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import FileUpload from "../../FileUpload/index";
 import FileOptions from "../../FileUpload/FileOptions";
+import RealTime from "../../../helpers/realtime.helper";
 dayjs.extend(relativeTime);
 
 async function fetcher(url) {
@@ -32,6 +33,16 @@ const API_URL = window.location.hostname.includes('localhost') || window.locatio
 
 const AllFiles = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
+
+  const [newFiles, setNewFiles] = useState({ data: {} });
+
+  useEffect(() => {
+    const fetchNewData = () => {
+      RealTime.subscribe("allFiles", "", (data) => setNewFiles(data));
+    };
+    fetchNewData();
+    console.log(newFiles);
+  }, []);
 
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -150,7 +161,8 @@ const AllFiles = () => {
                   <Zip file={file} />
                 </div>
               ) : new RegExp("\\b" + "ms-excel" + "\\b").test(file.type) ||
-                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ? (
+                new RegExp("\\b" + "spreadsheetml" + "\\b").test(file.type) ||
+                new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
                   className="file tw-flex tw-items-center mr-0 my-5 relative"

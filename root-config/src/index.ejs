@@ -39,6 +39,7 @@
           "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
           "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
           "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+          "@zuri/control": "https://zuri.chat/zuri-control.js",
           "@zuri/plugin-header": "https://zuri.chat/zuri-plugin-header.js",
           "@zuri/root-config": "https://companyfiles.zuri.chat/zuri-root-config.js",
           "@zuri/zuri-plugin-company-files": "https://companyfiles.zuri.chat/zuri-zuri-plugin-company-files.js"
@@ -59,9 +60,10 @@
         }
       }
     </script>
-  <script>
+  <!-- <script>
     System.import('@zuri/root-config');
-  </script>
+    System.import('@zuri/control');
+  </script> -->
   <% } %>
 
   <!--
@@ -83,6 +85,7 @@
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <script>
       System.import('@zuri/root-config');
+      System.import('@zuri/control')
     </script>
     <import-map-overrides-full
       show-when-local-storage="devtools"

@@ -24,7 +24,8 @@ const {
   searchBySize,
   searchByType,
   getFilesWithSameFolderId,
-  cropImage
+  cropImage,
+  sortFiles
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -41,6 +42,9 @@ router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get("/all", getAllFiles);
+
+// GET ALL FILES SORTED BY THE FILE PROPERTIES
+router.get("/sort", sortFiles);
 
 // GET A SPECIFIC FILE TYPE
 router.get("/type/:type", getFileByType);

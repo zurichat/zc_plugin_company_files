@@ -24,6 +24,7 @@ function audio({ file }) {
           file={file}
           IconName={BsMusicNoteBeamed}
           bgColor={"tw-bg-green-400"}
+          textColor={"tw-text-black"}
         />
       </div>
       {openStatus && (
