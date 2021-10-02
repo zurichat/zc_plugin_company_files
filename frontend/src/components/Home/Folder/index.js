@@ -49,7 +49,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-folders"
-            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -73,18 +73,22 @@ const index = () => {
           Folders
         </h2>
         <Link
-          to="/all-folders"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-border-green-500"
-        >
-          View All
-        </Link>
+            to="/all-folders"
+            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          >
+            View All
+          </Link>
       </div>
       <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12">
         {folders.data.length ? (
           folders.data
             .slice(0, 4)
             .map((folder) => (
-              <FolderComponent key={folder.folderId} folder={folder} view={"grid"} />
+              <FolderComponent
+                key={folder.folderId}
+                folder={folder}
+                view={"grid"}
+              />
             ))
         ) : (
           <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
