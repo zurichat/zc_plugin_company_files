@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import { BsCardImage } from "react-icons/bs";
+import ImgFile from "../../../public/Icons/imgfile.svg";
 import FileType from "./FileType";
 
 function Image({ file }) {
@@ -22,7 +22,7 @@ function Image({ file }) {
       >
         <FileType
           file={file}
-          IconName={BsCardImage}
+          IconName={ImgFile}
           bgColor={"tw-bg-blue-300"}
           textColor={"tw-text-blue-500"}
         />

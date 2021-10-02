@@ -13,6 +13,7 @@ import ReactPaginate from "react-paginate";
 import Loader from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
+import { RTCSubscription } from "../../../helpers/RTCSubscription";
 
 const AllFolders = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,8 @@ const AllFolders = () => {
     setSortingMethod("name");
   }
 
+  const [allFolders, setAllFolders] = useState();
+
   useEffect(() => {
     (async () => {
       try {
@@ -45,6 +48,17 @@ const AllFolders = () => {
         throw new Error(err);
       }
     })();
+    RTCSubscription("allFolders", (allFolders) => {
+      console.log({ allFolders });
+      try {
+        dispatch({
+          type: "FETCH_FOLDERS_FULFILLED",
+          payload: { status: "success", data: [...allFolders.data] },
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
+    });
   }, []);
 
   const showOptions = (e) => {
