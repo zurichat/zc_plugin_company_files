@@ -38,8 +38,6 @@ const AllFolders = () => {
     setSortingMethod("name");
   }
 
-  const [allFolders, setAllFolders] = useState();
-
   useEffect(() => {
     (async () => {
       try {
