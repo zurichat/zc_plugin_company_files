@@ -57,7 +57,7 @@ const index = () => {
       setNewFile(newFile.data);
       console.log({ newFile });
     });
-  }, [newFile, dispatch]);
+  }, [newFile]);
 
   // useEffect(() => {
   //   SubscribeToChannel("/companyfiles", (stuff, me, you) => {
