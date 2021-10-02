@@ -48,8 +48,7 @@ exports.sidebar = async (req, res) => {
 
   let data = await Rooms.fetchAll({org_id: org});
   handleRoomUrl(data);
-  const defaultRooms = data.filter(room => room.isDefault)
-  console.log(req.session)
+  const defaultRooms = data.filter(room => room.isDefault && room.room_members_id.includes(user))
   .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
  
 
