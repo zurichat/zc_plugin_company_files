@@ -1,8 +1,9 @@
-import React from 'react'
+import {React, useState} from 'react'
 import { useHistory } from "react-router";
 
-function StarPutFile({addStar, SetAddStar, id, file }) {
+function StarPutFile({ id, file }) {
     
+  const [addStar, SetAddStar] = useState(false);
 
     const PutHistory = useHistory();
 
