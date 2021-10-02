@@ -8,7 +8,7 @@ import Loader from "./LoadAnimation";
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-function StarredGrid({
+function StarredList({
   error,
   isLoading,
   data,
@@ -204,11 +204,14 @@ function StarredGrid({
         deleteModal={deleteModal}
         clickedId={id}
         setData={setData}
-        data={data}
+        // data={data}
         setFileDel={setFileDel}
+
+
+       
       />
     </>
   );
 }
 
-export default StarredGrid;
+export default StarredList;
