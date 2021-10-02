@@ -63,7 +63,7 @@ function FileHeader({
     <>
       <button
         onClick={showOptions}
-        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-bg-green-500 hover:tw-text-white tw-outline-none"
       >
         Add New
       </button>

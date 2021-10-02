@@ -36,7 +36,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-folders"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -61,7 +61,7 @@ const index = () => {
         </h2>
         <Link
           to="/all-folders"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+          className="tw-text-green-500 tw-text-lg tw-font-semibold hover:tw-border-green-500"
         >
           View All
         </Link>

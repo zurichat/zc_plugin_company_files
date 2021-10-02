@@ -33,8 +33,9 @@ const index = () => {
 
   useEffect(() => {
     RTCSubscription("allFiles", (stuff) => {
+      const websocketResponse = stuff;
       console.log({ stuff });
-      setFileSubscription(stuff.data);
+      setFileSubscription(websocketResponse.data);
       console.log({ fileSubscription });
     });
   }, []);
@@ -55,7 +56,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-files"
-            className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -78,7 +79,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 tw-text-lg tw-font-semibold tw-hover:text-green-600"
+          className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
