@@ -1,9 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import userImage from './img/userImage.png'
 import classes from './Activities.module.css'
 
 function Activities() {
+    const [activities, setActivities] = useState([])
     const [display, setDisplay] = useState(false)
+
+    useEffect(() => {
+        axios.get('https://companyfiles.zuri.chat/api/v1/activities')
+        .then(res => {
+            console.log('res', res)
+            console.log('resdata', res.data)
+            console.log('resdatadata', res.data.data)
+            
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }, [])
     
     const goBack = () => {
         const currentState = history.state;

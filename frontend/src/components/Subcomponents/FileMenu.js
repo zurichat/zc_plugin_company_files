@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
+import { useDispatch } from 'react-redux'
+import { checkRecentlyViewed } from "../../actions/fileAction";
+import { detectViewedFile } from "../../actions/fileAction";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
@@ -19,23 +22,17 @@ import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
-<<<<<<< HEAD
-import axios from 'axios'
-=======
 import Modal from "./DeleteToBinModal";
->>>>>>> 766db0ff9f3cb07c8a473a8755eb66abd27d38dc
-
+import axios from "axios";
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
+  const dispatch = useDispatch()
 
   function previewCmd() {
-<<<<<<< HEAD
-    console.log('file',file._id)
-=======
-    console.log(file);
->>>>>>> 766db0ff9f3cb07c8a473a8755eb66abd27d38dc
     setOpenPreview(true);
+    dispatch(checkRecentlyViewed(file._id))
+    console.log('file',file)
   }
 
   function getLink() {}
@@ -56,17 +53,24 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+    dispatch(checkRecentlyViewed(file._id))
+  }
 
   function deleteCmd() {
     setDeleteToBin(true);
   }
 
-  function preview(id) {
-    setOpenPreview(true);
-    fetch("https://companyfiles.zuri.chat/api/v1/files/preview/" + id, {
-      method: "Post",
+  const preview = (id) => {
+    axios
+    .post("https://companyfiles.zuri.chat/api/v1/files/preview/" + id)
+    .then(response => {
+      console.log(response)
     })
+    .catch(error => {
+      console.log(error)
+    })
+    console.log('preview file id', file._id);
   }
 
   return (
@@ -78,7 +82,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
         }}
       >
         <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
-          <FileMenuButton name="Preview" cmd={preview(file._id)}>
+          <FileMenuButton name="Preview" cmd={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="preview"
