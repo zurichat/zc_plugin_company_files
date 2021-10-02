@@ -13,8 +13,6 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require('../utils/appError');
-const { query } = require('express');
-const { use } = require('../routes/rooms.route');
 
 const zuriCoreBaseUrl = "https://api.zuri.chat";
 
@@ -42,6 +40,9 @@ exports.createRoom = async (req, res) => {
   // }
 
   // Verify user ids later on...
+
+  // publish update to sidebar
+  RealTime.sideBarPublish(room.org_id, room.room_creator_id, {message: `Room '${room.room_name}' created successfully`});
 
   const response = await Rooms.create(room);
 
@@ -93,7 +94,7 @@ exports.deleteRoom = async (req, res) => {
 
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
-  const { userId, orgId } = req.body;
+  const { userId, orgId, userName } = req.body;
   // if (!/^[0-9a-fA-F]{24}$/.test(memberId)) {
   //   throw new BadRequestError('Invalid member id. Enter a valid object id!');
   // }
@@ -122,12 +123,21 @@ exports.addToRoom = async (req, res) => {
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
+  // publish update to sidebar
+  RealTime.sideBarPublish(
+    room.org_id, userId, 
+    {
+      message: `${userName} joined ${room.room_name} successfully`, 
+      userId,
+    }
+    );
+
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
 
 exports.removeFromRoom = async (req, res) => {
   // the info of the user to be removed from a room
-  const { userId } = req.body;
+  const { userId, userName } = req.body;
 
   // fetch all the target room with the provided room_id.
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
@@ -152,6 +162,15 @@ exports.removeFromRoom = async (req, res) => {
   await Rooms.update(req.params.roomId, room);
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
+
+  // publish update to sidebar
+  RealTime.sideBarPublish(
+    room.org_id, userId, 
+    {
+      message: `${userName} left ${room.room_name} successfully`, 
+      userId,
+    }
+  );
 
   res
     .status(200)
@@ -256,6 +275,6 @@ exports.checkMemberInRoom = async (req, res) => {
   
   const data = { isMemberInRoom }
 
-  return res.status(200).send(appResponse("member room check returned successfully", data, true));
+  return res.status(200).send(appResponse("room member check returned successfully", data, true));
 
 }
