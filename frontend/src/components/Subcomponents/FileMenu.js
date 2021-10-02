@@ -20,10 +20,14 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
+import FilePropertiesModal from "./FilePropertiesModal";
+import RenameFileModal from "./RenameFileModal";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
+  const [fileProperties, setFileProperties] = useState(false);
+  const [editName, setEditName] = useState(false);
 
   function previewCmd() {
     console.log(file);
@@ -46,10 +50,12 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function addStar() {}
 
-  function rename() {}
+  function rename() {
+    setEditName(!editName);
+  }
 
   function properties() {
-    console.log("Properties");
+    setFileProperties(!fileProperties);
   }
 
   function deleteCmd() {
@@ -163,6 +169,26 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             setDeleteToBin={setDeleteToBin}
             id={file._id}
             fileName={file.fileName}
+          />
+        )}
+        {fileProperties && (
+          <FilePropertiesModal
+            name={file.fileName}
+            size={file.size}
+            type={file.type}
+            modified={file.dateModified}
+            accessed={file.lastAccessed}
+            fileProperties={fileProperties}
+            setFileProperties={setFileProperties}
+          />
+        )}
+        {editName && (
+          <RenameFileModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            editName={editName}
+            setEditName={setEditName}
           />
         )}
       </HandleClickEvent>
