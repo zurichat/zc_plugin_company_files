@@ -73,13 +73,11 @@ exports.folderDetails = async (req, res) => {
   const updateLastAccessed = { lastAccessed: new Date().toISOString() };
 
   await Promise.all([
-    Folders.update(folderId, updateLastAccessed),
-    RealTime.publish(`folderDetail ${data._id}`, data)
+    Folders.update(id, updateLastAccessed),
+    RealTime.publish(`folderDetail${data._id}`, data)
   ])
 
-  const updatedFolderDetails = await Folders.fetchOne({ _id: folderId });
-
-  res.status(200).send(appResponse(null, updatedFolderDetails, true));
+  res.status(200).send(appResponse(null, folderDetail, true));
 }
 
 
@@ -267,7 +265,7 @@ exports.recentlyViewed = async(req, res) => {
     return dateB - dateA
   });
 
-  res.status(200).json(data.slice(0, 10))
+  res.status(200).json(data.slice(0, 5))
 } 
 
 // search starred folder

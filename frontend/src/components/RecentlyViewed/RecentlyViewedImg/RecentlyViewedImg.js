@@ -2,10 +2,7 @@ import React from 'react'
 import { BsArrowUpDown } from "react-icons/bs";
 import { BsGrid3X2 } from "react-icons/bs";
 import {Link} from "react-router-dom";
-import axios from 'axios'
-import ImageIcon from '../svg/imageIcon';
-import classes from '../RecentlyViewed.module.css'
-import { format } from "timeago.js";
+import classes from './RecentlyViewedImg.module.css'
 
 function RecentlyViewedImg() {
     const goBack = () => {
@@ -41,23 +38,7 @@ function RecentlyViewedImg() {
                 </div>
             </div>
             <div className={classes.body}>
-                {
-                    images.map((image, idx) => (
-                        <div className={classes.container}>
-                            <div className={classes.icon} style={{background: '#E3EEFF'}}>
-                                <ImageIcon />
-                            </div>
-                            <div className={classes.fileDetails}>
-                                <div className={classes.fileName}>
-                                    {image.fileName}
-                                </div>
-                                <div className={classes.timeStamp}>
-                                    {format(image.lastAccessed)}
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
+
             </div>
         </div>
     )
