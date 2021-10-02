@@ -22,24 +22,24 @@ export default function Home() {
     (state) => state.rootReducer.workspaceReducer
   );
 
-  if (error) {
-    console.error({ error });
-  } else if (loading) {
-    return console.log({ loading });
-  } else if (info !== undefined) {
-    axios.defaults.headers.common["token"] = info?.token;
-    const userName = info[0]?.first_name + " " + info[0]?.last_name;
-    axios.defaults.headers.common["userObj"] = {
-      imageUrl: info[0]?._image_url,
-      userName,
-      userId: info[0]?._id,
-    };
-  }
-
   useEffect(() => {
     (async () => {
       try {
         dispatch(getUserInfo);
+        if (error) {
+          console.error({ error });
+        } else if (loading) {
+          return console.log({ loading });
+        } else if (info !== undefined) {
+          axios.defaults.headers["token"] = info?.token;
+          axios.defaults.headers["userId"] = info?._id;
+          const userName = info[0]?.first_name + " " + info[0]?.last_name;
+          axios.defaults.headers["userObj"] = {
+            imageUrl: info[0]?._image_url,
+            userName,
+            userId: info[0]?._id,
+          };
+        }
       } catch (err) {
         throw err;
       }

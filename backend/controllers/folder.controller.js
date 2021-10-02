@@ -118,8 +118,8 @@ exports.folderDelete = async (req, res) => {
 exports.recentlyViewed = async(req, res) => {
   const data = await Folders.fetchAll();
 
-  data.sort(function (a, b) {
-    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+  data.sort((a, b) => {
+    const dateA = new Date(a.lastAccessed); const dateB = new Date(b.lastAccessed)
     return dateB - dateA
   });
 

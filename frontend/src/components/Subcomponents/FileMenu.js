@@ -84,6 +84,18 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     setDeleteToBin(true);
   }
 
+  // detect if the screen height is at the bottom
+  function detectBottom() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // detect if an element is going below the screen height
+  
+
   return (
     <>
       <HandleClickEvent
@@ -92,7 +104,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           setOpenStatus(false);
         }}
       >
-        <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
+        <div className="tw-bg-white ${tw-bottom-5} tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
           <FileMenuButton name="Preview" cmd={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"

@@ -45,21 +45,20 @@ export const detectViewedFile = (id) => async (dispatch) => {
   }
 };
 
-export const deleteFile = (file) => async (dispatch) => {
-  try {
-    const response = await axios.put(`/files/deleteToBin/${file._id}`);
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const starFile = (file) => async (dispatch) => {
   console.log(file._id);
   try {
     const response = await axios.put(`/files/starFile/${file._id}`, { isStarred: true });
+    dispatch({
+      type: 'STAR_FILE_FULFILLED',
+      payload: response.data,
+    })
     console.log(response);
   } catch (error) {
+    dispatch({
+      type: 'STAR_FILE_REJECTED',
+      payload: error.message,
+    })
     console.log(error);
   }
 };

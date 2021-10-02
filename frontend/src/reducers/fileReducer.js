@@ -53,9 +53,32 @@ export default function fileReducer(state = fileInititalState, action) {
         ...state,
         loading: false,
         error: null,
-        files: state.files.filter((file) => file.id !== action.payload),
+        files: state.files.data.filter((file) => file.id !== action.payload),
       };
     case "DELETE_FILE_REJECTED":
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case "STAR_FILE_PENDING":
+      return {
+        ...state,
+        loading: true,
+      };
+    case "STAR_FILE_FULFILLED":
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        files: state.files.data.map((file) => {
+          if (file.id === action.payload.id) {
+            return action.payload;
+          }
+          return file;
+        }),
+      };
+    case "STAR_FILE_REJECTED":
       return {
         ...state,
         loading: false,
