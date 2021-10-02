@@ -8,7 +8,7 @@ const NewRoomSchema = Joi.object({
   private: Joi.boolean().default(false),
   org_id: Joi.string().required(),
   room_member_ids: Joi.array().default([]),
-  room_created_by: Joi.string(),
+  room_creator_id: Joi.string().required(),
   room_created_at: Joi.date().default(new Date().toISOString()),
   room_modified_at: Joi.date().default(new Date().toISOString()),
   description: Joi.string().max(250).default(""),
@@ -16,6 +16,7 @@ const NewRoomSchema = Joi.object({
   room_domain: Joi.string().required().valid('base', 'files', 'folders', 'personal').messages({
     'any.only': 'Invalid room domain! Try base, files, folders or personal.',
   }),
+  
 });
 
 module.exports = NewRoomSchema;
