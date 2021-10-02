@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
+import { useDispatch } from 'react-redux'
+import { checkRecentlyViewed } from "../../actions/fileAction";
+import { detectViewedFile } from "../../actions/fileAction";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
@@ -20,17 +23,23 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
+<<<<<<< HEAD
+import axios from "axios";
+=======
 
 import axios from "axios";
 import FileDownload from "js-file-download";
 
+>>>>>>> 792f6fd95af734b6582e79bc05ce868dde3e955d
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
+  const dispatch = useDispatch()
 
   function previewCmd() {
-    console.log(file);
     setOpenPreview(true);
+    dispatch(checkRecentlyViewed(file._id))
+    console.log('file',file)
   }
 
   function getLink() {
@@ -62,10 +71,24 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+    dispatch(checkRecentlyViewed(file._id))
+  }
 
   function deleteCmd() {
     setDeleteToBin(true);
+  }
+
+  const preview = (id) => {
+    axios
+    .post("https://companyfiles.zuri.chat/api/v1/files/preview/" + id)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+    console.log('preview file id', file._id);
   }
 
   return (

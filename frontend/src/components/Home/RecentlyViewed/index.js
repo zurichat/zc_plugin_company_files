@@ -35,6 +35,7 @@ const RecentlyViewed = () => {
           altText={"images"}
           dateViewed={"20 Jul 2020"}
           bgColor={"tw-bg-blue-100"}
+          link={"recently-viewed-images"}
         />
         <Viewed
           name={"Videos"}
@@ -42,13 +43,15 @@ const RecentlyViewed = () => {
           altText={"videos"}
           dateViewed={"20 Jul 2020"}
           bgColor={"tw-bg-pink-100"}
+          link={"recently-viewed-videos"}
         />
         <Viewed
-          name={"Document"}
+          name={"Documents"}
           image={DocumentFile}
           altText={"document"}
           dateViewed={"20 Jul 2020"}
           bgColor={"tw-bg-green-200"}
+          link={"recently-viewed-docs"}
         />
         <Viewed
           name={"Compressed"}
@@ -56,6 +59,7 @@ const RecentlyViewed = () => {
           altText={"zip"}
           dateViewed={"20 Jul 2020"}
           bgColor={"tw-bg-pink-200"}
+          link={"recently-viewed-zips"}
         />
       </div>
     </div>
