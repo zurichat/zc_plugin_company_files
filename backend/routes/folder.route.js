@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, getFilesInFolder, giveFolderAccess, deleteFolderAccess, recentlyViewed, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
+const { folderCreate, folderUpdate, folderDetails, folderDelete, getAllFolders, getFilesInFolder, giveFolderAccess, updateFolderAccess,deleteFolderAccess, recentlyViewed, searchStarredFolders, starFolder, unStarFolder} = require('../controllers/folder.controller');
 
 // CREATE A NEW FOLDER
 router.post('/create', folderCreate);
@@ -18,6 +18,9 @@ router.get('/recentlyViewed', recentlyViewed)
 
 // GIVE FOLDER ACCESS FROM THE ENDPOINT
 router.get('/giveaccess', giveFolderAccess);
+
+// GIVE FOLDER ACCESS FROM THE ENDPOINT
+router.get('/updateaccess', updateFolderAccess);
 
 // DELETE FOLDER ACCESS FROM THE ENDPOINT
 router.get('/deleteaccess', deleteFolderAccess);
