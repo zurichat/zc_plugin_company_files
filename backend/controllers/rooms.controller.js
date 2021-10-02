@@ -242,13 +242,18 @@ exports.getRoomMembers = async (req, res) => {
     throw new BadRequestError("something went wrong");
   }
   
+  let thumbnail_img_urls = [];
+  room.members.forEach((data,index)=> {
+    if(index < 3) thumbnail_img_urls.push(data.image_url);
+  })
   const members = room.members.map(({ user_name, status, first_name, last_name }) => ({ user_name, status, first_name, last_name }));
   const data = {
     room_name: room.room_name,
     room_url: room.room_url,
     room_image: room.room_image,
     members_count: room.members.length,
-    members
+    members,
+    thumbnail_img_urls,
   }
 
   return res.status(200).send(appResponse("Room Members Returned Successfully", data, true));
