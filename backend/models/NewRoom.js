@@ -9,8 +9,10 @@ const NewRoomSchema = Joi.object({
   org_id: Joi.string().required(),
   room_member_ids: Joi.array().default([]),
   room_created_by: Joi.string(),
-  room_created_at: Joi.date().default(new Date()),
-  room_modified_at: Joi.date().default(new Date()),
+  room_created_at: Joi.date().default(new Date().toISOString()),
+  room_modified_at: Joi.date().default(new Date().toISOString()),
+  description: Joi.string().required().max(250),
+  isArchived: Joi.boolean().default(false),
 });
 
 module.exports = NewRoomSchema;
