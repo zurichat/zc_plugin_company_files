@@ -29,7 +29,7 @@ exports.getAllFolders = async (req, res) => {
 
   const data = folders.map((folder) => {
     const filesWithTheSameFolderId = allFiles.filter((file) => {
-      return file.folderId === folder._id;
+      return file.folderId === folder.folderId;
     });
     return {
       ...folder,
