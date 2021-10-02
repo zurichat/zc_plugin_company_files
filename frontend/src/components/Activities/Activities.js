@@ -141,7 +141,7 @@ function Activities() {
                      <div className={classes.text}>
                            {activity.userObj.user_name} {activity.operation} 
                            <span> {activity.filename} </span>
-                           from
+                           to
                            <span> Company files</span>
                      </div>
                      <div className={classes.time}>
