@@ -185,7 +185,7 @@ exports.getAllFiles = async (req, res) => {
     await RealTime.publish('allFiles', nonDeletedFiles);
 
     // Cache data in memory
-    setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
+    // setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
 
     res.status(200).send(appResponse(null, nonDeletedFiles, true));
   }

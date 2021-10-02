@@ -1,4 +1,8 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
 const getCache = async (req, { key }) => {
+  if (isProduction) return null;
+  
   const data = await req.MemoryCache.getAsync(key);
 
   return (data && typeof(data) === 'string') ? data : null;
