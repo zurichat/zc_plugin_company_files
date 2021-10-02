@@ -29,6 +29,7 @@ import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
+import StarPutFile from "./StarPut";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
@@ -70,7 +71,10 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function moveTo() {}
 
-  function addStar() {}
+  function addStar() {
+    SetAddStar(!addStar);
+
+  }
 
   function rename() {
     setEditName(!editName);
@@ -229,6 +233,19 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             setEditName={setEditName}
           />
         )}
+        {/* Add Star */}
+        
+        {addStar && (
+          <StarPutFile
+            id={file._id}
+            file={file}
+            addStar={addStar}
+            SetAddStar={SetAddStar}
+          />
+        )}
+
+
+
       </HandleClickEvent>
     </>
   );
