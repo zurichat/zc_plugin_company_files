@@ -6,17 +6,41 @@ const appResponse = require('../utils/appResponse');
 const RoomSchema = require('../models/NewRoom');
 const slugify = require('slugify');
 const uuid = require('uuid').v4;
+const axios = require('axios').default;
+
 const {
   BadRequestError,
   ForbiddenError,
   NotFoundError,
 } = require('../utils/appError');
 
+const zuriCoreBaseUrl = "https://api.zuri.chat";
+
 exports.createRoom = async (req, res) => {
   const { body } = req;
-  // body.roomId = uuid();
+  const { memberEmail } = req.query;
 
   const room = await RoomSchema.validateAsync(body);
+
+
+  if(!memberEmail) throw new BadRequestError('org member email required in query');
+
+  // call zuri core for org member details;
+  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${body.org_id}/members/?query=${memberEmail}`;
+  let creatorData; 
+  try {
+    const response = await axios.get(getOrgMemberUrl);
+    if(!response.data[0])
+     throw new NotFoundError(`member with email '${memberEmail}' not found`);
+
+    const creator = response.data[0];
+    room.room_member_ids = [creator._id]; 
+    room.room_created_by = creator._id;  
+
+  } catch (error) {
+    throw new BadRequestError("something went wrong");
+  }
+
   // room.members = [];
  
   // room.slug = slugify(room.roomName, {
@@ -188,7 +212,18 @@ exports.getRoomMembers = async (req, res) => {
  
   const room = await Rooms.fetchOne({ _id: roomId });
 
-  if (!room) throw new NotFoundError();  
+  if (!room) throw new NotFoundError();
+  
+  const getOrgMembersUrl = `${zuriCoreBaseUrl}/organizations/${room.org_id}/members`;
+ 
+  try {
+    const response = await axios.get(getOrgMembersUrl);  
+
+    room.members = response.data.filter(member => room.room_member_ids.includes(member._id));
+
+  } catch (error) {
+    throw new BadRequestError("something went wrong");
+  }
   
   const members = room.members.map(({ user_name, status, first_name, last_name }) => ({ user_name, status, first_name, last_name }));
   const data = {
