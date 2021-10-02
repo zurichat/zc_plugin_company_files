@@ -523,23 +523,6 @@ exports.unStarFile = async (req, res) => {
 }
 
 
-exports.recentlyViewed = async (req, res) => {
-  const data = await File.fetchAll();  
-  data.sort((a, b) => {
-    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
-    return dateB - dateA
-  });
-
-  res.status(200).send(appResponse('Recently viewed files', data.slice(0, 5), true));
-}
-
-exports.detectPreview = async (req, res) => {
-  const { id } = req.params;
-  const updatedLastAccessed = { lastAccessed: new Date().toISOString() }; 
-  await File.update(id, updatedLastAccessed);
-  res.status(200).json(`lastAccessed date updated`);
-}
-
 
 /*******************************
  * =============================
@@ -568,4 +551,142 @@ exports.setEditPermission = async (req, res) => {
   } catch (error) {
     res.status(500).send(error)
   }
+}
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+        return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        // await RealTime.publish('fileTypeSearch', { message: `Sorry, there is no file type: ${fileType}` })
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);
+      }
+
+      await RealTime.publish('fileTypeSearch', fileSearch);
+      return res.status(200).json(fileSearch);
+
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+
+exports.fileRename = async (req, res) => {
+  try {
+    const { body: { name } } = req;
+
+    // Get single file
+    const file = await File.fetchOne({ _id: req.params.id });
+    file.name = name;
+
+    // updates file name
+    const response = await File.update(req.params.id, file);
+
+    res.send({ response });
+
+  } catch (error) {
+
+    res.send({ error });
+
+  }
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+  try {
+    const { data } = await File.fetchAll();
+    const { size } = req.params;
+    const sizeRangePlus = Number(size) + 500;
+    const sizeRangeMinus = Number(size) - 500;
+    const files = [];
+
+    for (i = 0; i < data.length; i++) {
+      if (data[i].size) {
+        if ((data[i].size >= sizeRangeMinus) && (data[i].size <= size)) {
+          files.push(data[i])
+        } else if ((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+          files.push(data[i])
+        }
+      }
+    }
+
+    files.length > 0 ?  
+    ( res.status(200).json(files) && await RealTime.publish('fileSizeSearch', { files }) ) : 
+    res.status(404).json('No matches')
+
+  } catch (err) {
+  res.status(500).json(err);
+  }
+};
+
+exports.recentlyViewedImages = async (req, res) => {
+
+    const data = await File.fetchAll();  
+    const onlyImages = data.filter((data)=>/image/.test(data.type))
+    const sorted = onlyImages.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted.slice(0, 10))
+   
+}
+
+exports.recentlyViewedVideos = async (req, res) => {
+  const data = await File.fetchAll();  
+    const onlyVideos = data.filter((data)=>/video/.test(data.type))
+    const sorted = onlyVideos.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted.slice(0, 10))
+}
+
+exports.recentlyViewedDocs = async (req, res) => {
+  const data = await File.fetchAll();  
+ 
+  const onlyDocs = data.filter((data)=>/doc/.test(data.type) || /pdf/.test(data.type) || /spreadsheetml/.test(data.type) || /ppt/.test(data.type))
+  const sorted = onlyDocs.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted.slice(0, 10))
+  
+}
+
+exports.recentlyViewedAudio = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyAudio = data.filter((data)=>/audio/.test(data.type))
+  const sorted = onlyAudio.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+  
+}
+
+
+exports.recentlyViewedCompressed = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyZip = data.filter((data)=>/zip/.test(data.type) || /7z/.test(data.type) || /z/.test(data.type) || /rar/.test(data.type))
+  const sorted = onlyZip.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted.slice(0, 10))
+}
+
+exports.detectPreview = async (req, res) => {
+  const {id} = req.params;
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() };  
+  await File.update(id, updateLastAccessed)
+  res.status(200).json("Updated Last aCCessed")
 }

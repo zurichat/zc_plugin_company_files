@@ -25,7 +25,7 @@ import RenameFileModal from "./RenameFileModal";
 
 import { useDispatch } from 'react-redux'
 import { checkRecentlyViewed } from "../../actions/fileAction";
-import { detectViewedFile } from "../../actions/fileAction";
+import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
@@ -36,6 +36,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [fileProperties, setFileProperties] = useState(false);
   const [editName, setEditName] = useState(false);
   const dispatch = useDispatch()
+
 
   function previewCmd() {
     setOpenPreview(true);
@@ -77,7 +78,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function properties() {
     setFileProperties(!fileProperties);
-    dispatch(detectViewedFile(file._id))
+    dispatch(fileDetails(file._id))
   }
 
   function deleteCmd() {

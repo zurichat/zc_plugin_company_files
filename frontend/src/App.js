@@ -32,7 +32,6 @@ export default function Home() {
           return console.log({ loading });
         } else if (info !== undefined) {
           axios.defaults.headers["token"] = info?.token;
-          axios.defaults.headers["userId"] = info?._id;
           const userName = info[0]?.first_name + " " + info[0]?.last_name;
           axios.defaults.headers["userObj"] = {
             imageUrl: info[0]?._image_url,

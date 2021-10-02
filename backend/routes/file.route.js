@@ -26,7 +26,11 @@ const {
   getFilesWithSameFolderId,
   cropImage,
   sortFiles,
-  recentlyViewed,
+  recentlyViewedImages,
+  recentlyViewedAudio,
+  recentlyViewedVideos,
+  recentlyViewedDocs,
+  recentlyViewedCompressed,
   detectPreview,
 } = require('../controllers/file.controller');
 
@@ -94,7 +98,12 @@ router.put('/restoreFile/:id', restoreFile);
 router.get('/setEdit/:admin', setEditPermission);
 
 // GET RECENTLY VIEWED FILES
-router.get('/recentlyViewed', recentlyViewed);
+router.get('/recentlyViewedImages', recentlyViewedImages);
+router.get('/recentlyViewedAudio', recentlyViewedAudio);
+router.get('/recentlyViewedVideos', recentlyViewedVideos);
+router.get('/recentlyViewedDocs', recentlyViewedDocs);
+router.get('/recentlyViewedCompressed', recentlyViewedCompressed);
+
 
 // STAR A FILE
 router.put('/starFile/:id', starFile);
