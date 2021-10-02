@@ -16,7 +16,7 @@ const databaseEmailUrl = "https://api.zuri.chat/external/send-mail?custom_mail=1
 this.data = {
     plugin_id: "6134c6a40366b6816a0b75cd",
     organization_id: "6133c5a68006324323416896",
-    collection_name: "FolderTest",
+    collection_name: "Folders",
     bulk_write: false,
     object_id: "",
     filter: {},
@@ -25,7 +25,7 @@ this.data = {
   this.data_update = {
     plugin_id: "6134c6a40366b6816a0b75cd",
     organization_id: "6133c5a68006324323416896",
-    collection_name: "FolderTest",
+    collection_name: "Folders",
     object_id: "" ,
     bulk_write: false,
     raw_query: {},
