@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import { RiVideoLine } from "react-icons/ri";
+import Vid from "../../../public/Icons/video.svg"
 import FileType from "./FileType";
 
 function Video({ file }) {
@@ -22,7 +22,7 @@ function Video({ file }) {
       >
         <FileType
           file={file}
-          IconName={RiVideoLine}
+          IconName={Vid}
           bgColor={"tw-bg-green-300"}
           textColor={"tw-text-red-300"}
         />

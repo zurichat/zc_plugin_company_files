@@ -47,6 +47,9 @@ exports.fileUploadStatus = (req, res) => {
 }
 
 
+
+
+
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
   const fileId = req.headers['x-file-id'];
@@ -108,7 +111,7 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([
           File.create(file),
           deleteFile(filePath),
-          addActivity('added', `${fileData.fileName}`),
+          addActivity(req.headers.userObj, 'added', `${fileData.fileName}`),
           RealTime.publish('newFile', file)
         ]);
 
@@ -171,7 +174,7 @@ exports.cropImage = async (req, res) => {
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
   const cache = await getCache(req, { key: 'allFiles' });
-
+  let nonDeletedFiles = [];
   if (cache) {
     res.status(200).send(appResponse(null, JSON.parse([cache]), true));
   } else {
@@ -181,16 +184,64 @@ exports.getAllFiles = async (req, res) => {
       return new Date(b.dateAdded) - new Date(a.dateAdded);
     });
 
-    const nonDeletedFiles = data.filter(file => !file.isDeleted);
+    nonDeletedFiles = data.filter(file => !file.isDeleted);
     await RealTime.publish('allFiles', nonDeletedFiles);
 
     // Cache data in memory
-    setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
-
-    res.status(200).send(appResponse(null, nonDeletedFiles, true));
+    // setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
   }
+
+  res.status(200).send(appResponse(null, nonDeletedFiles, true));
+
 }
 
+
+// sort files by query string
+exports.sortFiles = async (req, res) => {
+  const sortBy = (key, data) => {
+    try {
+      return data.sort((currentItem, nextItem) => {
+
+        let current = currentItem[key], 
+            next = nextItem[key];
+
+        if (key !== "size") {
+          current = currentItem[key].toLowerCase();
+          next = nextItem[key].toLowerCase();
+        }
+  
+        return (current < next) ? -1 : (current > next) ? 1 : 0;
+  
+      })
+    } catch (error) {
+
+      return data;
+
+    }
+  }
+
+  let data = await File.fetchAll();
+  data = data.filter(file => !file.isDeleted).slice(0, 50);
+
+  if (req.query.by !== undefined && req.query.by !== null) {
+    let key = req.query.by;
+    data = sortBy(key, data);
+  }
+
+  res.status(200).send(appResponse(null, data, true));
+
+}
+
+exports.copyFile = async (req, res) => {
+
+  const data = await File.fetchOne({ _id: req.params.id });
+  data.fileName = `${data.fileName}-1`;
+  delete data._id, delete data.dateAdded;
+
+  const response = await File.create(data.data);
+  res.send({ response })
+
+}
 
 // Get all files by type
 exports.getFileByType = async (req, res) => {
@@ -239,7 +290,7 @@ exports.fileRename = async (req, res) => {
   ) {
     newFileName = newFileName + file.fileName.substr(file.fileName.lastIndexOf('.'));
     await File.update(fileId, { fileName: newFileName });
-
+    addActivity(req.headers.userObj, 'renamed', `${oldFileName} to ${newFileName}`)
     res.status(200).send(appResponse('File renamed successfully!', { ...file, fileName: newFileName }, true));
   } else {
     throw new BadRequestError('"oldFileName" cannot be equal to the "newFileName"!');
@@ -260,13 +311,29 @@ exports.fileDelete = async (req, res) => {
   if (!response) throw new InternalServerError();
 
   // Save to list of activities
-  await addActivity('permanently deleted', `${data.fileName}`);
+  await addActivity(req.headers.userObj, 'permanently deleted', `${data.fileName}`);
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
 
+// exports.deleteSomeFiles = async (req, res) => {
+//   let response = await File.fetchAll();
+//   let data = response.slice(0, 10);
+//   data.map(async file => {
+//     try {
+//       await Promise.all([
+//         File.delete(file._id),
+//         MediaUpload.deleteFromCloudinary(file.cloudinaryId)
+//       ]);
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   })
+//   res.status(200).send(appResponse('File deleted successfully!', { count: response.length }, true));
+// }
 
 // Delete multiple files 
+
 exports.deleteMultipleFiles = async (req, res) => {
   const { ids } = req.body;
 
@@ -275,7 +342,7 @@ exports.deleteMultipleFiles = async (req, res) => {
     ...ids.map(async id => {
       const data = await File.fetchOne({ _id: id });
       // Save to list of activities
-      if (data) await addActivity('deleted', `${data.fileName}`);
+      if (data) await addActivity(req.headers.userObj, 'deleted', `${data.fileName}`);
       return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
     })
   ]);
@@ -288,13 +355,14 @@ exports.deleteMultipleFiles = async (req, res) => {
 
 // Send to trash
 exports.deleteTemporarily = async (req, res) => {
+  console.log(req.headers.userObj)
   const data = await File.fetchOne({ _id: req.params.id });
   
   if (data.isDeleted === false) {
     const response = await File.update(req.params.id, { isDeleted: true });
 
     // Save to list of activities
-    await addActivity('deleted', `${data.fileName}`);
+    await addActivity(req.headers.userObj, 'deleted', `${data.fileName}`);
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
   } else {
@@ -311,7 +379,7 @@ exports.restoreFile = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: false });
 
     // Save to list of activities
-    await addActivity('restored', `${data.fileName}`);
+    await addActivity(req.headers.userObj, 'restored', `${data.fileName}`);
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
@@ -337,6 +405,7 @@ exports.cutOrMoveFile = async (req, res) => {
   if (file.folderId === folderId) throw new BadRequestError(`You can't cut or move a file to the same folder!`);
 
   await File.update(fileId, { folderId });
+  addActivity(req.headers.userObj, 'moved', `${file.fileName} to ${folder.folderName}`)
 
   res.status(200).send(appResponse('File cut or moved successfully!', { ...file, folderId }, true));
 }
@@ -432,7 +501,7 @@ exports.starFile = async (req, res) => {
   
   if (data.isStarred === false) {
     const response = await File.update(req.params.id, { isStarred: true });
-
+    addActivity(req.headers.userObj, 'starred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
     throw new BadRequestError();
@@ -446,30 +515,13 @@ exports.unStarFile = async (req, res) => {
   
   if (data.isStarred === true) {
     const response = await File.update(req.params.id, { isStarred: false });
-
+    addActivity(req.headers.userObj, 'unstarred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
     throw new BadRequestError();
   }
 }
 
-
-exports.recentlyViewed = async (req, res) => {
-  const data = await File.fetchAll();  
-  data.sort((a, b) => {
-    const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
-    return dateB - dateA
-  });
-
-  res.status(200).send(appResponse('Recently viewed files', data.slice(0, 5), true));
-}
-
-exports.detectPreview = async (req, res) => {
-  const { id } = req.params;
-  const updatedLastAccessed = { lastAccessed: new Date().toISOString() }; 
-  await File.update(id, updatedLastAccessed);
-  res.status(200).json(`lastAccessed date updated`);
-}
 
 
 /*******************************
@@ -499,4 +551,142 @@ exports.setEditPermission = async (req, res) => {
   } catch (error) {
     res.status(500).send(error)
   }
+}
+
+
+exports.searchByType = async (req, res) => {
+
+  try {
+    const { data } = await File.fetchAll();
+    const { fileType } = req.query;
+
+    if (fileType) {
+      const fileSearch = data.filter((file) => {
+        return file.type === fileType
+      });
+
+      if (fileSearch.length === 0) {
+        // await RealTime.publish('fileTypeSearch', { message: `Sorry, there is no file type: ${fileType}` })
+        return res.status(404).json(`Sorry, there is no file type: ${fileType}`);
+      }
+
+      await RealTime.publish('fileTypeSearch', fileSearch);
+      return res.status(200).json(fileSearch);
+
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+
+exports.fileRename = async (req, res) => {
+  try {
+    const { body: { name } } = req;
+
+    // Get single file
+    const file = await File.fetchOne({ _id: req.params.id });
+    file.name = name;
+
+    // updates file name
+    const response = await File.update(req.params.id, file);
+
+    res.send({ response });
+
+  } catch (error) {
+
+    res.send({ error });
+
+  }
+}
+
+// Search Files By Size
+exports.searchBySize = async (req, res) => {
+  try {
+    const { data } = await File.fetchAll();
+    const { size } = req.params;
+    const sizeRangePlus = Number(size) + 500;
+    const sizeRangeMinus = Number(size) - 500;
+    const files = [];
+
+    for (i = 0; i < data.length; i++) {
+      if (data[i].size) {
+        if ((data[i].size >= sizeRangeMinus) && (data[i].size <= size)) {
+          files.push(data[i])
+        } else if ((data[i].size <= sizeRangePlus) && (data[i].size >= size)) {
+          files.push(data[i])
+        }
+      }
+    }
+
+    files.length > 0 ?  
+    ( res.status(200).json(files) && await RealTime.publish('fileSizeSearch', { files }) ) : 
+    res.status(404).json('No matches')
+
+  } catch (err) {
+  res.status(500).json(err);
+  }
+};
+
+exports.recentlyViewedImages = async (req, res) => {
+
+    const data = await File.fetchAll();  
+    const onlyImages = data.filter((data)=>/image/.test(data.type))
+    const sorted = onlyImages.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+   
+}
+
+exports.recentlyViewedVideos = async (req, res) => {
+  const data = await File.fetchAll();  
+    const onlyVideos = data.filter((data)=>/video/.test(data.type))
+    const sorted = onlyVideos.sort(function (a, b) {
+        const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+        return dateB - dateA
+      });
+    res.status(200).json(sorted)
+}
+
+exports.recentlyViewedDocs = async (req, res) => {
+  const data = await File.fetchAll();  
+ 
+  const onlyDocs = data.filter((data)=>/doc/.test(data.type) || /pdf/.test(data.type) || /spreadsheetml/.test(data.type) || /ppt/.test(data.type))
+  const sorted = onlyDocs.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+  
+}
+
+exports.recentlyViewedAudio = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyAudio = data.filter((data)=>/audio/.test(data.type))
+  const sorted = onlyAudio.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+  
+}
+
+
+exports.recentlyViewedCompressed = async (req, res) => {
+  const data = await File.fetchAll();  
+  const onlyZip = data.filter((data)=>/zip/.test(data.type) || /7z/.test(data.type) || /z/.test(data.type) || /rar/.test(data.type))
+  const sorted = onlyZip.sort(function (a, b) {
+      const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
+      return dateB - dateA
+    });
+  res.status(200).json(sorted)
+}
+
+exports.detectPreview = async (req, res) => {
+  const {id} = req.params;
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
+  await File.update(id, updateLastAccessed)
+  res.status(200).json(`Last accessed date updated`)
 }

@@ -21,8 +21,16 @@ const {
   getAllDeletedFiles,
   isDuplicate,
   setEditPermission,
+  searchBySize,
+  searchByType,
+  getFilesWithSameFolderId,
   cropImage,
-  recentlyViewed,
+  sortFiles,
+  recentlyViewedImages,
+  recentlyViewedAudio,
+  recentlyViewedVideos,
+  recentlyViewedDocs,
+  recentlyViewedCompressed,
   detectPreview,
 } = require('../controllers/file.controller');
 
@@ -43,6 +51,9 @@ router.put('/crop', cropImage);
 
 // GET ALL THE FILES FROM THE ENDPOINT
 router.get('/all', getAllFiles);
+
+// GET ALL FILES SORTED BY THE FILE PROPERTIES
+router.get("/sort", sortFiles);
 
 // GET A SPECIFIC FILE TYPE
 router.get('/type/:type', getFileByType);
@@ -87,7 +98,12 @@ router.put('/restoreFile/:id', restoreFile);
 router.get('/setEdit/:admin', setEditPermission);
 
 // GET RECENTLY VIEWED FILES
-router.get('/recentlyViewed', recentlyViewed);
+router.get('/recentlyViewedImages', recentlyViewedImages);
+router.get('/recentlyViewedAudio', recentlyViewedAudio);
+router.get('/recentlyViewedVideos', recentlyViewedVideos);
+router.get('/recentlyViewedDocs', recentlyViewedDocs);
+router.get('/recentlyViewedCompressed', recentlyViewedCompressed);
+
 
 // STAR A FILE
 router.put('/starFile/:id', starFile);

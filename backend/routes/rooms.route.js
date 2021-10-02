@@ -8,7 +8,10 @@ const {
   removeFromRoom,
   editRoom,
   setRoomPrivate,
-  getUserRooms
+  getUserRooms,
+  getRoomMembers,
+  checkMemberInRoom,
+  getOrgDefaultRoomOnDomain
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS
@@ -36,6 +39,15 @@ router.put('/update/:roomId', editRoom);
 router.put('/setPrivate/:roomId', setRoomPrivate);
 
 // GET USER ROOMS
-router.get('/getUserRooms/:userId', getUserRooms);
+router.get('/getUserRooms/:memberId', getUserRooms);
+
+// GET MEMBERS IN ROOM
+router.get('/:roomId/get-room-members', getRoomMembers);
+
+// GET ORG DEFAULT DOMAIN ROOM
+router.get('/organizations/:orgId',getOrgDefaultRoomOnDomain)
+
+// CHECK IF USER IS IN ROOM
+router.get('/:roomId/user-in-room', checkMemberInRoom);
 
 module.exports = router;

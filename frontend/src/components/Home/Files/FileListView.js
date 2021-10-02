@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BsCardImage, BsMusicNoteBeamed } from "react-icons/bs";
-import { GrDocumentZip, GrDocumentText, GrDocumentPpt } from "react-icons/gr";
-import { AiOutlineFilePdf } from "react-icons/ai";
-import { BsFileEarmarkSpreadsheet } from "react-icons/bs";
-import { RiVideoLine } from "react-icons/ri";
+
+import ZipImg from "../../../../public/Icons/zip.svg"
+import Vid from "../../../../public/Icons/video.svg"
+import PdfImg from "../../../../public/Icons/pdffile.svg";
+import PptImg from "../../../../public/Icons/pp-cat.svg"
+import Xls from "../../../../public/Icons/excel-cat.svg"
+import DocImg from "../../../../public/Icons/doc-cat.svg"
+import ImgFile from "../../../../public/Icons/imgfile.svg";
+import Aud from "../../../../public/Icons/music/active.svg";
+
 import Loader from "react-loader-spinner";
 import { fetchFiles } from "../../../actions/fileAction";
 import FileType from "./FileType";
@@ -79,13 +84,13 @@ function FileListView({ sortingMethod }) {
                   <td className="tw-w-4/5 tw-py-[25px] tw-truncate tw-flex tw-items-center">
                     {new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={BsCardImage}
+                        IconName={ImgFile}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
                     ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={AiOutlineFilePdf}
+                        IconName={PdfImg}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
@@ -97,7 +102,7 @@ function FileListView({ sortingMethod }) {
                       ) ||
                       new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={BsFileEarmarkSpreadsheet}
+                        IconName={Xls}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
@@ -107,7 +112,7 @@ function FileListView({ sortingMethod }) {
                       ) ||
                       new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={GrDocumentText}
+                        IconName={DocImg}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
@@ -118,34 +123,34 @@ function FileListView({ sortingMethod }) {
                         file.type
                       ) ? (
                       <FileType
-                        IconName={GrDocumentPpt}
+                        IconName={PptImg}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
                     ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={BsMusicNoteBeamed}
+                        IconName={Aud}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
                     ) : new RegExp("\\b" + "video" + "\\b").test(file.type) ? (
                       <FileType
-                        IconName={RiVideoLine}
+                        IconName={Vid}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
                     ) : (
                       <FileType
-                        IconName={GrDocumentZip}
+                        IconName={ZipImg}
                         bgColor={"tw-bg-blue-300"}
                         textColor={"tw-text-blue-600"}
                       />
                     )}
-                    {file.fileName.slice(0, file.fileName.lastIndexOf("."))}
+                    <span className="tw-truncate tw-w-3/5">{file.fileName.slice(0, file.fileName.lastIndexOf("."))}</span>
                   </td>
-                  <td className="tw-w-1/4 tw-px-[25px]">Me</td>
-                  <td className="tw-w-1/4 tw-px-[25px]">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
-                  <td className="tw-w-1/4 tw-px-[25px]">{convertSize(file.size)}{" "}MB</td>
+                  <td className="tw-w-1/4">Me</td>
+                  <td className="tw-w-1/4">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
+                  <td className="tw-w-1/4">{convertSize(file.size)}{" "}MB</td>
                 </tr>
               ))}
           </tbody>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import { BsMusicNoteBeamed } from "react-icons/bs";
+import Aud from "../../../public/Icons/music/active.svg";
 import FileType from "./FileType";
 
 function audio({ file }) {
@@ -22,7 +22,7 @@ function audio({ file }) {
       >
         <FileType
           file={file}
-          IconName={BsMusicNoteBeamed}
+          IconName={Aud}
           bgColor={"tw-bg-green-400"}
           textColor={"tw-text-black"}
         />

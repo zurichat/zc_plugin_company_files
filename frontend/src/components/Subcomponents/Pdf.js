@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineFilePdf } from "react-icons/ai";
+import PdfImg from "../../../public/Icons/pdffile.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -22,7 +22,7 @@ function Pdf({ file }) {
       >
         <FileType
           file={file}
-          IconName={AiOutlineFilePdf}
+          IconName={PdfImg}
           bgColor={"tw-bg-file-pdf"}
           textColor={"tw-text-red-800"}
         />
