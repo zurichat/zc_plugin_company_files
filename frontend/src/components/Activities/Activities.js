@@ -13,7 +13,8 @@ function Activities() {
             console.log('res', res)
             console.log('resdata', res.data)
             console.log('resdatadata', res.data.data)
-            
+            setActivities(res.data.data)
+            console.log('activities', activities)
         })
         .catch(err => {
             console.log(err)
