@@ -14,6 +14,7 @@ import Audio from "../../Subcomponents//audio";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
+import { useSnackbar } from "react-simple-snackbar";
 dayjs.extend(relativeTime);
 
 const index = () => {
@@ -21,24 +22,36 @@ const index = () => {
   const { loading, error, files } = useSelector(
     (state) => state.rootReducer.fileReducer
   );
-
-  const [newFiles, setNewFiles] = useState();
-  const [fileSubscription, setFileSubscription] = useState();
+  const [newFile, setNewFile] = useState();
+  const [SnackBar] = useSnackbar({
+    position: "bottom-center",
+    style: { backgroundColor: "#00B87C", color: "#fff" },
+  });
 
   useEffect(() => {
     (async () => {
       dispatch(fetchFiles());
     })();
+    RTCSubscription("allFiles", (allFiles) => {
+      console.log({ allFiles });
+      try {
+        dispatch({
+          type: "FETCH_FILES_FULFILLED",
+          payload: { status: "success", data: [...allFiles.data] },
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    RTCSubscription("allFiles", (stuff) => {
-      const websocketResponse = stuff;
-      console.log({ stuff });
-      setFileSubscription(websocketResponse.data);
-      console.log({ fileSubscription });
+    RTCSubscription("newFile", (newFile) => {
+      console.log({ newFile });
+      setNewFile(newFile.data);
+      console.log({ newFile });
     });
-  }, []);
+  }, [newFile, dispatch]);
 
   if (error)
     return (
@@ -79,7 +92,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-border-2 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
@@ -156,6 +169,12 @@ const index = () => {
           )}
         </div>
       </div>
+
+      {newFile != undefined || null > 0 &&
+        SnackBar(
+          `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
+          10e3
+        )}
     </div>
   );
 };

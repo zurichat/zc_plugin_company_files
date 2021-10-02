@@ -36,7 +36,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-folders"
-            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+            className="tw-text-green-500 hover:tw-border-2 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
