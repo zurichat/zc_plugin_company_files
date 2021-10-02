@@ -17,6 +17,7 @@ import { RiDeleteBinLine, RiErrorWarningLine } from "react-icons/ri/index";
 import { GrCut } from "react-icons/gr/index";
 import { FiCopy } from "react-icons/fi/index";
 import { HandleClickEvent } from "./HandleClickEvent";
+import StarFolder from "./StarPutFolder";
 
 
 function FolderMenu({ folder, openStatus, setOpenStatus }) {
@@ -42,7 +43,9 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
 
   function moveTo() {}
 
-  function addStar() {}
+  function addStar() {
+    SetAddStarFolder(!addStarFolder);
+  }
 
   function rename() {}
 
@@ -129,6 +132,16 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
           </FolderMenuButton>
         </div>
       </HandleClickEvent>
+
+      {addStarFolder && (
+          <StarPutFile
+            id={folder._id}
+            folder={folder}
+            addStarFolder={addStarFolder}
+            setAddStarFolder={setAddStarFolder}
+          />
+        )}
+
     </>
   );
 }
