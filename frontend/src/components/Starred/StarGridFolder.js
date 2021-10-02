@@ -30,7 +30,7 @@ function StarGridFolder({}) {
             <div className="tw-flex tw-items-center">
             <FontAwesomeIcon
                     icon={faFolder}
-                    className="tw-bg-yellow-500 tw-w-8 tw-h-5"
+                    className="tw-text-yellow-500 tw-w-8 tw-h-5"
                   />
             </div>
             <div className="tw-flex tw-flex-col tw-ml-3 tw-text-left">
