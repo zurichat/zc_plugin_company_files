@@ -35,7 +35,7 @@ exports.getAllFolders = async (req, res) => {
     await RealTime.publish('allFolders', allFolders);
 
     // Cache data in memory
-    setCache(req, { key: 'allFolders', duration: 3600, data: JSON.stringify(allFolders) });
+    // setCache(req, { key: 'allFolders', duration: 3600, data: JSON.stringify(allFolders) });
 
     res.status(200).send(appResponse(null, allFolders, true));
   }
