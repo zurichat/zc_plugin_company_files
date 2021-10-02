@@ -1,13 +1,23 @@
 .borderSpace {
-  border-spacing: 0 1.5em;
+  border-spacing: 0 3.5em;
 }
 .tableHide {
   empty-cells: show;
 }
 
+table th,
+table td {
+  padding: 0;
+}
+
 .trashTheading,
 .emptyTrash {
   font-size: 0.9375rem;
+}
+
+.has__toolTip:hover .toolTip {
+  visibility: visible;
+  z-index: 50;
 }
 
 .preloader .line {
