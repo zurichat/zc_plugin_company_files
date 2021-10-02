@@ -1,59 +1,84 @@
 const uuid = require('uuid').v4;
 const FolderSchema = require('../models/Folder.js');
 const appResponse = require('../utils/appResponse');
-const DatabaseConnection = require('../utils/database.helper');
+const DatabaseOps = require('../utils/database.helper');
 const RealTime = require('../utils/realtime.helper');
 const { NotFoundError, BadRequestError, InternalServerError } = require('../utils/appError');
+const { getCache, setCache } = require('../utils/cache.helper');
 
-const Folders = new DatabaseConnection('Folder');
-const Files = new DatabaseConnection('File');
+const Files = new DatabaseOps('File');
+const Folders = new DatabaseOps('Folder');
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   body.folderId = uuid();
-  // body.parentId = uuid();
 
   const folder = await FolderSchema.validateAsync(body);
-  const createdFolder = await Folders.create(folder);
-  const data = createdFolder;
-  const createdFolderObject = await Folders.fetchOne({ _id: data?.object_id });
+  await Folders.create(folder);
 
+  const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
 
-  res.status(201).json(createdFolderObject);
-};
-
-exports.getAllFolders = async (req, res) => {
-  // get all the folders and also the number of files with the same folder id
-  const folders = await Folders.fetchAll();
-  const allFiles = await Files.fetchAll();
-
-  const data = folders.map((folder) => {
-    const filesWithTheSameFolderId = allFiles.filter((file) => {
-      return file.folderId === folder.folderId;
-    });
-    return {
-      ...folder,
-      noOfFiles: filesWithTheSameFolderId.length,
-    };
-  });
-
-  res.status(200).send(appResponse(null, data, true));
+  res.status(201).send(appResponse(null, createdFolder, true));
 }
 
+
+exports.getAllFolders = async (req, res) => {
+  const cache = await getCache(req, { key: 'allFolders' });
+
+  if (cache) {
+    res.status(200).send(appResponse(null, JSON.parse([cache]), true));
+  } else {
+    const allFiles = await Files.fetchAll();
+    const allFolders = await Folders.fetchAll();
+
+    allFolders.forEach(folder => folder.noOfFiles = allFiles.filter(({ folderId }) =>  folderId === folder._id).length);
+    await RealTime.publish('allFolders', allFolders);
+
+    // Cache data in memory
+    // setCache(req, { key: 'allFolders', duration: 3600, data: JSON.stringify(allFolders) });
+
+    res.status(200).send(appResponse(null, allFolders, true));
+  }
+}
+
+
+// find files in a folder
+exports.getFilesInFolder = async (req, res) => {
+  const { folderId } = req.params;
+  if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
+
+  const [folder, allFiles] = await Promise.all([
+    Folders.fetchOne({ _id: folderId }),
+    Files.fetchAll()
+  ]);
+
+  if (!folder) throw new NotFoundError('Folder not found!');
+  if (!allFiles) throw new NotFoundError();
+
+  const matchingFiles = allFiles.filter(file => file.folderId === folderId);
+
+  res.status(200).send(appResponse(null, matchingFiles, true));
+}
+
+
 exports.folderDetails = async (req, res) => {
-  const { id } = req.params;
+  const { folderId } = req.params;
+  if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
-    //this line of code updates the folder last accessed time to the current date and time 
-    const updateLastAccessed = { lastAccessed: new Date().toISOString() }; 
-     await Folders.update(id, updateLastAccessed);
-     const data = await Folders.fetchOne({ _id: id });
-     const response = await RealTime.publish('folder_detail', data);
-    res.status(200).send(appResponse(null, data, true, {
-        ...response,
-        count: data.length,
-      }));
+  const data = await Folders.fetchOne({ _id: folderId });
+  if (!data) throw new NotFoundError();
 
-};
+  // this line of code updates the folder last accessed time to the current date and time
+  const updateLastAccessed = { lastAccessed: new Date().toISOString() };
+
+  await Promise.all([
+    Folders.update(id, updateLastAccessed),
+    RealTime.publish(`folderDetail${data._id}`, data)
+  ])
+
+  res.status(200).send(appResponse(null, folderDetail, true));
+}
+
 
 exports.folderUpdate = async (req, res) => {
   const { body } = req;
