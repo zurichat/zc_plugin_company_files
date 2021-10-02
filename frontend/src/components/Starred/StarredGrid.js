@@ -1,8 +1,8 @@
 import useFetch from "./useFetch";
 import Loader from "./LoadAnimation";
 import emptystarred from "./emptystarred.png";
-import { useState } from 'react'
-import StarredModal from './StarredModal'
+// import { useState } from 'react'
+// import StarredModal from './StarredModal'
 
 
 const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -10,7 +10,7 @@ const isEmpty = (obj) => Object.keys(obj).length === 0;
 
 function StarredGrid({}) {
 
-  const [display, setDisplay] = useState(false);
+  // const [display, setDisplay] = useState(false);
   
 
 
@@ -23,7 +23,7 @@ function StarredGrid({}) {
     <div>
       <div className="tw-mt-6 tw-grid tw-grid-cols-1 tw-items-center tw-gap-8 xl:tw-grid-cols-4 lg:tw-grid-cols-3 sm:tw-grid-cols-2 tw-auto-cols-max md:tw-grid-cols-3 xs:tw-grid-cols-1 " >
         {data?.data?.map((details) => (
-          <div className="tw-flex tw-p-2 tw-border tw-cursor-pointer" key={details._id} onClick={() => setDisplay(StarredModal)}>
+          <div className="tw-flex tw-p-2 tw-border tw-cursor-pointer" key={details._id} >
          
             <div className="tw-bg-green-100 tw-flex tw-items-center">
               <img src={details.url} alt="" className="tw-w-8 tw-h-5" />

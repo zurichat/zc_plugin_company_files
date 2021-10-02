@@ -20,9 +20,6 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
-
-import AddToStarred from './AddToStarred'
-
 import FilePropertiesModal from "./FilePropertiesModal";
 import RenameFileModal from "./RenameFileModal";
 
@@ -32,7 +29,6 @@ import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
-
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
@@ -74,9 +70,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function moveTo() {}
 
-  function addStar() {
-    <AddToStarred />
-  }
+  function addStar() {}
 
   function rename() {
     setEditName(!editName);
