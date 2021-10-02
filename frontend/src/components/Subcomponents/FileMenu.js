@@ -20,6 +20,7 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
+import AddToStarred from './AddToStarred'
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
@@ -44,7 +45,9 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function moveTo() {}
 
-  function addStar() {}
+  function addStar() {
+    <AddToStarred />
+  }
 
   function rename() {}
 
