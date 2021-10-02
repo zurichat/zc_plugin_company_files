@@ -77,6 +77,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   }
 
   function properties() {
+    setFileProperties(!fileProperties);
     dispatch(fileDetails(file._id))
   }
 

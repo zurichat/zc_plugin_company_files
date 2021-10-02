@@ -21,7 +21,6 @@ export function fetchFiles() {
 }
 
 
-
 export function setLoading() {
   return {
     type:
@@ -34,7 +33,8 @@ export function setLoading() {
 
 export const checkRecentlyViewed = (id) => async (dispatch) => {
   try {
-    await axios.post(`/files/preview/${id}`)
+    const response = await axios.post(`/files/preview/${id}`)
+    console.log(response)
   } catch (error) {
     console.log(error)
   }
