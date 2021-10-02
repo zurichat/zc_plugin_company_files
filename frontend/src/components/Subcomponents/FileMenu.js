@@ -20,6 +20,12 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
+import FilePropertiesModal from "./FilePropertiesModal";
+import RenameFileModal from "./RenameFileModal";
+
+import { useDispatch } from 'react-redux'
+import { checkRecentlyViewed } from "../../actions/fileAction";
+import { detectViewedFile } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
@@ -27,10 +33,15 @@ import FileDownload from "js-file-download";
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
+  const [fileProperties, setFileProperties] = useState(false);
+  const [editName, setEditName] = useState(false);
+  const dispatch = useDispatch()
 
   function previewCmd() {
-    console.log(file);
     setOpenPreview(true);
+    dispatch(checkRecentlyViewed(file._id))
+    console.log(file);
+    console.log('file',file)
   }
 
   function getLink() {
@@ -60,9 +71,14 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function addStar() {}
 
-  function rename() {}
+  function rename() {
+    setEditName(!editName);
+  }
 
-  function properties() {}
+  function properties() {
+    setFileProperties(!fileProperties);
+    dispatch(detectViewedFile(file._id))
+  }
 
   function deleteCmd() {
     setDeleteToBin(true);
@@ -139,7 +155,11 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
               title="title"
             />
           </FileMenuButton>
-          <FileMenuButton name="Properties" cmd={properties}>
+          <FileMenuButton
+            name="Properties"
+            cmd={properties}
+            onClick={properties}
+          >
             <RiErrorWarningLine
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="properties"
@@ -174,6 +194,26 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             setDeleteToBin={setDeleteToBin}
             id={file._id}
             fileName={file.fileName}
+          />
+        )}
+        {fileProperties && (
+          <FilePropertiesModal
+            name={file.fileName}
+            size={file.size}
+            type={file.type}
+            modified={file.dateModified}
+            accessed={file.lastAccessed}
+            fileProperties={fileProperties}
+            setFileProperties={setFileProperties}
+          />
+        )}
+        {editName && (
+          <RenameFileModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            editName={editName}
+            setEditName={setEditName}
           />
         )}
       </HandleClickEvent>
