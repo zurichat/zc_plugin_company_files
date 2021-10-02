@@ -10,7 +10,7 @@ module.exports = async (userInfo, operation, filename) => {
     img_url: 'https://www.gravatar.com/avatar/'
   }
 
-  if (userInfo.userName || userInfo.imageUrl) {
+  if (userInfo.hasOwnProperty(userName) || userInfo.hasOwnProperty(imageUrl)) {
     const data = {
       userObj: {
         user_name: userInfo.userName,
