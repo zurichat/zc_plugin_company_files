@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 
-const isEmpty = (obj) => Object.keys(obj).length === 0;
-
-function useFetch(url, del, res, empty) {
+const useFetch = (url) => {
   const [data, setData] = useState([]);
   const [isLoading, setisLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,27 +16,23 @@ function useFetch(url, del, res, empty) {
         return res.json();
       })
       .then((data) => {
-        if (isEmpty(data.data)) {
-          setData([]);
+          setData(data);
           setisLoading(false);
-          return;
-        } else {
-          setData(data.data);
           setError(null);
-          setisLoading(false);
-        }
+       
       })
       .catch((err) => {
         if (err.name === "AbortError") {
+          console.log("fetch aborted")
         } else {
           setisLoading(false);
           setError(err.message);
         }
       });
     return () => abortCont.abort();
-  }, [del, res, empty]);
+  }, [url]);
 
-  return { data, error, isLoading, setData, setError };
+  return { data, isLoading, setData, error };
 }
 
 export default useFetch;
