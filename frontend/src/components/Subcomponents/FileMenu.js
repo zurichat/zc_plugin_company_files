@@ -93,7 +93,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
         }}
       >
         <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
-          <FileMenuButton name="Preview" onClick={previewCmd}>
+          <FileMenuButton name="Preview" cmd={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="preview"
