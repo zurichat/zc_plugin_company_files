@@ -27,6 +27,14 @@ exports.info = (req, res) => {
 }
 
 
+function handleRoomUrl(rooms){
+
+   return rooms.map( room => {
+    return room.room_url += `?roomId=${room._id}`
+  })
+
+ 
+}
 exports.sidebar = async (req, res) => {
   const { org, user } = req.query;
 
@@ -39,9 +47,11 @@ exports.sidebar = async (req, res) => {
   // if (!isUserValidated) throw new UnAuthorizedError();
 
   let data = await Rooms.fetchAll({org_id: org});
+  handleRoomUrl(data);
   const defaultRooms = data.filter(room => room.isDefault)
   .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
  
+
   data = data.filter(room => room.isDefault == undefined ? true : !room.isDefault)
   .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
 
@@ -64,6 +74,7 @@ exports.sidebar = async (req, res) => {
     user_id: user,
     group_name: 'Company Files',
     show_group: true,
+    button_url: "/companyfiles",
     joined_rooms: [...defaultRooms],
     public_rooms: [...data]
   }
