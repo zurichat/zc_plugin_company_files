@@ -1,8 +1,8 @@
-import React from 'react'
+import {React, useState} from 'react'
 import { useHistory } from "react-router";
 
-function StarFolder({addStarFolder, SetAddStarFolder, id, folder }) {
-    
+function StarFolder({ id, folder }) {
+  const [addStarFolder, SetAddStarFolder] = useState(false);
 
     const PutHistory = useHistory();
 
