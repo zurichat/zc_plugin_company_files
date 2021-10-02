@@ -62,6 +62,14 @@ exports.editRoom = async (req, res) => {
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
+  // publish update to sidebar
+  RealTime.publish(
+    `${room.org_id}_updateRoom`, 
+    {
+      message: `${room.room_name} updated`
+    }
+  );
+
   res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 };
 
@@ -86,6 +94,14 @@ exports.getOneRoom = async (req, res) => {
 exports.deleteRoom = async (req, res) => {
   // filter out the target room
   const response = await Rooms.delete(req.params.roomId);
+
+  // publish update to sidebar
+  RealTime.publish(
+    `${room.org_id}_deleteRoom`, 
+    {
+      message: `${room.room_name} deleted`
+    }
+  );
 
   res
     .status(200)
