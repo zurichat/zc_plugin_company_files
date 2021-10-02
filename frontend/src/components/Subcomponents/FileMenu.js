@@ -23,9 +23,9 @@ import Preview from "../Preview/Preview";
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
 
+
   function previewCmd() {
-    console.log(file)
-    setOpenPreview(true);
+    setOpenPreview(true); 
   }
 
   function getLink() {}
@@ -46,7 +46,8 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function rename() {}
 
-  function properties() {}
+  function properties() {
+  }
 
   function deleteCmd() {}
 
@@ -59,7 +60,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
         }}
       >
         <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
-          <FileMenuButton name="Preview" cmd={previewCmd}>
+          <FileMenuButton name="Preview" onClick={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="preview"

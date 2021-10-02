@@ -20,6 +20,15 @@ export function fetchFiles() {
   };
 }
 
+export const detectViewedFile = (id) => async(dispatch) => {
+  try{
+   const resp =  await axios.post(`files/preview/${id}`)
+   console.log(resp)
+  }catch(error){
+    console.log(error)
+  }
+}
+
 export function setLoading() {
   return {
     type:

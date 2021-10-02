@@ -557,7 +557,7 @@ exports.recentlyViewedVideos = async (req, res) => {
 
 exports.recentlyViewedDocs = async (req, res) => {
   const data = await File.fetchAll();  
-  const onlyDocs = data.filter((data)=>/doc/.test(data.type))
+  const onlyDocs = data.filter((data)=>/doc/.test(data.type) || /pdf/.test(data.type) || /spreadsheetml/.test(data.type) || /ppt/.test(data.type))
   const sorted = onlyDocs.sort(function (a, b) {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
       return dateB - dateA
@@ -580,7 +580,7 @@ exports.recentlyViewedAudio = async (req, res) => {
 
 exports.recentlyViewedCompressed = async (req, res) => {
   const data = await File.fetchAll();  
-  const onlyZip = data.filter((data)=>/zip/.test(data.type))
+  const onlyZip = data.filter((data)=>/zip/.test(data.type) || /7z/.test(data.type) || /z/.test(data.type) || /rar/.test(data.type))
   const sorted = onlyZip.sort(function (a, b) {
       const dateA = new Date(a.lastAccessed), dateB = new Date(b.lastAccessed)
       return dateB - dateA
