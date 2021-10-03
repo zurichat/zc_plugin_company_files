@@ -45,6 +45,29 @@ exports.getAllFolders = async (req, res) => {
   }
 };
 
+exports.addFileToFolder = async (req, res) => {
+  const { fileId, folderId } = req.params;
+  if ((!folderId && !fileId) && (!folderId || !fileId)) {
+    throw new BadRequestError("Invalid request");
+  }
+  const response = await Files.update(fileId, { folderId });
+  await RealTime.publish("fileAddedToFolder", response);
+  res.status(200).send(appResponse("File added to folder", response, true));
+};
+
+exports.removeFileFromFolder = async (req, res) => {
+  const { fileId, folderId } = req.params;
+  if ((!folderId && !fileId) || !folderId || !fileId) {
+    throw new BadRequestError("Invalid request");
+  }
+  // fetch the file that has the folderId
+  const file = await Files.fetchOne({ _id: fileId });
+  if (!file) throw new NotFoundError(`File not found`);
+  const removedFile = await Files.update(fileId, { folderId: null });
+  await RealTime.publish('fileRemovedFromFolder', removedFile)
+  res.status(200).send(appResponse("file removed from folder", removedFile, true))
+};
+
 // find files in a folder
 exports.getFilesInFolder = async (req, res) => {
   const { folderId } = req.params;
@@ -132,7 +155,7 @@ exports.giveFolderAccess = async (req, res) => {
   // Send update
   const response = await axios.put(databaseWriteUrl, data_update);
   // Store response
-  const {data} = response;
+  const { data } = response;
   // Send updated folder info to FE using Centrifugo
   const centrifugoResponse = await RealTime.publish("Add Folder", data);
   // Send updated folder info to FE
@@ -177,7 +200,7 @@ exports.updateFolderAccess = async (req, res) => {
   // Send update
   const response = await axios.put(databaseWriteUrl, data_update);
   // Store response
-  const {data} = response;
+  const { data } = response;
   // Send updated folder info to FE using Centrifugo
   const centrifugoResponse = await RealTime.publish("Updated Folder", data);
   // Send updated folder info to FE
@@ -234,7 +257,7 @@ exports.deleteFolderAccess = async (req, res) => {
   // Send update
   const response = await axios.post(databaseWriteUrl, data_update);
   // Store response
-  const {data} = response;
+  const { data } = response;
   // Send updated folder info to FE using Centrifugo
   const centrifugoResponse = await RealTime.publish(
     "Deleted Folder Access",
