@@ -309,7 +309,7 @@ exports.fileDelete = async (req, res) => {
     MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   ]);
   
-  if (!response) throw new InternalServerError();
+  if (!response) throw new InternalServerError("Can't delete permanently");
 
   // Save to list of activities
   await addActivity(userInfo, 'permanently deleted', `${data.fileName}`);
@@ -348,7 +348,7 @@ exports.deleteMultipleFiles = async (req, res) => {
     })
   ]);
 
-  if (!response) throw new InternalServerError();
+  if (!response) throw new InternalServerError("Issues with deleting");
 
   res.status(200).send(appResponse('Multiple files deleted successfully!', response, true));
 }
@@ -367,7 +367,7 @@ exports.deleteTemporarily = async (req, res) => {
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
   } else {
-    throw new BadRequestError();
+    throw new BadRequestError("File is already deleted");
   }
 }
 
@@ -384,7 +384,7 @@ exports.restoreFile = async (req, res) => {
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
-    throw new BadRequestError();
+    throw new BadRequestError("File is already restored");
   }
 }
 
@@ -416,7 +416,7 @@ exports.cutOrMoveFile = async (req, res) => {
 exports.searchStarredFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError()
+  if (!allFiles) throw new NotFoundError("No starred Files")
 
   const data = allFiles.filter(file => file.isStarred);
   
@@ -454,7 +454,7 @@ exports.searchByDate = async (req, res) => {
 exports.getArchivedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("Archived files not found");
 
   const data = allFiles.filter(file => file.isArchived);
   
@@ -469,7 +469,7 @@ exports.getArchivedFiles = async (req, res) => {
 // Get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("No deleted files");
 
   const deletedFiles = allFiles.filter(file => file.isDeleted);
 
@@ -485,7 +485,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 exports.isDuplicate = async (req, res) => {
   const { md5Hash } = req.body;
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("File not found");
 
   const [fileExists] = allFiles.filter(file => file.md5Hash === md5Hash);
 
@@ -505,7 +505,7 @@ exports.starFile = async (req, res) => {
     addActivity(userInfo, 'starred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already starred!", [], true));
   }
 }
 
@@ -519,7 +519,7 @@ exports.unStarFile = async (req, res) => {
     addActivity(userInfo, 'unstarred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
 }
 
