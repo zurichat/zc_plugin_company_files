@@ -13,7 +13,7 @@ const UserAllow = (props) => {
   return (
     <div className="tw-flex tw-w-full tw-items-center tw-px-3 tw-space-x-4 tw-h-14">
       {props.image}
-      <div className="tw-w-10/12">
+      <div className="tw-w-10/12 subject">
         <h1 className="tw-capitalize tw-w-full tw-text-sm tw-font-semibold">
           {props.name}
         </h1>
@@ -21,7 +21,7 @@ const UserAllow = (props) => {
       </div>
 
       <div className="tw-w-40 tw-flex tw-justify-between">
-        <span className={`{pr-2 user_roles tw-flex`}>
+        <span className={`{user_roles tw-flex`}>
           <div className="custom-select" style={{ width: "119.2px" }}>
             <select>
               <option value="0">Role:</option>
@@ -52,11 +52,23 @@ const UserAllow = (props) => {
           .save_icon img {
             width: 15px;
             height: 15px;
+            align-self: center;
           }
 
           .save_icon {
-            aligm-self: center;
+            align-self: center;
             margin-left: 5px;
+          }
+
+          @media (min-width: 300px) and (max-width: 499px) {
+            .custom-select {
+              width: 80px !important;
+            }
+
+            .save_icon img {
+              width: 10px !important;
+              height: 10px !important;
+            }
           }
 
           /*SELECTOR CSS */
