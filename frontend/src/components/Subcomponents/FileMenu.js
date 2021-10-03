@@ -1,9 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
-import { useDispatch } from 'react-redux'
-import { checkRecentlyViewed } from "../../actions/fileAction";
-import { detectViewedFile } from "../../actions/fileAction";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
@@ -23,6 +20,15 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
+<<<<<<< HEAD
+=======
+import FilePropertiesModal from "./FilePropertiesModal";
+import RenameFileModal from "./RenameFileModal";
+
+import { useDispatch } from "react-redux";
+import { checkRecentlyViewed } from "../../actions/fileAction";
+import { fileDetails } from "../../actions/fileAction";
+>>>>>>> 3f5a995439dcbb638847c6a2e3f7eeff8b6ddf6d
 
 import axios from "axios";
 import FileDownload from "js-file-download";
@@ -30,12 +36,15 @@ import FileDownload from "js-file-download";
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
-  const dispatch = useDispatch()
+  const [fileProperties, setFileProperties] = useState(false);
+  const [editName, setEditName] = useState(false);
+  const dispatch = useDispatch();
 
   function previewCmd() {
     setOpenPreview(true);
-    dispatch(checkRecentlyViewed(file._id))
-    console.log('file',file)
+    dispatch(checkRecentlyViewed(file._id));
+    console.log(file);
+    console.log("file", file);
   }
 
   function getLink() {
@@ -47,10 +56,12 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     axios({
       url: file.url,
       method: "GET",
-      responseType: "blob"
+      responseType: "blob",
     })
-    .then(res => FileDownload(res.data, file.fileName))
-    .catch(err => alert(`Unable to download: ${file.fileName}, some error just occured!`))
+      .then((res) => FileDownload(res.data, file.fileName))
+      .catch((err) =>
+        alert(`Unable to download: ${file.fileName}, some error just occured!`)
+      );
   }
 
   function share() {}
@@ -63,29 +74,44 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function moveTo() {}
 
-  function addStar() {}
+  async function addStar() {
+    try {
+      const res = await axios.put(`/files/starFile/${file._id}`);
+      alert(res.data.message);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
-  function rename() {}
+  function rename() {
+    setEditName(!editName);
+  }
 
   function properties() {
-    dispatch(checkRecentlyViewed(file._id))
+    setFileProperties(!fileProperties);
+    dispatch(fileDetails(file._id));
   }
 
   function deleteCmd() {
     setDeleteToBin(true);
   }
 
-  const preview = (id) => {
-    axios
-    .post("https://companyfiles.zuri.chat/api/v1/files/preview/" + id)
-    .then(response => {
-      console.log(response)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    console.log('preview file id', file._id);
+  // detect if an element is going below the screen height and it can't be seen and raise the element up
+  function handleScroll(e) {
+    const element = e;
+    const elementTop = element.getBoundingClientRect().top;
+    const elementBottom = element.getBoundingClientRect().bottom;
+    const windowHeight = window.innerHeight;
+    if (elementTop < 0) {
+      element.style.top = "0px";
+    } else if (elementBottom > windowHeight) {
+      element.style.top = `${windowHeight - elementBottom}px`;
+    }
   }
+
+  useEffect(() => {
+    handleScroll(document.getElementById("fileContextMenu"));
+  }, []);
 
   return (
     <>
@@ -95,14 +121,17 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           setOpenStatus(false);
         }}
       >
-        <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
+        <div
+          id="fileContextMenu"
+          className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20"
+        >
           <FileMenuButton name="Preview" cmd={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="preview"
             />
           </FileMenuButton>
-          
+
           <FileMenuButton name="Get link" cmd={getLink}>
             <HiOutlineLink
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -158,7 +187,11 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
               title="title"
             />
           </FileMenuButton>
-          <FileMenuButton name="Properties" cmd={properties}>
+          <FileMenuButton
+            name="Properties"
+            cmd={properties}
+            onClick={properties}
+          >
             <RiErrorWarningLine
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="properties"
@@ -179,7 +212,11 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             <VideoPreview file={file} setOpenStatus={setOpenStatus} />
           ) : type === "image" ? (
             <ImagePreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "pdf" || "word" || "powerpoint" || "excel" || "txt" ? (
+          ) : type === "pdf" ||
+            type === "word" ||
+            type === "powerpoint" ||
+            type === "excel" ||
+            type === "txt" ? (
             <Preview file={file} setOpenStatus={setOpenStatus} />
           ) : (
             <div>
@@ -193,6 +230,26 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             setDeleteToBin={setDeleteToBin}
             id={file._id}
             fileName={file.fileName}
+          />
+        )}
+        {fileProperties && (
+          <FilePropertiesModal
+            name={file.fileName}
+            size={file.size}
+            type={file.type}
+            modified={file.dateModified}
+            accessed={file.lastAccessed}
+            fileProperties={fileProperties}
+            setFileProperties={setFileProperties}
+          />
+        )}
+        {editName && (
+          <RenameFileModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            editName={editName}
+            setEditName={setEditName}
           />
         )}
       </HandleClickEvent>

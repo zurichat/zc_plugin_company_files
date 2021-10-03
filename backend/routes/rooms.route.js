@@ -39,7 +39,7 @@ router.put('/update/:roomId', editRoom);
 router.put('/setPrivate/:roomId', setRoomPrivate);
 
 // GET USER ROOMS
-router.get('/getUserRooms/:memberId', getUserRooms);
+router.get('/getUserRooms/:userId', getUserRooms);
 
 // GET MEMBERS IN ROOM
 router.get('/:roomId/get-room-members', getRoomMembers);

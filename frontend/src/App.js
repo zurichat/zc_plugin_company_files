@@ -18,23 +18,27 @@ axios.defaults.baseURL = API_URL;
 
 export default function Home() {
   const dispatch = useDispatch();
-  const info = useSelector((state) => state.rootReducer.workspaceReducer.info);
-  console.log(info);
-
-  if (info !== undefined) {
-    axios.defaults.headers.common["token"] = info?.token;
-    const userName = info[0]?.first_name + " " + info[0]?.last_name;
-    axios.defaults.headers.common["userObj"] = {
-      imageUrl: info[0]?._image_url,
-      userName,
-      userId: info[0]?._id,
-    };
-  }
+  const { loading, error, info } = useSelector(
+    (state) => state.rootReducer.workspaceReducer
+  );
 
   useEffect(() => {
     (async () => {
       try {
         dispatch(getUserInfo);
+        if (error) {
+          console.error({ error });
+        } else if (loading) {
+          return console.log({ loading });
+        } else if (info !== undefined) {
+          axios.defaults.headers["token"] = info?.token;
+          const userName = info[0]?.first_name + " " + info[0]?.last_name;
+          axios.defaults.headers["userObj"] = {
+            imageUrl: info[0]?._image_url,
+            userName,
+            userId: info[0]?._id,
+          };
+        }
       } catch (err) {
         throw err;
       }

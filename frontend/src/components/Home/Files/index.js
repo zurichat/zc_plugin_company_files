@@ -20,6 +20,7 @@ import {
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
+import { useSnackbar } from "react-simple-snackbar";
 dayjs.extend(relativeTime);
 
 const index = () => {
@@ -27,53 +28,40 @@ const index = () => {
   const { loading, error, files } = useSelector(
     (state) => state.rootReducer.fileReducer
   );
-
-  const [newFiles, setNewFiles] = useState();
-  const [fileSubscription, setFileSubscription] = useState();
+  const [newFile, setNewFile] = useState();
+  const [SnackBar] = useSnackbar({
+    position: "bottom-center",
+    style: { backgroundColor: "#00B87C", color: "#fff" },
+  });
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
-    })();
-  }, []);
-
-  useEffect(() => {
-    RTCSubscription("allFiles", (stuff) => {
-      const websocketResponse = stuff;
-      console.log({ stuff });
-      setFileSubscription(websocketResponse.data);
-      console.log({ fileSubscription });
-    });
-  }, []);
-
-  useEffect(() => {
-    SubscribeToChannel("/companyfiles", (stuff, me, you) => {
-      console.log(stuff.data.event, me, you);
-      setFileSubscription(stuff.data.event);
-    });
-    console.log(fileSubscription);
-    (async function () {
       try {
-        const info = await GetUserInfo();
-        console.log(info);
+        dispatch(fetchFiles());
       } catch (err) {
         console.log(err);
       }
     })();
-    (async function () {
+    RTCSubscription("allFiles", (allFiles) => {
+      console.log({ allFiles });
       try {
-        const users = await GetWorkspaceUsers();
-        console.log(users);
+        dispatch({
+          type: "FETCH_FILES_FULFILLED",
+          payload: { status: "success", data: [...allFiles.data] },
+        });
       } catch (err) {
-        console.log(err);
+        throw new Error(err);
       }
-    })();
-    const fetchNewData = () => {
-      RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
-    };
-    fetchNewData();
-    console.log(newFiles);
+    });
   }, []);
+
+  useEffect(() => {
+    RTCSubscription("newFile", (newFile) => {
+      console.log({ newFile });
+      setNewFile(newFile.data);
+      console.log({ newFile });
+    });
+  }, [newFile]);
 
   if (error)
     return (
@@ -91,7 +79,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-files"
-            className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+            className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -114,7 +102,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
@@ -191,6 +179,13 @@ const index = () => {
           )}
         </div>
       </div>
+
+      {newFile != undefined ||
+        (null > 0 &&
+          SnackBar(
+            `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
+            10e3
+          ))}
     </div>
   );
 };

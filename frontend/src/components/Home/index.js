@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder/index";
 import Files from "./Files/index";
@@ -7,6 +7,7 @@ import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+import Room from "./Room/index";
 import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
@@ -14,21 +15,12 @@ const Index = () => {
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
-  const [newFile, setNewFile] = useState({ data: {} });
   const [SnackBar] = useSnackbar({
     position: 'bottom-center',
     style: { backgroundColor: '#00B87C', color: '#fff' }
   });
 
   // let progress = useRef(false)
-
-  // useLayoutEffect(() => {
-    // const fetchNewData = () => {
-    //   RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
-    // };
-    // fetchNewData();
-    // console.log(newFile);
-  // }, [newFile]);
 
   const showOptions = (e) => {
     setOptions(!options);
@@ -73,7 +65,7 @@ const Index = () => {
       >
         Add New
       </button>
-
+      {/* <Room /> */}
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />

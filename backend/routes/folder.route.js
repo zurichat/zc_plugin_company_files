@@ -7,6 +7,9 @@ const {
   folderDelete,
   getAllFolders,
   getFilesInFolder,
+  giveFolderAccess,
+  updateFolderAccess,
+  deleteFolderAccess,
   recentlyViewed,
   searchStarredFolders,
   starFolder,
@@ -29,6 +32,15 @@ router.get('/:folderId/files', getFilesInFolder);
 router.get('/read/:folderId', folderDetails);
 
 router.get('/recentlyViewed', recentlyViewed)
+
+// GIVE FOLDER ACCESS FROM THE ENDPOINT
+router.get('/giveaccess', giveFolderAccess);
+
+// GIVE FOLDER ACCESS FROM THE ENDPOINT
+router.get('/updateaccess', updateFolderAccess);
+
+// DELETE FOLDER ACCESS FROM THE ENDPOINT
+router.get('/deleteaccess', deleteFolderAccess);
 
 router.route('/write/:id')
   .put(folderUpdate)

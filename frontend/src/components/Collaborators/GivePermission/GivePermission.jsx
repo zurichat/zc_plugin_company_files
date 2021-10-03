@@ -9,15 +9,15 @@ import img4 from "../CollabImages/damilola-4.png";
 
 const AdminAllow = (props) => {
   return (
-    <div className="flex items-center px-3 space-x-4 h-14">
+    <div className="tw-flex tw-items-center tw-px-3 tw-space-x-4 tw-h-14">
       {props.admin_image}
-      <div className="w-10/12">
-        <h1 className="capitalize w-full text-sm font-semibold">
+      <div className="tw-w-10/12">
+        <h1 className="tw-capitalize tw-w-full tw-text-sm tw-font-semibold">
           {props.admin_name}
         </h1>
-        <span className="text-[14px] text-gray-500">{props.admin_email}</span>
+        <span className="tw-text-[14px] tw-text-gray-500">{props.admin_email}</span>
       </div>
-      <span className=" text-right min-w-min">Admin</span>
+      <span className=" tw-text-right tw-min-w-min tw-text-base">Admin</span>
     </div>
   );
 };
@@ -29,7 +29,7 @@ const GivePermission = () => {
         admin_email="damiloloa@zuri.hng"
         admin_image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img1}
           />
@@ -39,7 +39,7 @@ const GivePermission = () => {
       <UserAllow
         image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img1}
           />
@@ -51,7 +51,7 @@ const GivePermission = () => {
       <UserAllow
         image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img1}
           />
@@ -63,7 +63,7 @@ const GivePermission = () => {
       <UserAllow
         image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img2}
           />
@@ -75,7 +75,7 @@ const GivePermission = () => {
       <UserAllow
         image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img3}
           />
@@ -87,7 +87,7 @@ const GivePermission = () => {
       <UserAllow
         image={
           <img
-            className="h-9 rounded-full w-9"
+            className="tw-h-9 tw-rounded-full tw-w-9"
             alt="profile pic of admin of folder"
             src={img4}
           />

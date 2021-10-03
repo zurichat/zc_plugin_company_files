@@ -13,6 +13,7 @@ exports.getAllActivities = async (req, res) => {
   // })
 }
 
+// This function is solely for testing purposes
 exports.createNewActivity = async (req, res) => {
   const activity = await Activity.create({
     userObj: {

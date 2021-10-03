@@ -29,3 +29,12 @@ export function setLoading() {
       "UPDATE_FOLDER_PENDING",
   };
 }
+
+export const folderDetails = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/folders/read/${id}`)
+    console.log(response)
+  } catch (error) {
+    console.log(error)
+  }
+} 

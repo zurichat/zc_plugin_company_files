@@ -22,7 +22,7 @@ const ProgressContainer = ({ file, uploader, addToFileMap, deleteCurrentFile, FI
       element: thisElement.current
     })
 
-  })
+  }, [])
   return (
     <div ref={thisElement} style={{ width: "100%"}}>
 

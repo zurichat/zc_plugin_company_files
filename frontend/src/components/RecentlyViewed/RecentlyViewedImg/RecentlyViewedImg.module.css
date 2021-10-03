@@ -1,3 +1,4 @@
+
 .recentlyViewedImg {
     width: 100%;
     padding: 32px;
@@ -25,5 +26,4 @@
 .right {
     display: flex;
     align-items: center;
-
 }

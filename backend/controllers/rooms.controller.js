@@ -13,35 +13,15 @@ const {
   ForbiddenError,
   NotFoundError,
 } = require('../utils/appError');
-const { query } = require('express');
 
 const zuriCoreBaseUrl = "https://api.zuri.chat";
 
 exports.createRoom = async (req, res) => {
   const { body } = req;
-  const { memberEmail } = req.query;
 
   const room = await RoomSchema.validateAsync(body);
 
-
-  if(!memberEmail) throw new BadRequestError('org member email required in query');
-
-  // call zuri core for org member details;
-  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${body.org_id}/members/?query=${memberEmail}`;
-  let creatorData; 
-  try {
-    const response = await axios.get(getOrgMemberUrl);
-    if(!response.data[0])
-     throw new NotFoundError(`member with email '${memberEmail}' not found`);
-
-    const creator = response.data[0];
-    room.room_member_ids = [creator._id]; 
-    room.room_created_by = creator._id;  
-
-  } catch (error) {
-    throw new BadRequestError("something went wrong");
-  }
-
+  room.room_member_ids = [room.room_creator_id]; 
   // room.members = [];
  
   // room.slug = slugify(room.roomName, {
@@ -61,6 +41,9 @@ exports.createRoom = async (req, res) => {
 
   // Verify user ids later on...
 
+  // publish update to sidebar
+  RealTime.sideBarPublish(room.org_id, room.room_creator_id, {message: `Room '${room.room_name}' created successfully`});
+
   const response = await Rooms.create(room);
 
   res
@@ -78,6 +61,14 @@ exports.editRoom = async (req, res) => {
   await Rooms.update(req.params.roomId, body);
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
+
+  // publish update to sidebar
+  RealTime.publish(
+    `${room.org_id}_updateRoom`, 
+    {
+      message: `${room.room_name} updated`
+    }
+  );
 
   res.status(200).send(appResponse('Room details updated!', updatedRoom, true));
 };
@@ -104,6 +95,14 @@ exports.deleteRoom = async (req, res) => {
   // filter out the target room
   const response = await Rooms.delete(req.params.roomId);
 
+  // publish update to sidebar
+  RealTime.publish(
+    `${room.org_id}_deleteRoom`, 
+    {
+      message: `${room.room_name} deleted`
+    }
+  );
+
   res
     .status(200)
     .send(appResponse('Room has been deleted successfully!', response, true));
@@ -111,27 +110,12 @@ exports.deleteRoom = async (req, res) => {
 
 exports.addToRoom = async (req, res) => {
   // the info of the user to be added to a room
-  const { memberEmail, orgId } = req.body;
+  const { userId, orgId, userName } = req.body;
   // if (!/^[0-9a-fA-F]{24}$/.test(memberId)) {
   //   throw new BadRequestError('Invalid member id. Enter a valid object id!');
   // }
 
-  if(!memberEmail || !orgId) throw new BadRequestError('one or more required fields missing in body');
-
-
-  // call zuri core for org member details;
-  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${orgId}/members/?query=${memberEmail}`;
-  let member; 
-  try {
-    const response = await axios.get(getOrgMemberUrl);
-    if(!response.data[0])
-     throw new NotFoundError(`member with email '${memberEmail}' not found`);
-
-    member = response.data[0]; 
-
-  } catch (error) {
-    throw new BadRequestError("something went wrong");
-  }
+  if(!userId || !orgId) throw new BadRequestError('one or more required fields missing in body');
 
   // fetch all the rooms available and get the target room with the provided room_id.
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
@@ -141,12 +125,12 @@ exports.addToRoom = async (req, res) => {
   if (room.private)
     throw new ForbiddenError(`You can't join a private room!`);
 
-  const isMemberInRoom = room.room_member_ids.filter((id) => id === member._id).length;
+  const isMemberInRoom = room.room_member_ids.filter((id) => id === userId).length;
 
   if (isMemberInRoom) throw new BadRequestError('user is already in room!');
 
   // Add user to room...
-  room.room_member_ids.push(member._id);
+  room.room_member_ids.push(userId);
   delete room._id;
   room.room_modified_at = new Date();
 
@@ -155,12 +139,21 @@ exports.addToRoom = async (req, res) => {
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
+  // publish update to sidebar
+  RealTime.sideBarPublish(
+    room.org_id, userId, 
+    {
+      message: `${userName} joined ${room.room_name} successfully`, 
+      userId,
+    }
+    );
+
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
 
 exports.removeFromRoom = async (req, res) => {
   // the info of the user to be removed from a room
-  const { memberId } = req.body;
+  const { userId, userName } = req.body;
 
   // fetch all the target room with the provided room_id.
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
@@ -175,7 +168,7 @@ exports.removeFromRoom = async (req, res) => {
   // }
 
   // parse the room data and remove the target user data from it.
-  room.room_member_ids = room.room_member_ids.filter((id) => id !== memberId);
+  room.room_member_ids = room.room_member_ids.filter((id) => id !== userId);
   room.room_modified_at = new Date();
 
   // clean up the room data
@@ -185,6 +178,15 @@ exports.removeFromRoom = async (req, res) => {
   await Rooms.update(req.params.roomId, room);
 
   const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
+
+  // publish update to sidebar
+  RealTime.sideBarPublish(
+    room.org_id, userId, 
+    {
+      message: `${userName} left ${room.room_name} successfully`, 
+      userId,
+    }
+  );
 
   res
     .status(200)
@@ -212,9 +214,9 @@ exports.setRoomPrivate = async (req, res) => {
 
 exports.getUserRooms = async (req, res) => {
   const data  = await Rooms.fetchAll();
-  const { memberId } = req.params;
+  const { userId } = req.params;
 
-  const roomFound = data.filter((d) => d.room_member_ids && d.room_member_ids.includes(memberId));
+  const roomFound = data.filter((d) => d.room_member_ids && d.room_member_ids.includes(userId));
   if (roomFound.length === 0) {
     throw new NotFoundError();
   } else {
@@ -226,31 +228,16 @@ exports.getUserRooms = async (req, res) => {
 
 exports.getRoomMembers = async (req, res) => {
   const {roomId } = req.params;
-
  
   const room = await Rooms.fetchOne({ _id: roomId });
 
   if (!room) throw new NotFoundError();
-  
-  const getOrgMembersUrl = `${zuriCoreBaseUrl}/organizations/${room.org_id}/members`;
- 
-  try {
-    const response = await axios.get(getOrgMembersUrl);  
-
-    room.members = response.data.filter(member => room.room_member_ids.includes(member._id));
-
-  } catch (error) {
-    throw new BadRequestError("something went wrong");
-  }
-  
-  
-  const members = room.members.map(({ user_name, status, first_name, last_name,image_url }) => ({ user_name, status, first_name, last_name, image_url }));
   const data = {
     room_name: room.room_name,
     room_url: room.room_url,
     room_image: room.room_image,
     members_count: room.members.length,
-    members,
+    members: room.room_member_ids,
   }
 
   return res.status(200).send(appResponse("Room Members Returned Successfully", data, true));
@@ -286,39 +273,24 @@ exports.getOrgDefaultRoomOnDomain = async (req, res) => {
 }
 
 exports.checkMemberInRoom = async (req, res) => {
-  const { memberEmail, orgId } = req.query;
+  const { userId, orgId } = req.query;
   // if (!/^[0-9a-fA-F]{24}$/.test(memberId)) {
   //   throw new BadRequestError('Invalid member id. Enter a valid object id!');
   // }
 
-  if(!memberEmail || !orgId) throw new BadRequestError('one or more required fields missing in body');
+  if(!userId || !orgId) throw new BadRequestError('one or more required fields missing in body');
 
-
-  // call zuri core for org member details;
-  const getOrgMemberUrl = `${zuriCoreBaseUrl}/organizations/${orgId}/members/?query=${memberEmail}`;
-  let member; 
-  try {
-    const response = await axios.get(getOrgMemberUrl);
-    if(!response.data[0])
-     throw new NotFoundError(`member with email '${memberEmail}' not found`);
-
-    member = response.data[0]; 
-
-  } catch (error) {
-    throw new BadRequestError("something went wrong");
-  }
-
-  // fetch all the rooms available and get the target room with the provided room_id.
+  // fetch the target room with the provided room_id.
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
 
   if (!room) throw new NotFoundError();
 
 
-   const isMemberInRoom = room.room_member_ids.filter((id) => id === member._id).length ? true : false;
+   const isMemberInRoom = room.room_member_ids.filter((id) => id === userId).length ? true : false;
 
   
   const data = { isMemberInRoom }
 
-  return res.status(200).send(appResponse("member room check returned successfully", data, true));
+  return res.status(200).send(appResponse("room member check returned successfully", data, true));
 
 }
