@@ -32,7 +32,7 @@ export function setLoading() {
 
 export const folderDetails = (id) => async (dispatch) => {
   try {
-    const response = await axios.post(`/folders/read/${id}`)
+    const response = await axios.get(`/folders/read/${id}`)
     console.log(response)
   } catch (error) {
     console.log(error)

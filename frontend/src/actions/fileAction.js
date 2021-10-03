@@ -38,7 +38,7 @@ export const checkRecentlyViewed = (id) => async (dispatch) => {
 export const fileDetails = (id) => async (dispatch) => {
   console.log(file._id);
   try {
-    const response = await axios.post(`/files/read/${id}`);
+    const response = await axios.get(`/files/read/${id}`);
     console.log(response);
   } catch (error) {
     console.log(error);
