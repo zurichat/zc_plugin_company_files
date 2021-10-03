@@ -23,14 +23,10 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
-<<<<<<< HEAD
-import axios from "axios";
-=======
 
 import axios from "axios";
 import FileDownload from "js-file-download";
 
->>>>>>> 792f6fd95af734b6582e79bc05ce868dde3e955d
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
