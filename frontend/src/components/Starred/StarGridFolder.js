@@ -27,10 +27,10 @@ function StarGridFolder({}) {
         {data?.data?.map((details) => (
           <div className="tw-flex tw-p-2 tw-border tw-cursor-pointer" key={details._id} >
          
-            <div className="tw-bg-white tw-flex tw-items-center">
+            <div className="tw-flex tw-items-center">
             <FontAwesomeIcon
                     icon={faFolder}
-                    className="tw-bg-yellow-500 tw-w-4 tw-h-3"
+                    className="tw-text-yellow-500 tw-w-8 tw-h-5"
                   />
             </div>
             <div className="tw-flex tw-flex-col tw-ml-3 tw-text-left">
