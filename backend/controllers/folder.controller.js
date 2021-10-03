@@ -6,7 +6,6 @@ const RealTime = require("../utils/realtime.helper");
 const {
   NotFoundError,
   BadRequestError,
-  InternalServerError,
 } = require("../utils/appError");
 const { getCache, setCache } = require("../utils/cache.helper");
 const addActivity = require("../utils/activities");
@@ -81,7 +80,7 @@ exports.getFilesInFolder = async (req, res) => {
   ]);
 
   if (!folder) throw new NotFoundError("Folder not found!");
-  if (!allFiles) throw new NotFoundError();
+  if (!allFiles) throw new NotFoundError("File not found");
 
   const matchingFiles = allFiles.filter((file) => file.folderId === folderId);
 
@@ -93,7 +92,7 @@ exports.folderDetails = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const data = await Folders.fetchOne({ _id: folderId });
-  if (!data) throw new NotFoundError();
+  if (!data) throw new NotFoundError("Folder not found");
 
   // this line of code updates the folder last accessed time to the current date and time
   const updateLastAccessed = { lastAccessed: new Date().toISOString() };
@@ -287,7 +286,7 @@ exports.recentlyViewed = async (req, res) => {
 // search starred folder
 exports.searchStarredFolders = async (req, res) => {
   const allFolders = await Folders.fetchAll();
-  if (!allFolders) throw new InternalServerError();
+  if (!allFolders) throw new NotFoundError("Starred Folders not found");
 
   const data = allFolders.filter((folder) => folder.isStarred);
 
