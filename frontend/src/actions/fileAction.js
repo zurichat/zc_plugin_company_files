@@ -63,7 +63,16 @@ export const starFile = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'STAR_FILE_FULFILLED', payload: newFile });
     const response = await axios.put(`/files/starFile/${file._id}`, { isStarred: true });
+    dispatch({
+      type: 'STAR_FILE_FULFILLED',
+      payload: response.data,
+    })
+    console.log(response);
   } catch (error) {
+    dispatch({
+      type: 'STAR_FILE_REJECTED',
+      payload: error.message,
+    })
     console.log(error);
   }
 };

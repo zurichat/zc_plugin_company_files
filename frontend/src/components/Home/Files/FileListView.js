@@ -23,7 +23,11 @@ function FileListView({ sortingMethod }) {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 

@@ -19,7 +19,11 @@ function FileGridView({ sortingMethod }) {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
 
@@ -45,8 +49,10 @@ function FileGridView({ sortingMethod }) {
             .sort(
               sortingMethod == "name"
                 ? function (a, b) {
-                    if (a.fileName.toLowerCase() < b.fileName.toLowerCase()) return -1;
-                    if (a.fileName.toLowerCase() > b.fileName.toLowerCase()) return 1;
+                    if (a.fileName.toLowerCase() < b.fileName.toLowerCase())
+                      return -1;
+                    if (a.fileName.toLowerCase() > b.fileName.toLowerCase())
+                      return 1;
                     return 0;
                   }
                 : sortingMethod == "type"

@@ -36,7 +36,11 @@ const index = () => {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (err) {
+        console.log(err);
+      }
     })();
     RTCSubscription("allFiles", (allFiles) => {
       console.log({ allFiles });
@@ -59,35 +63,6 @@ const index = () => {
     });
   }, [newFile]);
 
-  // useEffect(() => {
-  //   SubscribeToChannel("/companyfiles", (stuff, me, you) => {
-  //     console.log(stuff.data.event, me, you);
-  //     setFileSubscription(stuff.data.event);
-  //   });
-  //   console.log(fileSubscription);
-  //   (async function () {
-  //     try {
-  //       const info = await GetUserInfo();
-  //       console.log(info);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  //   (async function () {
-  //     try {
-  //       const users = await GetWorkspaceUsers();
-  //       console.log(users);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  //   const fetchNewData = () => {
-  //     RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
-  //   };
-  //   fetchNewData();
-  //   console.log(newFiles);
-  // }, []);
-
   if (error)
     return (
       <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4">
@@ -103,11 +78,11 @@ const index = () => {
             Files
           </h2>
           <Link
-          to="/all-files"
-          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
-        >
-          View All
-        </Link>
+            to="/all-files"
+            className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
+          >
+            View All
+          </Link>
         </div>
         <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
@@ -127,7 +102,7 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
