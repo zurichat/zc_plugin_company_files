@@ -94,7 +94,7 @@ function FileGridView({ sortingMethod }) {
                 new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
-                  className="file tw-flex tw-items-center mr-0 my-5 relative"
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Excel file={file} />
                 </div>
