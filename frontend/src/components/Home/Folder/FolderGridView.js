@@ -36,7 +36,9 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
         </div>
 
         <div className="icons tw-mt-1 tw-w-full tw-flex tw-items-start tw-justify-between">
-          <span className="tw-block tw-text-gray-400">{folder.noOfFiles}</span>
+          <span className="tw-block tw-text-gray-400">
+            {folder.noOfFiles} {folder.noOfFiles > 1 ? "Files" : "File"}
+          </span>
           <div className="avi tw-w-16 tw-cursor-pointer">
             <img
               src={folderUsers}
