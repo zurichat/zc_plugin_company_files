@@ -13,6 +13,12 @@ const API_URL =
     ? "http://localhost:5500/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
+const userName = ""
+axios.defaults.headers["userObj"] = {
+  imageUrl: "",
+  userName: "Jamie Vardy",
+  userId: "",
+};
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -26,19 +32,6 @@ export default function Home() {
     (async () => {
       try {
         dispatch(getUserInfo);
-        if (error) {
-          console.error({ error });
-        } else if (loading) {
-          return console.log({ loading });
-        } else if (info !== undefined) {
-          axios.defaults.headers["token"] = info?.token;
-          const userName = info[0]?.first_name + " " + info[0]?.last_name;
-          axios.defaults.headers["userObj"] = {
-            imageUrl: info[0]?._image_url,
-            userName,
-            userId: info[0]?._id,
-          };
-        }
       } catch (err) {
         throw err;
       }

@@ -18,6 +18,7 @@ const { getCache, setCache } = require('../utils/cache.helper');
 
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
 
+const userInfo = {username: "mark", imageUrl: "https://www.gravatar.com/avatar/"};
 
 exports.fileUploadRequest = (req, res) => {
   const { fileName } = req.body;
@@ -111,7 +112,7 @@ exports.fileUpload = async (req, res) => {
         await Promise.all([
           File.create(file),
           deleteFile(filePath),
-          addActivity(req.headers.userObj, 'added', `${fileData.fileName}`),
+          addActivity(userInfo, 'added', `${fileData.fileName}`),
           RealTime.publish('newFile', file)
         ]);
 
@@ -290,7 +291,7 @@ exports.fileRename = async (req, res) => {
   ) {
     newFileName = newFileName + file.fileName.substr(file.fileName.lastIndexOf('.'));
     await File.update(fileId, { fileName: newFileName });
-    addActivity(req.headers.userObj, 'renamed', `${oldFileName} to ${newFileName}`)
+    addActivity(userInfo, 'renamed', `${oldFileName} to ${newFileName}`)
     res.status(200).send(appResponse('File renamed successfully!', { ...file, fileName: newFileName }, true));
   } else {
     throw new BadRequestError('"oldFileName" cannot be equal to the "newFileName"!');
@@ -308,10 +309,10 @@ exports.fileDelete = async (req, res) => {
     MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   ]);
   
-  if (!response) throw new InternalServerError();
+  if (!response) throw new InternalServerError("Can't delete permanently");
 
   // Save to list of activities
-  await addActivity(req.headers.userObj, 'permanently deleted', `${data.fileName}`);
+  await addActivity(userInfo, 'permanently deleted', `${data.fileName}`);
 
   res.status(200).send(appResponse('File deleted successfully!', response, true));
 }
@@ -342,12 +343,12 @@ exports.deleteMultipleFiles = async (req, res) => {
     ...ids.map(async id => {
       const data = await File.fetchOne({ _id: id });
       // Save to list of activities
-      if (data) await addActivity(req.headers.userObj, 'deleted', `${data.fileName}`);
+      if (data) await addActivity(userInfo, 'deleted', `${data.fileName}`);
       return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
     })
   ]);
 
-  if (!response) throw new InternalServerError();
+  if (!response) throw new InternalServerError("Issues with deleting");
 
   res.status(200).send(appResponse('Multiple files deleted successfully!', response, true));
 }
@@ -355,18 +356,18 @@ exports.deleteMultipleFiles = async (req, res) => {
 
 // Send to trash
 exports.deleteTemporarily = async (req, res) => {
-  console.log(req.headers.userObj)
+  console.log(userInfo)
   const data = await File.fetchOne({ _id: req.params.id });
   
   if (data.isDeleted === false) {
     const response = await File.update(req.params.id, { isDeleted: true });
 
     // Save to list of activities
-    await addActivity(req.headers.userObj, 'deleted', `${data.fileName}`);
+    await addActivity(userInfo, 'deleted', `${data.fileName}`);
 
     res.status(200).send(appResponse('File sent to trash!', response, true));
   } else {
-    throw new BadRequestError();
+    throw new BadRequestError("File is already deleted");
   }
 }
 
@@ -379,11 +380,11 @@ exports.restoreFile = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: false });
 
     // Save to list of activities
-    await addActivity(req.headers.userObj, 'restored', `${data.fileName}`);
+    await addActivity(userInfo, 'restored', `${data.fileName}`);
 
     res.status(200).send(appResponse('File restored!', response, true));
   } else {
-    throw new BadRequestError();
+    throw new BadRequestError("File is already restored");
   }
 }
 
@@ -405,7 +406,7 @@ exports.cutOrMoveFile = async (req, res) => {
   if (file.folderId === folderId) throw new BadRequestError(`You can't cut or move a file to the same folder!`);
 
   await File.update(fileId, { folderId });
-  addActivity(req.headers.userObj, 'moved', `${file.fileName} to ${folder.folderName}`)
+  addActivity(userInfo, 'moved', `${file.fileName} to ${folder.folderName}`)
 
   res.status(200).send(appResponse('File cut or moved successfully!', { ...file, folderId }, true));
 }
@@ -415,7 +416,7 @@ exports.cutOrMoveFile = async (req, res) => {
 exports.searchStarredFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError()
+  if (!allFiles) throw new NotFoundError("No starred Files")
 
   const data = allFiles.filter(file => file.isStarred);
   
@@ -453,7 +454,7 @@ exports.searchByDate = async (req, res) => {
 exports.getArchivedFiles = async (req, res) => {
 
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("Archived files not found");
 
   const data = allFiles.filter(file => file.isArchived);
   
@@ -468,7 +469,7 @@ exports.getArchivedFiles = async (req, res) => {
 // Get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("No deleted files");
 
   const deletedFiles = allFiles.filter(file => file.isDeleted);
 
@@ -484,7 +485,7 @@ exports.getAllDeletedFiles = async (req, res) => {
 exports.isDuplicate = async (req, res) => {
   const { md5Hash } = req.body;
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new InternalServerError();
+  if (!allFiles) throw new NotFoundError("File not found");
 
   const [fileExists] = allFiles.filter(file => file.md5Hash === md5Hash);
 
@@ -501,10 +502,10 @@ exports.starFile = async (req, res) => {
   
   if (data.isStarred === false) {
     const response = await File.update(req.params.id, { isStarred: true });
-    addActivity(req.headers.userObj, 'starred', `${data.fileName}`)
+    addActivity(userInfo, 'starred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already starred!", [], true));
   }
 }
 
@@ -515,16 +516,16 @@ exports.unStarFile = async (req, res) => {
   
   if (data.isStarred === true) {
     const response = await File.update(req.params.id, { isStarred: false });
-    addActivity(req.headers.userObj, 'unstarred', `${data.fileName}`)
+    addActivity(userInfo, 'unstarred', `${data.fileName}`)
     res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
 }
 
 
 
-/*******************************
+/** *****************************
  * =============================
  * 
  * UNCHECKED!

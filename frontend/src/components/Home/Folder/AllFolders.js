@@ -47,7 +47,7 @@ const AllFolders = () => {
       }
     })();
     RTCSubscription("allFolders", (allFolders) => {
-      console.log({ allFolders });
+      //console.log({ allFolders });
       try {
         dispatch({
           type: "FETCH_FOLDERS_FULFILLED",
@@ -168,8 +168,10 @@ const AllFolders = () => {
             .sort(
               sortingMethod == "name"
                 ? function (a, b) {
-                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase()) return -1;
-                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase()) return 1;
+                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase())
+                      return -1;
+                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase())
+                      return 1;
                     return 0;
                   }
                 : (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
