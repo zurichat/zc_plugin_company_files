@@ -23,27 +23,27 @@ import Modal from "./DeleteToBinModal";
 import FilePropertiesModal from "./FilePropertiesModal";
 import RenameFileModal from "./RenameFileModal";
 
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 import { checkRecentlyViewed } from "../../actions/fileAction";
 import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
 import StarPutFile from "./StarPut";
+import PdfPreview from "../Preview/PdfPreview";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
   const [fileProperties, setFileProperties] = useState(false);
   const [editName, setEditName] = useState(false);
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
 
   function previewCmd() {
     setOpenPreview(true);
-    dispatch(checkRecentlyViewed(file._id))
+    dispatch(checkRecentlyViewed(file._id));
     console.log(file);
-    console.log('file',file)
+    console.log("file", file);
   }
 
   function getLink() {
@@ -55,10 +55,12 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     axios({
       url: file.url,
       method: "GET",
-      responseType: "blob"
+      responseType: "blob",
     })
-    .then(res => FileDownload(res.data, file.fileName))
-    .catch(err => alert(`Unable to download: ${file.fileName}, some error just occured!`))
+      .then((res) => FileDownload(res.data, file.fileName))
+      .catch((err) =>
+        alert(`Unable to download: ${file.fileName}, some error just occured!`)
+      );
   }
 
   function share() {}
@@ -73,7 +75,6 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function addStar() {
     SetAddStar(!addStar);
-
   }
 
   function rename() {
@@ -82,7 +83,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function properties() {
     setFileProperties(!fileProperties);
-    dispatch(fileDetails(file._id))
+    dispatch(fileDetails(file._id));
   }
 
   function deleteCmd() {
@@ -99,7 +100,6 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   }
 
   // detect if an element is going below the screen height
-  
 
   return (
     <>
@@ -116,7 +116,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
               title="preview"
             />
           </FileMenuButton>
-          
+
           <FileMenuButton name="Get link" cmd={getLink}>
             <HiOutlineLink
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -197,8 +197,10 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             <VideoPreview file={file} setOpenStatus={setOpenStatus} />
           ) : type === "image" ? (
             <ImagePreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "pdf" || "word" || "powerpoint" || "excel" || "txt" ? (
+          ) : type === "word" || "powerpoint" || "excel" || "txt" ? (
             <Preview file={file} setOpenStatus={setOpenStatus} />
+          ) : type === "pdf" ? (
+            <PdfPreview file={file} setOpenStatus={setOpenStatus} />
           ) : (
             <div>
               <p>Can't preview this file</p>
@@ -234,7 +236,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           />
         )}
         {/* Add Star */}
-        
+
         {addStar && (
           <StarPutFile
             id={file._id}
@@ -243,9 +245,6 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             SetAddStar={SetAddStar}
           />
         )}
-
-
-
       </HandleClickEvent>
     </>
   );
