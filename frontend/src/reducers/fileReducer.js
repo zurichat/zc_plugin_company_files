@@ -53,7 +53,7 @@ export default function fileReducer(state = fileInititalState, action) {
         ...state,
         loading: false,
         error: null,
-        files: state.files.data.filter((file) => file.id !== action.payload),
+        files: { ...state.files, data: state.files.data.filter((file) => file._id !== action.payload) },
       };
     case 'STAR_FILE_FULFILLED':
       return {
@@ -62,18 +62,19 @@ export default function fileReducer(state = fileInititalState, action) {
         error: null,
         files: { ...state.files, data: state.files.data.map((file) => (file._id === action.payload._id ? action.payload : file)) },
       };
+
     case 'DELETE_FILE_REJECTED':
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case "STAR_FILE_PENDING":
+    case 'STAR_FILE_PENDING':
       return {
         ...state,
         loading: true,
       };
-    case "STAR_FILE_FULFILLED":
+    case 'STAR_FILE_FULFILLED':
       return {
         ...state,
         loading: false,
@@ -85,13 +86,13 @@ export default function fileReducer(state = fileInititalState, action) {
           return file;
         }),
       };
-    case "STAR_FILE_REJECTED":
+    case 'STAR_FILE_REJECTED':
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case "UPDATE_FILE_PENDING":
+    case 'UPDATE_FILE_PENDING':
       return {
         ...state,
         loading: true,
