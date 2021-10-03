@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import userImage from "./Images/Rectangle 8.png";
 import classes from "./Activities.module.css";
+import Loader from "react-loader-spinner";
+
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -226,13 +228,19 @@ function Activities() {
 
   if (activities.length === 0) {
     return (
-      <div className="no-activities">
-        <p>No activities yet</p>
+      <div className="tw-w-full tw-py-10 ">
+        <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
+          <Loader
+            type="ThreeDots"
+            color="#00B87C"
+            height={100}
+            width={100}
+            visible="true"
+          />
+        </div>
       </div>
     );
   }
-
-  console.log("activities", activities);
 
   return (
     <div className={classes.activities}>
@@ -245,53 +253,54 @@ function Activities() {
         <div className={classes.trash}>{trash}</div>
       </div>
       <div className={classes.activities__left}>
-        {activities.length > 0 && activities.map((activity, idx) => (
-          <div key={activity._id} className={classes.activitiesDescription}>
-            <div className={classes.container}>
-              <div className={classes.img}>
-                <img src={activity?.userObj?.img_url} alt="user picture" />
-              </div>
-              <div className={classes.text}>
-                {activity?.userObj?.user_name} {activity.operation}
-                <span> {activity.filename} </span>
-                from
-                <span> Company files</span>
-              </div>
-              <div className={classes.time}>
-                {/* {Math.floor((activity.time) / 3600000)} hours ago */}
-                {convertMS(activity.time)}
-              </div>
-              <div
-                className={classes.options}
-                onClick={() => setDisplay(!display)}
-              >
-                {optionsIcon}
-              </div>
-            </div>
-            {display ? (
-              <>
-                <div
-                  className={classes.overlay}
-                  onClick={() => setDisplay(!display)}
-                ></div>
-                <div className={classes.dropdown}>
-                  <div className={classes.pin}>
-                    {pushPin}
-                    Pin
-                  </div>
-                  <div className={classes.markAsRead}>
-                    {markAsRead}
-                    Mark as read
-                  </div>
-                  <div className={classes.delete}>
-                    {trash}
-                    Delete
-                  </div>
+        {activities.length > 0 &&
+          activities.map((activity, idx) => (
+            <div key={activity._id} className={classes.activitiesDescription}>
+              <div className={classes.container}>
+                <div className={classes.img}>
+                  <img src={activity?.userObj?.img_url} alt="user picture" />
                 </div>
-              </>
-            ) : null}
-          </div>
-        ))}
+                <div className={classes.text}>
+                  {activity?.userObj?.user_name} {activity.operation}
+                  <span> {activity.filename} </span>
+                  from
+                  <span> Company files</span>
+                </div>
+                <div className={classes.time}>
+                  {/* {Math.floor((activity.time) / 3600000)} hours ago */}
+                  {convertMS(activity.time)}
+                </div>
+                <div
+                  className={classes.options}
+                  onClick={() => setDisplay(!display)}
+                >
+                  {optionsIcon}
+                </div>
+              </div>
+              {display ? (
+                <>
+                  <div
+                    className={classes.overlay}
+                    onClick={() => setDisplay(!display)}
+                  ></div>
+                  <div className={classes.dropdown}>
+                    <div className={classes.pin}>
+                      {pushPin}
+                      Pin
+                    </div>
+                    <div className={classes.markAsRead}>
+                      {markAsRead}
+                      Mark as read
+                    </div>
+                    <div className={classes.delete}>
+                      {trash}
+                      Delete
+                    </div>
+                  </div>
+                </>
+              ) : null}
+            </div>
+          ))}
       </div>
       {/* <div className={classes.activities__right}>
                <div className={classes.top}>
