@@ -24,7 +24,10 @@ module.exports = async (userInfo, operation, filename) => {
     await Activity.create(data)
   } else {
     const data = {
-      userObj: defaultUserObj,
+      userObj: {
+        user_name: defaultUserObj.user_name,
+        img_url: defaultUserObj.img_url
+      },
       operation,
       filename,
       time: Date.now()
