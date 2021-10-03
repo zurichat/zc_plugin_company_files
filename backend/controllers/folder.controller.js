@@ -307,7 +307,7 @@ exports.starFolder = async (req, res) => {
       .status(200)
       .send(appResponse("Folder has been starred!", response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already starred!", [], true));
   }
 };
 
@@ -322,6 +322,6 @@ exports.unStarFolder = async (req, res) => {
       .status(200)
       .send(appResponse("Folder has been unstarred!", response, true));
   } else {
-    throw new BadRequestError();
+    res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
 };

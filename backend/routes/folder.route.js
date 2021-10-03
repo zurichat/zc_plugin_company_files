@@ -28,7 +28,7 @@ router.get("/all", getAllFolders);
 router.get("/allFiles/:folderId/files", getFilesInFolder);
 
 // FETCH A SINGLE FOLDER DATA FROM THE ENDPOINT
-router.get("/read/:folderId/folders", folderDetails);
+router.get("/read/:folderId", folderDetails);
 
 router.get("/recentlyViewed", recentlyViewed);
 
