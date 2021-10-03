@@ -35,7 +35,7 @@ exports.getAllFolders = async (req, res) => {
     const allFiles = await Files.fetchAll();
     const allFolders = await Folders.fetchAll();
 
-    allFolders.forEach((folder) => (folder.noOfFiles = allFiles.filter(({ folderId }) => folderId === folder._id).length));
+    allFolders.forEach((folder) => (folder.noOfFiles = allFiles.filter(({ folderId }) => folderId === folder.folderId).length));
     await RealTime.publish("allFolders", allFolders);
 
     // Cache data in memory
