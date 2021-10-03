@@ -214,7 +214,7 @@ exports.folderDeleteWithFiles = async (req, res) => {
   })
 
   // Delete all files contained in the folder by Id
-  filesInFolder.forEach(file => {
+  filesInFolder.forEach(async (file) => {
     if (file.isDeleted === false) {
       const response = await Files.update(file.fileId, { isDeleted: true });
   
