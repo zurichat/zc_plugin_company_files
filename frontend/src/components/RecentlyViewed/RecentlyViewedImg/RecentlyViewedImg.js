@@ -76,3 +76,15 @@
 // }
 
 // export default RecentlyViewedImg
+
+import React from 'react'
+
+function RecentlyViewedImg() {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default RecentlyViewedImg

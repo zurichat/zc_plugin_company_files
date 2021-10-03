@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder/index";
 import Files from "./Files/index";
@@ -21,14 +21,6 @@ const Index = () => {
   });
 
   // let progress = useRef(false)
-
-  // useLayoutEffect(() => {
-    // const fetchNewData = () => {
-    //   RealTime.subscribe("newFile", "files/all", (data) => setNewFile(data));
-    // };
-    // fetchNewData();
-    // console.log(newFile);
-  // }, [newFile]);
 
   const showOptions = (e) => {
     setOptions(!options);

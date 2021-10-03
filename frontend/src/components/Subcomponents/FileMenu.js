@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
 import {
@@ -29,8 +29,6 @@ import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
-import StarPutFile from "./StarPut";
-import PdfPreview from "../Preview/PdfPreview";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
@@ -73,8 +71,13 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
 
   function moveTo() {}
 
-  function addStar() {
-    SetAddStar(!addStar);
+  async function addStar() {
+    try {
+      const res = await axios.put(`/files/starFile/${file._id}`);
+      alert(res.data.message);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   function rename() {
@@ -90,16 +93,22 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     setDeleteToBin(true);
   }
 
-  // detect if the screen height is at the bottom
-  function detectBottom() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      return true;
-    } else {
-      return false;
+  // detect if an element is going below the screen height and it can't be seen and raise the element up
+  function handleScroll(e) {
+    const element = e;
+    const elementTop = element.getBoundingClientRect().top;
+    const elementBottom = element.getBoundingClientRect().bottom;
+    const windowHeight = window.innerHeight;
+    if (elementTop < 0) {
+      element.style.top = "0px";
+    } else if (elementBottom > windowHeight) {
+      element.style.top = `${windowHeight - elementBottom}px`;
     }
   }
 
-  // detect if an element is going below the screen height
+  useEffect(() => {
+    handleScroll(document.getElementById("fileContextMenu"));
+  }, []);
 
   return (
     <>
@@ -109,7 +118,10 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           setOpenStatus(false);
         }}
       >
-        <div className="tw-bg-white ${tw-bottom-5} tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20">
+        <div
+          id="fileContextMenu"
+          className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-left-5 tw-z-20"
+        >
           <FileMenuButton name="Preview" cmd={previewCmd}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -197,10 +209,12 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             <VideoPreview file={file} setOpenStatus={setOpenStatus} />
           ) : type === "image" ? (
             <ImagePreview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "word" || "powerpoint" || "excel" || "txt" ? (
+          ) : type === "pdf" ||
+            type === "word" ||
+            type === "powerpoint" ||
+            type === "excel" ||
+            type === "txt" ? (
             <Preview file={file} setOpenStatus={setOpenStatus} />
-          ) : type === "pdf" ? (
-            <PdfPreview file={file} setOpenStatus={setOpenStatus} />
           ) : (
             <div>
               <p>Can't preview this file</p>
@@ -233,16 +247,6 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             file={file}
             editName={editName}
             setEditName={setEditName}
-          />
-        )}
-        {/* Add Star */}
-
-        {addStar && (
-          <StarPutFile
-            id={file._id}
-            file={file}
-            addStar={addStar}
-            SetAddStar={SetAddStar}
           />
         )}
       </HandleClickEvent>

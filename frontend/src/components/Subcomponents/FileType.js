@@ -9,7 +9,7 @@ function FileType({ file, IconName, bgColor, textColor }) {
       >
         <img src={IconName} alt="icon" className={`tw-text-2xl ${textColor}`} />
       </div>
-      <div className="fileInfo sm:tw-w-20 md:tw-w-30 lg:tw-w-40 tw-overflow-hidden tw-flex tw-flex-col tw-mx-3">
+      <div className="fileInfo tw-w-3/5 sm:tw-w-20 md:tw-w-30 lg:tw-w-40 tw-overflow-hidden tw-flex tw-flex-col tw-mx-3">
         <span className="tw-w-full tw-truncate tw-text-sm tw-font-semibold">
           {file.fileName.slice(0, file.fileName.lastIndexOf("."))}
         </span>

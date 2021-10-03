@@ -1,19 +1,9 @@
 import StarredGrid from "./StarredGrid";
-import StarGridFolder from './StarGridFolder'
+import StarGridFolder from "./StarGridFolder";
 
-
-const StarredHead = ({
-  error,
-  isLoading,
-  data,
-  }) => {
-  
-
+const StarredHead = ({ error, isLoading, data }) => {
   return (
     <div className="md:tw-mx-10 tw-mx-4 tw-pt-5">
-
-
-      
       <div className="tw-flex tw-justify-between tw-pt-4 tw-pb-5">
         <h3 className="tw-font-semibold tw-text-xl itemsStarred">Starred</h3>
         <p>
@@ -35,35 +25,18 @@ const StarredHead = ({
       </div>
       <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between tw-bg-green-100">
         <p className="tw-px-2 sm:tw-px-5 tw-py-4 tw-text-sm text-gray-500">
-        All starred Files/Folders can be located here. 
+          All starred Files/Folders can be located here.
         </p>
-        <p
-          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold tw-text-green-600"
-          
-        >
+        <p className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold tw-text-green-600">
           Add
         </p>
       </div>
 
-     
+      <StarredGrid isLoading={isLoading} error={error} data={data} />
 
-           
-      <StarredGrid
-         isLoading={isLoading}
-        error={error}
-        data={data}
-       
-      />
-
-<StarGridFolder
-         isLoading={isLoading}
-        error={error}
-        data={data}
-       
-      />
-      
+      <StarGridFolder isLoading={isLoading} error={error} data={data} />
     </div>
   );
-}
+};
 
 export default StarredHead;

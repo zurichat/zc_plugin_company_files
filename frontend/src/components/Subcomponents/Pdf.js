@@ -19,6 +19,10 @@ function Pdf({ file }) {
         className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
+        onTouchStart={(e) => handleContextMenu(e)}
+        onTouchEnd={(e) => handleContextMenu(e)}
+        onTouchCancel={(e) => handleContextMenu(e)}
+        onTouchMove={(e) => handleContextMenu(e)}
       >
         <FileType
           file={file}
