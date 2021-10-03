@@ -14,6 +14,8 @@ const addActivity = require("../utils/activities");
 const Files = new DatabaseOps("File");
 const Folders = new DatabaseOps("Folder");
 
+const userInfo = {username: "mark", imageUrl: "https://www.gravatar.com/avatar/"};
+
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   body.folderId = uuid();
@@ -22,7 +24,7 @@ exports.folderCreate = async (req, res) => {
   await Folders.create(folder);
 
   const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
-  addActivity(req.headers.userObj, "created", `${createdFolder.folderName}`);
+  addActivity(userInfo, "created", `${createdFolder.folderName}`);
   res.status(201).send(appResponse(null, createdFolder, true));
 };
 
@@ -116,7 +118,7 @@ exports.folderUpdate = async (req, res) => {
     return folder._id === req.params.id;
   });
   addActivity(
-    req.headers.userObj,
+    userInfo,
     "updated",
     `${updatedFolder.folderName} details`
   );
@@ -227,7 +229,7 @@ exports.folderDelete = async (req, res) => {
   }
 
   const response = await Folders.delete(id);
-  addActivity(req.headers.userObj, "deleted", `${folder.folderName}`);
+  addActivity(userInfo, "deleted", `${folder.folderName}`);
   res.status(200).send(appResponse(null, response, true));
 };
 
@@ -302,7 +304,7 @@ exports.starFolder = async (req, res) => {
 
   if (data.isStarred === false) {
     const response = await Folders.update(req.params.id, { isStarred: true });
-    addActivity(req.headers.userObj, "starred", `${data.folderName}`);
+    addActivity(userInfo, "starred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been starred!", response, true));
@@ -317,7 +319,7 @@ exports.unStarFolder = async (req, res) => {
 
   if (data.isStarred === true) {
     const response = await Folders.update(req.params.id, { isStarred: false });
-    addActivity(req.headers.userObj, "unstarred", `${data.folderName}`);
+    addActivity(userInfo, "unstarred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been unstarred!", response, true));
