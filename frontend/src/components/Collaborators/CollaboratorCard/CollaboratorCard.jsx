@@ -4,22 +4,48 @@ import searchIcon from "../CollabImages/search-svg.svg";
 import chainIcon from "../CollabImages/chain-green.svg.svg";
 
 import { getUserInfo } from "../../../actions/workspaceInfo";
+import { useDispatch, useSelector } from "react-redux";
 
 import GivePermission from "../GivePermission/GivePermission";
 
 const CollaboratorCard = (props) => {
+  // avoid scrolling when modal is active
+  useEffect(() => {
+    document.body.style.overflowY = "hidden";
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, []);
+
+  // states
   const [users, setUsers] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
+  const dispatch = useDispatch();
+  const { loading, error, person, people, info } = useSelector(
+    (state) => state.rootReducer.workspaceReducer
+  );
+  console.log({ loading, error, person, people, info });
+
+  // Getting the user details
+
+  // useEffect(() => {
+  //   (async () => {
+  //     dispatch(getUserInfo());
+  //   })();
+  // }, []);
+
   useEffect(() => {
     const showUsers = async () => {
-      const res = getUserInfo;
-      console.log(res.data.data);
-      setUsers(res.data.data);
+      const res = dispatch(getUserInfo());
+      console.log(res.Body.email);
+      setUsers(res.Body.email);
     };
     showUsers();
   }, []);
+
+  // the email suggestion
 
   const handleSuggestions = (text) => {
     setText(text);
@@ -40,15 +66,15 @@ const CollaboratorCard = (props) => {
   };
 
   return (
-    <div className="collab_permission tw-absolute">
+    <div className="collab_permission">
       {/* Nav */}
       <div className="collab_nav tw-flex tw-justify-between">
         <div className="collab_search tw-p-2">
           <form className="tw-flex tw-justify-between">
             <input
               type="text"
-              placeholder="Search email, name or status"
-              className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base"
+              placeholder="Search for email address"
+              className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base tw-self-center"
               required="required"
               onChange={(e) => handleTextChange(e.target.value)}
               value={text}
@@ -102,7 +128,11 @@ const CollaboratorCard = (props) => {
           <a href="#" className="copy-link tw-flex">
             <span> Copy link</span>
             <span className="imago tw-ml-1">
-              <img src={chainIcon} alt="copy link" width={16} height={16} />
+              <img
+                src={chainIcon}
+                alt="copy link"
+                className="tw-w-[15px] tw-h-[15px]"
+              />
             </span>
           </a>
         </div>
@@ -125,15 +155,19 @@ const CollaboratorCard = (props) => {
             border-radius: 9px;
             width: 500px;
             z-index: 200;
-            margin: 70% auto 30% auto;
-            top: 0;
-            
+
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
           }
 
-          @media (min-width: 300px) and (max-width: 499px) {
-            .collab_permission {
-              width: 90%;
-            }
+          .collab_permission:before {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -4px;
           }
 
           .collab_nav {
@@ -204,8 +238,52 @@ const CollaboratorCard = (props) => {
             font-weight: 600;
           }
 
-          Image {
-            margin-top: -30px !important;
+          @media (min-width: 300px) and (max-width: 499px) {
+            .collab_permission {
+              width: 98%;
+            }
+
+            .collab_nav {
+              padding: 5px;
+            }
+
+            .collab_search {
+              width: 200px;
+            }
+
+            collab_search input {
+              width: 90%;
+            }
+
+            .collab_body {
+              width: 98%;
+              margin: 2px auto;
+            }
+
+            text {
+              margin-left: 4px;
+            }
+
+            text h3 {
+              font-size: 10px;
+              line-height: 14px;
+            }
+
+            text p {
+              font-size: 8px;
+              line-height: 12px;
+            }
+
+            .invite_btn {
+              padding: 8px;
+              font-size: 9px;
+              line-height: 18px;
+              height: 100%;
+            }
+
+            .image img {
+              display: none;
+            }
           }
         `}
       </style>
