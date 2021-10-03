@@ -1,8 +1,8 @@
 const DatabaseConnection = require('./database.helper')
 const Activity = new DatabaseConnection('Activity')
-// const axios = require('axios');
+// const axios = require('axios')
 
-exports.addActivity = async (userInfo, operation, filename) => {
+module.exports = async (userInfo, operation, filename) => {
  
   // when there is no logged in user || e.g when testing out of zuri.chat
   const defaultUserObj = {
@@ -10,7 +10,7 @@ exports.addActivity = async (userInfo, operation, filename) => {
     img_url: 'https://www.gravatar.com/avatar/'
   }
 
-  if (userInfo.userName && userInfo.imageUrl) {
+  if (userInfo.userName || userInfo.imageUrl) {
     const data = {
       userObj: {
         user_name: userInfo.userName,
@@ -20,6 +20,7 @@ exports.addActivity = async (userInfo, operation, filename) => {
       filename,
       time: Date.now()
     }
+
     await Activity.create(data)
   } else {
     const data = {
