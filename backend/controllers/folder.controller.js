@@ -17,13 +17,14 @@ const userInfo = {username: "mark", imageUrl: "https://www.gravatar.com/avatar/"
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
+  const {userObj} = req.headers;
   body.folderId = uuid();
   body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
   const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
-  addActivity(userInfo, "created", `${createdFolder.folderName}`);
+  await addActivity(userObj, "created", `${createdFolder.folderName}`);
   res.status(201).send(appResponse(null, createdFolder, true));
 };
 
@@ -109,6 +110,7 @@ exports.folderDetails = async (req, res) => {
 
 exports.folderUpdate = async (req, res) => {
   const { body } = req;
+  const {userObj} = req.headers;
 
   const response = await Folders.update(req.params.id, body);
   const allFolders = await Folders.fetchAll();
@@ -116,8 +118,8 @@ exports.folderUpdate = async (req, res) => {
   const updatedFolder = allFolders.data.filter((folder) => {
     return folder._id === req.params.id;
   });
-  addActivity(
-    userInfo,
+  await addActivity(
+    userObj,
     "updated",
     `${updatedFolder.folderName} details`
   );
@@ -228,7 +230,7 @@ exports.folderDelete = async (req, res) => {
   }
 
   const response = await Folders.delete(id);
-  addActivity(userInfo, "deleted", `${folder.folderName}`);
+  await addActivity(userObj, "deleted", `${folder.folderName}`);
   res.status(200).send(appResponse(null, response, true));
 };
 
@@ -299,11 +301,12 @@ exports.searchStarredFolders = async (req, res) => {
 
 // Star a folder
 exports.starFolder = async (req, res) => {
+  const {userObj} = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === false) {
     const response = await Folders.update(req.params.id, { isStarred: true });
-    addActivity(userInfo, "starred", `${data.folderName}`);
+    await addActivity(userObj, "starred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been starred!", response, true));
@@ -314,11 +317,12 @@ exports.starFolder = async (req, res) => {
 
 // unStar a folder
 exports.unStarFolder = async (req, res) => {
+  const {userObj} = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === true) {
     const response = await Folders.update(req.params.id, { isStarred: false });
-    addActivity(userInfo, "unstarred", `${data.folderName}`);
+    await addActivity(userObj, "unstarred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been unstarred!", response, true));

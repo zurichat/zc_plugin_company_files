@@ -13,12 +13,6 @@ const API_URL =
     ? "http://localhost:5500/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
-const userName = ""
-axios.defaults.headers["userObj"] = {
-  imageUrl: "",
-  userName: "Jamie Vardy",
-  userId: "",
-};
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -37,6 +31,13 @@ export default function Home() {
       }
     })();
   }, []);
+
+  axios.defaults.headers.common["Authorization"] = `Bearer ${info?.token}` || "";
+  axios.defaults.headers["userObj"] = {
+    imageUrl: info?.user_url || "",
+    userName: info?.user_name || "",
+    userId: info?._id || "",
+  };
 
   return (
     <Layout>

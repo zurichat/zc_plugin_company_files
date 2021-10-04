@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - (44px + 64px));
   font-size: 15px;
   color: #606060;
 }
@@ -19,7 +18,7 @@
   display: flex;
   align-items: center;
   padding: 32px 28px;
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -46,9 +45,8 @@
 }
 
 .activities__left {
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
-  overflow-y: scroll;
 }
 
 .activities__left .activitiesDescription .container {
@@ -109,7 +107,6 @@
   width: 177.37px;
   height: 111.57px;
   background: #FFFFFF;
-  box-shadow: -4px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   display: flex;
   flex-direction: column;
