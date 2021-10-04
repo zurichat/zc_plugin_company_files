@@ -20,15 +20,12 @@ import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
 import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
-<<<<<<< HEAD
-=======
 import FilePropertiesModal from "./FilePropertiesModal";
 import RenameFileModal from "./RenameFileModal";
 
 import { useDispatch } from "react-redux";
 import { checkRecentlyViewed } from "../../actions/fileAction";
 import { fileDetails } from "../../actions/fileAction";
->>>>>>> 3f5a995439dcbb638847c6a2e3f7eeff8b6ddf6d
 
 import axios from "axios";
 import FileDownload from "js-file-download";
