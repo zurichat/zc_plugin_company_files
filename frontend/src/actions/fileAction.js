@@ -20,6 +20,26 @@ export function fetchFiles() {
   };
 }
 
+export function fetchFilesInFolder({folderId}) {
+  return async function (dispatch) {
+    try {
+      // setLoading();
+      const res = await axios.get(`/folders/allFiles/${folderId}/files`);
+      // console.log("FOLDERFILES::: ", res.data);
+      return dispatch({
+        type: 'FETCH_FILES_FULFILLED',
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: 'FETCH_FILES_REJECTED',
+        payload: err.message,
+      });
+    }
+  };
+}
+
 export function setLoading() {
   return {
     type: 'FETCH_FILES_PENDING' || 'ADD_FILE_PENDING' || 'DELETE_FILE_PENDING' || 'UPDATE_FILE_PENDING',
@@ -63,16 +83,7 @@ export const starFile = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'STAR_FILE_FULFILLED', payload: newFile });
     const response = await axios.put(`/files/starFile/${file._id}`, { isStarred: true });
-    dispatch({
-      type: 'STAR_FILE_FULFILLED',
-      payload: response.data,
-    })
-    console.log(response);
   } catch (error) {
-    dispatch({
-      type: 'STAR_FILE_REJECTED',
-      payload: error.message,
-    })
     console.log(error);
   }
 };

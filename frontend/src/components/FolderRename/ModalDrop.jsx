@@ -12,7 +12,7 @@ const ModalDrop = (props) => {
         zIndex: "100",
         left: "0",
         top: "0",
-        background: "rgba(0, 0, 0, 0.5)",
+        background: "rgba(0, 0, 0, 0.65)",
         cursor: "pointer",
       }}
     />

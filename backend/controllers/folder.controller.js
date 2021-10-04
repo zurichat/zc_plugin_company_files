@@ -76,7 +76,7 @@ exports.getFilesInFolder = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const [folder, allFiles] = await Promise.all([
-    Folders.fetchOne({ _id: folderId }),
+    Folders.fetchOne({ folderId: folderId }),
     Files.fetchAll(),
   ]);
 
@@ -329,4 +329,81 @@ exports.unStarFolder = async (req, res) => {
   } else {
     res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
+}
+
+
+/**
+ * EXTRA ADDITIONS FOR CONTEXT MENU
+ */
+
+
+// RENAME FOLDER
+exports.folderRename = async (req, res) => {
+  const { folderId } = req.params;
+  let { oldFolderName, newFolderName } = req.body;
+
+  if (!folderId || !oldFolderName || !newFolderName) throw new BadRequestError('Please provide the "folderId", "oldFolderName" & "newFolderName"');
+
+  // Get single folder
+  const folder = await Folders.fetchOne({ _id: folderId });
+  if (!folder) throw new NotFoundError();
+  
+  console.log("FOLDER::: ", folder);
+  console.log("OLD NAME:: ", oldFolderName);
+  console.log("NEW NAME:: ", newFolderName);
+  if (
+    (newFolderName != folder.folderName)
+  ) {
+
+    await Folders.update(folderId, { folderName: newFolderName });
+
+    res.status(200).send(appResponse('Folder renamed successfully!', { ...folder, folderName: newFolderName }, true));
+  } else {
+    throw new BadRequestError('"oldFolderName" cannot be equal to the "newFolderName"!');
+  }
+}
+
+
+// DELETE FOLDER AND FILES IN IT
+exports.folderDeleteWithFiles = async (req, res) => {
+  const { folderId } = req.params;
+  if (!folderId) throw new BadRequestError('Please provide the "folderId" of folder to delete');
+
+  // fetch the folder
+  const folder = await Folders.fetchOne({ _id: folderId });
+  if (!folder) throw new NotFoundError();
+
+  // Fetch all files Contained in the Folder
+  let allFiles = await Files.fetchAll();
+  let filesInFolder = allFiles.filter(file => {
+    return file.folderId === folderId
+  })
+
+  // Delete all files contained in the folder by Id
+  filesInFolder.forEach(async (file) => {
+    if (file.isDeleted === false) {
+      const response = await Files.update(file.fileId, { isDeleted: true });
+  
+      // Save to list of activities
+      //await addActivity('deleted', `${data.fileName}`);
+    } else {
+      throw new BadRequestError();
+    }
+  })
+  // Now delete the folder by Id
+  const response = await Folders.delete(folderId);
+
+  res.status(200).send(appResponse(null, response, true));
 };
+
+// COPY FOLDER ::: CREATING A COPY OF A FOLDER
+exports.copyFolder = async (req, res) => {
+
+  const data = await Folders.fetchOne({ _id: req.params.folderId });
+  data.folderName = `${data.folderName}(1)`;
+  delete data._id, delete data.dateAdded;
+
+  const response = await Folders.create(data.data);
+  res.send({ response })
+
+}
