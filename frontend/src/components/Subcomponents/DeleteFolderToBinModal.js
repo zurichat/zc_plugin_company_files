@@ -4,7 +4,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, folderName }) => {
   const history = useHistory();
   const handleDelete = () => {
     fetch("https://companyfiles.zuri.chat/api/v1/folders/deleteFolder/" + id, {
-      method: "Get",
+      method: "put",
     }).then((res) => (res.status === 200 ? history.push("/trash") : null));
   };
 

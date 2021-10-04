@@ -1,11 +1,28 @@
 import { useHistory } from "react-router";
+import Swal from "sweetalert2";
 
 const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   const history = useHistory();
-  const handleDelete = () => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id, {
-      method: "Put",
-    }).then((res) => (res.status === 200 ? history.push("/trash") : null));
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        "https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id,
+        {
+          method: "put",
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        history.push("/trash");
+      }
+    } catch (error) {
+      await Swal.fire({
+        type: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error.message);
+    }
   };
 
   return deleteToBin ? (
@@ -23,7 +40,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
             {/*body*/}
             <div className="tw-relative tw-pt-3">
               <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
-                Are you sure you want to Delete ${fileName} File?
+                Are you sure you want to Delete {fileName} File?
               </p>
             </div>
             {/*footer*/}

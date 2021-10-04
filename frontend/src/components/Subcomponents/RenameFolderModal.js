@@ -25,7 +25,7 @@ const RenameFileModal = ({ file, editName, setEditName }) => {
     );
     setEditName(!editName);
 
-    const response = editRequest.json();
+    const response = await editRequest.json();
     console.log(response);
   };
 
