@@ -14,6 +14,9 @@ const {
   searchStarredFolders,
   starFolder,
   unStarFolder,
+  folderRename,
+  folderDeleteWithFiles,
+  copyFolder,
   addFileToFolder,
   removeFileFromFolder
 } = require("../controllers/folder.controller");
@@ -57,5 +60,14 @@ router.put('/add/:fileId/:folderId', addFileToFolder);
 
 // REMOVE FILE FROM FOLDER
 router.put('/remove/:fileId/:folderId', removeFileFromFolder);
+
+// RENAME A FOLDER
+router.put('/rename/:folderId', folderRename);
+
+// DELETE FOLDER AND FILES IN IT
+router.delete('/deleteFolder/:folderId', folderDeleteWithFiles);
+
+// CREATE COPY OF A FOLDER
+router.get('/copyFolder/:folderId', copyFolder);
 
 module.exports = router;

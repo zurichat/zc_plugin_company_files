@@ -3,26 +3,28 @@ const FolderSchema = require("../models/Folder.js");
 const appResponse = require("../utils/appResponse");
 const DatabaseOps = require("../utils/database.helper");
 const RealTime = require("../utils/realtime.helper");
-const {
-  NotFoundError,
-  BadRequestError,
-  InternalServerError,
-} = require("../utils/appError");
+const { NotFoundError, BadRequestError } = require("../utils/appError");
 const { getCache, setCache } = require("../utils/cache.helper");
 const addActivity = require("../utils/activities");
 
 const Files = new DatabaseOps("File");
 const Folders = new DatabaseOps("Folder");
 
+const userInfo = {
+  username: "mark",
+  imageUrl: "https://www.gravatar.com/avatar/",
+};
+
 exports.folderCreate = async (req, res) => {
   const { body } = req;
+  const { userObj } = req.headers;
   body.folderId = uuid();
   body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
   const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
-  addActivity(req.headers.userObj, "created", `${createdFolder.folderName}`);
+  await addActivity(userObj, "created", `${createdFolder.folderName}`);
   res.status(201).send(appResponse(null, createdFolder, true));
 };
 
@@ -47,7 +49,7 @@ exports.getAllFolders = async (req, res) => {
 
 exports.addFileToFolder = async (req, res) => {
   const { fileId, folderId } = req.params;
-  if ((!folderId && !fileId) && (!folderId || !fileId)) {
+  if (!folderId && !fileId && (!folderId || !fileId)) {
     throw new BadRequestError("Invalid request");
   }
   const response = await Files.update(fileId, { folderId });
@@ -64,8 +66,10 @@ exports.removeFileFromFolder = async (req, res) => {
   const file = await Files.fetchOne({ _id: fileId });
   if (!file) throw new NotFoundError(`File not found`);
   const removedFile = await Files.update(fileId, { folderId: null });
-  await RealTime.publish('fileRemovedFromFolder', removedFile)
-  res.status(200).send(appResponse("file removed from folder", removedFile, true))
+  await RealTime.publish("fileRemovedFromFolder", removedFile);
+  res
+    .status(200)
+    .send(appResponse("file removed from folder", removedFile, true));
 };
 
 // find files in a folder
@@ -74,12 +78,12 @@ exports.getFilesInFolder = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const [folder, allFiles] = await Promise.all([
-    Folders.fetchOne({ _id: folderId }),
+    Folders.fetchOne({ folderId }),
     Files.fetchAll(),
   ]);
 
   if (!folder) throw new NotFoundError("Folder not found!");
-  if (!allFiles) throw new NotFoundError();
+  if (!allFiles) throw new NotFoundError("File not found");
 
   const matchingFiles = allFiles.filter((file) => file.folderId === folderId);
 
@@ -91,7 +95,7 @@ exports.folderDetails = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const data = await Folders.fetchOne({ _id: folderId });
-  if (!data) throw new NotFoundError();
+  if (!data) throw new NotFoundError("Folder not found");
 
   // this line of code updates the folder last accessed time to the current date and time
   const updateLastAccessed = { lastAccessed: new Date().toISOString() };
@@ -108,6 +112,7 @@ exports.folderDetails = async (req, res) => {
 
 exports.folderUpdate = async (req, res) => {
   const { body } = req;
+  const { userObj } = req.headers;
 
   const response = await Folders.update(req.params.id, body);
   const allFolders = await Folders.fetchAll();
@@ -115,15 +120,11 @@ exports.folderUpdate = async (req, res) => {
   const updatedFolder = allFolders.data.filter((folder) => {
     return folder._id === req.params.id;
   });
-  addActivity(
-    req.headers.userObj,
-    "updated",
-    `${updatedFolder.folderName} details`
-  );
+  await addActivity(userObj, "updated", `${updatedFolder.folderName} details`);
   res.status(200).send(appResponse(null, updatedFolder, true));
 };
 
-// Give folder Access
+// Give folder Access - look for a way to get dynamic pluginid and organization id
 exports.giveFolderAccess = async (req, res) => {
   const { body } = req;
   body.memberId = uuid();
@@ -227,7 +228,7 @@ exports.folderDelete = async (req, res) => {
   }
 
   const response = await Folders.delete(id);
-  addActivity(req.headers.userObj, "deleted", `${folder.folderName}`);
+  await addActivity(userObj, "deleted", `${folder.folderName}`);
   res.status(200).send(appResponse(null, response, true));
 };
 
@@ -285,7 +286,7 @@ exports.recentlyViewed = async (req, res) => {
 // search starred folder
 exports.searchStarredFolders = async (req, res) => {
   const allFolders = await Folders.fetchAll();
-  if (!allFolders) throw new InternalServerError();
+  if (!allFolders) throw new NotFoundError("Starred Folders not found");
 
   const data = allFolders.filter((folder) => folder.isStarred);
 
@@ -298,11 +299,12 @@ exports.searchStarredFolders = async (req, res) => {
 
 // Star a folder
 exports.starFolder = async (req, res) => {
+  const { userObj } = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === false) {
     const response = await Folders.update(req.params.id, { isStarred: true });
-    addActivity(req.headers.userObj, "starred", `${data.folderName}`);
+    await addActivity(userObj, "starred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been starred!", response, true));
@@ -313,15 +315,93 @@ exports.starFolder = async (req, res) => {
 
 // unStar a folder
 exports.unStarFolder = async (req, res) => {
+  const { userObj } = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === true) {
     const response = await Folders.update(req.params.id, { isStarred: false });
-    addActivity(req.headers.userObj, "unstarred", `${data.folderName}`);
+    await addActivity(userObj, "unstarred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been unstarred!", response, true));
   } else {
     res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
+};
+
+/**
+ * EXTRA ADDITIONS FOR CONTEXT MENU
+ */
+
+// RENAME FOLDER
+exports.folderRename = async (req, res) => {
+  const { folderId } = req.params;
+  const { oldFolderName, newFolderName } = req.body;
+
+  if (!folderId && !oldFolderName && !newFolderName)
+    throw new BadRequestError('Please provide the "folderId", "oldFolderName" & "newFolderName"');
+
+  // Get single folder
+  const folder = await Folders.fetchOne({ _id: folderId });
+  if (!folder) throw new NotFoundError();
+
+  console.log("FOLDER::: ", folder);
+  console.log("OLD NAME:: ", oldFolderName);
+  console.log("NEW NAME:: ", newFolderName);
+  if (newFolderName != folder.folderName) {
+    await Folders.update(folderId, { folderName: newFolderName });
+
+    res
+      .status(200)
+      .send(appResponse(
+          "Folder renamed successfully!",
+          { ...folder, folderName: newFolderName },
+          true
+        ));
+  } else {
+    throw new BadRequestError('"oldFolderName" cannot be same as the "newFolderName"!');
+  }
+};
+
+// DELETE FOLDER AND FILES IN IT
+exports.folderDeleteWithFiles = async (req, res) => {
+  const { folderId } = req.params;
+  if (!folderId)
+    throw new BadRequestError('Please provide the "folderId" of folder to delete');
+
+  // fetch the folder
+  const folder = await Folders.fetchOne({ _id: folderId });
+  if (!folder) throw new NotFoundError();
+
+  // Fetch all files Contained in the Folder
+  const allFiles = await Files.fetchAll();
+  const filesInFolder = allFiles.filter((file) => {
+    return file.folderId === folderId;
+  });
+
+  // Delete all files contained in the folder by Id
+  filesInFolder.forEach(async (file) => {
+    if (file.isDeleted === false) {
+      const response = await Files.update(file.fileId, { isDeleted: true });
+
+      // Save to list of activities
+      // await addActivity('deleted', `${data.fileName}`);
+    } else {
+      throw new BadRequestError();
+    }
+  });
+  // Now delete the folder by Id
+  const response = await Folders.delete(folderId);
+
+  res.status(200).send(appResponse(null, response, true));
+};
+
+// COPY FOLDER ::: CREATING A COPY OF A FOLDER
+exports.copyFolder = async (req, res) => {
+  const data = await Folders.fetchOne({ _id: req.params.folderId });
+  data.folderName = `${data.folderName}(1)`;
+  delete data._id, delete data.dateAdded;
+
+  const response = await Folders.create(data.data);
+  res.send({ response });
 };

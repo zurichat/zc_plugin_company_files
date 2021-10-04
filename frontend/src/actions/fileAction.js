@@ -5,13 +5,33 @@ export function fetchFiles() {
     try {
       // setLoading();
       const res = await axios.get('/files/all');
-      console.log(res.data);
+      // console.log(res.data);
       return dispatch({
         type: 'FETCH_FILES_FULFILLED',
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
+      dispatch({
+        type: 'FETCH_FILES_REJECTED',
+        payload: err.message,
+      });
+    }
+  };
+}
+
+export function fetchFilesInFolder({folderId}) {
+  return async function (dispatch) {
+    try {
+      // setLoading();
+      const res = await axios.get(`/folders/allFiles/${folderId}/files`);
+      // console.log("FOLDERFILES::: ", res.data);
+      return dispatch({
+        type: 'FETCH_FILES_FULFILLED',
+        payload: res.data,
+      });
+    } catch (err) {
+      // console.log(err);
       dispatch({
         type: 'FETCH_FILES_REJECTED',
         payload: err.message,
@@ -48,9 +68,10 @@ export const fileDetails = (id) => async (dispatch) => {
 export const deleteFile = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'DELETE_FILE_FULFILLED', payload: file._id });
-    const response = await axios.put(`/files/deleteToBin/${file._id}`);
+    await axios.put(`/files/deleteToBin/${file._id}`);
   } catch (error) {
     console.log(error);
+    dispatch({ type: 'DELETE_FILE_REJECTED', payload: error.message });
   }
 };
 
@@ -63,16 +84,7 @@ export const starFile = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'STAR_FILE_FULFILLED', payload: newFile });
     const response = await axios.put(`/files/starFile/${file._id}`, { isStarred: true });
-    dispatch({
-      type: 'STAR_FILE_FULFILLED',
-      payload: response.data,
-    })
-    console.log(response);
   } catch (error) {
-    dispatch({
-      type: 'STAR_FILE_REJECTED',
-      payload: error.message,
-    })
     console.log(error);
   }
 };

@@ -4,7 +4,6 @@ import userImage from "./Images/Rectangle 8.png";
 import classes from "./Activities.module.css";
 import Loader from "react-loader-spinner";
 
-
 function Activities() {
   const [activities, setActivities] = useState([]);
   const [display, setDisplay] = useState(false);
@@ -12,15 +11,22 @@ function Activities() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(
-          "https://companyfiles.zuri.chat/api/v1/activities"
-        );
+        const res = await axios.get("/activities");
         setActivities(res.data.data);
       } catch (error) {
         console.log(error);
       }
     })();
   }, []);
+
+  async function deleteActivity(id) {
+    try {
+      await axios.delete(`/activities/${id}`);
+      setActivities(activities.filter((activity) => activity.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const goBack = () => {
     const currentState = history.state;
@@ -255,7 +261,7 @@ function Activities() {
       <div className={classes.activities__left}>
         {activities.length > 0 &&
           activities.map((activity, idx) => (
-            <div key={activity._id} className={classes.activitiesDescription}>
+            <div key={activity._id} className={`tw-relative ${classes.activitiesDescription}`}>
               <div className={classes.container}>
                 <div className={classes.img}>
                   <img src={activity?.userObj?.img_url} alt="user picture" />
@@ -267,7 +273,6 @@ function Activities() {
                   <span> Company files</span>
                 </div>
                 <div className={classes.time}>
-                  {/* {Math.floor((activity.time) / 3600000)} hours ago */}
                   {convertMS(activity.time)}
                 </div>
                 <div
@@ -280,11 +285,11 @@ function Activities() {
               {display ? (
                 <>
                   <div
-                    className={classes.overlay}
+                    className={`tw-shadow-md ${classes.overlay}`}
                     onClick={() => setDisplay(!display)}
                   ></div>
                   <div className={classes.dropdown}>
-                    <div className={classes.pin}>
+                    <div className={`hover:tw-bg-green-400 ${classes.pin}`}>
                       {pushPin}
                       Pin
                     </div>

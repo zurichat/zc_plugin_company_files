@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BsStar, BsInfoCircle, BsTrash, BsInfo } from 'react-icons/bs';
 import { FaShareAlt } from 'react-icons/fa';
-import { starFile } from '../../actions/fileAction';
+import { starFile, deleteFile } from '../../actions/fileAction';
 
 const FilePreviewMenu = ({ file, setOpenStatus, more, setShowshareurl }) => {
   const [showproperties, setShowproperties] = useState(false);
@@ -38,7 +38,7 @@ const FilePreviewMenu = ({ file, setOpenStatus, more, setShowshareurl }) => {
     setOpenStatus(false);
   };
   const handleDelete = (file) => {
-    
+    dispatch(deleteFile(file));
     setOpenStatus(false);
   };
   return (
