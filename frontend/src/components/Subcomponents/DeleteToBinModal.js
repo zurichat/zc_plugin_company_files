@@ -1,11 +1,28 @@
 import { useHistory } from "react-router";
+import Swal from "sweetalert2";
 
 const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   const history = useHistory();
-  const handleDelete = () => {
-    fetch("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id, {
-      method: "put",
-    }).then((res) => (res.status === 200 ? history.push("/trash") : null));
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        "https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id,
+        {
+          method: "put",
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        history.push("/trash");
+      }
+    } catch (error) {
+      await Swal.fire({
+        type: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+      console.log(error.message);
+    }
   };
 
   return deleteToBin ? (
