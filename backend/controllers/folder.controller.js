@@ -37,12 +37,7 @@ exports.getAllFolders = async (req, res) => {
     const allFiles = await Files.fetchAll();
     const allFolders = await Folders.fetchAll();
 
-    allFolders.forEach(
-      (folder) =>
-        (folder.noOfFiles = allFiles.filter(
-          ({ folderId }) => folderId === folder.folderId
-        ).length)
-    );
+    allFolders.forEach((folder) => (folder.noOfFiles = allFiles.filter(({ folderId }) => folderId === folder.folderId).length));
     await RealTime.publish("allFolders", allFolders);
 
     // Cache data in memory
@@ -171,12 +166,10 @@ exports.giveFolderAccess = async (req, res) => {
   // this.data_email.mail_body=`<p>Admin has given you ${body.role} access to ${body.folderName} folder</p>`;
   // //Send Email
   // axios.put(databaseEmailUrl, this.data_email).then();
-  res.status(200).send(
-    appResponse("Added Folder Access!", data, true, {
+  res.status(200).send(appResponse("Added Folder Access!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    })
-  );
+    }));
 };
 
 // Update member folder Access
@@ -212,12 +205,10 @@ exports.updateFolderAccess = async (req, res) => {
   // Send updated folder info to FE using Centrifugo
   const centrifugoResponse = await RealTime.publish("Updated Folder", data);
   // Send updated folder info to FE
-  res.status(200).send(
-    appResponse("Folder Access updated!", data, true, {
+  res.status(200).send(appResponse("Folder Access updated!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    })
-  );
+    }));
 };
 
 exports.folderDelete = async (req, res) => {
@@ -274,12 +265,10 @@ exports.deleteFolderAccess = async (req, res) => {
     data
   );
   // Send updated folder info to FE
-  res.status(200).send(
-    appResponse("Access deleted!", data, true, {
+  res.status(200).send(appResponse("Access deleted!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    })
-  );
+    }));
 };
 
 exports.recentlyViewed = async (req, res) => {
@@ -347,12 +336,10 @@ exports.unStarFolder = async (req, res) => {
 // RENAME FOLDER
 exports.folderRename = async (req, res) => {
   const { folderId } = req.params;
-  let { oldFolderName, newFolderName } = req.body;
+  const { oldFolderName, newFolderName } = req.body;
 
   if (!folderId && !oldFolderName && !newFolderName)
-    throw new BadRequestError(
-      'Please provide the "folderId", "oldFolderName" & "newFolderName"'
-    );
+    throw new BadRequestError('Please provide the "folderId", "oldFolderName" & "newFolderName"');
 
   // Get single folder
   const folder = await Folders.fetchOne({ _id: folderId });
@@ -366,17 +353,13 @@ exports.folderRename = async (req, res) => {
 
     res
       .status(200)
-      .send(
-        appResponse(
+      .send(appResponse(
           "Folder renamed successfully!",
           { ...folder, folderName: newFolderName },
           true
-        )
-      );
+        ));
   } else {
-    throw new BadRequestError(
-      '"oldFolderName" cannot be same as the "newFolderName"!'
-    );
+    throw new BadRequestError('"oldFolderName" cannot be same as the "newFolderName"!');
   }
 };
 
@@ -384,17 +367,15 @@ exports.folderRename = async (req, res) => {
 exports.folderDeleteWithFiles = async (req, res) => {
   const { folderId } = req.params;
   if (!folderId)
-    throw new BadRequestError(
-      'Please provide the "folderId" of folder to delete'
-    );
+    throw new BadRequestError('Please provide the "folderId" of folder to delete');
 
   // fetch the folder
   const folder = await Folders.fetchOne({ _id: folderId });
   if (!folder) throw new NotFoundError();
 
   // Fetch all files Contained in the Folder
-  let allFiles = await Files.fetchAll();
-  let filesInFolder = allFiles.filter((file) => {
+  const allFiles = await Files.fetchAll();
+  const filesInFolder = allFiles.filter((file) => {
     return file.folderId === folderId;
   });
 
@@ -404,7 +385,7 @@ exports.folderDeleteWithFiles = async (req, res) => {
       const response = await Files.update(file.fileId, { isDeleted: true });
 
       // Save to list of activities
-      //await addActivity('deleted', `${data.fileName}`);
+      // await addActivity('deleted', `${data.fileName}`);
     } else {
       throw new BadRequestError();
     }
