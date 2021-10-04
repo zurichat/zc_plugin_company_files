@@ -9,9 +9,9 @@ import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents/audio";
 import Loader from "react-loader-spinner";
-import { fetchFiles } from "../../../actions/fileAction";
+import { fetchFiles, fetchFilesInFolder } from "../../../actions/fileAction";
 
-function FileGridView({ sortingMethod }) {
+function FileGridView({ sortingMethod, folder }) {
   const dispatch = useDispatch();
   const { loading, error, files } = useSelector(
     (state) => state.rootReducer.fileReducer
@@ -20,7 +20,7 @@ function FileGridView({ sortingMethod }) {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(fetchFiles());
+        dispatch(fetchFilesInFolder({folderId: folder.folderId}));
       } catch (err) {
         console.log(err);
       }

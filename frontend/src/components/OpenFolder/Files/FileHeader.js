@@ -16,6 +16,7 @@ function FileHeader({
   sortByName,
   sortBySize,
   sortByType,
+  folderTitle,
 }) {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -56,17 +57,17 @@ function FileHeader({
 
   const goBack = () => {
     const currentState = history.state;
-    history.pushState(currentState, "", "/companyfiles");
+    history.pushState(currentState, "", "/companyfiles/all-folders");
   };
 
   return (
     <>
-      <button
+      {/* <button
         onClick={showOptions}
         className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-bg-green-500 hover:tw-text-white tw-outline-none"
       >
         Add New
-      </button>
+      </button> */}
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2">
         <h2 className="tw-text-lg tw-truncate tw-font-semibold tw-text-gray-900 tw-flex tw-flex-row">
@@ -74,8 +75,11 @@ function FileHeader({
             className="tw-text-lg tw-text-black tw-mr-3 tw-self-center"
             onClick={() => goBack()}
           />
-          All Files
+          {
+            `${folderTitle}`
+          }
         </h2>
+        {/*
         <div className="tw-flex tw-items-center tw-relative">
           <BsArrowUpDown
             title="sort"
@@ -115,6 +119,7 @@ function FileHeader({
             See Activities
           </Link>
         </div>
+          */}
       </div>
       {upload && (
         <FileUpload

@@ -29,6 +29,14 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
     dispatch(folderDetails(folder._id));
   }
 
+  function openFolder(){
+    const currentState = history.state;
+    console.log("CURRENT STATE::: ", currentState);
+    history.pushState({...currentState, pageData: {
+      folder
+    }}, "", "/companyfiles/open-folder");
+  }
+
   function getLink() {}
 
   function download() {}
@@ -88,7 +96,15 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
           id="folderContextMenu"
           className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-top-1/3 tw-z-20"
         >
-          <FolderMenuButton name="Open" cmd={openCmd}>
+          {/*
+            <FolderMenuButton name="Open" cmd={openCmd}>
+              <AiOutlineEye
+                className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+                title="open"
+              />
+            </FolderMenuButton>
+          */}
+          <FolderMenuButton name="Open" cmd={openFolder}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="open"

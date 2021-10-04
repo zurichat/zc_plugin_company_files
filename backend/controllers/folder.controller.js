@@ -75,7 +75,7 @@ exports.getFilesInFolder = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const [folder, allFiles] = await Promise.all([
-    Folders.fetchOne({ _id: folderId }),
+    Folders.fetchOne({ folderId: folderId }),
     Files.fetchAll(),
   ]);
 
