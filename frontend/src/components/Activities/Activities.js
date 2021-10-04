@@ -248,6 +248,8 @@ function Activities() {
     );
   }
 
+  console.log(activities)
+
   return (
     <div className={classes.activities}>
       <div className={classes.header}>
