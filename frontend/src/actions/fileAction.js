@@ -5,13 +5,13 @@ export function fetchFiles() {
     try {
       // setLoading();
       const res = await axios.get('/files/all');
-      console.log(res.data);
+      // console.log(res.data);
       return dispatch({
         type: 'FETCH_FILES_FULFILLED',
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       dispatch({
         type: 'FETCH_FILES_REJECTED',
         payload: err.message,
@@ -31,7 +31,7 @@ export function fetchFilesInFolder({folderId}) {
         payload: res.data,
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       dispatch({
         type: 'FETCH_FILES_REJECTED',
         payload: err.message,
@@ -68,9 +68,10 @@ export const fileDetails = (id) => async (dispatch) => {
 export const deleteFile = (file) => async (dispatch) => {
   try {
     dispatch({ type: 'DELETE_FILE_FULFILLED', payload: file._id });
-    const response = await axios.put(`/files/deleteToBin/${file._id}`);
+    await axios.put(`/files/deleteToBin/${file._id}`);
   } catch (error) {
     console.log(error);
+    dispatch({ type: 'DELETE_FILE_REJECTED', payload: error.message });
   }
 };
 
