@@ -248,8 +248,6 @@ function Activities() {
     );
   }
 
-  console.log(activities)
-
   return (
     <div className={classes.activities}>
       <div className={classes.header}>
@@ -263,7 +261,7 @@ function Activities() {
       <div className={classes.activities__left}>
         {activities.length > 0 &&
           activities.map((activity, idx) => (
-            <div key={activity._id} className={classes.activitiesDescription}>
+            <div key={activity._id} className={`tw-relative ${classes.activitiesDescription}`}>
               <div className={classes.container}>
                 <div className={classes.img}>
                   <img src={activity?.userObj?.img_url} alt="user picture" />
@@ -275,7 +273,6 @@ function Activities() {
                   <span> Company files</span>
                 </div>
                 <div className={classes.time}>
-                  {/* {Math.floor((activity.time) / 3600000)} hours ago */}
                   {convertMS(activity.time)}
                 </div>
                 <div
