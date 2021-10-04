@@ -84,7 +84,7 @@ exports.addUserToRoom = async (req, res) => {
 
   // publish update to sidebar
   await RealTime.sideBarPublish(room.org_id, userId, {
-    message: `${userName} joined ${room.room_name} successfully`,
+    message: `${user_name} joined ${room.room_name} successfully`,
     userId,
   });
 
@@ -283,7 +283,8 @@ exports.getRoomMembers = async (req, res) => {
   const room = await Rooms.fetchOne({ _id: roomId });
   console.log(req.headers.authorization);
   // remove bearer from the authorization
-  const myToken = process.env.ORG_TOKEN || userToken;
+  const myToken = process.env.ORG_TOKEN ?? userToken;
+  if (myToken === "") throw new BadRequestError("Pass in a valid token");
   const config = {
     authorization: myToken,
   };
