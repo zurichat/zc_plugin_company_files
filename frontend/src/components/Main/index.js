@@ -29,6 +29,7 @@ import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
 import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
+import AllTheFiles from "../OpenFolder/Files/AllFiles";
 import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
@@ -141,6 +142,9 @@ const Main = () => {
             </Route>
             <Route path="/recently-viewed-zips" exact>
               <RecentlyViewedZip />
+            </Route>
+            <Route path="/open-folder" exact>
+              <AllTheFiles />
             </Route>
           </Switch>
         </div>
