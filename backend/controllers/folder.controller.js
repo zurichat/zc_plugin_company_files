@@ -344,9 +344,11 @@ exports.folderRename = async (req, res) => {
   const folder = await Folders.fetchOne({ _id: folderId });
   if (!folder) throw new NotFoundError();
   
+  console.log("FOLDER::: ", folder);
+  console.log("OLD NAME:: ", oldFolderName);
+  console.log("NEW NAME:: ", newFolderName);
   if (
-    oldFolderName === folder.folderName &&
-    newFolderName !== folder.folderName
+    (newFolderName != folder.folderName)
   ) {
 
     await Folders.update(folderId, { folderName: newFolderName });
