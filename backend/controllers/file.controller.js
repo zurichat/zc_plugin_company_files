@@ -398,7 +398,6 @@ exports.deleteMultipleFiles = async (req, res) => {
 // Send to trash
 exports.deleteTemporarily = async (req, res) => {
   const { userObj } = req.headers;
-  console.log(userInfo);
   const data = await File.fetchOne({ _id: req.params.id });
 
   if (data.isDeleted === false) {
@@ -406,7 +405,7 @@ exports.deleteTemporarily = async (req, res) => {
 
     // Save to list of activities
     await addActivity(userObj, "deleted", `${data.fileName}`);
-
+    console.log({userObj})
     res.status(200).send(appResponse("File sent to trash!", response, true));
   } else {
     throw new BadRequestError("File is already deleted");

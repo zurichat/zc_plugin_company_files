@@ -10,11 +10,6 @@ const addActivity = require("../utils/activities");
 const Files = new DatabaseOps("File");
 const Folders = new DatabaseOps("Folder");
 
-const userInfo = {
-  username: "mark",
-  imageUrl: "https://www.gravatar.com/avatar/",
-};
-
 exports.folderCreate = async (req, res) => {
   const { body } = req;
   const { userObj } = req.headers;

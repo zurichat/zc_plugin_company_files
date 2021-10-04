@@ -4,7 +4,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   const history = useHistory();
   const handleDelete = () => {
     fetch("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id, {
-      method: "Put",
+      method: "put",
     }).then((res) => (res.status === 200 ? history.push("/trash") : null));
   };
 
@@ -23,7 +23,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
             {/*body*/}
             <div className="tw-relative tw-pt-3">
               <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
-                Are you sure you want to Delete ${fileName} File?
+                Are you sure you want to Delete {fileName} File?
               </p>
             </div>
             {/*footer*/}

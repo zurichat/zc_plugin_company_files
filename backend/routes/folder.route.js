@@ -65,7 +65,7 @@ router.put('/remove/:fileId/:folderId', removeFileFromFolder);
 router.put('/rename/:folderId', folderRename);
 
 // DELETE FOLDER AND FILES IN IT
-router.delete('/deleteFolder/:folderId', folderDeleteWithFiles);
+router.put('/deleteFolder/:folderId', folderDeleteWithFiles);
 
 // CREATE COPY OF A FOLDER
 router.get('/copyFolder/:folderId', copyFolder);
