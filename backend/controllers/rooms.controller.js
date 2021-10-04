@@ -64,31 +64,31 @@ exports.addUserToRoom = async (req, res) => {
     throw new BadRequestError("one or more required fields missing in body");
 
   // fetch all the rooms available and get the target room with the provided room_id.
-  const room = await Rooms.fetchOne({ _id: req.params.roomId });
-  if (!room) throw new NotFoundError("room not found");
+  // const room = await Rooms.fetchOne({ _id: req.params.roomId });
+  // if (!room) throw new NotFoundError("room not found");
 
-  const isMemberInRoom = room.room_member_ids.filter(
-    (id) => id === userId
-  ).length;
-  if (isMemberInRoom) throw new BadRequestError("user is already in room!");
+  // const isMemberInRoom = room.room_member_ids.filter(
+  //   (id) => id === userId
+  // ).length;
+  // if (isMemberInRoom) throw new BadRequestError("user is already in room!");
 
-  // Add user to room...
-  room.room_member_ids.push(userId);
-  delete room._id;
-  room.room_modified_at = new Date();
+  // // Add user to room...
+  // room.room_member_ids.push(userId);
+  // delete room._id;
+  // room.room_modified_at = new Date();
 
-  // send the data to the api endpoint for update.
-  await Rooms.update(req.params.roomId, room);
+  // // send the data to the api endpoint for update.
+  // await Rooms.update(req.params.roomId, room);
 
-  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
+  // const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
 
-  // publish update to sidebar
-  await RealTime.sideBarPublish(room.org_id, userId, {
-    message: `${user_name} joined ${room.room_name} successfully`,
-    userId,
-  });
+  // // publish update to sidebar
+  // await RealTime.sideBarPublish(room.org_id, userId, {
+  //   message: `${user_name} joined ${room.room_name} successfully`,
+  //   userId,
+  // });
 
-  return res.status(200).send(appResponse(null, updatedRoom, true));
+  return res.status(200).send(appResponse(null, `${user_name} recieved`, true));
 };
 
 // not tested yet
