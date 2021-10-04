@@ -5,6 +5,10 @@ const Activity = new DatabaseConnection('Activity')
 module.exports = async (userInfo, operation, filename) => {
  
   // when there is no logged in user || e.g when testing out of zuri.chat
+  // if were on localhost dont log the activity
+  if (process.env.NODE_ENV === 'development' && (userInfo === undefined || userInfo === null)) {
+    return
+  }
   const defaultUserObj = {
     user_name: 'Anonymous User',
     img_url: 'https://www.gravatar.com/avatar/'
@@ -14,7 +18,8 @@ module.exports = async (userInfo, operation, filename) => {
     const data = {
       userObj: {
         user_name: userInfo.userName,
-        img_url: userInfo.imageUrl
+        img_url: userInfo.imageUrl,
+        user_id: userInfo.userId
       },
       operation,
       filename,

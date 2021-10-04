@@ -5,6 +5,7 @@ const {
   getOneRoom,
   deleteRoom,
   addToRoom,
+  addUserToRoom,
   removeFromRoom,
   editRoom,
   setRoomPrivate,
@@ -18,10 +19,13 @@ const {
 router.get('/all', getAllRooms);
 
 // GET A ROOM
-router.get('/:roomId',getOneRoom);
+router.get('/room/:roomId',getOneRoom);
 
 // CREATE A NEW ROOM
 router.post('/create', createRoom);
+
+// ADD TO ROOM (ZURI MAIN)
+router.post('/add_to_room', addUserToRoom);
 
 // ADD A USER TO A ROOM
 router.put('/add/:roomId', addToRoom);
@@ -30,7 +34,7 @@ router.put('/add/:roomId', addToRoom);
 router.put('/remove/:roomId', removeFromRoom);
 
 // DELETE A ROOM
-router.delete('/delete/:roomId', deleteRoom);
+router.put('/delete/:roomId', deleteRoom);
 
 // EDIT A ROOM INFO
 router.put('/update/:roomId', editRoom);
@@ -42,12 +46,12 @@ router.put('/setPrivate/:roomId', setRoomPrivate);
 router.get('/getUserRooms/:userId', getUserRooms);
 
 // GET MEMBERS IN ROOM
-router.get('/:roomId/get-room-members', getRoomMembers);
+router.get('/members/:roomId/getRoomMembers', getRoomMembers);
 
 // GET ORG DEFAULT DOMAIN ROOM
-router.get('/organizations/:orgId',getOrgDefaultRoomOnDomain)
+router.get('/organization/:orgId',getOrgDefaultRoomOnDomain)
 
 // CHECK IF USER IS IN ROOM
-router.get('/:roomId/user-in-room', checkMemberInRoom);
+router.get('/user/:roomId/userInRoom', checkMemberInRoom);
 
 module.exports = router;

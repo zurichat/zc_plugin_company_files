@@ -3,27 +3,28 @@ const FolderSchema = require("../models/Folder.js");
 const appResponse = require("../utils/appResponse");
 const DatabaseOps = require("../utils/database.helper");
 const RealTime = require("../utils/realtime.helper");
-const {
-  NotFoundError,
-  BadRequestError,
-} = require("../utils/appError");
+const { NotFoundError, BadRequestError } = require("../utils/appError");
 const { getCache, setCache } = require("../utils/cache.helper");
 const addActivity = require("../utils/activities");
 
 const Files = new DatabaseOps("File");
 const Folders = new DatabaseOps("Folder");
 
-const userInfo = {username: "mark", imageUrl: "https://www.gravatar.com/avatar/"};
+const userInfo = {
+  username: "mark",
+  imageUrl: "https://www.gravatar.com/avatar/",
+};
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
+  const { userObj } = req.headers;
   body.folderId = uuid();
   body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
   const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
-  addActivity(userInfo, "created", `${createdFolder.folderName}`);
+  await addActivity(userObj, "created", `${createdFolder.folderName}`);
   res.status(201).send(appResponse(null, createdFolder, true));
 };
 
@@ -36,7 +37,12 @@ exports.getAllFolders = async (req, res) => {
     const allFiles = await Files.fetchAll();
     const allFolders = await Folders.fetchAll();
 
-    allFolders.forEach((folder) => (folder.noOfFiles = allFiles.filter(({ folderId }) => folderId === folder.folderId).length));
+    allFolders.forEach(
+      (folder) =>
+        (folder.noOfFiles = allFiles.filter(
+          ({ folderId }) => folderId === folder.folderId
+        ).length)
+    );
     await RealTime.publish("allFolders", allFolders);
 
     // Cache data in memory
@@ -48,7 +54,7 @@ exports.getAllFolders = async (req, res) => {
 
 exports.addFileToFolder = async (req, res) => {
   const { fileId, folderId } = req.params;
-  if ((!folderId && !fileId) && (!folderId || !fileId)) {
+  if (!folderId && !fileId && (!folderId || !fileId)) {
     throw new BadRequestError("Invalid request");
   }
   const response = await Files.update(fileId, { folderId });
@@ -65,8 +71,10 @@ exports.removeFileFromFolder = async (req, res) => {
   const file = await Files.fetchOne({ _id: fileId });
   if (!file) throw new NotFoundError(`File not found`);
   const removedFile = await Files.update(fileId, { folderId: null });
-  await RealTime.publish('fileRemovedFromFolder', removedFile)
-  res.status(200).send(appResponse("file removed from folder", removedFile, true))
+  await RealTime.publish("fileRemovedFromFolder", removedFile);
+  res
+    .status(200)
+    .send(appResponse("file removed from folder", removedFile, true));
 };
 
 // find files in a folder
@@ -75,7 +83,7 @@ exports.getFilesInFolder = async (req, res) => {
   if (!folderId) throw new BadRequestError('Missing "folderId" parameter');
 
   const [folder, allFiles] = await Promise.all([
-    Folders.fetchOne({ folderId: folderId }),
+    Folders.fetchOne({ folderId }),
     Files.fetchAll(),
   ]);
 
@@ -109,6 +117,7 @@ exports.folderDetails = async (req, res) => {
 
 exports.folderUpdate = async (req, res) => {
   const { body } = req;
+  const { userObj } = req.headers;
 
   const response = await Folders.update(req.params.id, body);
   const allFolders = await Folders.fetchAll();
@@ -116,15 +125,11 @@ exports.folderUpdate = async (req, res) => {
   const updatedFolder = allFolders.data.filter((folder) => {
     return folder._id === req.params.id;
   });
-  addActivity(
-    userInfo,
-    "updated",
-    `${updatedFolder.folderName} details`
-  );
+  await addActivity(userObj, "updated", `${updatedFolder.folderName} details`);
   res.status(200).send(appResponse(null, updatedFolder, true));
 };
 
-// Give folder Access
+// Give folder Access - look for a way to get dynamic pluginid and organization id
 exports.giveFolderAccess = async (req, res) => {
   const { body } = req;
   body.memberId = uuid();
@@ -166,10 +171,12 @@ exports.giveFolderAccess = async (req, res) => {
   // this.data_email.mail_body=`<p>Admin has given you ${body.role} access to ${body.folderName} folder</p>`;
   // //Send Email
   // axios.put(databaseEmailUrl, this.data_email).then();
-  res.status(200).send(appResponse("Added Folder Access!", data, true, {
+  res.status(200).send(
+    appResponse("Added Folder Access!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    }));
+    })
+  );
 };
 
 // Update member folder Access
@@ -205,10 +212,12 @@ exports.updateFolderAccess = async (req, res) => {
   // Send updated folder info to FE using Centrifugo
   const centrifugoResponse = await RealTime.publish("Updated Folder", data);
   // Send updated folder info to FE
-  res.status(200).send(appResponse("Folder Access updated!", data, true, {
+  res.status(200).send(
+    appResponse("Folder Access updated!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    }));
+    })
+  );
 };
 
 exports.folderDelete = async (req, res) => {
@@ -228,7 +237,7 @@ exports.folderDelete = async (req, res) => {
   }
 
   const response = await Folders.delete(id);
-  addActivity(userInfo, "deleted", `${folder.folderName}`);
+  await addActivity(userObj, "deleted", `${folder.folderName}`);
   res.status(200).send(appResponse(null, response, true));
 };
 
@@ -265,10 +274,12 @@ exports.deleteFolderAccess = async (req, res) => {
     data
   );
   // Send updated folder info to FE
-  res.status(200).send(appResponse("Access deleted!", data, true, {
+  res.status(200).send(
+    appResponse("Access deleted!", data, true, {
       ...centrifugoResponse,
       count: data.length,
-    }));
+    })
+  );
 };
 
 exports.recentlyViewed = async (req, res) => {
@@ -299,11 +310,12 @@ exports.searchStarredFolders = async (req, res) => {
 
 // Star a folder
 exports.starFolder = async (req, res) => {
+  const { userObj } = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === false) {
     const response = await Folders.update(req.params.id, { isStarred: true });
-    addActivity(userInfo, "starred", `${data.folderName}`);
+    await addActivity(userObj, "starred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been starred!", response, true));
@@ -314,56 +326,67 @@ exports.starFolder = async (req, res) => {
 
 // unStar a folder
 exports.unStarFolder = async (req, res) => {
+  const { userObj } = req.headers;
   const data = await Folders.fetchOne({ _id: req.params.id });
 
   if (data.isStarred === true) {
     const response = await Folders.update(req.params.id, { isStarred: false });
-    addActivity(userInfo, "unstarred", `${data.folderName}`);
+    await addActivity(userObj, "unstarred", `${data.folderName}`);
     res
       .status(200)
       .send(appResponse("Folder has been unstarred!", response, true));
   } else {
     res.status(200).send(appResponse("Folder is already unstarred!", [], true));
   }
-}
-
+};
 
 /**
  * EXTRA ADDITIONS FOR CONTEXT MENU
  */
-
 
 // RENAME FOLDER
 exports.folderRename = async (req, res) => {
   const { folderId } = req.params;
   let { oldFolderName, newFolderName } = req.body;
 
-  if (!folderId || !oldFolderName || !newFolderName) throw new BadRequestError('Please provide the "folderId", "oldFolderName" & "newFolderName"');
+  if (!folderId && !oldFolderName && !newFolderName)
+    throw new BadRequestError(
+      'Please provide the "folderId", "oldFolderName" & "newFolderName"'
+    );
 
   // Get single folder
   const folder = await Folders.fetchOne({ _id: folderId });
   if (!folder) throw new NotFoundError();
-  
+
   console.log("FOLDER::: ", folder);
   console.log("OLD NAME:: ", oldFolderName);
   console.log("NEW NAME:: ", newFolderName);
-  if (
-    (newFolderName != folder.folderName)
-  ) {
-
+  if (newFolderName != folder.folderName) {
     await Folders.update(folderId, { folderName: newFolderName });
 
-    res.status(200).send(appResponse('Folder renamed successfully!', { ...folder, folderName: newFolderName }, true));
+    res
+      .status(200)
+      .send(
+        appResponse(
+          "Folder renamed successfully!",
+          { ...folder, folderName: newFolderName },
+          true
+        )
+      );
   } else {
-    throw new BadRequestError('"oldFolderName" cannot be equal to the "newFolderName"!');
+    throw new BadRequestError(
+      '"oldFolderName" cannot be same as the "newFolderName"!'
+    );
   }
-}
-
+};
 
 // DELETE FOLDER AND FILES IN IT
 exports.folderDeleteWithFiles = async (req, res) => {
   const { folderId } = req.params;
-  if (!folderId) throw new BadRequestError('Please provide the "folderId" of folder to delete');
+  if (!folderId)
+    throw new BadRequestError(
+      'Please provide the "folderId" of folder to delete'
+    );
 
   // fetch the folder
   const folder = await Folders.fetchOne({ _id: folderId });
@@ -371,21 +394,21 @@ exports.folderDeleteWithFiles = async (req, res) => {
 
   // Fetch all files Contained in the Folder
   let allFiles = await Files.fetchAll();
-  let filesInFolder = allFiles.filter(file => {
-    return file.folderId === folderId
-  })
+  let filesInFolder = allFiles.filter((file) => {
+    return file.folderId === folderId;
+  });
 
   // Delete all files contained in the folder by Id
   filesInFolder.forEach(async (file) => {
     if (file.isDeleted === false) {
       const response = await Files.update(file.fileId, { isDeleted: true });
-  
+
       // Save to list of activities
       //await addActivity('deleted', `${data.fileName}`);
     } else {
       throw new BadRequestError();
     }
-  })
+  });
   // Now delete the folder by Id
   const response = await Folders.delete(folderId);
 
@@ -394,12 +417,10 @@ exports.folderDeleteWithFiles = async (req, res) => {
 
 // COPY FOLDER ::: CREATING A COPY OF A FOLDER
 exports.copyFolder = async (req, res) => {
-
   const data = await Folders.fetchOne({ _id: req.params.folderId });
   data.folderName = `${data.folderName}(1)`;
   delete data._id, delete data.dateAdded;
 
   const response = await Folders.create(data.data);
-  res.send({ response })
-
-}
+  res.send({ response });
+};
