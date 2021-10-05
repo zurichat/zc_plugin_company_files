@@ -1,11 +1,12 @@
 import { useHistory } from "react-router";
 import Swal from "sweetalert2";
+import axios from "axios"
 
 const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   const history = useHistory();
   const handleDelete = async () => {
     try {
-      const response = await axios.put("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id);
+      const response = await axios.put(`/files/deleteToBin/${id}`);
       console.log(response);
       {response.status === 200 && history.push("/trash")}
     } catch (error) {
