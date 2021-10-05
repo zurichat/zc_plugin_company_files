@@ -63,14 +63,14 @@ const RecentlyViewed = () => {
           link={"recently-viewed-zips"}
         />
 
-        <Viewed
+        {/* <Viewed
           name={"Folders"}
           image={FolderIcon}
           altText={"zip"}
           dateViewed={"20 Jul 2020"}
           bgColor={"tw-bg-yellow-100"}
           link={"recently-viewed-folders"}
-        />
+        /> */}
         
       </div>
     </div>
