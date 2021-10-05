@@ -10,6 +10,7 @@ function Folder({ folder, view }) {
     setOpenStatus(!openStatus);
   }
 
+
   return (
     <>
       <div className="tw-w-full tw-mb-10 tw-px-4 tw-py-7 tw-flex tw-flex-col tw-bg-white tw-rounded-md tw-shadow-md tw-relative">

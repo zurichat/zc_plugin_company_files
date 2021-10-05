@@ -1,5 +1,8 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import UserAllow from "./UserAllow";
+
+import { getUserInfo, getWorkspaceUser, getWorkspaceUsers} from '../../../actions/workspaceInfo';
+import { useDispatch, useSelector } from "react-redux";
 
 import img1 from "../CollabImages/damilola-1.png";
 import img2 from "../CollabImages/damilola-2.png";
@@ -23,7 +26,32 @@ const AdminAllow = (props) => {
   );
 };
 
-const GivePermission = () => {
+const GivePermission = ({search}) => {
+  const ZuriUsers = [];
+
+  const userArray = []
+
+  const onSaveHandler =(col)=> {
+    userArray.push(col)
+  }
+
+  const dispatch = useDispatch();
+  const { loading, error, users, user, info } = useSelector(
+    (state) => state.rootReducer.workspaceReducer
+  );
+
+  Object.keys(users).map(key => ZuriUsers.push(users[key]))
+
+
+  useEffect(() => {
+    (async () => {
+      dispatch(getUserInfo());
+      dispatch(getWorkspaceUser("eosabiya@gmail.com")); //takes email as parameter
+      dispatch(getWorkspaceUsers());
+    })();
+  }, []);
+
+
   return (
     <div className="div">
       <AdminAllow
@@ -37,7 +65,10 @@ const GivePermission = () => {
         }
         admin_name="Damilola Designer"
       />
-      <UserAllow
+      {
+        search == "" ? ZuriUsers.slice(0, (ZuriUsers.length - 1)).map(user => <UserAllow key={user._id} user={user} onSaveHandler={onSaveHandler} />) : ZuriUsers.filter(user => user.user_name == search || user.email == search).slice(0, 457).map(user => <UserAllow key={user._id} user={user} onSaveHandler={onSaveHandler} />)
+      }
+      {/* <UserAllow
         image={
           <img
             className="tw-h-9 tw-rounded-full tw-w-9 predicate"
@@ -95,30 +126,9 @@ const GivePermission = () => {
         }
         name="Damilola Emmanuel"
         email="damilolaemma@hotmail.com"
-      />
+      /> */}
 
-      <style jsx>{`
-        @media (min-width: 300px) and (max-width: 499px) {
-          .predicate {
-            width: 28px !important;
-            height: 28px !important;
-            margin-right: 2px !important;
-          }
-
-          h1 {
-            font-size: 12px !important;
-            line-height: 15px;
-          }
-
-          .subject span {
-            font-size: 10px !important;
-          }
-
-          .subject {
-            margin-left: 0.65px !important;
-          }
-        }
-      `}</style>
+      
     </div>
   );
 };
