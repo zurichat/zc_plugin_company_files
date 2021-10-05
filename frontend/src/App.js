@@ -6,6 +6,7 @@ import "./App.css";
 import axios from "axios";
 import { getUserInfo } from "./actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
+import store from "./store/store";
 
 const API_URL =
   window.location.hostname.includes("localhost") ||
@@ -13,6 +14,13 @@ const API_URL =
     ? "http://localhost:5500/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
+const { a, token, currentWorkspace } = store.getState().rootReducer.workspaceReducer.info;
+axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+axios.defaults.headers.userObj = {
+  userName: a.user_name,
+  imageUrl: a.img_url,
+  userId: a._id,
+};
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -31,13 +39,6 @@ export default function Home() {
       }
     })();
   }, []);
-
-  axios.defaults.headers.common["Authorization"] = `Bearer ${info?.token}` || "";
-  axios.defaults.headers["userObj"] = {
-    imageUrl: info?.user_url || "",
-    userName: info?.user_name || "",
-    userId: info?._id || "",
-  };
 
   return (
     <Layout>
