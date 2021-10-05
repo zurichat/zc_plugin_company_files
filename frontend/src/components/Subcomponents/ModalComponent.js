@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ModalComponent({message, setShow}) {
+function ModalComponent({message}) {
   const [show, setShow] = React.useState(true);
 
   function closeModal() {
