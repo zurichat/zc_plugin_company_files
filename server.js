@@ -4,10 +4,10 @@ require('express-async-errors');
 
 const path = require('path');
 const cors = require('cors');
-const cron = require('node-cron');
 const cpus = require('os').cpus();
 const cluster = require('cluster');
 const express = require('express');
+const crontab = require('node-crontab');
 const compression = require('compression');
 const cropFileUpload = require('express-fileupload');
 let MemoryCache;
@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 
 // Schedule 2-hourly trash emptying
 // (i.e., the emptyTrash() script will run every 2 hours)
-cron.schedule('* */2 * * *', emptyTrash);
+crontab.scheduleJob('* */2 * * *', emptyTrash, [30]);
 
 app.use((req, res, next) => {
   if (!isProduction) {

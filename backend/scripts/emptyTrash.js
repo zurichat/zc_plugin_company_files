@@ -13,7 +13,7 @@ const emptyTrash = async (FILE_DURATION = 30) => {
   console.log(':>> Cron Job [Empty Trash] is about running...');
   const allFiles = await File.fetchAll();
   const filesToDelete = allFiles.filter(file => {
-    return differenceInDays(file.lastAccessed, Date.now()) >= FILE_DURATION;
+    return file.isDeleted && differenceInDays(file.lastAccessed, Date.now()) >= FILE_DURATION;
   }).map(({ _id, cloudinaryId }) => { _id, cloudinaryId });
 
 
