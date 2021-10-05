@@ -7,16 +7,15 @@ import FolderIcon from '../svg/FolderIcon';
 import classes from '../RecentlyViewed.module.css'
 
 function RecentlyViewedFolders() {
-    const [images, setImages] = useState([])
+    const [folders, setFolders] = useState([])
     
     useEffect(() => {
         axios.get('https://companyfiles.zuri.chat/api/v1/folders/recentlyViewed')
         .then(res => {
-            console.log('res', res.data)
-            setImages(res.data)
+            setFolders(res.data)
         })
         .catch(err => {
-            console.log(err)
+            // console.log(err)
         })
     }, [])
     const goBack = () => {
@@ -31,7 +30,6 @@ function RecentlyViewedFolders() {
         </svg>
     )
 
-    console.log(images)
     return (
         <div className={classes.recentlyViewed}>
             <div className={classes.header}>
@@ -54,7 +52,7 @@ function RecentlyViewedFolders() {
             </div>
             <div className={classes.body}>
                 {
-                    images.map((image, idx) => (
+                    folders.map((image, idx) => (
                         <div className={classes.container}>
                             <div className={classes.icon} style={{background: '#E3EEFF'}}>
                                 <FolderIcon />

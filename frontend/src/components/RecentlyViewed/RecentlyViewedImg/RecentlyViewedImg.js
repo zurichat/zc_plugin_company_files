@@ -12,11 +12,10 @@ function RecentlyViewedImg() {
     useEffect(() => {
         axios.get('https://companyfiles.zuri.chat/api/v1/files/recentlyViewedImages')
         .then(res => {
-            console.log('res', res.data)
             setImages(res.data)
         })
         .catch(err => {
-            console.log(err)
+            // console.log(err)
         })
     }, [])
     const goBack = () => {
@@ -31,7 +30,6 @@ function RecentlyViewedImg() {
         </svg>
     )
 
-    console.log(images)
     return (
         <div className={classes.recentlyViewed}>
             <div className={classes.header}>

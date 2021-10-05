@@ -7,16 +7,15 @@ import DocsIcon from '../svg/DocsIcon';
 import classes from '../RecentlyViewed.module.css'
 
 function RecentlyViewedDocs() {
-    const [images, setImages] = useState([])
+    const [docs, setDocs] = useState([])
     
     useEffect(() => {
         axios.get('https://companyfiles.zuri.chat/api/v1/files/recentlyViewedDocs')
         .then(res => {
-            console.log('res', res.data)
-            setImages(res.data)
+            setDocs(res.data)
         })
         .catch(err => {
-            console.log(err)
+            // console.log(err)
         })
     }, [])
     const goBack = () => {
@@ -53,7 +52,7 @@ function RecentlyViewedDocs() {
             </div>
             <div className={classes.body}>
                 {
-                    images.map((image, idx) => (
+                    docs.map((image, idx) => (
                         <div className={classes.container}>
                             <div className={classes.icon} style={{background: '#D7FCEB'}}>
                                 <DocsIcon />

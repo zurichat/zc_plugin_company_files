@@ -7,16 +7,15 @@ import VideoIcon from '../svg/VideoIcon';
 import classes from '../RecentlyViewed.module.css'
 
 function RecentlyViewedVideos() {
-    const [images, setImages] = useState([])
+    const [videos, setVideos] = useState([])
     
     useEffect(() => {
         axios.get('https://companyfiles.zuri.chat/api/v1/files/recentlyViewedVideos')
         .then(res => {
-            console.log('res', res.data)
-            setImages(res.data)
+            setVideos(res.data)
         })
         .catch(err => {
-            console.log(err)
+            // console.log(err)
         })
     }, [])
     const goBack = () => {
@@ -31,7 +30,6 @@ function RecentlyViewedVideos() {
         </svg>
     )
 
-    console.log(images)
     return (
         <div className={classes.recentlyViewed}>
             <div className={classes.header}>
@@ -54,7 +52,7 @@ function RecentlyViewedVideos() {
             </div>
             <div className={classes.body}>
                 {
-                    images.map((image, idx) => (
+                    videos.map((image, idx) => (
                         <div className={classes.container}>
                             <div className={classes.icon} style={{background: '#FFF0F0'}}>
                                 <VideoIcon />
