@@ -15,6 +15,10 @@
     align-items: center;
 }
 
+.left div:first-child {
+    cursor: pointer;
+}
+
 .left span {
     margin-left: 30px;
     font-weight: bold;

@@ -1,41 +1,61 @@
 import React, { useState, useEffect } from 'react'
-import { BsArrowUpDown } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
-import {Link} from "react-router-dom";
 import axios from 'axios'
+import Loader from "react-loader-spinner";
+import {Link} from "react-router-dom";
+import { BsGrid3X2 } from "react-icons/bs";
+import { BsArrowUpDown } from "react-icons/bs";
 import DocsIcon from '../svg/DocsIcon';
+import BackBtn from '../svg/BackBtn';
 import classes from '../RecentlyViewed.module.css'
 
 function RecentlyViewedDocs() {
     const [docs, setDocs] = useState([])
     
     useEffect(() => {
-        axios.get('https://companyfiles.zuri.chat/api/v1/files/recentlyViewedDocs')
-        .then(res => {
-            setDocs(res.data)
-        })
-        .catch(err => {
-            // console.log(err)
-        })
+        (async () => {
+            try {
+                const res = await axios.get("/files/recentlyViewedDocs");
+                setDocs(res.data);
+            } catch (error) {
+                // console.log(error);
+            }
+        })();
     }, [])
+
+    const truncateString = (string, number) => {
+        if (string.length <= number) {
+            return string
+        }
+        return string.slice(0, number) + '...'
+    }
+
     const goBack = () => {
         const currentState = history.state;
         history.pushState(currentState, '', '/companyfiles');
     }
 
-    const backBtn = (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 12H4" stroke="#333333" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M10 18L4 12L10 6" stroke="#333333" stroke-width="1.22693" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    )
+    if (docs.length === 0) {
+        return (
+            <div className="tw-w-full tw-py-10 ">
+                <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
+                <Loader
+                    type="ThreeDots"
+                    color="#00B87C"
+                    height={100}
+                    width={100}
+                    visible="true"
+                />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={classes.recentlyViewed}>
             <div className={classes.header}>
                 <div className={classes.left}>
                     <div onClick={goBack}>
-                        {backBtn}
+                        <BackBtn />
                     </div>
                     <span>Recently Viewed Documents</span>
                 </div>
@@ -52,17 +72,17 @@ function RecentlyViewedDocs() {
             </div>
             <div className={classes.body}>
                 {
-                    docs.map((image, idx) => (
+                    docs.map((doc, idx) => (
                         <div className={classes.container}>
                             <div className={classes.icon} style={{background: '#D7FCEB'}}>
                                 <DocsIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {image.fileName}
+                                    {truncateString(doc.fileName, 18)}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {image.lastAccessed}
+                                    {doc.lastAccessed}
                                 </div>
                             </div>
                         </div>
