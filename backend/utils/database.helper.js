@@ -22,8 +22,7 @@ class DatabaseOps {
       organization_id: '6133c5a68006324323416896',
       collection_name: collection_name,
       bulk_delete: false,
-      object_id: '',
-      filter: {}
+      object_id: ''
     }
   }
 
@@ -62,6 +61,7 @@ class DatabaseOps {
   }
 
   update = async (id, payload) => {
+    this.data.filter = undefined;
     this.data.payload = payload;
     this.data.object_id = id;
 

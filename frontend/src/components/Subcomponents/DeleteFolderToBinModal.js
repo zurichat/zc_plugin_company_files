@@ -1,11 +1,26 @@
 import { useHistory } from "react-router";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Modal = ({ deleteToBin, setDeleteToBin, id, folderName }) => {
   const history = useHistory();
-  const handleDelete = () => {
-    fetch("https://companyfiles.zuri.chat/api/v1/folders/deleteFolder/" + id, {
-      method: "put",
-    }).then((res) => (res.status === 200 ? history.push("/trash") : null));
+  const handleDelete = async () => {
+    try {
+      const response = await axios.put(
+        "https://companyfiles.zuri.chat/api/v1/folders/deleteFolder/" + id
+      );
+      console.log(response);
+      {
+        response.status == 200 && history.push("/trash");
+      }
+    } catch (err) {
+      console.log(error.message);
+      await Swal.fire({
+        type: "error",
+        title: "Oops...",
+        text: error.message,
+      });
+    }
   };
 
   return deleteToBin ? (
@@ -23,7 +38,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, folderName }) => {
             {/*body*/}
             <div className="tw-relative tw-pt-3">
               <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
-                Are you sure you want to Delete ${folderName} File?
+                Are you sure you want to Delete {folderName} File?
               </p>
             </div>
             {/*footer*/}

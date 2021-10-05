@@ -332,13 +332,14 @@ exports.unStarFolder = async (req, res) => {
 exports.folderRename = async (req, res) => {
   const { folderId } = req.params;
   const { oldFolderName, newFolderName } = req.body;
+  console.log(req.body)
 
   if (!folderId && !oldFolderName && !newFolderName)
     throw new BadRequestError('Please provide the "folderId", "oldFolderName" & "newFolderName"');
 
   // Get single folder
   const folder = await Folders.fetchOne({ _id: folderId });
-  if (!folder) throw new NotFoundError();
+  if (!folder) throw new NotFoundError("Folder not found");
 
   console.log("FOLDER::: ", folder);
   console.log("OLD NAME:: ", oldFolderName);

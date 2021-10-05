@@ -6,6 +6,8 @@ import folderUsers from "../../../../public/Icons/folderUsers.png";
 import CollaboratorCard from "../../Collaborators/CollaboratorCard/CollaboratorCard";
 
 import Backdrop from "../../FolderRename/ModalDrop";
+import { FiPlusCircle } from 'react-icons/fi';
+
 
 function FolderGridView({ folder, openMenu, fileNumber, index }) {
   const [openModal, setModal] = useState(false);
@@ -17,6 +19,7 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
   const closeModal = () => {
     setModal(false);
   };
+
 
   return (
     <>
@@ -40,17 +43,19 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
             {folder.noOfFiles} {folder.noOfFiles > 1 ? "Files" : "File"}
           </span>
           <div className="avi tw-w-16 tw-cursor-pointer">
-            <img
+          <FiPlusCircle onClick={triggerModal} className="tw-text-xl tw-text-gray-500"/>
+
+            {/* <img
               src={folderUsers}
               alt="folder user"
               className="tw--mr-4 tw-w-full"
               onClick={triggerModal}
-            />
+            /> */}
           </div>
         </div>
       </div>
 
-      {openModal && <CollaboratorCard onCancel={closeModal} />}
+      {openModal && <CollaboratorCard key={folder._id} onCancel={closeModal} />}
       {openModal && <Backdrop onCancel={closeModal} />}
     </>
   );
