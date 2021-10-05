@@ -73,16 +73,16 @@ function RecentlyViewedVideos() {
             <div className={classes.body}>
                 {
                     videos.map((video, idx) => (
-                        <div className={classes.container}>
+                        <div key={video._id} className={classes.container}>
                             <div className={classes.icon} style={{background: '#FFF0F0'}}>
                                 <VideoIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {truncateString(video.fileName, 18)}
+                                    {truncateString(video?.fileName, 18)}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {video.lastAccessed}
+                                    {video?.lastAccessed}
                                 </div>
                             </div>
                         </div>

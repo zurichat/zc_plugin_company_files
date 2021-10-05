@@ -73,16 +73,16 @@ function RecentlyViewedImg() {
             <div className={classes.body}>
                 {
                     images.map((image, idx) => (
-                        <div className={classes.container}>
+                        <div key={image._id} className={classes.container}>
                             <div className={classes.icon} style={{background: '#E3EEFF'}}>
                                 <ImageIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {truncateString(image.fileName, 18)}
+                                    {truncateString(image?.fileName, 18)}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {image.lastAccessed}
+                                    {image?.lastAccessed}
                                 </div>
                             </div>
                         </div>

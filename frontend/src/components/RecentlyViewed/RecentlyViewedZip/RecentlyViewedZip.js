@@ -73,16 +73,16 @@ function RecentlyViewedZip() {
             <div className={classes.body}>
                 {
                     zipFiles.map((zipFile, idx) => (
-                        <div className={classes.container}>
+                        <div key={zipFile._id} className={classes.container}>
                             <div className={classes.icon} style={{background: '#FFE0F6'}}>
                                 <ZippedIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {truncateString(zipFile.fileName, 18)}
+                                    {truncateString(zipFile?.fileName, 18)}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {zipFile.lastAccessed}
+                                    {zipFile?.lastAccessed}
                                 </div>
                             </div>
                         </div>

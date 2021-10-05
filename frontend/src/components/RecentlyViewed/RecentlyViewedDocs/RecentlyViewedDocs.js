@@ -73,16 +73,16 @@ function RecentlyViewedDocs() {
             <div className={classes.body}>
                 {
                     docs.map((doc, idx) => (
-                        <div className={classes.container}>
+                        <div key={doc._id} className={classes.container}>
                             <div className={classes.icon} style={{background: '#D7FCEB'}}>
                                 <DocsIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {truncateString(doc.fileName, 18)}
+                                    {truncateString(doc?.fileName, 18)}
                                 </div>
                                 <div className={classes.timeStamp}>
-                                    {doc.lastAccessed}
+                                    {doc?.lastAccessed}
                                 </div>
                             </div>
                         </div>

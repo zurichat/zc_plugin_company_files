@@ -73,13 +73,13 @@ function RecentlyViewedFolders() {
             <div className={classes.body}>
                 {
                     folders.map((folder, idx) => (
-                        <div className={classes.container}>
+                        <div key={folder._id} className={classes.container}>
                             <div className={classes.icon} style={{background: '#FEF3C7'}}>
                                 <FolderIcon />
                             </div>
                             <div className={classes.fileDetails}>
                                 <div className={classes.fileName}>
-                                    {truncateString(folder.folderName, 9)}
+                                    {truncateString(folder?.folderName, 9)}
                                 </div>
                                 <div className={classes.timeStamp}>
                                     {folder?.lastAccessed}
