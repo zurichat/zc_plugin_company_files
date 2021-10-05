@@ -1,67 +1,55 @@
-const { unlink: deleteFile, stat: getFileDetails } = require("fs/promises");
-const fs = require("fs");
-const path = require("path");
-const uuid = require("uuid").v4;
-const Busboy = require("busboy");
-const mimeTypes = require("mime-types");
-const DatabaseOps = require("../utils/database.helper");
-const File = new DatabaseOps("File");
-const Folder = new DatabaseOps("Folder");
-const RealTime = require("../utils/realtime.helper");
-const FileSchema = require("../models/File");
-const MediaUpload = require("../utils/mediaUpload");
-const { BadRequestError, NotFoundError } = require("../utils/appError");
-const appResponse = require("../utils/appResponse");
-const md5Generator = require("../utils/md5Generator");
-const addActivity = require("./../utils/activities");
-const { getCache, setCache } = require("../utils/cache.helper");
+const { unlink: deleteFile, stat: getFileDetails } = require('fs/promises');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid').v4;
+const Busboy = require('busboy');
+const mimeTypes = require('mime-types');
+const DatabaseOps = require('../utils/database.helper');
+const File = new DatabaseOps('File');
+const Folder = new DatabaseOps('Folder');
+const RealTime = require('../utils/realtime.helper');
+const FileSchema = require('../models/File');
+const MediaUpload = require('../utils/mediaUpload');
+const { BadRequestError, NotFoundError } = require('../utils/appError');
+const appResponse = require('../utils/appResponse');
+const md5Generator = require('../utils/md5Generator');
+const addActivity = require('./../utils/activities');
+const { getCache, setCache } = require('../utils/cache.helper');
 
-const getFilePath = (fileName, fileId) =>
-  path.normalize(
-    path.join(process.cwd(), "uploads", `file~${fileId}~${fileName}`)
-  );
+const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
+
 
 exports.fileUploadRequest = (req, res) => {
   const { fileName } = req.body;
   if (!fileName) {
-    throw new BadRequestError("Missing file name!");
+    throw new BadRequestError('Missing file name!');
   } else {
     const fileId = uuid();
-    fs.createWriteStream(getFilePath(fileName, fileId), { flags: "w" });
+    fs.createWriteStream(getFilePath(fileName, fileId), { flags: 'w' });
 
     res.status(200).send(appResponse(null, { fileId, fileName }, true));
   }
-};
+}
+
 
 exports.fileUploadStatus = (req, res) => {
   if (req.query && req.query.fileName && req.query.fileId) {
     getFileDetails(getFilePath(req.query.fileName, req.query.fileId))
-      .then((stats) => {
-        res
-          .status(200)
-          .json({ status: "success", totalChunkUploaded: stats.size });
-      })
-      .catch((e) => {
-        console.error("-- file read failed:", e);
-        res.status(400).json({
-          status: "failure",
-          message: "No file with provided credentials...",
-          credentials: { ...req.query },
-        });
+      .then(stats => {
+        res.status(200).json({ status: 'success', totalChunkUploaded: stats.size });
+      }).catch(e => {
+        console.error('-- file read failed:', e);
+        return res.status(400).send(appResponse(null, 'No file with provided credentials...', false, { credentials: { ...req.query }}));
       });
   } else {
-    return res.status(400).json({
-      status: "failure",
-      message: 'Invalid "Content-Range" format',
-      credentials: { ...req.query },
-    });
+    return res.status(400).send(appResponse(null, 'Invalid "Content-Range" format', false, { credentials: { ...req.query }}));
   }
 };
 
 exports.fileUpload = async (req, res) => {
-  const contentRange = req.headers["content-range"];
-  const fileId = req.headers["x-file-id"];
-  const folderId = req.headers["x-folder-id"] || null;
+  const contentRange = req.headers['content-range'];
+  const fileId = req.headers['x-file-id'];
+  const folderId = req.headers['x-folder-id'] || null;
 
   if (!contentRange)
     throw new BadRequestError('Missing "Content-Range" header');
@@ -85,25 +73,22 @@ exports.fileUpload = async (req, res) => {
 
   const busboy = new Busboy({ headers: req.headers });
 
-  busboy.on("file", (_, file, fileName) => {
+  busboy.on('file', (_, file, fileName) => {
     const filePath = getFilePath(fileName, fileId);
 
     if (!fileId) req.pause();
 
     getFileDetails(filePath)
-      .then((stats) => {
-        if (stats.size !== rangeStart)
-          throw new BadRequestError("Bad chunk range start");
+      .then(stats => {
+        if (stats.size !== rangeStart) throw new BadRequestError('Bad chunk range start');
 
-        const fileStream = file.pipe(
-          fs.createWriteStream(filePath, { flags: "a" })
-        );
+        const fileStream = file.pipe(fs.createWriteStream(filePath, { flags: 'a' }));
 
-        fileStream.on("error", () => {
-          throw new BadRequestError("File upload failed!");
+        fileStream.on('error', () => {
+          throw new BadRequestError('File upload failed!');
         });
 
-        fileStream.on("finish", async () => {
+        fileStream.on('finish', async () => {
           // Generate file's md5Hash & upload to Cloudinary
           const [md5Hash, { url, size, cloudinaryId }] = await Promise.all([
             md5Generator(filePath),
@@ -118,8 +103,8 @@ exports.fileUpload = async (req, res) => {
             type: mimeTypes.lookup(fileName),
             size,
             cloudinaryId,
-            md5Hash,
-          };
+            md5Hash
+          }
 
           const file = await FileSchema.validateAsync(fileData);
 
@@ -129,28 +114,22 @@ exports.fileUpload = async (req, res) => {
           await Promise.all([
             File.create(file),
             deleteFile(filePath),
-            addActivity(userObj, "added", `${file.fileName}`),
-            RealTime.publish("newFile", file),
+            addActivity(userObj, 'added', `${file.fileName}`),
+            RealTime.publish('newFile', file)
           ]);
           // normal response without data.
-          return res
-            .status(200)
-            .send(appResponse("File uploaded successfully!", file, true));
+          return res.status(200).send(appResponse('File uploaded successfully!', file, true));
         });
       })
       .catch((e) => {
         // console.error('-- file read failed:', e);
-        return res.status(400).send(
-          appResponse(null, "No file with provided credentials...", false, {
-            credentials: { fileId, fileName },
-          })
-        );
+        return res.status(400).send(appResponse(null, 'No file with provided credentials...', false, { credentials: { fileId, fileName }}));
       });
   });
 
-  busboy.on("error", (e) => {
+  busboy.on('error', (e) => {
     // console.error('-- file read failed:', e);
-    throw new BadRequestError("File read failed!");
+    throw new BadRequestError('File read failed!');
   });
 
   req.pipe(busboy);
@@ -174,8 +153,9 @@ exports.cropImage = async (req, res) => {
       const updateParams = {
         url: newImage.url,
         cloudinaryId: newImage.cloudinaryId,
-        size: newImage.size,
-      };
+        size: newImage.size
+      }
+
       await Promise.all([
         await MediaUpload.deleteFromCloudinary(previousImage.cloudinaryId),
         File.update(id, updateParams),
@@ -184,11 +164,7 @@ exports.cropImage = async (req, res) => {
 
       const updatedCroppedImage = await File.fetchOne({ _id: id });
 
-      res
-        .status(200)
-        .send(
-          appResponse("Image cropped successfully!", updatedCroppedImage, true)
-        );
+      res.status(200).send(appResponse('Image cropped successfully!', updatedCroppedImage, true));
     } else {
       // Image crop did not occur
       await Promise.all([
@@ -199,13 +175,13 @@ exports.cropImage = async (req, res) => {
     }
   } else {
     await deleteFile(cropImage.tempFilePath);
-    throw new BadRequestError("Only images are allowed!");
+    throw new BadRequestError('Only images are allowed!');
   }
 };
 
 // Get all non-deleted files
 exports.getAllFiles = async (req, res) => {
-  const cache = await getCache(req, { key: "allFiles" });
+  const cache = await getCache(req, { key: 'allFiles' });
   let nonDeletedFiles = [];
   if (cache) {
     res.status(200).send(appResponse(null, JSON.parse([cache]), true));
@@ -216,15 +192,16 @@ exports.getAllFiles = async (req, res) => {
       return new Date(b.dateAdded) - new Date(a.dateAdded);
     });
 
-    nonDeletedFiles = data.filter((file) => !file.isDeleted);
-    await RealTime.publish("allFiles", nonDeletedFiles);
+    nonDeletedFiles = data.filter(file => !file.isDeleted);
+    await RealTime.publish('allFiles', nonDeletedFiles);
 
     // Cache data in memory
     // setCache(req, { key: 'allFiles', duration: 3600, data: JSON.stringify(nonDeletedFiles) });
   }
 
   res.status(200).send(appResponse(null, nonDeletedFiles, true));
-};
+}
+
 
 // sort files by query string
 exports.sortFiles = async (req, res) => {
@@ -234,7 +211,7 @@ exports.sortFiles = async (req, res) => {
         let current = currentItem[key];
         let next = nextItem[key];
 
-        if (key !== "size") {
+        if (key !== 'size') {
           current = currentItem[key].toLowerCase();
           next = nextItem[key].toLowerCase();
         }
@@ -255,7 +232,8 @@ exports.sortFiles = async (req, res) => {
   }
 
   res.status(200).send(appResponse(null, data, true));
-};
+}
+
 
 exports.copyFile = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });
@@ -263,8 +241,9 @@ exports.copyFile = async (req, res) => {
   delete data._id, delete data.dateAdded;
 
   const response = await File.create(data.data);
-  res.send({ response });
-};
+  res.status(200).send(appResponse(null, response, true));
+}
+
 
 // Get all files by type
 exports.getFileByType = async (req, res) => {
@@ -278,7 +257,8 @@ exports.getFileByType = async (req, res) => {
 
   await RealTime.publish(`${type}Files`, data);
   res.status(200).send(appResponse(null, matchedFiles, true));
-};
+}
+
 
 exports.fileDetails = async (req, res) => {
   const { fileId } = req.params;
@@ -291,20 +271,19 @@ exports.fileDetails = async (req, res) => {
 
   await Promise.all([
     File.update(fileId, updatedLastAccessed),
-    RealTime.publish("fileDetail", data),
+    RealTime.publish("fileDetail", data)
   ]);
 
   res.status(200).send(appResponse(null, data, true));
-};
+}
+
 
 exports.fileRename = async (req, res) => {
   const { fileId } = req.params;
   let { oldFileName, newFileName } = req.body;
 
   if (!fileId || !oldFileName || !newFileName)
-    throw new BadRequestError(
-      'Please provide the "fileId", "oldFileName" & "newFileName"'
-    );
+    throw new BadRequestError('Please provide the "fileId", "oldFileName" & "newFileName"');
 
   // Get single file
   const file = await File.fetchOne({ _id: fileId });
@@ -312,28 +291,20 @@ exports.fileRename = async (req, res) => {
 
   if (
     oldFileName === file.fileName &&
-    newFileName !== file.fileName.substring(0, file.fileName.lastIndexOf("."))
+    newFileName !== file.fileName.substring(0, file.fileName.lastIndexOf('.'))
   ) {
-    newFileName =
-      newFileName + file.fileName.substr(file.fileName.lastIndexOf("."));
+    newFileName = newFileName + file.fileName.substr(file.fileName.lastIndexOf('.'));
     await File.update(fileId, { fileName: newFileName });
+
     const { userObj } = req.headers;
-    await addActivity(userObj, "renamed", `${oldFileName} to ${newFileName}`);
-    res
-      .status(200)
-      .send(
-        appResponse(
-          "File renamed successfully!",
-          { ...file, fileName: newFileName },
-          true
-        )
-      );
+    await addActivity(userObj, 'renamed', `${oldFileName} to ${newFileName}`);
+
+    res.status(200).send(appResponse('File renamed successfully!', { ...file, fileName: newFileName }, true));
   } else {
-    throw new BadRequestError(
-      '"oldFileName" cannot be equal to the "newFileName"!'
-    );
+    throw new BadRequestError('"oldFileName" cannot be equal to the "newFileName"!');
   }
-};
+}
+
 
 // Delete permanently
 exports.fileDelete = async (req, res) => {
@@ -342,19 +313,18 @@ exports.fileDelete = async (req, res) => {
 
   const [response] = await Promise.all([
     File.delete(req.params.id),
-    MediaUpload.deleteFromCloudinary(data.cloudinaryId),
+    MediaUpload.deleteFromCloudinary(data.cloudinaryId)
   ]);
 
-  if (!response) throw new BadRequestError("Can't delete permanently");
+  if (!response) throw new BadRequestError(`Can't delete permanently`);
 
   // Save to list of activities
   const { userObj } = req.headers;
-  await addActivity(userObj, "permanently deleted", `${data.fileName}`);
+  await addActivity(userObj, 'permanently deleted', `${data.fileName}`);
 
-  res
-    .status(200)
-    .send(appResponse("File deleted successfully!", response, true));
-};
+  res.status(200).send(appResponse('File deleted successfully!', response, true));
+}
+
 
 // exports.deleteSomeFiles = async (req, res) => {
 //   let response = await File.fetchAll();
@@ -372,8 +342,8 @@ exports.fileDelete = async (req, res) => {
 //   res.status(200).send(appResponse('File deleted successfully!', { count: response.length }, true));
 // }
 
-// Delete multiple files
 
+// Delete multiple files
 exports.deleteMultipleFiles = async (req, res) => {
   const { ids } = req.body;
   const { userObj } = req.headers;
@@ -383,17 +353,16 @@ exports.deleteMultipleFiles = async (req, res) => {
     ...ids.map(async (id) => {
       const data = await File.fetchOne({ _id: id });
       // Save to list of activities
-      if (data) await addActivity(userObj, "deleted", `${data.fileName}`);
+      if (data) await addActivity(userObj, 'deleted', `${data.fileName}`);
       return MediaUpload.deleteFromCloudinary(data.cloudinaryId);
-    }),
+    })
   ]);
 
-  if (!response) throw new BadRequestError("Issues with deleting");
+  if (!response) throw new BadRequestError('Issues with deleting');
 
-  res
-    .status(200)
-    .send(appResponse("Multiple files deleted successfully!", response, true));
-};
+  res.status(200).send(appResponse('Multiple files deleted successfully!', response, true));
+}
+
 
 // Send to trash
 exports.deleteTemporarily = async (req, res) => {
@@ -401,16 +370,17 @@ exports.deleteTemporarily = async (req, res) => {
   const data = await File.fetchOne({ _id: req.params.id });
 
   if (data.isDeleted === false) {
-    const response = await File.update(req.params.id, { isDeleted: true });
+    const response = await File.update(req.params.id, { isDeleted: true, lastAccessed: new Date().toISOString() });
 
     // Save to list of activities
-    await addActivity(userObj, "deleted", `${data.fileName}`);
+    await addActivity(userObj, 'deleted', `${data.fileName}`);
     console.log({userObj})
-    res.status(200).send(appResponse("File sent to trash!", response, true));
+    res.status(200).send(appResponse('File sent to trash!', response, true));
   } else {
-    throw new BadRequestError("File is already deleted");
+    throw new BadRequestError('File is already deleted');
   }
-};
+}
+
 
 // Restore file
 exports.restoreFile = async (req, res) => {
@@ -421,67 +391,54 @@ exports.restoreFile = async (req, res) => {
     const response = await File.update(req.params.id, { isDeleted: false });
 
     // Save to list of activities
-    await addActivity(userObj, "restored", `${data.fileName}`);
+    await addActivity(userObj, 'restored', `${data.fileName}`);
 
-    res.status(200).send(appResponse("File restored!", response, true));
+    res.status(200).send(appResponse('File restored!', response, true));
   } else {
-    throw new BadRequestError("File is already restored");
+    throw new BadRequestError(`File hasn't been deleted!`);
   }
-};
+}
+
 
 // Cut or move file
 exports.cutOrMoveFile = async (req, res) => {
   let { fileId, folderId } = req.params;
   const { userObj } = req.headers;
-  if (!fileId || !folderId)
-    throw new BadRequestError('"fileId" & "folderId" are required!');
-  if (folderId === "null") folderId = null;
+  if (!fileId || !folderId)throw new BadRequestError('"fileId" & "folderId" are required!');
+  if (folderId === 'null') folderId = null;
 
   const [file, folder] = await Promise.all([
     File.fetchOne({ _id: fileId }),
-    Folder.fetchOne({ _id: folderId }),
+    Folder.fetchOne({ _id: folderId })
   ]);
 
-  if (!file) throw new NotFoundError("File not found!");
-  if (!folder && folderId !== null)
-    throw new NotFoundError("Folder not found!");
+  if (!file) throw new NotFoundError('File not found!');
+  if (!folder && folderId !== null) throw new NotFoundError('Folder not found!');
 
   if (file.folderId === folderId)
-    throw new BadRequestError(
-      `You can't cut or move a file to the same folder!`
-    );
+    throw new BadRequestError(`You can't cut or move a file to the same folder!`);
 
   await File.update(fileId, { folderId });
-  await addActivity(
-    userObj,
-    "moved",
-    `${file.fileName} to ${folder.folderName}`
-  );
+  await addActivity(userObj, 'moved', `${file.fileName} to ${folder.folderName}`);
 
-  res
-    .status(200)
-    .send(
-      appResponse(
-        "File cut or moved successfully!",
-        { ...file, folderId },
-        true
-      )
-    );
-};
+  res.status(200).send(appResponse('File cut or moved successfully!', { ...file, folderId }, true));
+}
+
 
 // handle file searching by is starred is true
 exports.searchStarredFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError("No starred Files");
+  if (!allFiles) throw new NotFoundError('No starred Files');
 
   const data = allFiles.filter((file) => file.isStarred);
 
-  await RealTime.publish("starredFiles", data);
+  await RealTime.publish('starredFiles', data);
 
   return data.length < 1
-    ? res.status(200).send(appResponse("No starred file!", [], true))
-    : res.status(200).send(appResponse("Starred files", data, true));
-};
+    ? res.status(200).send(appResponse('No starred file!', [], true))
+    : res.status(200).send(appResponse('Starred files', data, true));
+}
+
 
 exports.searchByDate = async (req, res) => {
   try {
@@ -504,50 +461,54 @@ exports.searchByDate = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error);
   }
-};
+}
+
 
 // Retrieves all the files that has been archived by a user
 exports.getArchivedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError("Archived files not found");
+  if (!allFiles) throw new NotFoundError('Archived files not found');
 
   const data = allFiles.filter((file) => file.isArchived);
 
-  await RealTime.publish("archivedFiles", data);
+  await RealTime.publish('archivedFiles', data);
 
   return data.length < 1
-    ? res.status(200).send(appResponse("No archived file!", [], true))
-    : res.status(200).send(appResponse("Archived files", data, true));
-};
+    ? res.status(200).send(appResponse('No archived file!', [], true))
+    : res.status(200).send(appResponse('Archived files', data, true));
+}
+
 
 // Get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError("No deleted files");
+  if (!allFiles) throw new NotFoundError('No deleted files');
 
   const deletedFiles = allFiles.filter((file) => file.isDeleted);
 
-  await RealTime.publish("deletedFiles", deletedFiles);
+  await RealTime.publish('deletedFiles', deletedFiles);
 
   return deletedFiles.length < 1
-    ? res.status(200).send(appResponse("No file deleted yet!", [], true))
-    : res.status(200).send(appResponse("Deleted files", deletedFiles, true));
-};
+    ? res.status(200).send(appResponse('No file deleted yet!', [], true))
+    : res.status(200).send(appResponse('Deleted files', deletedFiles, true));
+}
+
 
 // check for duplicate files with md5 values
 exports.isDuplicate = async (req, res) => {
   const { md5Hash } = req.body;
   const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError("File not found");
+  if (!allFiles) throw new NotFoundError('File not found');
 
-  const [fileExists] = allFiles.filter((file) => file.md5Hash === md5Hash);
+  const [fileExists] = allFiles.filter(file => file.md5Hash === md5Hash);
 
   if (fileExists) {
-    res.status(400).send(appResponse("File exists"));
+    res.status(400).send(appResponse('File exists'));
   } else {
-    res.status(200).send(appResponse("File does not exist", null, true));
+    res.status(200).send(appResponse('File does not exist', null, true));
   }
-};
+}
+
 
 // Star a file
 exports.starFile = async (req, res) => {
@@ -556,12 +517,13 @@ exports.starFile = async (req, res) => {
 
   if (data.isStarred === false) {
     const response = await File.update(req.params.id, { isStarred: true });
-    await addActivity(userObj, "starred", `${data.fileName}`);
-    res.status(200).send(appResponse("File has been starred!", response, true));
+    await addActivity(userObj, 'starred', `${data.fileName}`);
+    res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    res.status(200).send(appResponse("Folder is already starred!", [], true));
+    res.status(200).send(appResponse('File is already starred!', [], true));
   }
-};
+}
+
 
 // Unstar a file
 exports.unStarFile = async (req, res) => {
@@ -570,12 +532,13 @@ exports.unStarFile = async (req, res) => {
 
   if (data.isStarred === true) {
     const response = await File.update(req.params.id, { isStarred: false });
-    await addActivity(userObj, "unstarred", `${data.fileName}`);
-    res.status(200).send(appResponse("File has been starred!", response, true));
+    await addActivity(userObj, 'unstarred', `${data.fileName}`);
+    res.status(200).send(appResponse('File has been starred!', response, true));
   } else {
-    res.status(200).send(appResponse("Folder is already unstarred!", [], true));
+    res.status(200).send(appResponse('Folder is already unstarred!', [], true));
   }
-};
+}
+
 
 /** *****************************
  * =============================
@@ -632,26 +595,8 @@ exports.searchByType = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error);
   }
-};
+}
 
-exports.fileRename = async (req, res) => {
-  try {
-    const {
-      body: { name },
-    } = req;
-
-    // Get single file
-    const file = await File.fetchOne({ _id: req.params.id });
-    file.name = name;
-
-    // updates file name
-    const response = await File.update(req.params.id, file);
-
-    res.send({ response });
-  } catch (error) {
-    res.send({ error });
-  }
-};
 
 // Search Files By Size
 exports.searchBySize = async (req, res) => {

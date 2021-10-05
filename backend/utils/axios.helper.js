@@ -6,6 +6,10 @@ axios.interceptors.response.use(response => {
   // Maybe process response here
   return response.data;
 },({ message, request, response }) => {
+  // console.log('-- message', message);
+  // console.log('-- response', response);
+  // console.log('-- request', request);
+
   if (request) {
     throw new InternalServerError('An error occured while connecting to a required service.');
   }
@@ -24,6 +28,8 @@ axios.interceptors.response.use(response => {
         throw new ForbiddenError();
       case 404:
         throw new NotFoundError();
+      case 422:
+        throw new InternalServerError('An error occured while processing a request sent to Zuri Chat core.', 422);
       case 502:
         throw new BadGatewayError();
       default:
