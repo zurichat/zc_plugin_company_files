@@ -54,6 +54,17 @@ const UserAllow = ({user}) => {
   // const value = select.options[select.selectedIndex].value;
   }
 
+  const roleRmoveHandler = e => {
+    document.getElementById(userRoleId).innerText = "Role: "
+
+    document.getElementById(userRoleId).innerText !== role ? document.getElementById(saveBtnId).classList.add('displaySaveBtn'): document.getElementById(saveBtnId).classList.remove('displaySaveBtn')
+
+    toggleRoles()
+  // const value = select.options[select.selectedIndex].value;
+  }
+
+
+
   return (
     <div className="tw-flex tw-w-full tw-items-center tw-my-2 tw-px-4 tw-space-x-4 tw-h-14 tw-hover:bg-gray-100">
       {
@@ -84,7 +95,7 @@ const UserAllow = ({user}) => {
                   <div className="tw-cursor-pointer tw-hover:bg-green-500 tw-hover:text-white tw-py-1 tw-px-5"  onClick={roleChangeHandler}>Can View</div>
                 </div>
 
-                <div className="tw-flex tw-rounded tw-border-t tw-items-center tw-cursor-pointer tw-w-full tw-py-3 tw-px-10 removeUser">Remove</div>
+                <div className="tw-flex tw-rounded tw-border-t tw-items-center tw-cursor-pointer tw-w-full tw-py-3 tw-px-10 removeUser" onClick={roleRmoveHandler}>Remove</div>
                 
               </div>
             </div>
