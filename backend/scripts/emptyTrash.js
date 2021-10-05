@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const DatabaseOps = require('../utils/database.helper');
 const File = new DatabaseOps('File');
 
