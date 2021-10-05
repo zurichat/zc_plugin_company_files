@@ -74,7 +74,7 @@ function RecentlyViewedFolders() {
                 {
                     folders.map((folder, idx) => (
                         <div className={classes.container}>
-                            <div className={classes.icon} style={{background: '#E3EEFF'}}>
+                            <div className={classes.icon} style={{background: '#FEF3C7'}}>
                                 <FolderIcon />
                             </div>
                             <div className={classes.fileDetails}>
