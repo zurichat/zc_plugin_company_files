@@ -40,8 +40,11 @@ const GivePermission = ({search}) => {
     (state) => state.rootReducer.workspaceReducer
   );
 
-  Object.keys(users).map(key => ZuriUsers.push(users[key]))
-
+  if (error) {
+    console.log(error);
+  } else {
+    Object.keys(users).map(key => ZuriUsers.push(users[key]))
+  }
 
   useEffect(() => {
     (async () => {
