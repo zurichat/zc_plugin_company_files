@@ -112,6 +112,6 @@ router.put('/starFile/:id', starFile);
 router.put('/unStarFile/:id', unStarFile);
 
 // DETECT WHEN A FILE IS PREVIEWED
-router.post('/preview/:id', detectPreview);
+router.put('/preview/:id', detectPreview);
 
 module.exports = router;
