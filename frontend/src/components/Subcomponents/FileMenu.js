@@ -42,6 +42,8 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   function previewCmd() {
     setOpenPreview(true);
     dispatch(checkRecentlyViewed(file._id));
+    console.log(file);
+    console.log("file", file);
   }
 
   function getLink() {
