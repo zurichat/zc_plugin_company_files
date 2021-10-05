@@ -49,16 +49,8 @@ export function setLoading() {
 export const checkRecentlyViewed = (id) => async (dispatch) => {
   try {
     const response = await axios.put(`/files/preview/${id}`);
-    dispatch({
-      type: 'CHECK_RECENTLY_VIEWED',
-      payload: response.data,
-    });
     console.log(response);
   } catch (error) {
-    dispatch({
-      type: 'CHECK_RECENTLY_VIEWED_REJECTED',
-      payload: error.message,
-    });
     console.log(error);
   }
 };
