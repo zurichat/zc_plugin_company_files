@@ -18,6 +18,7 @@ import RecentlyViewedDocs from "../RecentlyViewed/RecentlyViewedDocs/RecentlyVie
 import RecentlyViewedImg from "../RecentlyViewed/RecentlyViewedImg/RecentlyViewedImg";
 import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewedVid";
 import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
+import RecentlyViewedFolders from "../RecentlyViewed/RecentlyViewedFolders/RecentlyViewedFolders";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
 
 import Test from "../ComponentToTest";
@@ -142,6 +143,9 @@ const Main = () => {
             </Route>
             <Route path="/recently-viewed-zips" exact>
               <RecentlyViewedZip />
+            </Route>
+            <Route path="/recently-viewed-folders" exact>
+              <RecentlyViewedFolders />
             </Route>
             <Route path="/open-folder" exact>
               <AllTheFiles />
