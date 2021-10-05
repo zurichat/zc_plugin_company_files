@@ -1,7 +1,11 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import UserAllow from "./UserAllow";
 
-import { getUserInfo, getWorkspaceUser, getWorkspaceUsers} from '../../../actions/workspaceInfo';
+import {
+  getUserInfo,
+  getWorkspaceUser,
+  getWorkspaceUsers,
+} from "../../../actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 import img1 from "../CollabImages/damilola-1.png";
@@ -26,24 +30,24 @@ const AdminAllow = (props) => {
   );
 };
 
-const GivePermission = ({search}) => {
+const GivePermission = ({ search }) => {
   const ZuriUsers = [];
 
-  const userArray = []
+  const userArray = [];
 
-  const onSaveHandler =(col)=> {
-    userArray.push(col)
-  }
+  const onSaveHandler = (col) => {
+    userArray.push(col);
+  };
 
   const dispatch = useDispatch();
   const { loading, error, users, user, info } = useSelector(
     (state) => state.rootReducer.workspaceReducer
   );
 
-  if (error) {
+  if (error && users == undefined || users == null) {
     console.log(error);
   } else {
-    Object.keys(users).map(key => ZuriUsers.push(users[key]))
+    Object.keys(users).map((key) => ZuriUsers.push(users[key]));
   }
 
   useEffect(() => {
@@ -53,7 +57,6 @@ const GivePermission = ({search}) => {
       dispatch(getWorkspaceUsers());
     })();
   }, []);
-
 
   return (
     <div className="div">
@@ -68,9 +71,25 @@ const GivePermission = ({search}) => {
         }
         admin_name="Damilola Designer"
       />
-      {
-        search == "" ? ZuriUsers.slice(0, (ZuriUsers.length - 1)).map(user => <UserAllow key={user._id} user={user} onSaveHandler={onSaveHandler} />) : ZuriUsers.filter(user => user.user_name == search || user.email == search).slice(0, 457).map(user => <UserAllow key={user._id} user={user} onSaveHandler={onSaveHandler} />)
-      }
+      {search == ""
+        ? ZuriUsers.slice(0, ZuriUsers.length - 1).map((user) => (
+            <UserAllow
+              key={user._id}
+              user={user}
+              onSaveHandler={onSaveHandler}
+            />
+          ))
+        : ZuriUsers.filter(
+            (user) => user.user_name == search || user.email == search
+          )
+            .slice(0, 457)
+            .map((user) => (
+              <UserAllow
+                key={user._id}
+                user={user}
+                onSaveHandler={onSaveHandler}
+              />
+            ))}
       {/* <UserAllow
         image={
           <img
@@ -130,8 +149,6 @@ const GivePermission = ({search}) => {
         name="Damilola Emmanuel"
         email="damilolaemma@hotmail.com"
       /> */}
-
-      
     </div>
   );
 };
