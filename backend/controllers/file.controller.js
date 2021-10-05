@@ -16,7 +16,10 @@ const md5Generator = require("../utils/md5Generator");
 const addActivity = require("./../utils/activities");
 const { getCache, setCache } = require("../utils/cache.helper");
 
-const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), "uploads", `file~${fileId}~${fileName}`));
+const getFilePath = (fileName, fileId) =>
+  path.normalize(
+    path.join(process.cwd(), "uploads", `file~${fileId}~${fileName}`)
+  );
 
 exports.fileUploadRequest = (req, res) => {
   const { fileName } = req.body;
@@ -40,22 +43,18 @@ exports.fileUploadStatus = (req, res) => {
       })
       .catch((e) => {
         console.error("-- file read failed:", e);
-        res
-          .status(400)
-          .json({
-            status: "failure",
-            message: "No file with provided credentials...",
-            credentials: { ...req.query },
-          });
+        res.status(400).json({
+          status: "failure",
+          message: "No file with provided credentials...",
+          credentials: { ...req.query },
+        });
       });
   } else {
-    return res
-      .status(400)
-      .json({
-        status: "failure",
-        message: 'Invalid "Content-Range" format',
-        credentials: { ...req.query },
-      });
+    return res.status(400).json({
+      status: "failure",
+      message: 'Invalid "Content-Range" format',
+      credentials: { ...req.query },
+    });
   }
 };
 
@@ -96,7 +95,9 @@ exports.fileUpload = async (req, res) => {
         if (stats.size !== rangeStart)
           throw new BadRequestError("Bad chunk range start");
 
-        const fileStream = file.pipe(fs.createWriteStream(filePath, { flags: "a" }));
+        const fileStream = file.pipe(
+          fs.createWriteStream(filePath, { flags: "a" })
+        );
 
         fileStream.on("error", () => {
           throw new BadRequestError("File upload failed!");
@@ -139,11 +140,11 @@ exports.fileUpload = async (req, res) => {
       })
       .catch((e) => {
         // console.error('-- file read failed:', e);
-        return res
-          .status(400)
-          .send(appResponse(null, "No file with provided credentials...", false, {
-              credentials: { fileId, fileName },
-            }));
+        return res.status(400).send(
+          appResponse(null, "No file with provided credentials...", false, {
+            credentials: { fileId, fileName },
+          })
+        );
       });
   });
 
@@ -185,7 +186,9 @@ exports.cropImage = async (req, res) => {
 
       res
         .status(200)
-        .send(appResponse("Image cropped successfully!", updatedCroppedImage, true));
+        .send(
+          appResponse("Image cropped successfully!", updatedCroppedImage, true)
+        );
     } else {
       // Image crop did not occur
       await Promise.all([
@@ -269,7 +272,9 @@ exports.getFileByType = async (req, res) => {
   const { type } = req.params;
   const data = await File.fetchAll();
 
-  const matchedFiles = data.filter((file) => new RegExp(`\\b${type}\\b`).test(file.type));
+  const matchedFiles = data.filter((file) =>
+    new RegExp(`\\b${type}\\b`).test(file.type)
+  );
 
   await RealTime.publish(`${type}Files`, data);
   res.status(200).send(appResponse(null, matchedFiles, true));
@@ -297,7 +302,9 @@ exports.fileRename = async (req, res) => {
   let { oldFileName, newFileName } = req.body;
 
   if (!fileId || !oldFileName || !newFileName)
-    throw new BadRequestError('Please provide the "fileId", "oldFileName" & "newFileName"');
+    throw new BadRequestError(
+      'Please provide the "fileId", "oldFileName" & "newFileName"'
+    );
 
   // Get single file
   const file = await File.fetchOne({ _id: fileId });
@@ -314,13 +321,17 @@ exports.fileRename = async (req, res) => {
     await addActivity(userObj, "renamed", `${oldFileName} to ${newFileName}`);
     res
       .status(200)
-      .send(appResponse(
+      .send(
+        appResponse(
           "File renamed successfully!",
           { ...file, fileName: newFileName },
           true
-        ));
+        )
+      );
   } else {
-    throw new BadRequestError('"oldFileName" cannot be equal to the "newFileName"!');
+    throw new BadRequestError(
+      '"oldFileName" cannot be equal to the "newFileName"!'
+    );
   }
 };
 
@@ -387,7 +398,6 @@ exports.deleteMultipleFiles = async (req, res) => {
 // Send to trash
 exports.deleteTemporarily = async (req, res) => {
   const { userObj } = req.headers;
-  console.log(userInfo);
   const data = await File.fetchOne({ _id: req.params.id });
 
   if (data.isDeleted === false) {
@@ -395,7 +405,7 @@ exports.deleteTemporarily = async (req, res) => {
 
     // Save to list of activities
     await addActivity(userObj, "deleted", `${data.fileName}`);
-
+    console.log({userObj})
     res.status(200).send(appResponse("File sent to trash!", response, true));
   } else {
     throw new BadRequestError("File is already deleted");
@@ -437,18 +447,26 @@ exports.cutOrMoveFile = async (req, res) => {
     throw new NotFoundError("Folder not found!");
 
   if (file.folderId === folderId)
-    throw new BadRequestError(`You can't cut or move a file to the same folder!`);
+    throw new BadRequestError(
+      `You can't cut or move a file to the same folder!`
+    );
 
   await File.update(fileId, { folderId });
-  await addActivity(userObj, "moved", `${file.fileName} to ${folder.folderName}`);
+  await addActivity(
+    userObj,
+    "moved",
+    `${file.fileName} to ${folder.folderName}`
+  );
 
   res
     .status(200)
-    .send(appResponse(
+    .send(
+      appResponse(
         "File cut or moved successfully!",
         { ...file, folderId },
         true
-      ));
+      )
+    );
 };
 
 // handle file searching by is starred is true
@@ -574,13 +592,17 @@ exports.setEditPermission = async (req, res) => {
     const fileData = files.data;
     const { admin } = req.params;
     if (admin == "true") {
-      res.send(fileData.map((files) => {
+      res.send(
+        fileData.map((files) => {
           return (files.permission = "edit");
-        }));
+        })
+      );
     } else {
-      res.send(fileData.map((files) => {
+      res.send(
+        fileData.map((files) => {
           return (files.permission = "view");
-        }));
+        })
+      );
     }
   } catch (error) {
     res.status(500).send(error);
@@ -684,10 +706,13 @@ exports.recentlyViewedVideos = async (req, res) => {
 exports.recentlyViewedDocs = async (req, res) => {
   const data = await File.fetchAll();
 
-  const onlyDocs = data.filter((data) => /doc/.test(data.type) ||
+  const onlyDocs = data.filter(
+    (data) =>
+      /doc/.test(data.type) ||
       /pdf/.test(data.type) ||
       /spreadsheetml/.test(data.type) ||
-      /ppt/.test(data.type));
+      /ppt/.test(data.type)
+  );
   const sorted = onlyDocs.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);
@@ -709,10 +734,13 @@ exports.recentlyViewedAudio = async (req, res) => {
 
 exports.recentlyViewedCompressed = async (req, res) => {
   const data = await File.fetchAll();
-  const onlyZip = data.filter((data) => /zip/.test(data.type) ||
+  const onlyZip = data.filter(
+    (data) =>
+      /zip/.test(data.type) ||
       /7z/.test(data.type) ||
       /z/.test(data.type) ||
-      /rar/.test(data.type));
+      /rar/.test(data.type)
+  );
   const sorted = onlyZip.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);

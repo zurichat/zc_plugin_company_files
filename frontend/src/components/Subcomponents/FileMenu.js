@@ -45,8 +45,14 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   }
 
   function getLink() {
-    navigator.clipboard.writeText(file.url);
-    alert("Link Copied to clipboard!");
+    navigator.clipboard
+      .writeText(file.url)
+      .then(() => {
+        alert("Copied successfully");
+      })
+      .catch((err) => {
+        console.log("Something went wrong", err);
+      });
   }
 
   function download() {
