@@ -4,6 +4,7 @@ require('express-async-errors');
 
 const path = require('path');
 const cors = require('cors');
+const cron = require('node-cron');
 const cpus = require('os').cpus();
 const cluster = require('cluster');
 const express = require('express');
@@ -21,6 +22,7 @@ const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
 const ErrorHandler = require('./backend/middlewares/errorHandler');
 const { NotFoundError } = require('./backend/utils/appError');
+const emptyTrash = require('./backend/scripts/emptyTrash');
 
 
 app.use(cors());
@@ -29,6 +31,10 @@ app.use(express.json()); // For parsing application/json
 app.use('/api/v1/files/crop', cropFileUpload({ useTempFiles: true }));
 app.use(express.urlencoded({ extended: false })); // For parsing application/x-www-form-urlencoded
 
+
+// Schedule 2-hourly trash emptying
+// (i.e., the emptyTrash() script will run every 2 hours)
+cron.schedule('* */2 * * *', emptyTrash);
 
 app.use((req, res, next) => {
   if (!isProduction) {
