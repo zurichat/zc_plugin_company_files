@@ -7,6 +7,7 @@ import { getUserInfo } from "../../../actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
 
 import GivePermission from "../GivePermission/GivePermission";
+import './collab.css';
 
 const CollaboratorCard = (props) => {
   // avoid scrolling when modal is active
@@ -18,9 +19,10 @@ const CollaboratorCard = (props) => {
   }, []);
 
   // states
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [text, setText] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  const [search, setSearch] = useState('')
 
   const dispatch = useDispatch();
   const { loading, error, person, people, info } = useSelector(
@@ -36,14 +38,14 @@ const CollaboratorCard = (props) => {
   //   })();
   // }, []);
 
-  useEffect(() => {
-    const showUsers = async () => {
-      const res = dispatch(getUserInfo());
-      console.log(res.Body.email);
-      setUsers(res.Body.email);
-    };
-    showUsers();
-  }, []);
+  // useEffect(() => {
+  //   const showUsers = async () => {
+  //     const res = dispatch(getUserInfo());
+  //     console.log(res.Body.email);
+  //     setUsers(res.Body.email);
+  //   };
+  //   showUsers();
+  // }, []);
 
   // the email suggestion
 
@@ -52,18 +54,18 @@ const CollaboratorCard = (props) => {
     setSuggestions({});
   };
 
-  const handleTextChange = (text) => {
-    let matches = [];
-    if (text.lenght > 0) {
-      matches = users.filter((user) => {
-        const regex = new RegExp(`${text}`, "gi");
-        return user.email.match(regex);
-      });
-    }
-    console.log("matches are", matches);
-    setSuggestions(matches);
-    setText(text);
-  };
+  // const handleTextChange = (text) => {
+  //   let matches = [];
+  //   if (text.lenght > 0) {
+  //     matches = users.filter((user) => {
+  //       const regex = new RegExp(`${text}`, "gi");
+  //       return user.email.match(regex);
+  //     });
+  //   }
+  //   console.log("matches are", matches);
+  //   setSuggestions(matches);
+  //   setText(text);
+  // };
 
   return (
     <div className="collab_permission">
@@ -76,8 +78,10 @@ const CollaboratorCard = (props) => {
               placeholder="Search for email address"
               className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base tw-self-center"
               required="required"
-              onChange={(e) => handleTextChange(e.target.value)}
-              value={text}
+              onChange={(e) => setSearch(e.target.value)
+                // handleTextChange(e.target.value)
+              }
+              value={search}
               onBlur={() =>
                 setTimeout(() => {
                   setSuggestions([]);
@@ -118,12 +122,12 @@ const CollaboratorCard = (props) => {
 
       {/* Body */}
       <div className="collab_body">
-        <GivePermission />
+        <GivePermission search={search} />
       </div>
 
       {/* Footer */}
       <hr />
-      <div className="collab_footer tw-py-2 tw-flex tw-justify-between">
+      <div className="collab_footer tw-py-2 tw-px-2 tw-items-end tw-flex tw-justify-between">
         <div className="fl_link">
           <a href="#" className="copy-link tw-flex">
             <span> Copy link</span>
@@ -137,15 +141,13 @@ const CollaboratorCard = (props) => {
           </a>
         </div>
         <div>
-          <p
-            className="tw-cursor-pointer tw-text-base tw-mr-3"
+          <button className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded tw-py-2 tw-px-3 InviteModalCloseBtn"
             onClick={props.onCancel}
           >
-            CLOSE
-          </p>
+            Close</button>
         </div>
       </div>
-      <style jsx>
+      {/* <style jsx>
         {`
           .collab_permission {
             background: #ffffff;
@@ -204,6 +206,8 @@ const CollaboratorCard = (props) => {
           .collab_body {
             width: 96%;
             margin: 5px auto;
+            max-height: 400px;
+            overflow: scroll;
           }
 
           text {
@@ -286,7 +290,7 @@ const CollaboratorCard = (props) => {
             }
           }
         `}
-      </style>
+      </style> */}
     </div>
   );
 };
