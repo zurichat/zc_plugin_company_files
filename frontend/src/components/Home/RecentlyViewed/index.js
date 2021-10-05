@@ -3,6 +3,7 @@ import ImgFile from "../../../../public/Icons/imgfile.svg";
 import Video from "../../../../public/Icons/video.svg";
 import DocumentFile from "../../../../public/Icons/documentfile.svg";
 import Zip from "../../../../public/Icons/zip.svg";
+import FolderIcon from "../../../../public/Icons/folderIcon.svg";
 import vector from "../../../../public/Icons/Vector.png";
 import { BsArrowUpDown } from "react-icons/bs";
 import { BsGrid3X2 } from "react-icons/bs";
@@ -61,6 +62,16 @@ const RecentlyViewed = () => {
           bgColor={"tw-bg-pink-200"}
           link={"recently-viewed-zips"}
         />
+
+        {/* <Viewed
+          name={"Folders"}
+          image={FolderIcon}
+          altText={"zip"}
+          dateViewed={"20 Jul 2020"}
+          bgColor={"tw-bg-yellow-100"}
+          link={"recently-viewed-folders"}
+        /> */}
+        
       </div>
     </div>
   );
