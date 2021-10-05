@@ -1,11 +1,16 @@
 import { useHistory } from "react-router";
+import axios from "axios"
 
 const Modal = ({ deleteToBin, setDeleteToBin, id, folderName }) => {
   const history = useHistory();
-  const handleDelete = () => {
-    fetch("https://companyfiles.zuri.chat/api/v1/folders/deleteFolder/" + id, {
-      method: "put",
-    }).then((res) => (res.status === 200 ? history.push("/trash") : null));
+  const handleDelete = async () => {
+    try {
+      const response = await axios.put("https://companyfiles.zuri.chat/api/v1/folders/deleteFolder/" + id);
+      console.log(response);
+      {response.status == 200 && history.push("/trash")}
+    } catch (err) {
+      console.log(error.message)
+    }
   };
 
   return deleteToBin ? (

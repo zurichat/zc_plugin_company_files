@@ -5,16 +5,9 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
   const history = useHistory();
   const handleDelete = async () => {
     try {
-      const response = await fetch(
-        "https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id,
-        {
-          method: "put",
-        }
-      );
+      const response = await axios.put("https://companyfiles.zuri.chat/api/v1/files/deleteToBin/" + id);
       console.log(response);
-      if (response.status === 200) {
-        history.push("/trash");
-      }
+      {response.status === 200 && history.push("/trash")}
     } catch (error) {
       await Swal.fire({
         type: "error",
