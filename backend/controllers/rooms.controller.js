@@ -281,7 +281,7 @@ exports.getRoomMembers = async (req, res) => {
   const [, userToken] = token.split(" ");
 
   const room = await Rooms.fetchOne({ _id: roomId });
-  console.log(req.headers.authorization);
+  // console.log(req.headers.authorization);
   // remove bearer from the authorization
   const myToken = process.env.ORG_TOKEN ?? userToken;
   if (myToken === "") throw new BadRequestError("Pass in a valid token");

@@ -11,7 +11,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, fileName }) => {
       {response.status === 200 && history.push("/trash")}
     } catch (error) {
       await Swal.fire({
-        type: "error",
+        icon: "error",
         title: "Oops...",
         text: error.message,
       });
