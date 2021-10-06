@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: false })); // For parsing application/x-w
 
 // Schedule 2-hourly trash emptying
 // (i.e., the emptyTrash() script will run every 2 hours)
-crontab.scheduleJob('* */2 * * *', emptyTrash, [30]);
+crontab.scheduleJob('0 1,3,5,7,9,11,13,15,17,19,21,23 * * *', emptyTrash, [30]);
 
 app.use((req, res, next) => {
   if (!isProduction) {
