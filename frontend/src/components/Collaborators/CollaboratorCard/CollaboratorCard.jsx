@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+
 import searchIcon from "../CollabImages/search-svg.svg";
 import chainIcon from "../CollabImages/chain-green.svg.svg";
 
@@ -25,10 +27,10 @@ const CollaboratorCard = (props) => {
   const [search, setSearch] = useState('')
 
   const dispatch = useDispatch();
-  const { loading, error, person, people, info } = useSelector(
+  const { loading, error, users, user, info } = useSelector(
     (state) => state.rootReducer.workspaceReducer
   );
-  console.log({ loading, error, person, people, info });
+  console.log({ user, users });
 
   // Getting the user details
 
@@ -121,9 +123,17 @@ const CollaboratorCard = (props) => {
       <hr />
 
       {/* Body */}
-      <div className="collab_body">
-        <GivePermission search={search} />
-      </div>
+      {
+        users == undefined ? 
+        <div className="tw-flex tw-flex-col tw-items-center tw-p-4">
+          <p>Ooops! It seems you are not logged in</p>
+          <a className="tw-bg-green-500 tw-text-white tw-p-4 tw-rounded" href="https://zuri.chat" >Go to Zuri Chat</a>
+        </div> : 
+        <div className="collab_body">
+          <GivePermission search={search} />
+        </div>
+      }
+      
 
       {/* Footer */}
       <hr />
@@ -141,10 +151,10 @@ const CollaboratorCard = (props) => {
           </a>
         </div>
         <div>
-          <button className="tw-bg-red-600 tw-text-base tw-text-white tw-rounded tw-py-2 tw-px-3 InviteModalCloseBtn"
+          <button className="tw-flex tw-items-center tw-uppercase tw-text-base tw-border tw-rounded tw-py-1 tw-px-2 InviteModalCloseBtn"
             onClick={props.onCancel}
           >
-            Close</button>
+           <AiOutlineCloseCircle className="tw-mr-2" /> Close</button>
         </div>
       </div>
       {/* <style jsx>

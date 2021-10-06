@@ -4,6 +4,9 @@ import saveIcon from "../CollabImages/save-svg.svg";
 import { BsChevronDown } from "react-icons/bs"
 import { BiSave} from 'react-icons/bi'
 import { BsPersonSquare } from 'react-icons/bs'
+import { MdRemoveCircleOutline } from 'react-icons/md';
+
+// import axios from 'axios';
 
 import { Helmet } from "react-helmet";
 import './userAllow.css';
@@ -63,6 +66,16 @@ const UserAllow = ({user}) => {
   // const value = select.options[select.selectedIndex].value;
   }
 
+  // const onSaveHandler = () => {
+  //   const data = {
+
+  //   }
+  //   axios.post('http://localhost:5500/api/v1/access/give', {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  // }
 
 
   return (
@@ -95,7 +108,7 @@ const UserAllow = ({user}) => {
                   <div className="tw-cursor-pointer tw-hover:bg-green-500 tw-hover:text-white tw-py-1 tw-px-5"  onClick={roleChangeHandler}>Can View</div>
                 </div>
 
-                <div className="tw-flex tw-rounded tw-border-t tw-items-center tw-cursor-pointer tw-w-full tw-py-3 tw-px-10 removeUser" onClick={roleRmoveHandler}>Remove</div>
+                <div className="tw-flex tw-rounded tw-border-t tw-items-center tw-cursor-pointer tw-w-full tw-py-3 tw-px-10 removeUser" onClick={roleRmoveHandler}><MdRemoveCircleOutline /> Remove</div>
                 
               </div>
             </div>
