@@ -52,6 +52,11 @@
     color: #fff;
   }
 
+  .InviteModalCloseBtn:hover {
+    transition: 0.4s;
+    background: rgb(73, 73, 73);
+    color: white;
+  }
   .collab_body {
     width: 96%;
     margin: 5px auto;

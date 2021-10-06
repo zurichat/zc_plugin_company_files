@@ -42,7 +42,7 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
           <span className="tw-block tw-text-gray-400">
             {folder.noOfFiles} {folder.noOfFiles > 1 ? "Files" : "File"}
           </span>
-          <div className="avi tw-w-16 tw-cursor-pointer">
+          <div className="avi tw-cursor-pointer">
           <FiPlusCircle onClick={triggerModal} className="tw-text-xl tw-text-gray-500"/>
 
             {/* <img

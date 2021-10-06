@@ -13,6 +13,7 @@ const API_URL =
     ? "http://localhost:5500/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
+<<<<<<< HEAD
 const info = store.getState().rootReducer.workspaceReducer.info;
 axios.defaults.headers.common["Authorization"] = `Bearer ${info.token}`;
 axios.defaults.headers.userObj = {
@@ -20,6 +21,8 @@ axios.defaults.headers.userObj = {
   imageUrl: info[0].img_url,
   userId: info[0]._id,
 };
+=======
+>>>>>>> e2146258e025a6f3f23601fc3d0314a7883bd29b
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

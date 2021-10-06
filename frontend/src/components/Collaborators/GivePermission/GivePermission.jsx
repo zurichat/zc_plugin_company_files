@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import UserAllow from "./UserAllow";
 
 import { getUserInfo, getWorkspaceUser, getWorkspaceUsers} from '../../../actions/workspaceInfo';
@@ -52,8 +53,14 @@ const GivePermission = ({search}) => {
   }, []);
 
 
-  return (
-    <div className="div">
+  // user == {} ? 
+  // <div>
+  // <p>Ooops! It seems you are not logged in</p>
+  // <a className="tw-p-3 tw-text-white tw-bg-green-500" href="https://zuri.chat">Go to Zuri.chat</a>
+  // </div> : 
+
+    return (
+    <div  className="div">
       <AdminAllow
         admin_email="damiloloa@zuri.hng"
         admin_image={
