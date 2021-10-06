@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { HandleClickEvent } from "./HandleClickEvent";
 import FileMenuButton from "./MenuButton";
+import ModalComponent from "./ModalComponent";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
@@ -35,6 +36,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [deleteToBin, setDeleteToBin] = useState(false);
   const [fileProperties, setFileProperties] = useState(false);
   const [editName, setEditName] = useState(false);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   function previewCmd() {
@@ -222,9 +224,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             type === "txt" ? (
             <Preview file={file} setOpenStatus={setOpenStatus} />
           ) : (
-            <div>
-              <p>Can't preview this file</p>
-            </div>
+            <ModalComponent message={"can't preview this file"} />
           )
         ) : null}
         {deleteToBin && (

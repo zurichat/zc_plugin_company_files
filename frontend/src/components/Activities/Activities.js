@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import userImage from "./Images/Rectangle 8.png";
 import classes from "./Activities.module.css";
 import Loader from "react-loader-spinner";
 

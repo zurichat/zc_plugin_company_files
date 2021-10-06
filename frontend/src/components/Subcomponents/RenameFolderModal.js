@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const RenameFileModal = ({ file, editName, setEditName }) => {
   const [newName, setNewName] = useState("");
@@ -9,24 +11,25 @@ const RenameFileModal = ({ file, editName, setEditName }) => {
   };
 
   const handleRename = async () => {
-    const requestOptions = {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-
-      body: JSON.stringify({
+    try {
+      const response = await axios.put(`/folders/rename/${file._id}`, {
         oldFolderName: file.folderName,
         newFolderName: newName,
-      }),
-    };
-    console.log(requestOptions.body);
-    const editRequest = await fetch(
-      `https://companyfiles.zuri.chat/api/v1/folders/rename/${file._id}`,
-      requestOptions
-    );
-    setEditName(!editName);
-
-    const response = await editRequest.json();
-    console.log(response);
+      });
+      console.log(response);
+      await Swal.fire({
+        title: "Success",
+        text: response.data.message,
+        icon: "success",
+      });
+    } catch (err) {
+      console.log(err);
+      await Swal.fire({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+      });
+    }
   };
 
   return (

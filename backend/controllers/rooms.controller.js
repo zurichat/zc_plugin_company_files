@@ -55,7 +55,7 @@ exports.createRoom = async (req, res) => {
     .send(appResponse("Room created successfully!", response, true));
 };
 
-// not tested yet
+// tested - waiting for zuri main
 exports.addUserToRoom = async (req, res) => {
   const { user_name, _id } = req.body;
 
@@ -91,7 +91,7 @@ exports.addUserToRoom = async (req, res) => {
   return res.status(200).send(appResponse(null, `${user_name} recieved`, true));
 };
 
-// not tested yet
+// tested - works
 exports.editRoom = async (req, res) => {
   const { body } = req;
   const room = await Rooms.fetchOne({ _id: req.params.roomId });
