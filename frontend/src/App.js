@@ -6,6 +6,7 @@ import "./App.css";
 import axios from "axios";
 import { getUserInfo } from "./actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
+import store from "./store/store";
 
 const API_URL =
   window.location.hostname.includes("localhost") ||
