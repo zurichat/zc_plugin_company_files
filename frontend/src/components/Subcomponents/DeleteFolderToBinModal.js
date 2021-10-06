@@ -16,7 +16,7 @@ const Modal = ({ deleteToBin, setDeleteToBin, id, folderName }) => {
     } catch (err) {
       console.log(error.message);
       await Swal.fire({
-        type: "error",
+        icon: "error",
         title: "Oops...",
         text: error.message,
       });
