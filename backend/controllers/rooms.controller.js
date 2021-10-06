@@ -50,6 +50,32 @@ exports.createRoom = async (req, res) => {
 
   const response = await Rooms.create(room);
 
+  // dtata to send to sidebar event
+  responseData = {
+    event: "sidebar_update",
+    plugin_id: "61518d6c9d521e488c59745f",
+    data: {
+      group_name: "COMPANYFILES",
+      name: "COMPANYFILES Plugin",
+      show_group: false,
+      button_url: "/companyfiles",
+      public_rooms: [],
+      joined_rooms: [
+        {
+          room_url: `companyfiles/${response.data.object_id}`,
+          room_name: body.room_name,
+          room_image:
+            "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg",
+        },
+      ],
+    },
+  };
+
+  await RealTime.publish(
+    `${room.org_id}_${room.room_creator_id}_sidebar`,
+    JSON.stringify(responseData)
+  );
+
   res
     .status(201)
     .send(appResponse("Room created successfully!", response, true));
