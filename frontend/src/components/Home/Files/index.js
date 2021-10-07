@@ -47,7 +47,6 @@ const index = () => {
       try {
         dispatch({
           type: "FETCH_FILES_FULFILLED",
-          payload: { status: "success", data: [...allFiles.data] },
         });
       } catch (err) {
         throw new Error(err);
