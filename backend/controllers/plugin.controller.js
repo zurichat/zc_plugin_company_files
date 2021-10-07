@@ -30,7 +30,7 @@ exports.info = (req, res) => {
 // append roomId to room_url
 function handleRoomUrl(rooms) {
   return rooms.map((room) => {
-    return `${room.room_url}/${room._id}`;
+    return room.room_url / room._id;
   });
 }
 
