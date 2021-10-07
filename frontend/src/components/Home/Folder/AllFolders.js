@@ -51,6 +51,7 @@ const AllFolders = () => {
       try {
         dispatch({
           type: "FETCH_FOLDERS_FULFILLED",
+          payload: { status: "success", data: [...allFolders.data] },
         });
       } catch (err) {
         throw new Error(err);
