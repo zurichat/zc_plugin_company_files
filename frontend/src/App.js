@@ -33,20 +33,12 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(getUserInfo);
+        dispatch(getUserInfo());
       } catch (err) {
         throw err;
       }
     })();
   }, []);
-
-  axios.defaults.headers.common["Authorization"] =
-    `Bearer ${info?.token}` || "";
-  axios.defaults.headers["userObj"] = {
-    imageUrl: info?.user_url || "",
-    userName: info?.user_name || "",
-    userId: info?._id || "",
-  };
 
   return (
     <Layout>
