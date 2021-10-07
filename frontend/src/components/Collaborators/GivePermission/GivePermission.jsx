@@ -41,7 +41,7 @@ const GivePermission = ({search}) => {
     (state) => state.rootReducer.workspaceReducer
   );
 
-  Object.keys(users).map(key => ZuriUsers.push(users[key]))
+  
 
 
   useEffect(() => {
@@ -50,6 +50,9 @@ const GivePermission = ({search}) => {
       dispatch(getWorkspaceUser("eosabiya@gmail.com")); //takes email as parameter
       dispatch(getWorkspaceUsers());
     })();
+    if (users !== null && users !== undefined) {
+      Object.keys(users).map(key => ZuriUsers.push(users[key]))
+    }
   }, []);
 
 
