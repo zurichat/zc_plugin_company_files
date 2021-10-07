@@ -17,9 +17,9 @@ axios.defaults.baseURL = API_URL;
 const info = store.getState().rootReducer.workspaceReducer.info;
 axios.defaults.headers.common["Authorization"] = `Bearer ${info?.token}`;
 axios.defaults.headers.userObj = {
-  userName: typeof info === "object" && info !== null && info[0].user_name,
-  imageUrl: typeof info === "object" && info !== null && info[0]?.img_url,
-  userId: typeof info === "object" && info !== null && info[0]?._id,
+  userName: typeof info === "object" && info !== null && info !== {} && info[0]?.user_name,
+  imageUrl: typeof info === "object" && info !== null && info !== {} && info[0]?.img_url,
+  userId: typeof info === "object" && info !== null && info !== {} && info[0]?._id,
 };
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
