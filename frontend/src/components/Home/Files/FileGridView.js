@@ -44,7 +44,7 @@ function FileGridView({ sortingMethod }) {
               visible="true"
             />
           </div>
-        ) : Object.keys(files).length && files.data.length > 0 ? (
+        ) : files !== {} && files?.data.length > 0 ? (
           files.data
             .sort(
               sortingMethod == "name"

@@ -1,7 +1,10 @@
 const fileInititalState = {
   loading: true,
   error: null,
-  files: {},
+  files: {
+    status: "",
+    data: []
+  },
 };
 
 export default function fileReducer(state = fileInititalState, action) {

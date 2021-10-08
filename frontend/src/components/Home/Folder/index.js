@@ -83,7 +83,7 @@ const index = () => {
         </Link>
       </div>
       <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12">
-        {folders.data.length ? (
+        {folders !== {} && folders?.data.length ? (
           folders.data
             .slice(0, 4)
             .map((folder) => (

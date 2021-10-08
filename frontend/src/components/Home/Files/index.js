@@ -47,6 +47,7 @@ const index = () => {
       try {
         dispatch({
           type: "FETCH_FILES_FULFILLED",
+          payload: {status: "success", data: [...allFiles.data]}
         });
       } catch (err) {
         throw new Error(err);
@@ -109,7 +110,7 @@ const index = () => {
 
       <div className="project-box-wrapper">
         <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
-          {files !== {} && files.data.length > 0 ? (
+          {files != {} && files?.data.length > 0 ? (
             files.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
