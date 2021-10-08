@@ -17,7 +17,7 @@ axios.defaults.baseURL = API_URL;
 const info = store.getState().rootReducer.workspaceReducer.info;
 axios.defaults.headers.common["Authorization"] = `Bearer ${info?.token}`;
 axios.defaults.headers.userObj = {
-  userName: typeof info === "object" && info !== null && info[0].user_name,
+  userName: typeof info === "object" && info !== null && info[0]?.user_name,
   imageUrl: typeof info === "object" && info !== null && info[0]?.img_url,
   userId: typeof info === "object" && info !== null && info[0]?._id,
 };
@@ -33,20 +33,12 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(getUserInfo);
+        dispatch(getUserInfo());
       } catch (err) {
         throw err;
       }
     })();
   }, []);
-
-  axios.defaults.headers.common["Authorization"] =
-    `Bearer ${info?.token}` || "";
-  axios.defaults.headers["userObj"] = {
-    imageUrl: info?.user_url || "",
-    userName: info?.user_name || "",
-    userId: info?._id || "",
-  };
 
   return (
     <Layout>

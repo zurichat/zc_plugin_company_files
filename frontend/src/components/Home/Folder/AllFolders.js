@@ -162,7 +162,7 @@ const AllFolders = () => {
               visible="true"
             />
           </div>
-        ) : folders.data.length ? (
+        ) : folders !== {} && folders?.data.length ? (
           folders.data
             .sort(
               sortingMethod == "name"
