@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef } from "react";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder/index";
 import Files from "./Files/index";
@@ -7,6 +7,7 @@ import FileOptions from "../FileUpload/FileOptions";
 import ShortCut from "./ShortCut";
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
+import Room from "./Room/index";
 import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
@@ -14,7 +15,6 @@ const Index = () => {
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
-  const [newFile, setNewFile] = useState({ data: {} });
   const [SnackBar] = useSnackbar({
     position: 'bottom-center',
     style: { backgroundColor: '#00B87C', color: '#fff' }
@@ -61,11 +61,11 @@ const Index = () => {
     >
       <button
         onClick={showOptions}
-        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 tw-hover:text-white tw-hover:bg-green-500 tw-outline-none"
+        className="tw-mt-4 tw-px-3 tw-py-2 tw-text-sm tw-text-green-500 tw-border tw-rounded tw-border-green-500 hover:tw-text-white hover:tw-bg-green-500 tw-outline-none"
       >
         Add New
       </button>
-
+      {/* <Room /> */}
       <FileOptions options={options} showUploadModal={showUploadModal} />
       <ShortCut />
       <RecentlyViewed />

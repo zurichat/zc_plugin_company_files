@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineFilePdf } from "react-icons/ai";
+import PdfImg from "../../../public/Icons/pdffile.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -19,10 +19,14 @@ function Pdf({ file }) {
         className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
+        onTouchStart={(e) => handleContextMenu(e)}
+        onTouchEnd={(e) => handleContextMenu(e)}
+        onTouchCancel={(e) => handleContextMenu(e)}
+        onTouchMove={(e) => handleContextMenu(e)}
       >
         <FileType
           file={file}
-          IconName={AiOutlineFilePdf}
+          IconName={PdfImg}
           bgColor={"tw-bg-file-pdf"}
           textColor={"tw-text-red-800"}
         />

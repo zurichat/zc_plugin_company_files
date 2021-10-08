@@ -6,7 +6,9 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        auto: "repeat(auto-fit, minmax(220px, 1fr))",
+        auto: "repeat(auto-fit, minmax(60px, 1fr))",
+        "auto-1": "repeat(auto-fit, minmax(150px, 1fr))",
+        "auto-2": "repeat(auto-fit, minmax(220px, 1fr))",
       },
       colors: {
         primary: "#00B87C",
@@ -20,6 +22,7 @@ module.exports = {
           lightGrey: "#F6F6F6",
           white: "#FFFFFF",
           lightGreen: "#f0fbf8",
+          trashRow: "#FAFAFA",
         },
         success: "#008B5E",
         text: {

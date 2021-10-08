@@ -15,7 +15,7 @@ const permissionSuccess = () => {
           <p>Permission Changed Successfully</p>
 
           <span
-            className="absolute right-20 cursor-pointer"
+            className="tw-absolute tw-left-[90%] cursor-pointer"
             id="notification"
             onClick={closeNotification}
           >

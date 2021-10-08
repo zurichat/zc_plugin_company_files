@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import { BsMusicNoteBeamed } from "react-icons/bs";
+import Aud from "../../../public/Icons/music/active.svg";
 import FileType from "./FileType";
 
 function audio({ file }) {
@@ -19,10 +19,14 @@ function audio({ file }) {
         className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
+        onTouchStart={(e) => handleContextMenu(e)}
+        onTouchEnd={(e) => handleContextMenu(e)}
+        onTouchCancel={(e) => handleContextMenu(e)}
+        onTouchMove={(e) => handleContextMenu(e)}
       >
         <FileType
           file={file}
-          IconName={BsMusicNoteBeamed}
+          IconName={Aud}
           bgColor={"tw-bg-green-400"}
           textColor={"tw-text-black"}
         />

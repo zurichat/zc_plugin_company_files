@@ -1,9 +1,9 @@
 import React from "react";
 import ToggleIcon from "../CollabImages/toggle-svg.svg";
-import Avater from "../CollabImages/tosin.PNG";
-import fileDrop from "../CollabImages/dropdown-svg.svg";
-import user1 from "../CollabImages/damilola-2.png";
-import user2 from "../CollabImages/damilola-4.png";
+// import Avater from "../CollabImages/tosin.PNG";
+// import fileDrop from "../CollabImages/dropdown-svg.svg";
+// import user1 from "../CollabImages/damilola-2.png";
+// import user2 from "../CollabImages/damilola-4.png";
 import trash from "../CollabImages/files-trash-svg.svg";
 import help from "../CollabImages/files-help-svg.svg";
 import starred from "../CollabImages/files-star-svg.svg";
@@ -15,29 +15,6 @@ import FileStatus from "../FileStatus/FileStatus";
 const CollaNavigation = () => {
   return (
     <div className="collab_wrapper">
-      {/* second header */}
-
-      <div className="header-green">
-        <div className="text-part">
-          <h3 className="file_title"># Files</h3>{" "}
-          <img src={fileDrop} alt="view files" />
-        </div>
-
-        <div className="available_friends">
-          <span className="images_friends">
-            <img src={Avater} alt="Friends" />
-
-            <img src={user1} alt="Friends" />
-
-            <img src={user2} alt="Friends" />
-          </span>
-
-          <span className="friends_online">
-            <h3 className="cursor-pointer">300</h3>
-          </span>
-        </div>
-      </div>
-
       {/* Add New */}
       <div className="collab_nav">
         <div className="left_collab_nav">
@@ -46,7 +23,7 @@ const CollaNavigation = () => {
       </div>
 
       {/* File Status */}
-      <div className="file_status_component">
+      <div className="file_status_component ">
         <FileStatus icon={files} title="All Files" className="fsc_1" />
         <FileStatus icon={people} title="Shared" />
         <FileStatus icon={starred} title="Starred" />

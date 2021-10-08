@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GrDocumentText } from "react-icons/gr";
+import DocImg from "../../../public/Icons/doc-cat.svg"
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -19,10 +19,14 @@ function Document({ file }) {
         className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
+        onTouchStart={(e) => handleContextMenu(e)}
+        onTouchEnd={(e) => handleContextMenu(e)}
+        onTouchCancel={(e) => handleContextMenu(e)}
+        onTouchMove={(e) => handleContextMenu(e)}
       >
         <FileType
           file={file}
-          IconName={GrDocumentText}
+          IconName={DocImg}
           bgColor={"tw-bg-file-doc"}
           textColor={"tw-text-blue-600"}
         />

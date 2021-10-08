@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from 'react-loader-spinner';
+import Loader from "react-loader-spinner";
 import axios from "axios";
 import useSWR from "swr";
 import dayjs from "dayjs";
@@ -19,10 +19,12 @@ async function fetcher(url) {
   return res.data;
 }
 
-const API_URL = window.location.hostname.includes('localhost') || window.location.hostname.includes('127.0.0.1')
-  ? 'http://127.0.0.1:5500/api/v1'
-  : 'https://companyfiles.zuri.chat/api/v1';
-  
+const API_URL =
+  window.location.hostname.includes("localhost") ||
+  window.location.hostname.includes("127.0.0.1")
+    ? "http://127.0.0.1:5500/api/v1"
+    : "https://companyfiles.zuri.chat/api/v1";
+
 const index = () => {
   const { data, error } = useSWR(`${API_URL}/files/all`, fetcher);
 
@@ -34,8 +36,14 @@ const index = () => {
     );
   if (!data)
     return (
-      <div className='h-96 flex items-center justify-center'>
-        <Loader type='ThreeDots' color='#00B87C' height={100} width={100} visible='true' />
+      <div className="h-96 flex items-center justify-center">
+        <Loader
+          type="ThreeDots"
+          color="#00B87C"
+          height={100}
+          width={100}
+          visible="true"
+        />
       </div>
     );
 

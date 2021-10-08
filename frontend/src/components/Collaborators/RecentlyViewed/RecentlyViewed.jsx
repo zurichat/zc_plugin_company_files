@@ -7,9 +7,9 @@ import CompressedImage from "../CollabImages/compressed-svg.svg";
 
 const FilesGrid = () => {
   return (
-    <div className="files_grid flex justify-between">
+    <div className="files_grid tw-flex justify-between">
       <div>
-        <div className="fileview flex fl_photo">
+        <div className="fileview tw-flex fl_photo">
           <img src={PhotoImage} alt="Picture" />
         </div>
         <h3 className="file_heading">Images</h3>
@@ -17,7 +17,7 @@ const FilesGrid = () => {
       </div>
 
       <div>
-        <div className="fileview flex fl_video">
+        <div className="fileview tw-flex fl_video">
           <img src={VideoImage} alt="Video" />
         </div>
         <h3 className="file_heading">Videos</h3>
@@ -25,7 +25,7 @@ const FilesGrid = () => {
       </div>
 
       <div>
-        <div className="fileview flex fl_document">
+        <div className="fileview tw-flex fl_document">
           <img src={DocumentImage} alt="Document" />
         </div>
         <h3 className="file_heading">Documents</h3>
@@ -33,7 +33,7 @@ const FilesGrid = () => {
       </div>
 
       <div>
-        <div className="fileview flex fl_compressed">
+        <div className="fileview tw-flex fl_compressed">
           <img src={CompressedImage} alt="Compressed" />
         </div>
         <h3 className="file_heading">Compressed</h3>

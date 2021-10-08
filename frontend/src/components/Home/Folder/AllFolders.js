@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FolderComponent from "./Folder";
-import { FaArrowLeft } from "react-icons/fa/index";
-import { BsArrowUpDown } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
-import UploadProgressModal from "../../FileUpload/UploadProgressModal";
-import FileUpload from "../../FileUpload/index";
 import FileOptions from "../../FileUpload/FileOptions";
-import RealTime from "../../../helpers/realtime.helper";
+import FileUpload from "../../FileUpload/index";
+import { FaArrowLeft } from "react-icons/fa/index";
+import { BsArrowUpDown, BsViewList } from "react-icons/bs";
+import { BsGrid3X2 } from "react-icons/bs";
+import { HandleClickEvent } from "../../Subcomponents/HandleClickEvent";
+import SortMenuButton from "../../Subcomponents/MenuButton";
+import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import ReactPaginate from "react-paginate";
 import Loader from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
+import { RTCSubscription } from "../../../helpers/RTCSubscription";
 
 const AllFolders = () => {
   const dispatch = useDispatch();
@@ -24,19 +26,36 @@ const AllFolders = () => {
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
   const [newFiles, setNewFiles] = useState({ data: {} });
+  const [openStatus, setOpenStatus] = useState(false);
+  const [view, setView] = useState("grid");
+  const [sortingMethod, setSortingMethod] = useState("name");
+
+  function sortByDate() {
+    setSortingMethod("date");
+  }
+
+  function sortByName() {
+    setSortingMethod("name");
+  }
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFolders());
+      try {
+        dispatch(fetchFolders());
+      } catch (err) {
+        throw new Error(err);
+      }
     })();
-  }, []);
-
-  useEffect(() => {
-    const fetchNewData = () => {
-      RealTime.subscribe("allFiles", "", (data) => setNewFiles(data));
-    };
-    fetchNewData();
-    console.log(newFiles);
+    RTCSubscription("allFolders", (allFolders) => {
+      //console.log({ allFolders });
+      try {
+        dispatch({
+          type: "FETCH_FOLDERS_FULFILLED",
+        });
+      } catch (err) {
+        throw new Error(err);
+      }
+    });
   }, []);
 
   const showOptions = (e) => {
@@ -75,26 +94,6 @@ const AllFolders = () => {
     history.pushState(currentState, "", "/companyfiles");
   };
 
-  if (error)
-    return (
-      <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-py-4 tw-h-screen tw-w-full">
-        Error failed
-      </div>
-    );
-
-  if (loading)
-    return (
-      <div className="tw-flex tw-items-center tw-justify-center tw-py-4 tw-h-screen tw-w-full">
-        <Loader
-          type="ThreeDots"
-          color="#00B87C"
-          height={100}
-          width={100}
-          visible="true"
-        />
-      </div>
-    );
-
   return (
     <div className="tw-w-full tw-py-2 tw-px-3 md:tw-px-5">
       <button
@@ -104,36 +103,85 @@ const AllFolders = () => {
         Add New
       </button>
       <FileOptions options={options} showUploadModal={showUploadModal} />
-      <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2 tw-mb-4">
-        <h2 className="tw-text-lg tw-font-normal tw-text-gray-900 tw-flex tw-flex-row">
+      <div className="tw-w-full tw-flex tw-justify-between tw-items-center tw-mt-2">
+        <h2 className="tw-text-lg tw-truncate tw-font-semibold tw-text-gray-900 tw-flex tw-flex-row">
           <FaArrowLeft
             className="tw-text-lg tw-text-black tw-mr-3 tw-self-center"
             onClick={() => goBack()}
           />
           All Folders
         </h2>
-        <div className="tw-flex tw-items-center">
+        <div className="tw-flex tw-items-center tw-relative">
           <BsArrowUpDown
             title="sort"
             className="tw-text-gray-400 tw-text-lg tw-mx-2 hover:tw-text-gray-500 tw-cursor-pointer"
+            onClick={() => setOpenStatus(true)}
           />
-          <BsGrid3X2
-            title="grid"
-            className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer"
-          />
+          <HandleClickEvent
+            show={openStatus}
+            onClickOutside={() => {
+              setOpenStatus(false);
+            }}
+          >
+            <div className="tw-bg-white tw-py-3 tw-w-44 tw-absolute tw--left-1/3 md:tw--left-3/4 tw-z-20 tw-rounded-sm">
+              <SortMenuButton name={"Sort By Name"} cmd={sortByName} />
+              <SortMenuButton name={"Sort By Date"} cmd={sortByDate} />
+            </div>
+          </HandleClickEvent>
+          {/*
+            <BsGrid3X2
+              title="grid"
+              className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer"
+              onClick={() => setView("list")}
+            />
+             <BsViewList
+              title="list"
+              className="tw-text-gray-400 tw-mx-2 tw-text-2xl hover:tw-text-gray-500 tw-cursor-pointer"
+              onClick={() => setView("grid")}
+            /> */}
           <Link
             to="/activities"
-            className="tw-mx-4 tw-py-2 tw-px-4 tw-bg-green-500 tw-text-white tw-text-sm tw-rounded hover:tw-bg-green-600"
+            className="tw-mx-4 tw-truncate tw-py-2 tw-px-4 tw-bg-green-500 tw-text-white tw-text-sm tw-rounded hover:tw-bg-green-600"
           >
             See Activities
           </Link>
         </div>
       </div>
-      <div className="tw-grid tw-grid-cols-auto">
-        {folders.data.length ? (
-          folders.data.map((folder) => (
-            <FolderComponent key={folder.folderId} folder={folder} />
-          ))
+      <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12 tw-mt-4 tw-mx-5">
+        {error ? (
+          <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center tw-text-red-600 tw-h-2/4 tw-w-full">
+            Error failed
+          </div>
+        ) : loading ? (
+          <div className="tw-flex tw-items-center tw-justify-center tw-h-2/4 tw-w-full">
+            <Loader
+              type="ThreeDots"
+              color="#00B87C"
+              height={100}
+              width={100}
+              visible="true"
+            />
+          </div>
+        ) : folders.data.length ? (
+          folders.data
+            .sort(
+              sortingMethod == "name"
+                ? function (a, b) {
+                    if (a.folderName.toLowerCase() < b.folderName.toLowerCase())
+                      return -1;
+                    if (a.folderName.toLowerCase() > b.folderName.toLowerCase())
+                      return 1;
+                    return 0;
+                  }
+                : (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)
+            )
+            .map((folder) => (
+              <FolderComponent
+                key={folder.folderId}
+                folder={folder}
+                view={view}
+              />
+            ))
         ) : (
           <div className="tw-text-3xl tw-flex tw-items-center tw-justify-center">
             No Folders

@@ -1,25 +1,7 @@
-import List from "./StarredList";
+import StarredGrid from "./StarredGrid";
+import StarGridFolder from "./StarGridFolder";
 
-function StarredHead({
-  error,
-  isLoading,
-  data,
-  setData,
-  setFileDel,
-  setEmptyStarred,
-  apiBase,
-}) {
-  let fileIds = data.map((data) => data._id);
-
-  const handleEmptyStarred = () => {
-    fetch(`${apiBase}/files/searchStarredFiles`, {
-      method: "Post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ids: fileIds }),
-    }).then((res) => (res.status === 200 ? setEmptyStarred("") : null));
-    setData((prev) => (prev = []));
-  };
-
+const StarredHead = ({ error, isLoading, data }) => {
   return (
     <div className="md:tw-mx-10 tw-mx-4 tw-pt-5">
       <div className="tw-flex tw-justify-between tw-pt-4 tw-pb-5">
@@ -41,26 +23,20 @@ function StarredHead({
           </span>
         </p>
       </div>
-      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between light--Green">
-        <p className="tw-px-2 sm:tw-px-5 tw-py-4 durationGray tw-text-sm">
-        All starred Files/Folders can be located here. 
+      <div className="tw-flex tw-flex-col sm:tw-flex-row tw-justify-between tw-bg-green-100">
+        <p className="tw-px-2 sm:tw-px-5 tw-py-4 tw-text-sm text-gray-500">
+          All starred Files/Folders can be located here.
         </p>
-        <p
-          className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold emptyStarred"
-          onClick={handleEmptyStarred}
-        >
+        <p className="tw-px-2 sm:tw-px-5 tw-py-4 tw-cursor-pointer tw-font-semibold tw-text-green-600">
           Add
         </p>
       </div>
-      <List
-        setFileDel={setFileDel}
-        data={data}
-        setData={setData}
-        isLoading={isLoading}
-        error={error}
-      />
+
+      <StarredGrid isLoading={isLoading} error={error} data={data} />
+
+      <StarGridFolder isLoading={isLoading} error={error} data={data} />
     </div>
   );
-}
+};
 
 export default StarredHead;

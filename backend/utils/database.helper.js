@@ -22,9 +22,17 @@ class DatabaseOps {
       organization_id: '6133c5a68006324323416896',
       collection_name: collection_name,
       bulk_delete: false,
-      object_id: '',
-      filter: {}
+      object_id: ''
     }
+  }
+
+  normalizeFilterQuery(paramsObject) {
+    return Object
+      .keys(paramsObject)
+      .filter(key => paramsObject[key] !== null)
+      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(paramsObject[key])}`)
+      .join('&')
+    ;
   }
 
   create = async (payload) => {
@@ -35,7 +43,7 @@ class DatabaseOps {
   }
 
   fetchAll = async (filter = {}) => {
-    this.data.filter = filter;
+    this.data.filter = this.normalizeFilterQuery(filter);
     const { data } = await axios.get(
       `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
     );
@@ -44,14 +52,16 @@ class DatabaseOps {
   }
 
   fetchOne = async (query) => {
+    
     const { data } = await axios.get(
-      `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?${Object.keys(query)}=${Object.values(query)}`
+      `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?${this.normalizeFilterQuery(query)}`
     );
 
     return data;
   }
 
   update = async (id, payload) => {
+    this.data.filter = undefined;
     this.data.payload = payload;
     this.data.object_id = id;
 

@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 import FileUpload from "../Home/index";
 import Home from "../Home";
 
 import NewFolder from "../FolderCreation/Folder";
-import TrashApp from "../TrashListView/TrashApp";
+import TrashApp from "../TrashListView/Trash";
 import Starred from "../Starred/index";
 import Activities from "../Activities/Activities";
+import RecentlyViewedDocs from "../RecentlyViewed/RecentlyViewedDocs/RecentlyViewedDocs";
+import RecentlyViewedImg from "../RecentlyViewed/RecentlyViewedImg/RecentlyViewedImg";
+import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewedVid";
+import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
+import RecentlyViewedFolders from "../RecentlyViewed/RecentlyViewedFolders/RecentlyViewedFolders";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
 
 import Test from "../ComponentToTest";
@@ -21,6 +30,7 @@ import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
 import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
+import AllTheFiles from "../OpenFolder/Files/AllFiles";
 import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
@@ -75,8 +85,8 @@ const Main = () => {
     >
       <Router basename="/companyfiles">
         <ScrollRestoration />
-        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center">
-          <SearchBar />
+        <div className="tw-bg-white tw-h-full tw-flex tw-flex-1 tw-flex-col tw-items-center md:tw-ml-2">
+          {/* <SearchBar /> */}
           <Parcel
             config={pluginHeader}
             wrapWith="div"
@@ -122,9 +132,6 @@ const Main = () => {
             </Route>
             <Route path="/collaborators" exact>
               <Collaborators />
-            </Route>
-            <Route path="/member" exact>
-              <MemberList />
             </Route>
           </Switch>
         </div>

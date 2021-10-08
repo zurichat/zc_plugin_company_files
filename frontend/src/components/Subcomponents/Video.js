@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import { RiVideoLine } from "react-icons/ri";
+import Vid from "../../../public/Icons/video.svg"
 import FileType from "./FileType";
 
 function Video({ file }) {
@@ -19,10 +19,14 @@ function Video({ file }) {
         className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
+        onTouchStart={(e) => handleContextMenu(e)}
+        onTouchEnd={(e) => handleContextMenu(e)}
+        onTouchCancel={(e) => handleContextMenu(e)}
+        onTouchMove={(e) => handleContextMenu(e)}
       >
         <FileType
           file={file}
-          IconName={RiVideoLine}
+          IconName={Vid}
           bgColor={"tw-bg-green-300"}
           textColor={"tw-text-red-300"}
         />
