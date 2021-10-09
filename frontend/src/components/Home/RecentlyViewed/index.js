@@ -29,7 +29,7 @@ const RecentlyViewed = () => {
         </div>
       </div>
 
-      <div className="tw-w-full tw-grid tw-grid-cols-auto-1 tw-gap-5 md:tw-gap-10 lg:tw-gap-14">
+      <div className="tw-w-full tw-flex tw-justify-between tw-flex-wrap sm:tw-flex-nowrap">
         <Viewed
           name={"Images"}
           image={ImgFile}
@@ -51,7 +51,7 @@ const RecentlyViewed = () => {
           image={DocumentFile}
           altText={"document"}
           dateViewed={"20 Jul 2020"}
-          bgColor={"tw-bg-green-200"}
+          bgColor={"tw-bg-green-100"}
           link={"recently-viewed-docs"}
         />
         <Viewed
