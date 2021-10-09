@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const FileSchema = Joi.object({
+  createdBy: Joi.string().required(),
   fileId: Joi.string().guid({ version: 'uuidv4' }).required(),
   fileName: Joi.string().required(),
   url: Joi.string().uri().required(),
@@ -15,6 +16,7 @@ const FileSchema = Joi.object({
     .messages({ 'string.pattern.base': 'MD5 hash provided is invalid or malformed' }),
   permissions: Joi.string().default('view'),
   isShared: Joi.boolean().default(false),
+  password: Joi.string(),
   shareToken: [Joi.string()],
   dateAdded: Joi.date().default(new Date().toISOString()),
   dateModified: Joi.date().default(new Date().toISOString()),

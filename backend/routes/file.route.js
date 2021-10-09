@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const { Router } = require('express');
 const {
   fileUpload,
   fileUploadRequest,
@@ -32,6 +33,9 @@ const {
   recentlyViewedDocs,
   recentlyViewedCompressed,
   detectPreview,
+  test,
+  lockFile,
+  resetFilePassword
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -112,6 +116,16 @@ router.put('/starFile/:id', starFile);
 router.put('/unStarFile/:id', unStarFile);
 
 // DETECT WHEN A FILE IS PREVIEWED
-router.put('/preview/:id', detectPreview);
+router.get('/preview/:id', detectPreview);
+
+//LOCK FILE ENDPOINT
+router.put("/lockFile/:id", lockFile);
+
+//RESET FILE PASSWORD
+router.put("/reset/:id", resetFilePassword)
+
+
+// test
+router.put('/test/:fileId/:userId', test);
 
 module.exports = router;
