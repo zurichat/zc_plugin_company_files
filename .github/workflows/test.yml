@@ -21,6 +21,7 @@ jobs:
 #           yarn build
       - name: Run tests
         run: |
+          yarn install
           yarn build
           yarn run test
           yarn run test:ci
