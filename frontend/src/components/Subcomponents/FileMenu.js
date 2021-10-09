@@ -237,6 +237,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
         )}
         {fileProperties && (
           <FilePropertiesModal
+            url={file.url}
             name={file.fileName}
             size={file.size}
             type={file.type}
