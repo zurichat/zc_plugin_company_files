@@ -6,7 +6,7 @@ function viewed({ link, image, name, dateViewed, altText, bgColor }) {
     <div className="tw-w-auto tw-flex tw-flex-col">
       <Link to={`/${link}`}>
       <div
-        className={`tw-w-36 tw-h-36 sm:tw-w-36 sm:tw-h-36 md:tw-w-44 md:tw-h-44 lg:tw-w-56 lg:tw-h-56 tw-flex tw-justify-around ${bgColor} tw-rounded-md tw-transition-all tw-duration-150 tw-shadow-md`}
+        className={`tw-w-auto tw-h-40 md:tw-h-[10rem] lg:tw-h-72 tw-flex tw-justify-around ${bgColor} tw-rounded-md tw-transition-all tw-duration-150 tw-shadow-md`}
       >
         <img
           className="icon tw-w-1/3"

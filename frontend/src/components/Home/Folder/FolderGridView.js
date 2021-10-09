@@ -6,9 +6,7 @@ import folderUsers from "../../../../public/Icons/folderUsers.png";
 import CollaboratorCard from "../../Collaborators/CollaboratorCard/CollaboratorCard";
 
 import Backdrop from "../../FolderRename/ModalDrop";
-import { FcFolder } from 'react-icons/fc';
 import { FiPlusCircle } from 'react-icons/fi';
-import { CgMoreVertical } from 'react-icons/cg';
 
 
 function FolderGridView({ folder, openMenu, fileNumber, index }) {
@@ -27,10 +25,10 @@ function FolderGridView({ folder, openMenu, fileNumber, index }) {
     <>
       <div className="tw-flex tw-justify-between tw-mb-6">
         <div className="icons">
-          <FcFolder className="tw-text-5xl tw-cursor-pointer" />
+          <img src={folderYellow} alt="folder" />
         </div>
         <div className="icons" onClick={() => openMenu()}>
-          <CgMoreVertical className="tw-cursor-pointer tw-text-xl tw-text-gray-600" />
+          <img src={options} alt="options" className="tw-cursor-pointer" />
         </div>
       </div>
       <div className="tw-text-sm tw-w-full tw-flex tw-flex-col tw-justify-between tw-items-center tw-text-[13px]">
