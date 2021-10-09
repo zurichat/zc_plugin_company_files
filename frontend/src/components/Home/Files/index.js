@@ -34,6 +34,8 @@ const index = () => {
     style: { backgroundColor: "#00B87C", color: "#fff" },
   });
 
+  console.log(files);
+
   useEffect(() => {
     (async () => {
       try {
@@ -79,7 +81,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-files"
-            className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
+            className="tw-text-green-500 hover:tw-text-green-700 tw-text-sm sm:tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -102,14 +104,17 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-text-green-700 tw-text-sm sm:tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
+        {/* <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between sm:tw-mx-2">
+          {Object.keys(files).length && files.data.length > 0 ? ( */}
+
+        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between sm:tw-mx-2">
           {files != {} && files?.data.length > 0 ? (
             files.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
@@ -178,8 +183,8 @@ const index = () => {
             </div>
           )}
         </div>
+        
       </div>
-
       {newFile != undefined ||
         (null > 0 &&
           SnackBar(
@@ -187,6 +192,7 @@ const index = () => {
             10e3
           ))}
     </div>
+    
   );
 };
 
