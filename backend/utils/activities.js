@@ -5,7 +5,7 @@ const Activity = new DatabaseConnection('Activity')
 module.exports = async (userInfo, operation, filename) => {
  
   // when there is no logged in user || e.g when testing out of zuri.chat
-  // if were on localhost dont log the activity
+  // if were on localhost dont log the activity req.headers.host
   if (process.env.NODE_ENV === 'development' && (userInfo === undefined || userInfo === null)) {
     return
   }

@@ -1,7 +1,10 @@
 const folderInititalState = {
   loading: true,
   error: null,
-  folders: {},
+  folders: {
+    status: "",
+    data: []
+  },
 }
 
 export default function folderReducer(state = folderInititalState, action) {

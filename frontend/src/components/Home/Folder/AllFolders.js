@@ -51,7 +51,6 @@ const AllFolders = () => {
       try {
         dispatch({
           type: "FETCH_FOLDERS_FULFILLED",
-          payload: { status: "success", data: [...allFolders.data] },
         });
       } catch (err) {
         throw new Error(err);
@@ -163,7 +162,7 @@ const AllFolders = () => {
               visible="true"
             />
           </div>
-        ) : folders.data.length ? (
+        ) : folders !== {} && folders?.data.length ? (
           folders.data
             .sort(
               sortingMethod == "name"
