@@ -18,7 +18,7 @@ const emptyTrash = async (FILE_DURATION = 30) => {
 
 
   const [response] = await Promise.all([
-    await File.delete(filesToDelete.map(({ _id }) => _id)),
+    File.delete(filesToDelete.map(({ _id }) => _id)),
     filesToDelete.map(({ cloudinaryId }) => {
       return MediaUpload.deleteFromCloudinary(cloudinaryId);
     })
