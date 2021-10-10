@@ -225,6 +225,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           </FileMenuButton>
         </div>
 
+        {/* conditon to check if file is locked*/}
         {openPreview ? (
           type === "audio" ? (
             <AudioPreview file={file} setOpenStatus={setOpenStatus} />

@@ -2,24 +2,19 @@ import React, { useState } from "react";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const LockFileModal = ({ file, lockFile, setLockFile }) => {
+const UnlockFileModal = ({ lockFile, setLockFile }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [password, setPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  const handleSetPassword = (e) => {
-    e.preventDefault();
-    setPassword(e.target.value);
-
-    console.log(password);
+  const setPassword = () => {
+    console.log("Password set");
   };
 
-  const handleSubmit = (event) => {
-    // API call ??
-    console.log(password);
+  const handleFileUnlock = () => {
+    console.log("File unlocked");
   };
 
   return (
@@ -31,7 +26,7 @@ const LockFileModal = ({ file, lockFile, setLockFile }) => {
             {/*header*/}
             <div className="tw-text-center sm:tw-text-left">
               <h3 className="tw-text-xl tw-text-text-grey tw-font-semibold tw-text-center">
-                Set Password
+                Enter Password
               </h3>
             </div>
             {/*body*/}
@@ -39,7 +34,6 @@ const LockFileModal = ({ file, lockFile, setLockFile }) => {
               <input
                 type={passwordShown ? "text" : "password"}
                 placeholder="Password"
-                onChange={(event) => handleSetPassword(event)}
                 className=" tw-block tw-w-full tw-border tw-h-12 tw-px-4 tw-outline-none tw-rounded-md"
               />
               <div
@@ -62,7 +56,7 @@ const LockFileModal = ({ file, lockFile, setLockFile }) => {
               <button
                 className=" tw-w-20 tw-border tw-bg-primary tw-text-white tw-rounded tw-font-semibold tw-py-3 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
                 type="button"
-                onClick={() => handleSubmit()}
+                onClick={() => handleFileUnlock()}
               >
                 Proceed
               </button>
@@ -75,4 +69,4 @@ const LockFileModal = ({ file, lockFile, setLockFile }) => {
   );
 };
 
-export default LockFileModal;
+export default UnlockFileModal;
