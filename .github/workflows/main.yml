@@ -1,4 +1,4 @@
-name: Continuous integration
+name: Zuri Company Files Deployment
 on:
   push:
     branches: [dev]

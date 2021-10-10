@@ -16,7 +16,7 @@ function Zip({ file }) {
   return (
     <>
       <div
-        className="tw-flex tw-items-center tw-w-36 sm:tw-w-52 tw-mx-2"
+        className="tw-flex tw-items-center tw-w-52 tw-mx-2"
         onClick={(e) => handleContextMenu(e)}
         onContextMenu={(e) => handleContextMenu(e)}
         onTouchStart={(e) => handleContextMenu(e)}
