@@ -9,6 +9,7 @@ const FileSchema = Joi.object({
   folderId: Joi.string().guid({ version: 'uuidv4' }).allow(null),
   cloudinaryId: Joi.string().required(),
   isStarred: Joi.boolean().default(false),
+  isArchived: Joi.boolean().default(false),
   isDeleted: Joi.boolean().default(false),
   comments: [{ content: Joi.string(), name: Joi.string() }],
   md5Hash: Joi.string().pattern(/^[a-f0-9]{32}$/i).required()

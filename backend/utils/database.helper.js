@@ -38,6 +38,7 @@ class DatabaseOps {
   }
 
   create = async (payload) => {
+    this.data.filter = undefined;
     this.data.payload = payload;
     const response = await axios.post(databaseWriteUrl, this.data);
 
@@ -86,6 +87,14 @@ class DatabaseOps {
 
       return data;
     }
+  }
+
+  deleteAll = async () => {
+    this.delete_data.bulk_delete = true;
+    this.delete_data.filter = {};
+    const { data } = await axios.post(databaseDeleteUrl, this.delete_data);
+
+    return data;
   }
 }
 

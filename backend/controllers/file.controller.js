@@ -464,21 +464,6 @@ exports.searchByDate = async (req, res) => {
 }
 
 
-// Retrieves all the files that has been archived by a user
-exports.getArchivedFiles = async (req, res) => {
-  const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError('Archived files not found');
-
-  const data = allFiles.filter((file) => file.isArchived);
-
-  await RealTime.publish('archivedFiles', data);
-
-  return data.length < 1
-    ? res.status(200).send(appResponse('No archived file!', [], true))
-    : res.status(200).send(appResponse('Archived files', data, true));
-}
-
-
 // Get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();

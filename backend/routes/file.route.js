@@ -15,7 +15,6 @@ const {
   restoreFile,
   getAllFiles,
   getFileByType,
-  getArchivedFiles,
   searchByDate,
   searchStarredFiles,
   getAllDeletedFiles,
@@ -66,9 +65,6 @@ router.get('/read/:fileId', fileDetails);
 
 // Renames file
 router.put('/rename/:fileId', fileRename);
-
-// GET ARCHIVED FILES
-router.get('/archive', getArchivedFiles);
 
 // SEARCH FILES BY DATE ADDED
 router.get('/searchByDate', searchByDate);
