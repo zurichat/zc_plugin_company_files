@@ -6,16 +6,9 @@ import Trash from "../../../../public/Icons/homeTrash.svg";
 import Help from "../../../../public/Icons/Help.svg";
 import Shortcuts from "./shortcuts";
 
-import { ImFilesEmpty } from 'react-icons/im';
-import { AiOutlineStar } from 'react-icons/ai';
-import { BsTrash } from 'react-icons/bs';
-import { BiHelpCircle } from 'react-icons/bi'
-
-
-
 const index = () => {
   return (
-    <div className="tw-w-full tw-py-4 md:tw-p-6">
+    <div className="tw-w-full tw-py-6">
       <div className="tw-w-full tw-grid tw-grid-cols-auto tw-gap-4 md:tw-gap-9 lg:tw-gap-16">
         <Shortcuts
           link={"all-files"}
