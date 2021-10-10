@@ -4,18 +4,20 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LockFileModal = ({ lockFile, setLockFile }) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [password, setPassword] = useState("");
 
-  const togglePasswordVisibility = () => {
+  function togglePasswordVisibility() {
     setPasswordShown(passwordShown ? false : true);
-  };
+  }
 
-  const setPassword = () => {
-    console.log("Password set");
-  };
+  function handleSetPassword(e) {
+    e.preventDefault();
+    setPassword(e.target.value);
+  }
 
-  const handleFileLock = () => {
-    console.log("File Locked");
-  };
+  function handleSubmit(event) {
+    // API call ??
+  }
 
   return (
     <>
@@ -30,38 +32,43 @@ const LockFileModal = ({ lockFile, setLockFile }) => {
               </h3>
             </div>
             {/*body*/}
-            <div className="tw-relative tw-pt-3 tw-text-base tw-text-text-grey">
-              <input
-                type={passwordShown ? "text" : "password"}
-                placeholder="Password"
-                onChange={(event) => setPassword(event)}
-                className=" tw-block tw-w-full tw-border tw-h-12 tw-px-4 tw-outline-none tw-rounded-md"
-              />
-              <div
-                className="tw-absolute tw-bottom-4 tw-right-4 tw-cursor-pointer tw-text-text-grey "
-                onClick={() => togglePasswordVisibility()}
-              >
-                {!passwordShown ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+            <form onSubmit={() => handleSubmit()}>
+              <div className="tw-relative tw-pt-3 tw-text-base tw-text-text-grey">
+                <input
+                  type={passwordShown ? "text" : "password"}
+                  placeholder="Password"
+                  onChange={(event) => handleSetPassword(event)}
+                  className=" tw-block tw-w-full tw-border tw-h-12 tw-px-4 tw-outline-none tw-rounded-md"
+                />
+                <div
+                  className="tw-absolute tw-bottom-4 tw-right-4 tw-cursor-pointer tw-text-text-grey "
+                  onClick={() => togglePasswordVisibility()}
+                >
+                  {!passwordShown ? (
+                    <AiOutlineEye />
+                  ) : (
+                    <AiOutlineEyeInvisible />
+                  )}
+                </div>
               </div>
-            </div>
-            {/*footer*/}
+              {/*footer*/}
 
-            <div className="tw-w-full tw-flex tw-justify-end">
-              <button
-                className=" tw-w-16 tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-py-3 tw-mr-8 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
-                type="button"
-                onClick={() => setLockFile(!lockFile)}
-              >
-                Cancel
-              </button>
-              <button
-                className=" tw-w-20 tw-border tw-bg-primary tw-text-white tw-rounded tw-font-semibold tw-py-3 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
-                type="button"
-                onClick={() => handleFileLock()}
-              >
-                Proceed
-              </button>
-            </div>
+              <div className="tw-w-full tw-flex tw-justify-end">
+                <button
+                  className=" tw-w-16 tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-py-3 tw-mr-8 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
+                  type="button"
+                  onClick={() => setLockFile(!lockFile)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className=" tw-w-20 tw-border tw-bg-primary tw-text-white tw-rounded tw-font-semibold tw-py-3 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
+                  type="submit"
+                >
+                  Proceed
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
