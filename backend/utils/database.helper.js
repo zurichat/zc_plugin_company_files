@@ -4,12 +4,14 @@ const databaseReadUrl = 'https://api.zuri.chat/data/read';
 const databaseWriteUrl = 'https://api.zuri.chat/data/write';
 const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
 
+const PLUGIN_ID = process.env.PLUGIN_ID || '6134c6a40366b6816a0b75cd';
+const ORG_ID = process.env.ORG_ID || '6133c5a68006324323416896';
 
 class DatabaseOps {
   constructor(collection_name) {
     this.data = {
-      plugin_id: '6134c6a40366b6816a0b75cd',
-      organization_id: '6133c5a68006324323416896',
+      plugin_id: PLUGIN_ID,
+      organization_id: ORG_ID,
       collection_name: collection_name,
       bulk_write: false,
       object_id: '',
@@ -18,8 +20,8 @@ class DatabaseOps {
     }
 
     this.delete_data = {
-      plugin_id: '6134c6a40366b6816a0b75cd',
-      organization_id: '6133c5a68006324323416896',
+      plugin_id: PLUGIN_ID,
+      organization_id: ORG_ID,
       collection_name: collection_name,
       bulk_delete: false,
       object_id: ''
@@ -52,7 +54,6 @@ class DatabaseOps {
   }
 
   fetchOne = async (query) => {
-    
     const { data } = await axios.get(
       `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}?${this.normalizeFilterQuery(query)}`
     );

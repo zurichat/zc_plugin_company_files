@@ -56,7 +56,7 @@ const Index = () => {
   return (
     <div
       className={
-        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-px-3 tw-py-4 sm:tw-px-10 tw-z-auto"
+        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-py-4 tw-px-10 tw-z-auto"
       }
     >
       <button
