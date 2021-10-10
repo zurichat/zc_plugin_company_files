@@ -1,7 +1,10 @@
 const fileInititalState = {
   loading: true,
   error: null,
-  files: {},
+  files: {
+    status: "",
+    data: []
+  },
 };
 
 export default function fileReducer(state = fileInititalState, action) {
@@ -62,7 +65,31 @@ export default function fileReducer(state = fileInititalState, action) {
         error: null,
         files: { ...state.files, data: state.files.data.map((file) => (file._id === action.payload._id ? action.payload : file)) },
       };
+
     case 'DELETE_FILE_REJECTED':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case 'STAR_FILE_PENDING':
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'STAR_FILE_FULFILLED':
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        files: state.files.data.map((file) => {
+          if (file.id === action.payload.id) {
+            return action.payload;
+          }
+          return file;
+        }),
+      };
+    case 'STAR_FILE_REJECTED':
       return {
         ...state,
         loading: false,

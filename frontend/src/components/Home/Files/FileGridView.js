@@ -19,7 +19,11 @@ function FileGridView({ sortingMethod }) {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
 
@@ -40,13 +44,15 @@ function FileGridView({ sortingMethod }) {
               visible="true"
             />
           </div>
-        ) : Object.keys(files).length && files.data.length > 0 ? (
+        ) : files !== {} && files?.data.length > 0 ? (
           files.data
             .sort(
               sortingMethod == "name"
                 ? function (a, b) {
-                    if (a.fileName.toLowerCase() < b.fileName.toLowerCase()) return -1;
-                    if (a.fileName.toLowerCase() > b.fileName.toLowerCase()) return 1;
+                    if (a.fileName.toLowerCase() < b.fileName.toLowerCase())
+                      return -1;
+                    if (a.fileName.toLowerCase() > b.fileName.toLowerCase())
+                      return 1;
                     return 0;
                   }
                 : sortingMethod == "type"
@@ -88,7 +94,7 @@ function FileGridView({ sortingMethod }) {
                 new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                 <div
                   key={file._id}
-                  className="file tw-flex tw-items-center mr-0 my-5 relative"
+                  className="file tw-flex tw-items-center tw-mr-0 tw-my-5 tw-relative"
                 >
                   <Excel file={file} />
                 </div>

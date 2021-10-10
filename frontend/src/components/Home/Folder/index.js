@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 
@@ -21,7 +20,11 @@ const index = () => {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFolders());
+      try {
+        dispatch(fetchFolders());
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 
@@ -49,7 +52,7 @@ const index = () => {
           </h2>
           <Link
             to="/all-folders"
-            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+            className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
           >
             View All
           </Link>
@@ -73,14 +76,14 @@ const index = () => {
           Folders
         </h2>
         <Link
-            to="/all-folders"
-            className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
-          >
-            View All
-          </Link>
+          to="/all-folders"
+          className="tw-text-green-500 hover:tw-text-green-700 tw-text-lg tw-font-semibold"
+        >
+          View All
+        </Link>
       </div>
       <div className="tw-grid tw-grid-cols-auto-2 tw-gap-5 md:tw-gap-12">
-        {folders.data.length ? (
+        {folders !== {} && folders?.data.length ? (
           folders.data
             .slice(0, 4)
             .map((folder) => (

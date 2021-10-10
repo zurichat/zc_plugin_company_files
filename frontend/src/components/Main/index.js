@@ -18,6 +18,7 @@ import RecentlyViewedDocs from "../RecentlyViewed/RecentlyViewedDocs/RecentlyVie
 import RecentlyViewedImg from "../RecentlyViewed/RecentlyViewedImg/RecentlyViewedImg";
 import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewedVid";
 import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
+import RecentlyViewedFolders from "../RecentlyViewed/RecentlyViewedFolders/RecentlyViewedFolders";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
 
 import Test from "../ComponentToTest";
@@ -29,6 +30,7 @@ import Help from "../Help/index";
 import Collaborators from "../Collaborators/Collaborators";
 import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
+import AllTheFiles from "../OpenFolder/Files/AllFiles";
 import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import Parcel from "single-spa-react/parcel";
 import { pluginHeader } from "@zuri/plugin-header";
@@ -141,6 +143,12 @@ const Main = () => {
             </Route>
             <Route path="/recently-viewed-zips" exact>
               <RecentlyViewedZip />
+            </Route>
+            <Route path="/recently-viewed-folders" exact>
+              <RecentlyViewedFolders />
+            </Route>
+            <Route path="/open-folder" exact>
+              <AllTheFiles />
             </Route>
           </Switch>
         </div>

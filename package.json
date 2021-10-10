@@ -54,6 +54,7 @@
     "joi": "^17.4.2",
     "joi-objectid": "^3.0.1",
     "mime-types": "^2.1.32",
+    "node-crontab": "^0.0.8",
     "slugify": "^1.6.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2"

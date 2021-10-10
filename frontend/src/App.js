@@ -6,6 +6,7 @@ import "./App.css";
 import axios from "axios";
 import { getUserInfo } from "./actions/workspaceInfo";
 import { useDispatch, useSelector } from "react-redux";
+import store from "./store/store";
 
 const API_URL =
   window.location.hostname.includes("localhost") ||
@@ -13,6 +14,13 @@ const API_URL =
     ? "http://localhost:5500/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
+const info = store.getState().rootReducer.workspaceReducer.info;
+axios.defaults.headers.common["Authorization"] = `Bearer ${info?.token}`;
+axios.defaults.headers.userObj = {
+  userName: typeof info === "object" && info !== null && info !== {} && info[0]?.user_name,
+  imageUrl: typeof info === "object" && info !== null && info !== {} && info[0]?.img_url,
+  userId: typeof info === "object" && info !== null && info !== {} && info[0]?._id,
+};
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -22,24 +30,10 @@ export default function Home() {
     (state) => state.rootReducer.workspaceReducer
   );
 
-  if (error) {
-    console.error({ error });
-  } else if (loading) {
-    return console.log({ loading });
-  } else if (info !== undefined) {
-    axios.defaults.headers.common["token"] = info?.token;
-    const userName = info[0]?.first_name + " " + info[0]?.last_name;
-    axios.defaults.headers.common["userObj"] = {
-      imageUrl: info[0]?._image_url,
-      userName,
-      userId: info[0]?._id,
-    };
-  }
-
   useEffect(() => {
     (async () => {
       try {
-        dispatch(getUserInfo);
+        dispatch(getUserInfo());
       } catch (err) {
         throw err;
       }

@@ -23,7 +23,11 @@ function FileListView({ sortingMethod }) {
 
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 
@@ -48,7 +52,7 @@ function FileListView({ sortingMethod }) {
             visible="true"
           />
         </div>
-      ) : Object.keys(files).length && files.data.length > 0 ? (
+      ) : files !== {} && files?.data.length > 0 ? (
         <table className="tw-border-0 tw-border-collapse tw-table-fixed tw-w-full tw-mx-3">
           <thead className="tw-text-base tw-text-text-grey tw-text-left">
             <tr>

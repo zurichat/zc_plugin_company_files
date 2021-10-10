@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from 'react-redux'
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { folderDetails } from "../../actions/folderAction";
 import FolderMenuButton from "./MenuButton";
+import axios from "axios";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
@@ -17,15 +18,30 @@ import { RiDeleteBinLine, RiErrorWarningLine } from "react-icons/ri/index";
 import { GrCut } from "react-icons/gr/index";
 import { FiCopy } from "react-icons/fi/index";
 import { HandleClickEvent } from "./HandleClickEvent";
-
+import StarFolder from "./StarPutFolder";
+import FolderPropertiesModal from "./FolderPropertiesModal";
+import RenameFolderModal from "./RenameFolderModal"
+import Modal from "./DeleteFolderToBinModal";
 
 function FolderMenu({ folder, openStatus, setOpenStatus }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [folderProperties, setFolderProperties] = useState(false);
+  const [editName, setEditName] = useState(false);
+  const [deleteToBin, setDeleteToBin] = useState(false);
+
 
   function openCmd() {
     setOpen(true);
-    dispatch(folderDetails(folder._id))
+    dispatch(folderDetails(folder._id));
+  }
+
+  function openFolder(){
+    const currentState = history.state;
+    console.log("CURRENT STATE::: ", currentState);
+    history.pushState({...currentState, pageData: {
+      folder
+    }}, "", "/companyfiles/open-folder");
   }
 
   function getLink() {}
@@ -42,15 +58,43 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
 
   function moveTo() {}
 
-  function addStar() {}
-
-  function rename() {}
-
-  function properties() {
-    dispatch(folderDetails(folder._id))
+  async function addStar() {
+    try {
+      const res = await axios.put("/folders/starFolder/" + folder._id);
+      alert(res.data.message);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  function deleteCmd() {}
+  function rename() {
+    setEditName(!editName);
+  }
+
+  function properties() {
+    setFolderProperties(!folderProperties);
+    dispatch(folderDetails(folder._id));
+  }
+
+  function deleteCmd() {
+    setDeleteToBin(true);
+  }
+
+  function handleScroll(e) {
+    const element = e;
+    const elementTop = element.getBoundingClientRect().top;
+    const elementBottom = element.getBoundingClientRect().bottom;
+    const windowHeight = window.innerHeight;
+    if (elementTop < 0) {
+      element.style.top = "0px";
+    } else if (elementBottom > windowHeight) {
+      element.style.top = `${windowHeight - elementBottom}px`;
+    }
+  }
+
+  useEffect(() => {
+    handleScroll(document.getElementById("folderContextMenu"));
+  }, []);
 
   return (
     <>
@@ -60,8 +104,19 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
           setOpenStatus(false);
         }}
       >
-        <div className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-top-1/3 tw-z-20">
-          <FolderMenuButton name="Open" cmd={openCmd}>
+        <div
+          id="folderContextMenu"
+          className="tw-bg-white tw-py-3 tw-w-60 tw-absolute tw-top-1/3 tw-z-20"
+        >
+          {/*
+            <FolderMenuButton name="Open" cmd={openCmd}>
+              <AiOutlineEye
+                className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+                title="open"
+              />
+            </FolderMenuButton>
+          */}
+          <FolderMenuButton name="Open" cmd={openFolder}>
             <AiOutlineEye
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
               title="open"
@@ -85,6 +140,7 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
               title="share"
             />
           </FolderMenuButton>
+          {/*
           <FolderMenuButton name="Select" cmd={select}>
             <BsCheckBox
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -92,10 +148,16 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
             />
           </FolderMenuButton>
           <FolderMenuButton name="Copy" cmd={copy}>
-            <FiCopy className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="copy" />
+            <FiCopy
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="copy"
+            />
           </FolderMenuButton>
           <FolderMenuButton name="Cut" cmd={cut}>
-            <GrCut className="tw-mr-3 tw-flex tw-self-center tw-text-xl" title="cut" />
+            <GrCut
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="cut"
+            />
           </FolderMenuButton>
           <FolderMenuButton name="Move to" cmd={moveTo}>
             <HiOutlineFolderRemove
@@ -103,6 +165,7 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
               title="move"
             />
           </FolderMenuButton>
+          */}
           <FolderMenuButton name="Add to starred" cmd={addStar}>
             <AiOutlineStar
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -128,6 +191,34 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
             />
           </FolderMenuButton>
         </div>
+        {folderProperties && (
+          <FolderPropertiesModal
+            name={folder.folderName}
+            size={folder.noOfFiles}
+            type={folder.permissions}
+            modified={folder.dateModified}
+            accessed={folder.lastAccessed}
+            fileProperties={folderProperties}
+            setFileProperties={setFolderProperties}
+          />
+        )}
+        {editName && (
+          <RenameFolderModal
+            name={folder.folderName}
+            id={folder._id}
+            file={folder}
+            editName={editName}
+            setEditName={setEditName}
+          />
+        )}
+        {deleteToBin && (
+          <Modal
+            deleteToBin={deleteToBin}
+            setDeleteToBin={setDeleteToBin}
+            id={folder._id}
+            folderName={folder.folderName}
+          />
+        )}
       </HandleClickEvent>
     </>
   );

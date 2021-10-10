@@ -34,16 +34,22 @@ const index = () => {
     style: { backgroundColor: "#00B87C", color: "#fff" },
   });
 
+  console.log(files);
+
   useEffect(() => {
     (async () => {
-      dispatch(fetchFiles());
+      try {
+        dispatch(fetchFiles());
+      } catch (err) {
+        console.log(err);
+      }
     })();
     RTCSubscription("allFiles", (allFiles) => {
       console.log({ allFiles });
       try {
         dispatch({
           type: "FETCH_FILES_FULFILLED",
-          payload: { status: "success", data: [...allFiles.data] },
+          payload: {status: "success", data: [...allFiles.data]}
         });
       } catch (err) {
         throw new Error(err);
@@ -58,35 +64,6 @@ const index = () => {
       console.log({ newFile });
     });
   }, [newFile]);
-
-  // useEffect(() => {
-  //   SubscribeToChannel("/companyfiles", (stuff, me, you) => {
-  //     console.log(stuff.data.event, me, you);
-  //     setFileSubscription(stuff.data.event);
-  //   });
-  //   console.log(fileSubscription);
-  //   (async function () {
-  //     try {
-  //       const info = await GetUserInfo();
-  //       console.log(info);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  //   (async function () {
-  //     try {
-  //       const users = await GetWorkspaceUsers();
-  //       console.log(users);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   })();
-  //   const fetchNewData = () => {
-  //     RealTime.subscribe("allFiles", "files/all", (data) => setNewFiles(data));
-  //   };
-  //   fetchNewData();
-  //   console.log(newFiles);
-  // }, []);
 
   if (error)
     return (
@@ -103,11 +80,11 @@ const index = () => {
             Files
           </h2>
           <Link
-          to="/all-files"
-          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
-        >
-          View All
-        </Link>
+            to="/all-files"
+            className="tw-text-green-500 hover:tw-text-green-700 tw-text-sm sm:tw-text-lg tw-font-semibold"
+          >
+            View All
+          </Link>
         </div>
         <div className="tw-h-48 tw-flex tw-items-center tw-justify-center">
           <Loader
@@ -127,15 +104,18 @@ const index = () => {
         <h2 className="tw-text-lg tw-font-semibold tw-text-gray-900">Files</h2>
         <Link
           to="/all-files"
-          className="tw-text-green-500 hover:tw-border-2 hover:tw-p-1 hover:tw-text-green-500 hover:tw-border-green-500 tw-text-lg tw-font-semibold"
+          className="tw-text-green-500 hover:tw-text-green-700 tw-text-sm sm:tw-text-lg tw-font-semibold"
         >
           View All
         </Link>
       </div>
 
       <div className="project-box-wrapper">
-        <div className="project-box tw-w-full tw-py-5 tw-grid tw-grid-cols-auto-2 tw-mx-2">
-          {Object.keys(files).length && files.data.length > 0 ? (
+        {/* <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between sm:tw-mx-2">
+          {Object.keys(files).length && files.data.length > 0 ? ( */}
+
+        <div className="project-box tw-w-full tw-py-5 tw-flex tw-flex-wrap tw-justify-between sm:tw-mx-2">
+          {files != {} && files?.data.length > 0 ? (
             files.data.slice(0, 15).map((file) => {
               return new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                 <div
@@ -203,8 +183,8 @@ const index = () => {
             </div>
           )}
         </div>
+        
       </div>
-
       {newFile != undefined ||
         (null > 0 &&
           SnackBar(
@@ -212,6 +192,7 @@ const index = () => {
             10e3
           ))}
     </div>
+    
   );
 };
 

@@ -1,7 +1,10 @@
 const folderInititalState = {
   loading: true,
   error: null,
-  folders: {},
+  folders: {
+    status: "",
+    data: []
+  },
 }
 
 export default function folderReducer(state = folderInititalState, action) {
@@ -70,7 +73,7 @@ export default function folderReducer(state = folderInititalState, action) {
         ...state,
         loading: false,
         error: null,
-        folders: state.folders.map(folder => {
+        folders: state.folders.data.map(folder => {
           if (folder.id === action.payload.id) {
             return action.payload
           }

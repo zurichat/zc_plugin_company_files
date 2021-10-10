@@ -4,27 +4,23 @@ import emptystarred from "./emptystarred.png";
 // import { useState } from 'react'
 // import StarredModal from './StarredModal'
 
-
 const isEmpty = (obj) => Object.keys(obj).length === 0;
 
-
 function StarredGrid({}) {
-
   // const [display, setDisplay] = useState(false);
-  
-
 
   const { data, isLoading, error } = useFetch(
     "https://companyfiles.zuri.chat/api/v1/files/searchStarredFiles"
   );
- console.log(data)
+  console.log(data);
   return (
-     
     <div>
-      <div className="tw-mt-6 tw-grid tw-grid-cols-1 tw-items-center tw-gap-8 xl:tw-grid-cols-4 lg:tw-grid-cols-3 sm:tw-grid-cols-2 tw-auto-cols-max md:tw-grid-cols-3 xs:tw-grid-cols-1 " >
+      <div className="tw-mt-6 tw-grid tw-grid-cols-1 tw-items-center tw-gap-8 xl:tw-grid-cols-4 lg:tw-grid-cols-3 sm:tw-grid-cols-2 tw-auto-cols-max md:tw-grid-cols-3 xs:tw-grid-cols-1 ">
         {data?.data?.map((details) => (
-          <div className="tw-flex tw-p-2 tw-border tw-cursor-pointer" key={details._id} >
-         
+          <div
+            className="tw-flex tw-p-2 tw-border tw-cursor-pointer"
+            key={details._id}
+          >
             <div className="tw-bg-green-100 tw-flex tw-items-center">
               <img src={details.url} alt="" className="tw-w-8 tw-h-5" />
             </div>
@@ -32,7 +28,6 @@ function StarredGrid({}) {
               <p className="tw-mb-2 tw-text-sm">{details.type}</p>
               <p className="tw-text-xs">{details.dateAdded}</p>
             </div>
-            
           </div>
         ))}
       </div>
@@ -51,7 +46,7 @@ function StarredGrid({}) {
           </p>
         </div>
       ) : null}
-      {(error) && (
+      {error && (
         <div className="tw-flex tw-justify-center tw-text-center tw-mt-60  tw-text-text-grey">
           {error}
         </div>
@@ -62,7 +57,6 @@ function StarredGrid({}) {
           <Loader />{" "}
         </div>
       )}
-     
     </div>
   );
 }
