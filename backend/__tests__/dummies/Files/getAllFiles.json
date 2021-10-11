@@ -1,0 +1,25 @@
+{
+  "status": 200,
+  "message": "success",
+  "data": [
+    {
+      "_id": "61623a3b8e856323d6f12148", 
+      "cloudinaryId": "wvcuixfacojxrp4nckha",
+      "dateAdded": "2021-10-10T00:47:58.537Z",
+      "dateModified": "2021-10-10T00:47:58.537Z",
+      "fileId": "04891dc6-f4f5-42a8-a556-897b40fa7cf9",
+      "fileName": "zuri-chat.jpg",      
+      "folderId": null,
+      "isArchived": true,
+      "isDeleted": false,
+      "isShared": false,
+      "isStarred": false,
+      "lastAccessed": "2021-10-10T01:48:38.784Z",
+      "md5Hash": "1ee5db1efd55d3ae5ae95ba0ef095f1b",
+      "permissions": "view",
+      "size": 69130,
+      "type": "image/jpeg",
+      "url": "https://res.cloudinary.com/companyfiles/image/upload/v1633827278/wvcuixfacojxrp4nckha.png"
+    }   
+  ]
+}

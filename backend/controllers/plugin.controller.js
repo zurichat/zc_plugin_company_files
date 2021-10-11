@@ -49,23 +49,12 @@ exports.sidebar = async (req, res) => {
 
   let data = await Rooms.fetchAll({ org_id: org });
   handleRoomUrl(data);
-  const defaultRooms = data
-    .filter((room) => room.isDefault && room.room_member_ids.includes(user))
-    // eslint-disable-next-line camelcase
-    .map(({ room_name, room_url, _id, room_image }) => ({
-      room_name,
-      room_url: `${room_url}/${_id}`,
-      room_image,
-    }));
+  const defaultRooms = data.filter(room => room.isDefault && room.room_member_ids.includes(user))
+  .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
+ 
 
-  data = data
-    .filter((room) => (room.isDefault == undefined ? true : !room.isDefault))
-    // eslint-disable-next-line camelcase
-    .map(({ room_name, room_url, _id, room_image }) => ({
-      room_name,
-      room_url: `${room_url}/${_id}`,
-      room_image,
-    }));
+  data = data.filter(room => room.isDefault == undefined ? true : !room.isDefault)
+  .map(({ room_name, room_url, room_image }) => ({ room_name, room_url, room_image }));
 
   // allRooms.forEach(room => room.memberCount = room.members.length);
 

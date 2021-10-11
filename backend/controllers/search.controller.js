@@ -10,6 +10,7 @@ exports.searchAndFilterFiles = async (req, res) => {
 
   if (fileName.trim()) {
     const data = await File.fetchAll();
+
     let response;
 
     if (fileType.trim()) {
