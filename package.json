@@ -18,13 +18,12 @@
     "lint:backend:fix": "yarn lint:backend -- --fix",
     "prepare": "husky install",
     "start": "node server.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout=10000 --detectOpenHandles --recursive --exit",
+    "test": "cross-env NODE_ENV=test mocha --timeout=10000 --detectOpenHandles  --exit",
     "test:debug": "cross-env NODE_ENV=test mocha --runInBand --detectOpenHandles --verbose",
     "test:watch": "cross-env NODE_ENV=test mocha --watch --verbose",
     "test:cover": "cross-env NODE_ENV=test yarn test:cover:unit && yarn test:cover:report",
     "test:cover:report": "cross-env NODE_ENV=test nyc report --reporter=lcov --reporter=Text --report-dir='./coverage'",
-    "test:cover:unit": "cross-env NODE_ENV=test nyc --silent yarn test",
-    "test:ci": "cross-env NODE_ENV=test mocha --coverage --verbose && cat ./coverage/lcov.info | coveralls"
+    "test:cover:unit": "cross-env NODE_ENV=test nyc --silent yarn test"
   },
   "repository": "git+https://github.com/zurichat/zc_plugin_company_files.git",
   "author": "Team Galileo / HNGi8",
