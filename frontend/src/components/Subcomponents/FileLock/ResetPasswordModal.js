@@ -1,20 +1,28 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const UnlockFileModal = ({ lockFile, setLockFile }) => {
+const ResetPasswordModal = ({ file, changePassword, setChangePassword }) => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
 
   const togglePasswordVisibility = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  const setPassword = () => {
-    console.log("Password set");
+  const changeFilePassword = (e) => {
+    e.preventDefault();
+    setNewPassword(e.target.value);
+
+    console.log(newPassword);
   };
 
-  const handleFileUnlock = () => {
-    console.log("File unlocked");
+  const handleReset = async () => {
+    // API call ??
+
+    console.log(password);
   };
 
   return (
@@ -26,14 +34,21 @@ const UnlockFileModal = ({ lockFile, setLockFile }) => {
             {/*header*/}
             <div className="tw-text-center sm:tw-text-left">
               <h3 className="tw-text-xl tw-text-text-grey tw-font-semibold tw-text-center">
-                Enter Password
+                Reset Password
               </h3>
             </div>
             {/*body*/}
             <div className="tw-relative tw-pt-3 tw-text-base tw-text-text-grey">
               <input
                 type={passwordShown ? "text" : "password"}
-                placeholder="Password"
+                placeholder="Old password"
+                // onChange={(event) => handleSetPassword(event)}
+                className=" tw-block tw-w-full tw-border tw-h-12 tw-px-4 tw-outline-none tw-rounded-md"
+              />
+              <input
+                type={passwordShown ? "text" : "password"}
+                placeholder="New Password"
+                onChange={(event) => changeFilePassword(event)}
                 className=" tw-block tw-w-full tw-border tw-h-12 tw-px-4 tw-outline-none tw-rounded-md"
               />
               <div
@@ -49,14 +64,14 @@ const UnlockFileModal = ({ lockFile, setLockFile }) => {
               <button
                 className=" tw-w-16 tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-py-3 tw-mr-8 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
                 type="button"
-                onClick={() => setLockFile(!lockFile)}
+                onClick={() => setChangePassword(!changePassword)}
               >
                 Cancel
               </button>
               <button
                 className=" tw-w-20 tw-border tw-bg-primary tw-text-white tw-rounded tw-font-semibold tw-py-3 tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
                 type="button"
-                onClick={() => handleFileUnlock()}
+                onClick={() => handleReset()}
               >
                 Proceed
               </button>
@@ -69,4 +84,4 @@ const UnlockFileModal = ({ lockFile, setLockFile }) => {
   );
 };
 
-export default UnlockFileModal;
+export default ResetPasswordModal;
