@@ -1,0 +1,26 @@
+<html>
+<head>
+  <title>Company Files Search Endpoint Test</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div style="margin:100px;">
+   
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Company Files Search Endpoint Test</a>
+  </div>
+</nav>
+<form method='GET' action='/api/v1/search/fileAndFolder/?searchQuery' >
+  <div class="form-group">
+    <label for="exampleInputEmail1">Search File and Folder</label>
+    <input type="text" class="form-control" id="Text1" aria-describedby="TextHelp" name='searchQuery' placeholder="Enter text to search file and folder">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  </div>
+</body>
+</html>
