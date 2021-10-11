@@ -35,7 +35,6 @@ exports.searchAndFilterFiles = async (req, res) => {
 
 exports.searchFileAndFolder = async (req, res) => {
   let { searchQuery } = req.query;
-  console.log(searchQuery)
   const fileData = await File.fetchAll();
   const folderData = await Folder.fetchAll();
   
