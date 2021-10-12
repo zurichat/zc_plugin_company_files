@@ -6,7 +6,6 @@ const pluginRouter = require('./plugin.router');
 const searchRouter = require('./search.route');
 const activityRouter = require('./activity.route')
 const securityRouter = require('./security.route')
-const activityRouter = require('./activity.route');
 const slackRouter = require('./slack.route');
 
 
