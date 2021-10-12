@@ -6,6 +6,8 @@ const pluginRouter = require('./plugin.router');
 const searchRouter = require('./search.route');
 const activityRouter = require('./activity.route')
 const securityRouter = require('./security.route')
+const activityRouter = require('./activity.route');
+const slackRouter = require('./slack.route');
 
 
 // Import Swagger for documentation
@@ -22,6 +24,7 @@ module.exports = router => {
   router.use('/activities', activityRouter)
   router.use('/security', securityRouter)
   router.use('/docs', swagger.serve, swagger.setup(docs))
+  router.use('/slack', slackRouter)
 
   return router;
 }
