@@ -20,6 +20,7 @@ import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewe
 import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
 import RecentlyViewedFolders from "../RecentlyViewed/RecentlyViewedFolders/RecentlyViewedFolders";
 import AddNewDoc from "../AddNewDoc/AddNewDoc";
+import Security from "../security/Security";
 
 import Test from "../ComponentToTest";
 
@@ -149,6 +150,9 @@ const Main = () => {
             </Route>
             <Route path="/open-folder" exact>
               <AllTheFiles />
+            </Route>
+            <Route path="/security" exact>
+              <Security />
             </Route>
           </Switch>
         </div>
