@@ -4,9 +4,8 @@ const app = require('../../server');
 
 
 describe.skip("Dummy Server Test", () => {
-  jest.setTimeout(10000);
   it("should respond with status code 200", async () => {
-    const res = await request(app).get("/");
+    const res = await request(app).get("/api/v1/info");
     expect(res.status).toBe(200);
   });
 });
