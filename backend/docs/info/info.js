@@ -63,3 +63,28 @@ exports.getPing = {
         },
       },
 }
+
+exports.sync = {
+    post: {
+        tags: ["Info"],
+        description: "Sync Plug-in",
+        operationId: "sync",
+        parameters: [],
+        responses: {
+            200: {
+                description: "Synchronized Successfully",
+                content: {
+                    "application/json": {
+                        // "status": "success",
+                        // "message": "Synchronized Successfully",
+                        // "data": {
+                        //     "status": 200,
+                        //     "message": "synchronization updated successfull",
+                        //     "data": null
+                        // }
+                    },
+                },
+            },
+        },
+    },
+}
