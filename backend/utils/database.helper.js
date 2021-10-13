@@ -16,6 +16,7 @@ class DatabaseOps {
       bulk_write: false,
       object_id: '',
       filter: {},
+      options: {},
       payload: {}
     }
 
@@ -61,8 +62,9 @@ class DatabaseOps {
     return data;
   }
 
-  fetchByFilter = async (filter = {}) => {
+  fetchByFilter = async (filter = {}, options = {}) => {
     this.data.filter = filter;
+    this.data.options = options;
     
     const { data } = await axios.post(`${databaseReadUrl}`, this.data);
 
