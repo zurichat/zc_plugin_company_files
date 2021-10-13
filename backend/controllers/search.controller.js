@@ -2,26 +2,21 @@ const DatabaseOps = require('../utils/database.helper');
 const File = new DatabaseOps('File');
 const Folder = new DatabaseOps('Folder');
 const appResponse = require('../utils/appResponse');
+const { BadRequestError } = require('../utils/appError');
 
 
-exports.searchAndFilterFiles = async (req, res) => {
-  // In this route, we will search files and filter them
-  let { fileName, fileType } = req.query;
+const searchAndFilterFiles = async (req, res) => {
+  const { fileName, fileType } = req.query;
 
-  if (fileName.trim()) {
-    const data = await File.fetchAll();
-
+  if (fileName && fileName.trim()) {
     let response;
 
-    if (fileType.trim()) {
-      fileType = fileType.split(',');
-      response = data.filter(({ fileName: name, type }) => {
-        return new RegExp(String(fileName), 'i').test(name) && fileType.includes(type);
+    if (fileType && fileType.trim()) {
+      response = await File.fetchByFilter({
+        fileName: { '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       });
     } else {
-      response = data.filter(({ fileName: name }) => {
-        return new RegExp(String(fileName), 'i').test(name);
-      });
+      response = await File.fetchByFilter({ fileName: { '$regex': fileName, '$options': 'i' } });
     }
 
     if (!response.length) {
@@ -33,6 +28,25 @@ exports.searchAndFilterFiles = async (req, res) => {
     return res.status(400).send(appResponse('Invalid fileName provided!', null));
   }
 }
+
+
+exports.searchFilesAndFolders = async (req, res) => {
+  const { category } = req.query;
+
+  if (!category) throw new BadRequestError('Category not provided! Valid categories are "files" & "folders"');
+
+  switch (category.toLowerCase()) {
+    case 'files':
+      searchAndFilterFiles(req, res);
+      break;
+    // case 'folders':
+    //   searchAndFilterFolders(req, res);
+    //   break;
+    default:
+      throw new BadRequestError('Invalid category! Valid categories are "files" & "folders"');
+  }
+}
+
 
 exports.searchFileAndFolder = async (req, res) => {
   let { searchQuery } = req.query;
