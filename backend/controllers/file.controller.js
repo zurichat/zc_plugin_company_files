@@ -44,7 +44,8 @@ exports.fileUploadStatus = (req, res) => {
   } else {
     return res.status(400).send(appResponse(null, 'Invalid "Content-Range" format', false, { credentials: { ...req.query }}));
   }
-};
+}
+
 
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
@@ -63,11 +64,7 @@ exports.fileUpload = async (req, res) => {
   const rangeEnd = Number(match[2]);
   const fileSize = Number(match[3]);
 
-  if (
-    rangeStart >= fileSize ||
-    rangeStart >= rangeEnd ||
-    rangeStart >= rangeEnd
-  ) {
+  if (rangeStart >= fileSize || rangeStart >= rangeEnd || rangeStart >= rangeEnd) {
     throw new BadRequestError('Invalid "Content-Range" provided');
   }
 
@@ -117,7 +114,7 @@ exports.fileUpload = async (req, res) => {
             addActivity(userObj, 'added', `${file.fileName}`),
             RealTime.publish('newFile', file)
           ]);
-          // normal response without data.
+          
           return res.status(200).send(appResponse('File uploaded successfully!', file, true));
         });
       })
@@ -133,7 +130,8 @@ exports.fileUpload = async (req, res) => {
   });
 
   req.pipe(busboy);
-};
+}
+
 
 exports.cropImage = async (req, res) => {
   // Upload cropped file to cloudinary
