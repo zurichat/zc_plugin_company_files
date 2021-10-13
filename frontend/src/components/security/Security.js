@@ -30,10 +30,10 @@ function Security() {
       <table className="tw-table-fixed tw-w-full">
         <thead className="tw-text-xl tw-text-left">
           <tr>
-            <th className="tw-capitalize tw-truncate">status</th>
-            <th className="tw-capitalize tw-truncate">statuscode</th>
-            <th className="tw-capitalize tw-truncate">data</th>
-            <th className="tw-capitalize tw-truncate">Message</th>
+            <th className="tw-capitalize tw-truncate">URL</th>
+            <th className="tw-capitalize tw-truncate">Status</th>
+            {/* <th className="tw-capitalize tw-truncate">data</th>
+            <th className="tw-capitalize tw-truncate">Message</th> */}
           </tr>
         </thead>
         <tbody className="tw-text-xl tw-font-medium tw-center">
@@ -41,15 +41,14 @@ function Security() {
             <tr>
               <td>Loading...</td>
               <td>Loading...</td>
-              <td>Loading...</td>
-              <td>Loading...</td>
+              {/* <td>Loading...</td>
+              <td>Loading...</td> */}
             </tr>
           ) : (
             <tr>
-              <td>{result?.status}</td>
-              <td>{result?.statusCode}</td>
-              <td>Null</td>
-              <td>{result?.message}</td>
+              {result?.allResponse.map(data => (
+                <><td>{data.url}</td><td>{data.status}</td></>
+              ))}
             </tr>
           )}
         </tbody>
