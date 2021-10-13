@@ -10,12 +10,12 @@ function Security() {
       try {
         setLoading(true);
         const response = await axios.get("/security");
-        // console.log(response.data);
-        setResult(response.data);  
-        setLoading(false); 
+        console.log(response.data);
+        setResult(response.data);
+        setLoading(false);
       } catch (err) {
         setLoading(true);
-        // console.log(err.response.data);
+        console.log(err.response.data);
         setResult(err.response.data);
         setLoading(false);
       }
@@ -27,7 +27,7 @@ function Security() {
       <p className="tw-text-xl tw-my-4 tw-text-center">
         Security - Testing of all API endpoints
       </p>
-      <table className="tw-table-fixed tw-w-full">
+      <table className="tw-table-auto tw-w-full">
         <thead className="tw-text-xl tw-text-left">
           <tr>
             <th className="tw-capitalize tw-truncate">URL</th>
@@ -41,15 +41,14 @@ function Security() {
             <tr>
               <td>Loading...</td>
               <td>Loading...</td>
-              {/* <td>Loading...</td>
-              <td>Loading...</td> */}
             </tr>
           ) : (
-            <tr>
-              {result?.allResponse.map(data => (
-                <><td>{data.url}</td><td>{data.status}</td></>
-              ))}
-            </tr>
+            result?.allResponse.map((item, idx) => (
+              <tr key={idx}>
+                <td>{item.url}</td>
+                <td>{item.status}</td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>
