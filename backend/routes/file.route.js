@@ -35,7 +35,8 @@ const {
   detectPreview,
   test,
   lockFile,
-  resetFilePassword
+  resetFilePassword,
+  searchResource
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -124,6 +125,8 @@ router.put("/lockFile/:id", lockFile);
 //RESET FILE PASSWORD
 router.put("/reset/:id", resetFilePassword)
 
+//SEARCH RESOURCE FOR COMPANY FILES
+router.get("/search", searchResource)
 
 // test
 router.put('/test/:fileId/:userId', test);

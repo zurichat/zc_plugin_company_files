@@ -784,13 +784,30 @@ exports.resetFilePassword = async (req, res) => {
   }
 }
 
+exports.searchResource = async (req, res) => {
+
+  const { fileName } = req.query
+
+  console.log(fileName)
+  const data = await File.fetchAll()
+  const searchedFiles = data.filter((file)=>{
+     return file.fileName.includes(fileName)
+  })
+
+
+  res.status(200).json({
+    total_count: searchedFiles.length,
+	  page: 1,
+	  next: null,
+	  previous: null,
+    result: searchedFiles,
+  })
+}
 
 //add a creator to a file
 exports.test = async (req, res) => {
   const { fileId, userId } = req.params
-
   await File.update(fileId, {createdBy: userId })
-
   let file = await File.fetchOne({ _id: fileId });
   res.status(200).json(file)
 
