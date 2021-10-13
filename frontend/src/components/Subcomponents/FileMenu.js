@@ -12,6 +12,8 @@ import {
   AiOutlineEdit,
   AiOutlineEye,
   AiOutlineStar,
+  AiOutlineLock,
+  AiOutlineUnlock,
 } from "react-icons/ai/index";
 import { RiDeleteBinLine, RiErrorWarningLine } from "react-icons/ri/index";
 import { GrCut } from "react-icons/gr/index";
@@ -23,6 +25,8 @@ import Preview from "../Preview/Preview";
 import Modal from "./DeleteToBinModal";
 import FilePropertiesModal from "./FilePropertiesModal";
 import RenameFileModal from "./RenameFileModal";
+import LockFileModal from "./FileLock/LockFileModal";
+import UnlockFileModal from "./FileLock/UnlockFileModal";
 
 import { useDispatch } from "react-redux";
 import { checkRecentlyViewed } from "../../actions/fileAction";
@@ -30,9 +34,15 @@ import { fileDetails } from "../../actions/fileAction";
 
 import axios from "axios";
 import FileDownload from "js-file-download";
+import ResetPasswordModal from "./FileLock/ResetPasswordModal";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
   const [openPreview, setOpenPreview] = useState(false);
+
+  const [lockFile, setLockFile] = useState(false);
+  const [unlockFile, setUnlockFile] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
+
   const [deleteToBin, setDeleteToBin] = useState(false);
   const [fileProperties, setFileProperties] = useState(false);
   const [editName, setEditName] = useState(false);
@@ -44,6 +54,16 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     dispatch(checkRecentlyViewed(file._id));
     console.log(file);
     console.log("file", file);
+  }
+
+  function lockCmd() {
+    setLockFile(!lockFile);
+  }
+  function unlockCmd() {
+    setUnlockFile(!unlockFile);
+  }
+  function resetPwd() {
+    setChangePassword(!changePassword);
   }
 
   function getLink() {
@@ -137,6 +157,27 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             />
           </FileMenuButton>
 
+          <FileMenuButton name="Lock file" cmd={lockCmd}>
+            <AiOutlineLock
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="lock"
+            />
+          </FileMenuButton>
+
+          <FileMenuButton name="Unlock file" cmd={unlockCmd}>
+            <AiOutlineUnlock
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="unlock"
+            />
+          </FileMenuButton>
+
+          <FileMenuButton name="Reset Password" cmd={resetPwd}>
+            <AiOutlineUnlock
+              className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
+              title="reset"
+            />
+          </FileMenuButton>
+
           <FileMenuButton name="Get link" cmd={getLink}>
             <HiOutlineLink
               className="tw-mr-3 tw-flex tw-self-center tw-text-xl"
@@ -210,6 +251,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           </FileMenuButton>
         </div>
 
+        {/* conditon to check if file is locked*/}
         {openPreview ? (
           type === "audio" ? (
             <AudioPreview file={file} setOpenStatus={setOpenStatus} />
@@ -227,6 +269,33 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
             <ModalComponent message={"can't preview this file"} />
           )
         ) : null}
+        {lockFile && (
+          <LockFileModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            lockFile={lockFile}
+            setLockFile={setLockFile}
+          />
+        )}
+        {unlockFile && (
+          <UnlockFileModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            UnlockFile={unlockFile}
+            setUnlockFile={setUnlockFile}
+          />
+        )}
+        {changePassword && (
+          <ResetPasswordModal
+            name={file.fileName}
+            id={file._id}
+            file={file}
+            changePassword={changePassword}
+            setChangePassword={setChangePassword}
+          />
+        )}
         {deleteToBin && (
           <Modal
             deleteToBin={deleteToBin}
