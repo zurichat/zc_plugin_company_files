@@ -86,8 +86,8 @@ const searchAndFilterFolders = async (req, res) => {
     const total_count = response.length;
     const next = (endIndex < total_count ) ? { page: page + 1, limit } : {};
     const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
-    const last_page = ((total_count % limit) === 0) ? total_count/limit : Math.floor(total_count/limit) + 1
-    console.log(total_count/limit)
+    // const last_page = ((total_count % limit) === 0) ? total_count/limit : Math.floor(total_count/limit) + 1
+    // console.log(total_count/limit)
 
     if (total_count !== 0) {
       return res.status(200).send(
@@ -99,7 +99,7 @@ const searchAndFilterFolders = async (req, res) => {
             previous,
             per_page: limit,
             first_page: 1,
-            last_page,
+            last_page: null
           },
           plugin: "Company Files",
           query: { folderName, folderDate },
