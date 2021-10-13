@@ -14,8 +14,7 @@ const { BadRequestError, NotFoundError } = require('../utils/appError');
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 const addActivity = require('./../utils/activities');
-const { getCache, setCache } = require('../utils/cache.helper');
-const bcrypt = require("bcrypt")
+const { getCache } = require('../utils/cache.helper');
 
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
 
@@ -45,7 +44,8 @@ exports.fileUploadStatus = (req, res) => {
   } else {
     return res.status(400).send(appResponse(null, 'Invalid "Content-Range" format', false, { credentials: { ...req.query }}));
   }
-};
+}
+
 
 exports.fileUpload = async (req, res) => {
   const contentRange = req.headers['content-range'];
@@ -64,11 +64,7 @@ exports.fileUpload = async (req, res) => {
   const rangeEnd = Number(match[2]);
   const fileSize = Number(match[3]);
 
-  if (
-    rangeStart >= fileSize ||
-    rangeStart >= rangeEnd ||
-    rangeStart >= rangeEnd
-  ) {
+  if (rangeStart >= fileSize || rangeStart >= rangeEnd || rangeStart >= rangeEnd) {
     throw new BadRequestError('Invalid "Content-Range" provided');
   }
 
@@ -118,7 +114,7 @@ exports.fileUpload = async (req, res) => {
             addActivity(userObj, 'added', `${file.fileName}`),
             RealTime.publish('newFile', file)
           ]);
-          // normal response without data.
+          
           return res.status(200).send(appResponse('File uploaded successfully!', file, true));
         });
       })
@@ -134,7 +130,8 @@ exports.fileUpload = async (req, res) => {
   });
 
   req.pipe(busboy);
-};
+}
+
 
 exports.cropImage = async (req, res) => {
   // Upload cropped file to cloudinary
@@ -252,9 +249,7 @@ exports.getFileByType = async (req, res) => {
   const { type } = req.params;
   const data = await File.fetchAll();
 
-  const matchedFiles = data.filter((file) =>
-    new RegExp(`\\b${type}\\b`).test(file.type)
-  );
+  const matchedFiles = data.filter((file) => new RegExp(`\\b${type}\\b`).test(file.type));
 
   await RealTime.publish(`${type}Files`, data);
   res.status(200).send(appResponse(null, matchedFiles, true));
@@ -478,21 +473,6 @@ exports.searchByDate = async (req, res) => {
 }
 
 
-// Retrieves all the files that has been archived by a user
-exports.getArchivedFiles = async (req, res) => {
-  const allFiles = await File.fetchAll();
-  if (!allFiles) throw new NotFoundError('Archived files not found');
-
-  const data = allFiles.filter((file) => file.isArchived);
-
-  await RealTime.publish('archivedFiles', data);
-
-  return data.length < 1
-    ? res.status(200).send(appResponse('No archived file!', [], true))
-    : res.status(200).send(appResponse('Archived files', data, true));
-}
-
-
 // Get all deleted files
 exports.getAllDeletedFiles = async (req, res) => {
   const allFiles = await File.fetchAll();
@@ -569,17 +549,13 @@ exports.setEditPermission = async (req, res) => {
     const fileData = files.data;
     const { admin } = req.params;
     if (admin == "true") {
-      res.send(
-        fileData.map((files) => {
+      res.send(fileData.map((files) => {
           return (files.permission = "edit");
-        })
-      );
+        }));
     } else {
-      res.send(
-        fileData.map((files) => {
+      res.send(fileData.map((files) => {
           return (files.permission = "view");
-        })
-      );
+        }));
     }
   } catch (error) {
     res.status(500).send(error);
@@ -665,13 +641,10 @@ exports.recentlyViewedVideos = async (req, res) => {
 exports.recentlyViewedDocs = async (req, res) => {
   const data = await File.fetchAll();
 
-  const onlyDocs = data.filter(
-    (data) =>
-      /doc/.test(data.type) ||
+  const onlyDocs = data.filter((data) => /doc/.test(data.type) ||
       /pdf/.test(data.type) ||
       /spreadsheetml/.test(data.type) ||
-      /ppt/.test(data.type)
-  );
+      /ppt/.test(data.type));
   const sorted = onlyDocs.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);
@@ -693,13 +666,10 @@ exports.recentlyViewedAudio = async (req, res) => {
 
 exports.recentlyViewedCompressed = async (req, res) => {
   const data = await File.fetchAll();
-  const onlyZip = data.filter(
-    (data) =>
-      /zip/.test(data.type) ||
+  const onlyZip = data.filter((data) => /zip/.test(data.type) ||
       /7z/.test(data.type) ||
       /z/.test(data.type) ||
-      /rar/.test(data.type)
-  );
+      /rar/.test(data.type));
   const sorted = onlyZip.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);
@@ -784,25 +754,25 @@ exports.resetFilePassword = async (req, res) => {
   }
 }
 
-exports.searchResource = async (req, res) => {
+// exports.searchResource = async (req, res) => {
 
-  const { fileName } = req.query
+//   const { fileName } = req.query
 
-  console.log(fileName)
-  const data = await File.fetchAll()
-  const searchedFiles = data.filter((file)=>{
-     return file.fileName.includes(fileName)
-  })
+//   console.log(fileName)
+//   const data = await File.fetchAll()
+//   const searchedFiles = data.filter((file)=>{
+//      return file.fileName.includes(fileName)
+//   })
 
 
-  res.status(200).json({
-    total_count: searchedFiles.length,
-	  page: 1,
-	  next: null,
-	  previous: null,
-    result: searchedFiles,
-  })
-}
+//   res.status(200).json({
+//     total_count: searchedFiles.length,
+// 	  page: 1,
+// 	  next: null,
+// 	  previous: null,
+//     result: searchedFiles,
+//   })
+// }
 
 //add a creator to a file
 exports.test = async (req, res) => {

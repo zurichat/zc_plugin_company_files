@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const FileSchema = Joi.object({
-  createdBy: Joi.string().required(),
+  createdBy: Joi.string(),
   fileId: Joi.string().guid({ version: 'uuidv4' }).required(),
   fileName: Joi.string().required(),
   url: Joi.string().uri().required(),
@@ -10,6 +10,7 @@ const FileSchema = Joi.object({
   folderId: Joi.string().guid({ version: 'uuidv4' }).allow(null),
   cloudinaryId: Joi.string().required(),
   isStarred: Joi.boolean().default(false),
+  isArchived: Joi.boolean().default(false),
   isDeleted: Joi.boolean().default(false),
   comments: [{ content: Joi.string(), name: Joi.string() }],
   md5Hash: Joi.string().pattern(/^[a-f0-9]{32}$/i).required()

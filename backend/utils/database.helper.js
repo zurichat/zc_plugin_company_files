@@ -38,19 +38,19 @@ class DatabaseOps {
   }
 
   create = async (payload) => {
+    this.data.filter = undefined;
     this.data.payload = payload;
-    const response = await axios.post(databaseWriteUrl, this.data);
+    const { data } = await axios.post(databaseWriteUrl, this.data);
 
-    return response.data;
+    return data;
   }
 
-  fetchAll = async (filter = {}) => {
-    this.data.filter = this.normalizeFilterQuery(filter);
+  fetchAll = async () => {
     const { data } = await axios.get(
       `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
     );
 
-    return data;
+    return data === null ? [] : data;
   }
 
   fetchOne = async (query) => {
@@ -59,6 +59,14 @@ class DatabaseOps {
     );
 
     return data;
+  }
+
+  fetchByFilter = async (filter = {}) => {
+    this.data.filter = filter;
+    
+    const { data } = await axios.post(`${databaseReadUrl}`, this.data);
+
+    return data === null ? [] : data;
   }
 
   update = async (id, payload) => {
@@ -86,6 +94,14 @@ class DatabaseOps {
 
       return data;
     }
+  }
+
+  deleteAll = async () => {
+    this.delete_data.bulk_delete = true;
+    this.delete_data.filter = {};
+    const { data } = await axios.post(databaseDeleteUrl, this.delete_data);
+
+    return data;
   }
 }
 

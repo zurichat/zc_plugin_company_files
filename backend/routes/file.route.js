@@ -16,15 +16,14 @@ const {
   restoreFile,
   getAllFiles,
   getFileByType,
-  getArchivedFiles,
   searchByDate,
   searchStarredFiles,
   getAllDeletedFiles,
   isDuplicate,
   setEditPermission,
-  searchBySize,
-  searchByType,
-  getFilesWithSameFolderId,
+  // searchBySize,
+  // searchByType,
+  // getFilesWithSameFolderId,
   cropImage,
   sortFiles,
   recentlyViewedImages,
@@ -36,7 +35,7 @@ const {
   test,
   lockFile,
   resetFilePassword,
-  searchResource
+
 } = require('../controllers/file.controller');
 
 // FILE UPLOAD REQUEST
@@ -71,9 +70,6 @@ router.get('/read/:fileId', fileDetails);
 
 // Renames file
 router.put('/rename/:fileId', fileRename);
-
-// GET ARCHIVED FILES
-router.get('/archive', getArchivedFiles);
 
 // SEARCH FILES BY DATE ADDED
 router.get('/searchByDate', searchByDate);
@@ -125,8 +121,6 @@ router.put("/lockFile/:id", lockFile);
 //RESET FILE PASSWORD
 router.put("/reset/:id", resetFilePassword)
 
-//SEARCH RESOURCE FOR COMPANY FILES
-router.get("/search", searchResource)
 
 // test
 router.put('/test/:fileId/:userId', test);
