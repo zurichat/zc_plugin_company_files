@@ -14,7 +14,7 @@ const { BadRequestError, NotFoundError } = require('../utils/appError');
 const appResponse = require('../utils/appResponse');
 const md5Generator = require('../utils/md5Generator');
 const addActivity = require('./../utils/activities');
-const { getCache, setCache } = require('../utils/cache.helper');
+const { getCache } = require('../utils/cache.helper');
 
 const getFilePath = (fileName, fileId) => path.normalize(path.join(process.cwd(), 'uploads', `file~${fileId}~${fileName}`));
 
@@ -251,9 +251,7 @@ exports.getFileByType = async (req, res) => {
   const { type } = req.params;
   const data = await File.fetchAll();
 
-  const matchedFiles = data.filter((file) =>
-    new RegExp(`\\b${type}\\b`).test(file.type)
-  );
+  const matchedFiles = data.filter((file) => new RegExp(`\\b${type}\\b`).test(file.type));
 
   await RealTime.publish(`${type}Files`, data);
   res.status(200).send(appResponse(null, matchedFiles, true));
@@ -540,17 +538,13 @@ exports.setEditPermission = async (req, res) => {
     const fileData = files.data;
     const { admin } = req.params;
     if (admin == "true") {
-      res.send(
-        fileData.map((files) => {
+      res.send(fileData.map((files) => {
           return (files.permission = "edit");
-        })
-      );
+        }));
     } else {
-      res.send(
-        fileData.map((files) => {
+      res.send(fileData.map((files) => {
           return (files.permission = "view");
-        })
-      );
+        }));
     }
   } catch (error) {
     res.status(500).send(error);
@@ -636,13 +630,10 @@ exports.recentlyViewedVideos = async (req, res) => {
 exports.recentlyViewedDocs = async (req, res) => {
   const data = await File.fetchAll();
 
-  const onlyDocs = data.filter(
-    (data) =>
-      /doc/.test(data.type) ||
+  const onlyDocs = data.filter((data) => /doc/.test(data.type) ||
       /pdf/.test(data.type) ||
       /spreadsheetml/.test(data.type) ||
-      /ppt/.test(data.type)
-  );
+      /ppt/.test(data.type));
   const sorted = onlyDocs.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);
@@ -664,13 +655,10 @@ exports.recentlyViewedAudio = async (req, res) => {
 
 exports.recentlyViewedCompressed = async (req, res) => {
   const data = await File.fetchAll();
-  const onlyZip = data.filter(
-    (data) =>
-      /zip/.test(data.type) ||
+  const onlyZip = data.filter((data) => /zip/.test(data.type) ||
       /7z/.test(data.type) ||
       /z/.test(data.type) ||
-      /rar/.test(data.type)
-  );
+      /rar/.test(data.type));
   const sorted = onlyZip.sort((a, b) => {
     const dateA = new Date(a.lastAccessed);
     const dateB = new Date(b.lastAccessed);

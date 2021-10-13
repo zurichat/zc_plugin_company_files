@@ -77,6 +77,7 @@ exports.sidebar = async (req, res) => {
     group_name: "Company Files",
     show_group: true,
     button_url: "/companyfiles",
+    category: "tools",
     joined_rooms: [
       {
         room_name: "All Company Files",
