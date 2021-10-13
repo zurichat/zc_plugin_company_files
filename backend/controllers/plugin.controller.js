@@ -11,6 +11,7 @@ const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
 const databaseSyncUrl = 'https://api.zuri.chat/plugins/6134c6a40366b6816a0b75cd/sync';
+const pluginInfoUrl = 'https://api.zuri.chat/marketplace/plugins/6134c6a40366b6816a0b75cd';
 
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
@@ -105,7 +106,8 @@ exports.ping = (req, res) => {
 // Endpoint for syncing the plugin each time a new event occurs
 // Possible events are a user joining or leaving a workspace for now.
 exports.sync = async (req, res) => {
-  const userList = req.body.queue;
+  const queue = await axios.get(`${pluginInfoUrl}`);
+  const userList = queue.data.queue;
 
   if (!userList) {
     throw new BadRequestError("No queue to update");
