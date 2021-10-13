@@ -8,6 +8,9 @@ const DatabaseConnection = require("../utils/database.helper");
 const Rooms = new DatabaseConnection("TheNewRooms");
 const { PLUGIN_ID } = process.env;
 const authCheck = require("../utils/authcheck.helper");
+const appResponse = require("../utils/appResponse");
+const axios = require("../utils/axios.helper");
+const databaseSyncUrl = 'https://api.zuri.chat/plugins/6134c6a40366b6816a0b75cd/sync';
 
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
@@ -38,9 +41,7 @@ exports.sidebar = async (req, res) => {
   const { org, user } = req.query;
 
   if (!org || !user) {
-    throw new BadRequestError(
-      "One or more query parameters are missing! Valid parameters are: org & user."
-    );
+    throw new BadRequestError("One or more query parameters are missing! Valid parameters are: org & user.");
   }
 
   // const isUserValidated = await authCheck(org, user, token);
@@ -100,3 +101,56 @@ exports.ping = (req, res) => {
     .status(200)
     .json({ status: "success", message: "Server is up & running..." });
 };
+
+// Endpoint for syncing the plugin each time a new event occurs
+// Possible events are a user joining or leaving a workspace for now.
+exports.sync = async (req, res) => {
+  const userList = req.body.queue;
+
+  if (!userList) {
+    throw new BadRequestError("No queue to update");
+  }
+  const queueId = userList[userList.length - 1].id;
+
+  for (let i = 0; i < userList.length; i++){
+
+    const org_id = userList[i].message.organization_id;
+    const rooms = await Rooms.fetchByFilter({ org_id });
+
+    if (userList[i].event === "enter_organization"){
+
+      for (let j = 0; j < userList.length; j++) {
+        const {_id} = rooms[j];
+        if (!rooms[j].isDefault){
+          rooms[j].room_member_ids.push(userList[i].message.member_id);
+          delete rooms[j]._id;
+          rooms[j].room_modified_at = new Date();
+          await Rooms.update(_id, rooms[j]);
+        }
+      }
+    }
+
+    if (userList[i].event === "leave_organization"){
+      for (let k = 0; k < rooms.length; k++) {
+        const {_id} = rooms[k];
+        console.log("I left");
+        rooms[k].room_member_ids = rooms[k].room_member_ids.filter((id) => id !== userList[i].message.member_id);
+        rooms[k].room_modified_at = new Date();
+
+        delete rooms[k]._id;
+
+        await Rooms.update(_id, rooms[k]);
+      }
+    }
+  }
+
+  const data = await axios.patch(`${databaseSyncUrl}`, {id:queueId});
+
+  res
+      .status(200)
+      .send(appResponse(
+              "Synchronized Successfully",
+              data,
+              true
+          ));
+}
