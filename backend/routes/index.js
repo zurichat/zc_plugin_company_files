@@ -1,10 +1,11 @@
 const fileRouter = require('./file.route');
 const folderRouter = require('./folder.route');
-const archiveRouter = require('./archive.route');
+const archivedRouter = require('./archived.route');
 const roomsRouter = require('./rooms.route');
 const pluginRouter = require('./plugin.router');
 const searchRouter = require('./search.route');
-const activityRouter = require('./activity.route');
+const activityRouter = require('./activity.route')
+const securityRouter = require('./security.route')
 const slackRouter = require('./slack.route');
 
 
@@ -17,9 +18,10 @@ module.exports = router => {
   router.use('/rooms', roomsRouter);
   router.use('/files', fileRouter);
   router.use('/folders', folderRouter);
-  router.use('/archive', archiveRouter);
+  router.use('/archived', archivedRouter);
   router.use('/search', searchRouter);
   router.use('/activities', activityRouter)
+  router.use('/security', securityRouter)
   router.use('/docs', swagger.serve, swagger.setup(docs))
   router.use('/slack', slackRouter)
 
