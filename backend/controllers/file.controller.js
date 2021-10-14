@@ -280,12 +280,24 @@ exports.fileDetails = async (req, res) => {
     }
 
     const check = await checkPassword(filePassword, data.password)
-    if(check) res.status(200).json(data)
-    else throw new BadRequestError('wrong password');
-  }
-  
-}
 
+    await Promise.all([
+      File.update(fileId, updatedLastAccessed),
+      RealTime.publish("fileDetail", data)
+    ]);
+    if(check) {
+      const updatedLastAccessed = { lastAccessed: new Date().toISOString() };
+      data = { ...data, ...updatedLastAccessed };
+
+      await Promise.all([
+        File.update(fileId, updatedLastAccessed),
+        RealTime.publish("fileDetail", data)
+      ]);
+      res.status(200).json(data)
+    }
+      else throw new BadRequestError('wrong password');
+  }
+}
 
 exports.fileRename = async (req, res) => {
   const { fileId } = req.params;
@@ -753,26 +765,6 @@ exports.resetFilePassword = async (req, res) => {
     throw new BadRequestError('you must provide a correct password field');
   }
 }
-
-// exports.searchResource = async (req, res) => {
-
-//   const { fileName } = req.query
-
-//   console.log(fileName)
-//   const data = await File.fetchAll()
-//   const searchedFiles = data.filter((file)=>{
-//      return file.fileName.includes(fileName)
-//   })
-
-
-//   res.status(200).json({
-//     total_count: searchedFiles.length,
-// 	  page: 1,
-// 	  next: null,
-// 	  previous: null,
-//     result: searchedFiles,
-//   })
-// }
 
 //add a creator to a file
 exports.test = async (req, res) => {
