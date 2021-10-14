@@ -262,15 +262,28 @@ exports.fileDetails = async (req, res) => {
   let data = await File.fetchOne({ _id: fileId });
   if (!data) throw new NotFoundError();
 
-  const updatedLastAccessed = { lastAccessed: new Date().toISOString() };
-  data = { ...data, ...updatedLastAccessed };
+  if(!data.password){
+    const updatedLastAccessed = { lastAccessed: new Date().toISOString() };
+    data = { ...data, ...updatedLastAccessed };
+  
+    await Promise.all([
+      File.update(fileId, updatedLastAccessed),
+      RealTime.publish("fileDetail", data)
+    ]);
+  
+    res.status(200).send(appResponse(null, data, true));
+  }else{
+    const { filePassword } = req.body
+    async function checkPassword(inputPassword, dbPassword){
+      const isSame = await bcrypt.compare(inputPassword, dbPassword)
+      return isSame
+    }
 
-  await Promise.all([
-    File.update(fileId, updatedLastAccessed),
-    RealTime.publish("fileDetail", data)
-  ]);
-
-  res.status(200).send(appResponse(null, data, true));
+    const check = await checkPassword(filePassword, data.password)
+    if(check) res.status(200).json(data)
+    else throw new BadRequestError('wrong password');
+  }
+  
 }
 
 
@@ -671,3 +684,101 @@ exports.detectPreview = async (req, res) => {
   await File.update(id, updateLastAccessed);
   res.status(200).json(`Last accessed date updated`);
 };
+
+exports.lockFile = async (req, res) => {
+  const { creatorId, password } = req.body
+  const fileId  = req.params.id
+
+  let file = await File.fetchOne({ _id: fileId });
+  if (!file) throw new NotFoundError();
+
+  if(file.createdBy !== creatorId || !creatorId){
+    throw new BadRequestError('you can only lock a file you created!');
+  }else{
+
+    if(!password) {
+      throw new BadRequestError('you must type a password');
+    }else{
+      
+      async function hashPassword(passwordParams){
+        const salt = await bcrypt.genSalt(10);
+        hash = await bcrypt.hash(passwordParams, salt);
+        return hash
+      }
+      const newHash = await hashPassword(password)
+      const filePassword = {password: newHash}
+      await File.update(fileId, filePassword)
+
+      let newFile = await File.fetchOne({ _id: fileId });
+      res.status(200).json({success: true, message: "new password created", data: newFile})
+    }
+  }
+}
+
+
+exports.resetFilePassword = async (req, res) => {
+  const { newPassword, oldPassword } = req.body
+  const fileId  = req.params.id
+
+  let file = await File.fetchOne({ _id: fileId });
+  if (!file) throw new NotFoundError();
+
+  if(!file.password){
+    throw new BadRequestError('you cant reset a file that has no password');
+  }
+
+  async function checkPassword(inputPassword, dbPassword){
+    const isSame = await bcrypt.compare(inputPassword, dbPassword)
+    return isSame
+  }
+
+  const check = await checkPassword(oldPassword, file.password)
+  if(check === true){
+
+    async function hashPassword(passwordParams){
+      const salt = await bcrypt.genSalt(10);
+      hash = await bcrypt.hash(passwordParams, salt);
+      return hash
+    }
+
+    if(!newPassword) throw new BadRequestError('you must type a new password');
+
+    const newHash = await hashPassword(newPassword)
+    const filePassword = {password: newHash}
+    await File.update(fileId, filePassword)
+
+    let newFile = await File.fetchOne({ _id: fileId });
+    res.status(200).json({success: true, data: newFile})
+  }else{
+    throw new BadRequestError('you must provide a correct password field');
+  }
+}
+
+// exports.searchResource = async (req, res) => {
+
+//   const { fileName } = req.query
+
+//   console.log(fileName)
+//   const data = await File.fetchAll()
+//   const searchedFiles = data.filter((file)=>{
+//      return file.fileName.includes(fileName)
+//   })
+
+
+//   res.status(200).json({
+//     total_count: searchedFiles.length,
+// 	  page: 1,
+// 	  next: null,
+// 	  previous: null,
+//     result: searchedFiles,
+//   })
+// }
+
+//add a creator to a file
+exports.test = async (req, res) => {
+  const { fileId, userId } = req.params
+  await File.update(fileId, {createdBy: userId })
+  let file = await File.fetchOne({ _id: fileId });
+  res.status(200).json(file)
+
+}

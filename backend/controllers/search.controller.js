@@ -18,6 +18,7 @@ const formatSearchData = data => {
 }
 
 
+
 const searchAndFilterFiles = async (req, res) => {
   const { fileName, fileType } = req.query;
 
@@ -59,6 +60,78 @@ const searchAndFilterFiles = async (req, res) => {
 }
 
 
+const searchAndFilterFolders = async (req, res) => {
+  const { folderName, folderDate } = req.query;
+
+  let response;
+
+  if (folderName) {
+
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 10;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    if (folderDate) {
+      response = await Folder.fetchByFilter({
+        folderName: { $regex: folderName, $options: "i" },
+        dateAdded: { $regex: folderDate },
+      }, { skip: startIndex, limit });
+    } else {
+      response = await Folder.fetchByFilter({
+        folderName: { $regex: folderName, $options: "i" },
+      }, { skip: startIndex, limit });
+    }
+
+    const total_count = response.length;
+    const next = (endIndex < total_count ) ? { page: page + 1, limit } : {};
+    const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
+    // const last_page = ((total_count % limit) === 0) ? total_count/limit : Math.floor(total_count/limit) + 1
+    // console.log(total_count/limit)
+
+    if (total_count !== 0) {
+      return res.status(200).send(
+        appResponse("Folder search result", undefined, true, {
+          pagination: {
+            total_count,
+            current_page: page,
+            next,
+            previous,
+            per_page: limit,
+            first_page: 1,
+            last_page: null
+          },
+          plugin: "Company Files",
+          query: { folderName, folderDate },
+          result: formatSearchData(response),
+        })
+      );
+    } else {
+      return res.status(200).send(
+        appResponse("Folder search queries wrong", undefined, true, {
+          pagination: {
+            total_count,
+            current_page: page,
+            next,
+            previous,
+            per_page: limit,
+            first_page: 1,
+            last_page,
+          },
+          plugin: "Company Files",
+          query: { folderName, folderDate },
+          result: formatSearchData(response),
+        })
+      );
+    }
+  } else {
+    return res
+      .status(400)
+      .send(appResponse("Invalid folderName provided!", null));
+  }
+};
+
+
 exports.searchFilesAndFolders = async (req, res) => {
   const { category } = req.query;
 
@@ -68,12 +141,13 @@ exports.searchFilesAndFolders = async (req, res) => {
     case 'files':
       searchAndFilterFiles(req, res);
       break;
-    // case 'folders':
-    //   searchAndFilterFolders(req, res);
-    //   break;
+    case 'folders':
+      searchAndFilterFolders(req, res);
+      break;
     default:
       throw new BadRequestError('Invalid category! Valid categories are "files" & "folders"');
   }
+
 }
 
 

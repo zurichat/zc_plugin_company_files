@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const { requestService } = require('../controllers/slack.controller');
+const Slack = require('../controllers/slack.controller');
 
-router.post('/message', requestService)
+router.post('/message', Slack.requestService)
 
 module.exports = router;
