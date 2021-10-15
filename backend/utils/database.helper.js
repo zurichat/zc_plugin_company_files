@@ -5,7 +5,7 @@ const databaseWriteUrl = 'https://api.zuri.chat/data/write';
 const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
 
 // 61518d6c9d521e488c59745f 
-const PLUGIN_ID = process.env.PLUGIN_ID || '6134c6a40366b6816a0b75cd';
+const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 const ORG_ID = process.env.ORG_ID || '6133c5a68006324323416896';
 
 class DatabaseOps {
