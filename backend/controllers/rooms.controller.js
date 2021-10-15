@@ -287,11 +287,17 @@ exports.addMultiUsersToRoom = async (req, res) => {
       ],
     },
   };
-
-  await RealTime.publish(
-    `${room.org_id}_${room.room_creator_id}_sidebar`,
-    JSON.stringify(responseData)
-  );
+  // Loop for Centrifugo sidebar update
+  members_id.forEach(memberId => {
+    await RealTime.publish(
+      `${room.org_id}_${memberId}_sidebar`,
+      JSON.stringify(responseData)
+    );
+  })
+  // await RealTime.publish(
+  //   `${room.org_id}_${room.room_creator_id}_sidebar`,
+  //   JSON.stringify(responseData)
+  // );
 
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
@@ -350,11 +356,17 @@ exports.removeMultiUsersFromRoom = async (req, res) => {
       joined_rooms: [],
     },
   };
-
-  await RealTime.publish(
-    `${room.org_id}_${room.room_creator_id}_sidebar`,
-    JSON.stringify(responseData)
-  );
+  // Loop for sidebar update to centrifugo
+  members_id.forEach(memberId => {
+    await RealTime.publish(
+      `${room.org_id}_${memberId}_sidebar`,
+      JSON.stringify(responseData)
+    );
+  })
+  // await RealTime.publish(
+  //   `${room.org_id}_${room.room_creator_id}_sidebar`,
+  //   JSON.stringify(responseData)
+  // );
 
   res
     .status(200)

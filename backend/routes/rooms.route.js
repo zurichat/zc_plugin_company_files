@@ -26,9 +26,6 @@ router.get('/room/:roomId',getOneRoom);
 // CREATE A NEW ROOM
 router.post('/:org_id/users/:member_id/room', createRoom);
 
-// CREATE A NEW ROOM
-router.post('/:org_id/users/:member_id/room', createRoom);
-
 // TEST:: CHECK ADDING MULTIPLE USERS AT A TIME
 router.post('/:org_id/room/:room_id/members/:member_id', addMultiUsersToRoom);
 
