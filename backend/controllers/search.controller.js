@@ -8,6 +8,7 @@ const { BadRequestError } = require('../utils/appError');
 const formatSearchData = data => {
   return data.map(_ => {
     return {
+      id: _._id,
       title: _.fileName || _.folderName,
       description: _.type || _.description,
       imageUrl: _.url ? _.url : null,
@@ -68,19 +69,19 @@ const searchAndFilterFolders = async (req, res) => {
   if (folderName) {
 
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
+    const limit = 1;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
     if (folderDate) {
       response = await Folder.fetchByFilter({
         folderName: { '$regex': folderName, '$options': "i" },
-        dateAdded: { '$regex': folderDate },
+        dateAdded:  { '$regex': folderDate},
       }, { skip: startIndex, limit });
 
       response_total = await Folder.fetchByFilter({
         folderName: { '$regex': folderName, '$options': "i" },
-        dateAdded: { '$regex': folderDate },
+        dateAdded:  { '$regex': folderDate},
       });
     } else {
       response = await Folder.fetchByFilter({
@@ -101,35 +102,51 @@ const searchAndFilterFolders = async (req, res) => {
     if (total_count !== 0) {
       return res.status(200).send(
         appResponse("Folder search result", undefined, true, {
+          title: `folder search results for query '${folderName}'`,
+          description: `result of search for folders that contains the query '${folderName}'`,
           pagination: {
-            total_count,
+            total_results: total_count,
+            page_size: limit,
             current_page: page,
-            next,
-            previous,
-            per_page: limit,
             first_page: 1,
             last_page,
+            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
-          plugin: "Company Files",
-          query: { folderName, folderDate },
-          result: formatSearchData(response),
+          search_parameters: {
+            query: folderName, 
+            filters: 'folders',
+            plugin: 'Company Files',
+          },
+          results: {
+            entity: 'Folders',
+            data: formatSearchData(response)
+            },
         })
       );
     } else {
       return res.status(200).send(
         appResponse("Folder search queries wrong", undefined, true, {
+          title: `folder search results for query '${folderName}'`,
+          description: `result of search for folders that contains the query '${folderName}'`,
           pagination: {
-            total_count,
+            total_results: total_count,
+            page_size: limit,
             current_page: page,
-            next,
-            previous,
-            per_page: limit,
             first_page: 1,
             last_page,
+            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
-          plugin: "Company Files",
-          query: { folderName, folderDate },
-          result: formatSearchData(response),
+          search_parameters: {
+            query: folderName, 
+            filters: 'folders',
+            plugin: 'Company Files',
+          },
+          results: {
+            entity: 'Folders',
+            data: formatSearchData(response)
+            },
         })
       );
     }

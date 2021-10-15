@@ -6,7 +6,7 @@ const RealTime = require("../utils/realtime.helper");
 const DatabaseConnection = require("../utils/database.helper");
 // const Rooms = new DatabaseConnection('NewRooms');
 const Rooms = new DatabaseConnection("TheNewRooms");
-const PLUGIN_ID = process.env.PLUGIN_ID || '61518d6c9d521e488c59745f';
+const PLUGIN_ID = process.env.PLUGIN_ID || '6169d79a4bfde011fe582e4a';
 const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
@@ -19,7 +19,7 @@ exports.info = (req, res) => {
 
   res.status(200).json({
     status: "success",
-    pluginId: PLUGIN_ID || "61518d6c9d521e488c59745f",
+    pluginId: PLUGIN_ID || "6169d79a4bfde011fe582e4a",
     pluginName,
     pluginUrl: `${baseUrl}`,
     sidebarUrl: `${baseUrl}/api/v1/sidebar`,
@@ -74,7 +74,7 @@ exports.sidebar = async (req, res) => {
     name: "Company Files",
     description:
       "An effective file management system that improves business workflow, organizes important data and provides a searchable database for quick retrieval.",
-    plugin_id: PLUGIN_ID || "61518d6c9d521e488c59745f",
+    plugin_id: PLUGIN_ID || "6169d79a4bfde011fe582e4a",
     organisation_id: org,
     user_id: user,
     group_name: "Company Files",

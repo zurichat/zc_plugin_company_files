@@ -12,14 +12,14 @@ const Folders = new DatabaseOps("Folder");
 
 exports.folderCreate = async (req, res) => {
   const { body } = req;
-  const { userObj } = req.headers;
+  // const { userObj } = req.headers;
   body.folderId = uuid();
-  body.memberId = uuid();
+  // body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
   const createdFolder = await Folders.fetchOne({ folderId: folder.folderId });
-  await addActivity(userObj, "created", `${createdFolder.folderName}`);
+  // await addActivity(userObj, "created", `${createdFolder.folderName}`);
   res.status(201).send(appResponse(null, createdFolder, true));
 };
 
