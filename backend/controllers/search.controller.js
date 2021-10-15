@@ -67,7 +67,9 @@ const searchAndFilterFolders = async (req, res) => {
 
   let response;
 
-  if (folderName) {
+  console.log(orgId, memberId)
+
+  if (folderName && folderName.trim()) {
 
     const page = parseInt(req.query.page, 10) || 1;
     const limit = 1;
@@ -76,29 +78,37 @@ const searchAndFilterFolders = async (req, res) => {
 
     if (folderDate) {
       response = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
         folderName: { '$regex': folderName, '$options': "i" },
         dateAdded:  { '$regex': folderDate},
       }, { skip: startIndex, limit });
+      console.log(response)
 
       response_total = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
         folderName: { '$regex': folderName, '$options': "i" },
         dateAdded:  { '$regex': folderDate},
       });
     } else {
       response = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
         folderName: { '$regex': folderName, '$options': "i" },
       }, { skip: startIndex, limit });
 
       response_total = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
         folderName: { '$regex': folderName, '$options': "i" },
       }); 
     }
 
     const total_count = response.length;
-    const next = (endIndex < total_count ) ? { page: page + 1, limit } : {};
-    const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
+    const previous = 0 || page - 1;
     const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-
+    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
 
     if (total_count !== 0) {
       return res.status(200).send(
