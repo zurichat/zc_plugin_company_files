@@ -35,8 +35,12 @@ describe('FILE UPLOAD TESTS', () => {
       
     });
 
-    // refresh sinon sandbox 
     afterEach(() => {        
+        sandbox.restore();
+    });
+
+    // refresh sinon sandbox 
+    after(() => {        
         // Delete cache.
         fileId,fileName = null;
         

@@ -29,8 +29,13 @@ describe('FILES TESTS', () => {
 
     });
 
-    // refresh sinon sandbox 
+    // restore sandbox
     afterEach(() => {
+      sandbox.restore();
+    });
+    
+    // refresh sinon && sandbox 
+    after(() => {
         sandbox.restore();
         sinon.restore();
     });
