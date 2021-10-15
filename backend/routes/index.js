@@ -15,7 +15,7 @@ const docs = require('../docs');
 
 module.exports = router => {
   router.use('/', pluginRouter);
-  router.use('/rooms', roomsRouter);
+  router.use('/org', roomsRouter);
   router.use('/files', fileRouter);
   router.use('/folders', folderRouter);
   router.use('/archived', archivedRouter);
