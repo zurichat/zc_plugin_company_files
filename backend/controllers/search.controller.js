@@ -74,20 +74,29 @@ const searchAndFilterFolders = async (req, res) => {
 
     if (folderDate) {
       response = await Folder.fetchByFilter({
-        folderName: { $regex: folderName, $options: "i" },
-        dateAdded: { $regex: folderDate },
+        folderName: { '$regex': folderName, '$options': "i" },
+        dateAdded: { '$regex': folderDate },
       }, { skip: startIndex, limit });
+
+      response_total = await Folder.fetchByFilter({
+        folderName: { '$regex': folderName, '$options': "i" },
+        dateAdded: { '$regex': folderDate },
+      });
     } else {
       response = await Folder.fetchByFilter({
-        folderName: { $regex: folderName, $options: "i" },
+        folderName: { '$regex': folderName, '$options': "i" },
       }, { skip: startIndex, limit });
+
+      response_total = await Folder.fetchByFilter({
+        folderName: { '$regex': folderName, '$options': "i" },
+      }); 
     }
 
     const total_count = response.length;
     const next = (endIndex < total_count ) ? { page: page + 1, limit } : {};
     const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
-    // const last_page = ((total_count % limit) === 0) ? total_count/limit : Math.floor(total_count/limit) + 1
-    // console.log(total_count/limit)
+    const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
+
 
     if (total_count !== 0) {
       return res.status(200).send(
@@ -99,7 +108,7 @@ const searchAndFilterFolders = async (req, res) => {
             previous,
             per_page: limit,
             first_page: 1,
-            last_page: null
+            last_page,
           },
           plugin: "Company Files",
           query: { folderName, folderDate },
