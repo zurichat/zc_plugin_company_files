@@ -12,7 +12,8 @@ const {
   getUserRooms,
   getRoomMembers,
   checkMemberInRoom,
-  getOrgDefaultRoomOnDomain
+  getOrgDefaultRoomOnDomain,
+  addMultiUsersToRoom
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS
@@ -29,6 +30,9 @@ router.post('/add_to_room', addUserToRoom);
 
 // ADD A USER TO A ROOM
 router.put('/add/:roomId', addToRoom);
+
+// TEST:: CHECK ADDING MULTIPLE USERS AT A TIME
+router.post('/add/multi', addMultiUsersToRoom);
 
 // REMOVE A USER FROM A ROOM
 router.put('/remove/:roomId', removeFromRoom);
