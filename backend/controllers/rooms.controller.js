@@ -46,9 +46,9 @@ exports.createRoom = async (req, res) => {
   const response = await Rooms.create(room);
 
   // publish update to sidebar
-  await RealTime.sideBarPublish(room.org_id, room.room_creator_id, {
-    message: `Room '${room.room_name}' created successfully`,
-  });
+  // await RealTime.sideBarPublish(room.org_id, room.room_creator_id, {
+  //   message: `Room '${room.room_name}' created successfully`,
+  // });
 
   // dtata to send to sidebar event
   responseData = {
@@ -59,7 +59,7 @@ exports.createRoom = async (req, res) => {
       id: response.data.object_id,
       name: "COMPANYFILES Plugin",
       show_group: false,
-      category: "productiv",
+      category: "tools",
       button_url: "/companyfiles",
       public_rooms: [],
       joined_rooms: [
