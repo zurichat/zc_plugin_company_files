@@ -21,9 +21,9 @@ const zuriCoreBaseUrl = "https://api.zuri.chat";
 exports.createRoom = async (req, res) => {
   const { body } = req;
 
+  body.room_creator_id = req.params.member_id;
   const room = await RoomSchema.validateAsync(body);
 
-  room.room_member_ids = [room.room_creator_id];
   // room.members = [];
 
   // room.slug = slugify(room.roomName, {
@@ -43,12 +43,12 @@ exports.createRoom = async (req, res) => {
 
   // Verify user ids later on...
 
+  const response = await Rooms.create(room);
+
   // publish update to sidebar
   await RealTime.sideBarPublish(room.org_id, room.room_creator_id, {
     message: `Room '${room.room_name}' created successfully`,
   });
-
-  const response = await Rooms.create(room);
 
   // dtata to send to sidebar event
   responseData = {
@@ -56,14 +56,16 @@ exports.createRoom = async (req, res) => {
     plugin_id: "61518d6c9d521e488c59745f",
     data: {
       group_name: "COMPANYFILES",
+      id: response.data.object_id,
       name: "COMPANYFILES Plugin",
       show_group: false,
+      category: "productiv",
       button_url: "/companyfiles",
       public_rooms: [],
       joined_rooms: [
         {
-          room_url: `companyfiles/${response.data.object_id}`,
-          room_name: body.room_name,
+          room_name: response.data.room_name,
+          // room_url: `https://zuri.chat/companyfiles/${response.data.object_id}`,
           room_image:
             "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg",
         },

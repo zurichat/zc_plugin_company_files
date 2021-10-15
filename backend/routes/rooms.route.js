@@ -22,7 +22,7 @@ router.get('/all', getAllRooms);
 router.get('/room/:roomId',getOneRoom);
 
 // CREATE A NEW ROOM
-router.post('/create', createRoom);
+router.post('/:org_id/users/:member_id/room', createRoom);
 
 // ADD TO ROOM (ZURI MAIN)
 router.post('/add_to_room', addUserToRoom);
