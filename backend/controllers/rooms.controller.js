@@ -260,6 +260,7 @@ exports.addMultiUsersToRoom = async (req, res) => {
   await RealTime.sideBarPublish(room.org_id, isValid[0], {
     message: `User(s) ${[...isValid]} joined ${room.room_name} successfully`,
     userId: isValid[0],
+    members_id
   });
 
   // dtata to send to sidebar event
@@ -292,14 +293,14 @@ exports.addMultiUsersToRoom = async (req, res) => {
 };
 
 
-
 //::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
 exports.removeMultiUsersFromRoom = async (req, res) => {
-  // the info of the user to be removed from a room
-  const { userId, userName } = req.body;
+  // the info of the users to be removed from a room
+  // const { userId, userName } = req.body;
+  const { room_id, members_id } = req.body;
 
   // fetch all the target room with the provided room_id.
-  const room = await Rooms.fetchOne({ _id: req.params.roomId });
+  const room = await Rooms.fetchOne({ _id: room_id });
 
   if (!room) throw new NotFoundError();
 
@@ -311,22 +312,43 @@ exports.removeMultiUsersFromRoom = async (req, res) => {
   // }
 
   // parse the room data and remove the target user data from it.
-  room.room_member_ids = room.room_member_ids.filter((id) => id !== userId);
+  room.room_member_ids = room.room_member_ids.filter((id) => {
+    return members_id.indexOf(id) < 0
+  });
   room.room_modified_at = new Date();
-
   // clean up the room data
   delete room._id;
 
   // send the data to the api endpoint for update.
-  await Rooms.update(req.params.roomId, room);
+  await Rooms.update(room_id, room);
 
-  const updatedRoom = await Rooms.fetchOne({ _id: req.params.roomId });
+  const updatedRoom = await Rooms.fetchOne({ _id: room_id });
 
   // publish update to sidebar
-  RealTime.sideBarPublish(room.org_id, userId, {
-    message: `${userName} left ${room.room_name} successfully`,
-    userId,
+  RealTime.sideBarPublish(room.org_id, members_id[0], {
+    message: `User(S) ${members_id} left ${room.room_name} successfully`,
+    userId: members_id[0],
+    members_id
   });
+
+   // dtata to send to sidebar event
+   responseData = {
+    event: "sidebar_update",
+    plugin_id: "61518d6c9d521e488c59745f",
+    data: {
+      group_name: "COMPANYFILES",
+      name: "COMPANYFILES Plugin",
+      show_group: false,
+      button_url: "/companyfiles",
+      public_rooms: [],
+      joined_rooms: [],
+    },
+  };
+
+  await RealTime.publish(
+    `${room.org_id}_${room.room_creator_id}_sidebar`,
+    JSON.stringify(responseData)
+  );
 
   res
     .status(200)
