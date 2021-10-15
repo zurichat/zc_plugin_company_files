@@ -13,7 +13,8 @@ const {
   getRoomMembers,
   checkMemberInRoom,
   getOrgDefaultRoomOnDomain,
-  addMultiUsersToRoom
+  addMultiUsersToRoom,
+  removeMultiUsersFromRoom
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS
@@ -25,14 +26,20 @@ router.get('/room/:roomId',getOneRoom);
 // CREATE A NEW ROOM
 router.post('/:org_id/users/:member_id/room', createRoom);
 
+// CREATE A NEW ROOM
+router.post('/:org_id/users/:member_id/room', createRoom);
+
+// TEST:: CHECK ADDING MULTIPLE USERS AT A TIME
+router.post('/:org_id/room/:room_id/members/:member_id', addMultiUsersToRoom);
+
+// TEST:: CHECK REMOVING MULTIPLE USERS AT A TIME
+router.patch('/:org_id/room/:room_id/members/:member_id', removeMultiUsersFromRoom);
+
 // ADD TO ROOM (ZURI MAIN)
 router.post('/add_to_room', addUserToRoom);
 
 // ADD A USER TO A ROOM
 router.put('/add/:roomId', addToRoom);
-
-// TEST:: CHECK ADDING MULTIPLE USERS AT A TIME
-router.post('/add/multi', addMultiUsersToRoom);
 
 // REMOVE A USER FROM A ROOM
 router.put('/remove/:roomId', removeFromRoom);

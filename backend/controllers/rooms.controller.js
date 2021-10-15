@@ -219,6 +219,7 @@ exports.addToRoom = async (req, res) => {
 
 //::: ENDPOINT FOR ADDING MULTIPLE USERS TO A ROOM
 exports.addMultiUsersToRoom = async (req, res) => {
+  console.log("ADD MULTI ENDPOINT HIT");
   // the info of the user to be added to a room
   const { room_id, members_id } = req.body;
 
@@ -273,6 +274,7 @@ exports.addMultiUsersToRoom = async (req, res) => {
       group_name: "COMPANYFILES",
       name: "COMPANYFILES Plugin",
       show_group: false,
+      category: "tools",
       button_url: "/companyfiles",
       public_rooms: [],
       joined_rooms: [
@@ -297,6 +299,7 @@ exports.addMultiUsersToRoom = async (req, res) => {
 
 //::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
 exports.removeMultiUsersFromRoom = async (req, res) => {
+  console.log("REMOVE MULTI ENDPOINT HIT");
   // the info of the users to be removed from a room
   // const { userId, userName } = req.body;
   const { room_id, members_id } = req.body;
@@ -341,6 +344,7 @@ exports.removeMultiUsersFromRoom = async (req, res) => {
       group_name: "COMPANYFILES",
       name: "COMPANYFILES Plugin",
       show_group: false,
+      category: "tools",
       button_url: "/companyfiles",
       public_rooms: [],
       joined_rooms: [],
