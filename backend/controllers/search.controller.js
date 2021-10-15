@@ -62,6 +62,7 @@ const searchAndFilterFiles = async (req, res) => {
 
 
 const searchAndFilterFolders = async (req, res) => {
+  const { orgId, memberId } = req.params;
   const { folderName, folderDate } = req.query;
 
   let response;
