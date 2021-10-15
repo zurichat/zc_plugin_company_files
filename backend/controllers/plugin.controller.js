@@ -6,12 +6,13 @@ const RealTime = require("../utils/realtime.helper");
 const DatabaseConnection = require("../utils/database.helper");
 // const Rooms = new DatabaseConnection('NewRooms');
 const Rooms = new DatabaseConnection("TheNewRooms");
-const { PLUGIN_ID } = process.env;
+const PLUGIN_ID = process.env.PLUGIN_ID || '61518d6c9d521e488c59745f';
 const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
-const databaseSyncUrl = 'https://api.zuri.chat/plugins/6134c6a40366b6816a0b75cd/sync';
-const pluginInfoUrl = 'https://api.zuri.chat/marketplace/plugins/6134c6a40366b6816a0b75cd';
+
+const databaseSyncUrl = `https://api.zuri.chat/plugins/${PLUGIN_ID}/sync`;
+const pluginInfoUrl = `https://api.zuri.chat/marketplace/plugins/${PLUGIN_ID}`;
 
 exports.info = (req, res) => {
   const baseUrl = `${req.protocol}://${req.get("host")}`;
@@ -121,9 +122,9 @@ exports.sync = async (req, res) => {
 
     if (userList[i].event === "enter_organization"){
 
-      for (let j = 0; j < userList.length; j++) {
+      for (let j = 0; j < rooms.length; j++) {
         const {_id} = rooms[j];
-        if (!rooms[j].isDefault){
+        if (rooms[j].isDefault){
           rooms[j].room_member_ids.push(userList[i].message.member_id);
           delete rooms[j]._id;
           rooms[j].room_modified_at = new Date();
