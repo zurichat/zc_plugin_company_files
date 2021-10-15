@@ -2,7 +2,7 @@ const axios = require('axios')
 
 exports.callAll = async (req, res) => {
 
-  try {
+  
     const all = [
       'https://companyfiles.zuri.chat/api/v1/files/all',
       'https://companyfiles.zuri.chat/api/v1/files/uploadStatus',
@@ -39,43 +39,27 @@ exports.callAll = async (req, res) => {
       'https://companyfiles.zuri.chat/api/v1/plugin/info',
       'https://companyfiles.zuri.chat/api/v1/plugin/sidebar',
       'https://companyfiles.zuri.chat/api/v1/plugin/sidebar',
-
     ]
 
-    // const request1 = await axios.get(all)
-    // const request2 = await axios.get(uploadStatus)
-    // const request3 = await axios.get(sort)
-    // const request4 = await axios.get(archive)
-    // const request5 = await axios.get(deletedFiles)
-
-    let allResponse 
+    let allResponse = []
     for (let i = 0 ; i < all.length ; i++) {
-      allResponse[i] = await axios.get(all[i])
+      try {
+        const response = await axios.get(all[i])
+        allResponse.push({
+          url: all[i],
+          status: response.status ? response.status : 'SUCCESS'
+        })
+
+      } catch (err) {
+        allResponse.push({
+          url: all[i],
+          status: 'FAILED'
+        })
+      }
     }
 
-    await axios.all(allResponse)
-      .then(axios.spread((...responses) => {
-        res.status(200).json({
-          responses
-        })
-      }))
-      .catch(errors => {
-        // console.log(errors)
-        return res.status(403).json({
-          status: "error",
-          statusCode: 403,
-          message: "Forbidden! Can't access all endpoints.",
-          data: null,
-        })
-      })
-
-
-  } catch (err) {
-    return res.status(403).json({
-      status: "error",
-      statusCode: 403,
-      message: "Forbidden! Can't access all endpoints.",
-      data: null,
+    return res.status(200).json({
+      allResponse
     })
-  }
+
 }

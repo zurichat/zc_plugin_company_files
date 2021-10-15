@@ -4,6 +4,7 @@ const databaseReadUrl = 'https://api.zuri.chat/data/read';
 const databaseWriteUrl = 'https://api.zuri.chat/data/write';
 const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
 
+// 61518d6c9d521e488c59745f 
 const PLUGIN_ID = process.env.PLUGIN_ID || '6134c6a40366b6816a0b75cd';
 const ORG_ID = process.env.ORG_ID || '6133c5a68006324323416896';
 
@@ -16,6 +17,7 @@ class DatabaseOps {
       bulk_write: false,
       object_id: '',
       filter: {},
+      options: {},
       payload: {}
     }
 
@@ -38,19 +40,20 @@ class DatabaseOps {
   }
 
   create = async (payload) => {
+    this.data.filter = undefined;
     this.data.payload = payload;
-    const response = await axios.post(databaseWriteUrl, this.data);
 
-    return response.data;
+    const { data } = await axios.post(databaseWriteUrl, this.data);
+    return data;
+    
   }
 
-  fetchAll = async (filter = {}) => {
-    this.data.filter = this.normalizeFilterQuery(filter);
+  fetchAll = async () => {
     const { data } = await axios.get(
       `${databaseReadUrl}/${this.data.plugin_id}/${this.data.collection_name}/${this.data.organization_id}`
     );
 
-    return data;
+    return data === null ? [] : data;
   }
 
   fetchOne = async (query) => {
@@ -59,6 +62,15 @@ class DatabaseOps {
     );
 
     return data;
+  }
+
+  fetchByFilter = async (filter = {}, options = {}) => {
+    this.data.filter = filter;
+    this.data.options = options;
+    
+    const { data } = await axios.post(`${databaseReadUrl}`, this.data);
+
+    return data === null ? [] : data;
   }
 
   update = async (id, payload) => {
@@ -86,6 +98,14 @@ class DatabaseOps {
 
       return data;
     }
+  }
+
+  deleteAll = async () => {
+    this.delete_data.bulk_delete = true;
+    this.delete_data.filter = {};
+    const { data } = await axios.post(databaseDeleteUrl, this.delete_data);
+
+    return data;
   }
 }
 

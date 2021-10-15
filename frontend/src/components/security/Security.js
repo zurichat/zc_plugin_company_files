@@ -10,12 +10,12 @@ function Security() {
       try {
         setLoading(true);
         const response = await axios.get("/security");
-        // console.log(response.data);
-        setResult(response.data);  
-        setLoading(false); 
+        console.log(response.data);
+        setResult(response.data);
+        setLoading(false);
       } catch (err) {
         setLoading(true);
-        // console.log(err.response.data);
+        console.log(err.response.data);
         setResult(err.response.data);
         setLoading(false);
       }
@@ -27,13 +27,13 @@ function Security() {
       <p className="tw-text-xl tw-my-4 tw-text-center">
         Security - Testing of all API endpoints
       </p>
-      <table className="tw-table-fixed tw-w-full">
+      <table className="tw-table-auto tw-w-full">
         <thead className="tw-text-xl tw-text-left">
           <tr>
-            <th className="tw-capitalize tw-truncate">status</th>
-            <th className="tw-capitalize tw-truncate">statuscode</th>
-            <th className="tw-capitalize tw-truncate">data</th>
-            <th className="tw-capitalize tw-truncate">Message</th>
+            <th className="tw-capitalize tw-truncate">URL</th>
+            <th className="tw-capitalize tw-truncate">Status</th>
+            {/* <th className="tw-capitalize tw-truncate">data</th>
+            <th className="tw-capitalize tw-truncate">Message</th> */}
           </tr>
         </thead>
         <tbody className="tw-text-xl tw-font-medium tw-center">
@@ -41,16 +41,14 @@ function Security() {
             <tr>
               <td>Loading...</td>
               <td>Loading...</td>
-              <td>Loading...</td>
-              <td>Loading...</td>
             </tr>
           ) : (
-            <tr>
-              <td>{result?.status}</td>
-              <td>{result?.statusCode}</td>
-              <td>Null</td>
-              <td>{result?.message}</td>
-            </tr>
+            result?.allResponse.map((item, idx) => (
+              <tr key={idx}>
+                <td>{item.url}</td>
+                <td>{item.status}</td>
+              </tr>
+            ))
           )}
         </tbody>
       </table>
