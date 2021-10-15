@@ -50,13 +50,13 @@ exports.createRoom = async (req, res) => {
   //   message: `Room '${room.room_name}' created successfully`,
   // });
 
-  // dtata to send to sidebar event
+  // data to send to sidebar event
   responseData = {
     event: "sidebar_update",
-    plugin_id: "61518d6c9d521e488c59745f",
+    plugin_id: "61696153b2cc8a9af4833d6a",
     data: {
       group_name: "COMPANYFILES",
-      id: response.data.object_id,
+      id: response.object_id,
       name: "COMPANYFILES Plugin",
       show_group: false,
       category: "tools",
@@ -64,7 +64,7 @@ exports.createRoom = async (req, res) => {
       public_rooms: [],
       joined_rooms: [
         {
-          room_name: response.data.room_name,
+          // room_name: response.data.room_name,
           // room_url: `https://zuri.chat/companyfiles/${response.data.object_id}`,
           room_image:
             "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg",
