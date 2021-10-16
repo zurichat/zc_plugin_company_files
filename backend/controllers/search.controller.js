@@ -59,7 +59,7 @@ const searchAndFilterFiles = async (req, res) => {
     const total_count = response.length;
     const previous = 0 || page - 1;
     const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
+    // const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
 
     return res.status(200).send(appResponse('File search result', undefined, true, {
       title: `files search results for query '${fileName}'`,
@@ -70,8 +70,8 @@ const searchAndFilterFiles = async (req, res) => {
         current_page: page,
         first_page: 1,
         last_page,
-        next: `https://companyfiles.zuri.chat/api/v1/search/?category=files&fileName=t&page=${next}`,
-        previous: `https://companyfiles.zuri.chat/v1/search/?category=files&fileName=t&page=${previous}`,
+        next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+        previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
       },
       search_parameters: {
         query: fileName, 
@@ -133,7 +133,7 @@ const searchAndFilterFolders = async (req, res) => {
     const total_count = response.length;
     const previous = 0 || page - 1;
     const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
+    // const next =  (endIndex < total_count ) ? page + 1 : last_page;
 
     if (total_count !== 0) {
       return res.status(200).send(
@@ -146,8 +146,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `https://companyfiles.zuri.chat/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `https://companyfiles.zuri.chat/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+            previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
@@ -171,8 +171,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `https://companyfiles.zuri.chat/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `https://companyfiles.zuri.chat/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+            previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
