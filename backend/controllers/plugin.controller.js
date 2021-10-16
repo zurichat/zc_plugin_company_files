@@ -136,7 +136,6 @@ exports.sync = async (req, res) => {
     if (userList[i].event === "leave_organization"){
       for (let k = 0; k < rooms.length; k++) {
         const {_id} = rooms[k];
-        console.log("I left");
         rooms[k].room_member_ids = rooms[k].room_member_ids.filter((id) => id !== userList[i].message.member_id);
         rooms[k].room_modified_at = new Date();
 
