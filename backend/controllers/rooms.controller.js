@@ -21,9 +21,9 @@ const zuriCoreBaseUrl = "https://api.zuri.chat";
 exports.createRoom = async (req, res) => {
   const { body } = req;
 
+  body.room_creator_id = req.params.member_id;
   const room = await RoomSchema.validateAsync(body);
 
-  room.room_member_ids = [room.room_creator_id];
   // room.members = [];
 
   // room.slug = slugify(room.roomName, {
@@ -43,27 +43,29 @@ exports.createRoom = async (req, res) => {
 
   // Verify user ids later on...
 
-  // publish update to sidebar
-  await RealTime.sideBarPublish(room.org_id, room.room_creator_id, {
-    message: `Room '${room.room_name}' created successfully`,
-  });
-
   const response = await Rooms.create(room);
 
-  // dtata to send to sidebar event
+  // publish update to sidebar
+  // await RealTime.sideBarPublish(room.org_id, room.room_creator_id, {
+  //   message: `Room '${room.room_name}' created successfully`,
+  // });
+
+  // data to send to sidebar event
   responseData = {
     event: "sidebar_update",
-    plugin_id: "61518d6c9d521e488c59745f",
+    plugin_id: "61696153b2cc8a9af4833d6a",
     data: {
       group_name: "COMPANYFILES",
+      id: response.object_id,
       name: "COMPANYFILES Plugin",
       show_group: false,
+      category: "tools",
       button_url: "/companyfiles",
       public_rooms: [],
       joined_rooms: [
         {
-          room_url: `companyfiles/${response.data.object_id}`,
-          room_name: body.room_name,
+          // room_name: response.data.room_name,
+          // room_url: `https://zuri.chat/companyfiles/${response.data.object_id}`,
           room_image:
             "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg",
         },
@@ -214,6 +216,169 @@ exports.addToRoom = async (req, res) => {
 
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
+
+//::: ENDPOINT FOR ADDING MULTIPLE USERS TO A ROOM
+exports.addMultiUsersToRoom = async (req, res) => {
+  console.log("ADD MULTI ENDPOINT HIT");
+  // the info of the user to be added to a room
+  const { room_id, members_id } = req.body;
+
+  if (!room_id && !members_id)
+    throw new BadRequestError("one or more required fields missing in body");
+
+  // fetch all the rooms available and get the target room with the provided room_id.
+  const room = await Rooms.fetchOne({ _id: room_id });
+
+  if (!room) throw new NotFoundError("room not found");
+
+  if (room.private) throw new ForbiddenError(`You can't join a private room!`);
+
+  // const isMemberInRoom = room.room_member_ids.filter(
+  //   (id) => id === userId
+  // ).length;
+  let isIn = [];
+  let isValid = []
+  members_id.forEach(member => {
+    let checkIn = room.room_member_ids.filter((id) => id === member);
+    if(checkIn.length > 0){
+      isIn.push(member)
+    }else{
+      isValid.push(member)
+    }
+  });
+
+  if (isIn.length > 0) throw new BadRequestError(`user(s) with id: ${isIn} is already in room!`);
+
+  // Add user to room...
+  room.room_member_ids.push(...isValid);
+  delete room._id;
+  room.room_modified_at = new Date();
+
+  // send the data to the api endpoint for update.
+  await Rooms.update(room_id, room);
+
+  const updatedRoom = await Rooms.fetchOne({ _id: room_id });
+
+  // publish update to sidebar
+  await RealTime.sideBarPublish(room.org_id, isValid[0], {
+    message: `User(s) ${[...isValid]} joined ${room.room_name} successfully`,
+    userId: isValid[0],
+    members_id
+  });
+
+  // dtata to send to sidebar event
+  responseData = {
+    event: "sidebar_update",
+    plugin_id: "61518d6c9d521e488c59745f",
+    data: {
+      group_name: "COMPANYFILES",
+      name: "COMPANYFILES Plugin",
+      show_group: false,
+      category: "tools",
+      button_url: "/companyfiles",
+      public_rooms: [],
+      joined_rooms: [
+        {
+          room_url: `companyfiles/${room._id}`,
+          room_name: room.room_name,
+          room_image:
+            "https://res.cloudinary.com/eyiajd/image/upload/v1630441863/sidebarplugin/Company%20File%20Management%20PlugIn%20%28Sidebar%20Icons%29/Files_sm4hss.svg",
+        },
+      ],
+    },
+  };
+  // Loop for Centrifugo sidebar update
+  members_id.forEach(async (memberId) => {
+    await RealTime.publish(
+      `${room.org_id}_${memberId}_sidebar`,
+      JSON.stringify(responseData)
+    );
+  })
+  // await RealTime.publish(
+  //   `${room.org_id}_${room.room_creator_id}_sidebar`,
+  //   JSON.stringify(responseData)
+  // );
+
+  return res.status(200).send(appResponse(null, updatedRoom, true));
+};
+
+
+//::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
+exports.removeMultiUsersFromRoom = async (req, res) => {
+  console.log("REMOVE MULTI ENDPOINT HIT");
+  // the info of the users to be removed from a room
+  // const { userId, userName } = req.body;
+  const { room_id, members_id } = req.body;
+
+  // fetch all the target room with the provided room_id.
+  const room = await Rooms.fetchOne({ _id: room_id });
+
+  if (!room) throw new NotFoundError();
+
+  // Check if room type is DM...
+  // if (room.roomType === 'inbox' && userId in room.members) {
+  //   throw new BadRequestError(`You cannot leave a DM!`);
+  // } else if (room.roomType === 'inbox' && room.members.indexOf(userId) === -1) {
+  //   throw new ForbiddenError('Access forbidden! You cannot join an already existing DM!');
+  // }
+
+  // parse the room data and remove the target user data from it.
+  room.room_member_ids = room.room_member_ids.filter((id) => {
+    return members_id.indexOf(id) < 0
+  });
+  room.room_modified_at = new Date();
+  // clean up the room data
+  delete room._id;
+
+  // send the data to the api endpoint for update.
+  await Rooms.update(room_id, room);
+
+  const updatedRoom = await Rooms.fetchOne({ _id: room_id });
+
+  // publish update to sidebar
+  RealTime.sideBarPublish(room.org_id, members_id[0], {
+    message: `User(S) ${members_id} left ${room.room_name} successfully`,
+    userId: members_id[0],
+    members_id
+  });
+
+   // dtata to send to sidebar event
+   responseData = {
+    event: "sidebar_update",
+    plugin_id: "61518d6c9d521e488c59745f",
+    data: {
+      group_name: "COMPANYFILES",
+      name: "COMPANYFILES Plugin",
+      show_group: false,
+      category: "tools",
+      button_url: "/companyfiles",
+      public_rooms: [],
+      joined_rooms: [],
+    },
+  };
+  // Loop for sidebar update to centrifugo
+  members_id.forEach(async (memberId) => {
+    await RealTime.publish(
+      `${room.org_id}_${memberId}_sidebar`,
+      JSON.stringify(responseData)
+    );
+  })
+  // await RealTime.publish(
+  //   `${room.org_id}_${room.room_creator_id}_sidebar`,
+  //   JSON.stringify(responseData)
+  // );
+
+  res
+    .status(200)
+    .send(
+      appResponse(
+        "User has been successfully removed from the room",
+        updatedRoom,
+        true
+      )
+    );
+};
+
 
 // not tested yet
 exports.removeFromRoom = async (req, res) => {

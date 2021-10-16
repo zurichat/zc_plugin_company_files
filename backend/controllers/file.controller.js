@@ -768,8 +768,8 @@ exports.resetFilePassword = async (req, res) => {
 
 //add a creator to a file
 exports.test = async (req, res) => {
-  const { fileId, userId } = req.params
-  await File.update(fileId, {createdBy: userId })
+  const { fileId, userId, orgId } = req.params
+  await File.update(fileId, {createdBy: userId, orgId })
   let file = await File.fetchOne({ _id: fileId });
   res.status(200).json(file)
 

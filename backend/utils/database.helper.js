@@ -6,6 +6,9 @@ const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
 
 const PLUGIN_ID = process.env.PLUGIN_ID || '6169d79a4bfde011fe582e4a';
 const ORG_ID = process.env.ORG_ID || '6169e016f5998a09e3bbbd11';
+// 61518d6c9d521e488c59745f 
+// const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
+// const ORG_ID = process.env.ORG_ID || '6133c5a68006324323416896';
 
 class DatabaseOps {
   constructor(collection_name) {
@@ -41,9 +44,10 @@ class DatabaseOps {
   create = async (payload) => {
     this.data.filter = undefined;
     this.data.payload = payload;
-    const { data } = await axios.post(databaseWriteUrl, this.data);
 
+    const { data } = await axios.post(databaseWriteUrl, this.data);
     return data;
+    
   }
 
   fetchAll = async () => {
