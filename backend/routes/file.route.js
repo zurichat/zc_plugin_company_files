@@ -123,6 +123,6 @@ router.put("/reset/:id", resetFilePassword)
 
 
 // test
-router.put('/test/:fileId/:userId', test);
+router.put('/test/:fileId/:userId/:orgId', test);
 
 module.exports = router;
