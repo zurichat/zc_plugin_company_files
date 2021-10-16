@@ -70,8 +70,8 @@ const searchAndFilterFiles = async (req, res) => {
         current_page: page,
         first_page: 1,
         last_page,
-        next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
-        previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
+        next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
+        previous: `https://companyfiles.zuri.chat/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${previous}`,
       },
       search_parameters: {
         query: fileName, 
@@ -146,8 +146,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
-            previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
+            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
+            previous: `https://companyfiles.zuri.chat/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
