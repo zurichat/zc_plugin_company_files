@@ -67,8 +67,6 @@ const searchAndFilterFolders = async (req, res) => {
 
   let response;
 
-  console.log(orgId, memberId)
-
   if (folderName && folderName.trim()) {
 
     const page = parseInt(req.query.page, 10) || 1;
@@ -83,7 +81,6 @@ const searchAndFilterFolders = async (req, res) => {
         folderName: { '$regex': folderName, '$options': "i" },
         dateAdded:  { '$regex': folderDate},
       }, { skip: startIndex, limit });
-      console.log(response)
 
       response_total = await Folder.fetchByFilter({
         orgId, 
@@ -170,11 +167,11 @@ const searchAndFilterFolders = async (req, res) => {
 
 
 exports.searchFilesAndFolders = async (req, res) => {
-  const { category } = req.query;
+  const { filter } = req.query;
 
-  if (!category) throw new BadRequestError('Category not provided! Valid categories are "files" & "folders"');
+  if (!filter) throw new BadRequestError('category not provided! Valid categories are "files" & "folders"');
 
-  switch (category.toLowerCase()) {
+  switch (filter.toLowerCase()) {
     case 'files':
       searchAndFilterFiles(req, res);
       break;
@@ -216,4 +213,21 @@ exports.searchFileAndFolder = async (req, res) => {
 
 exports.testSearch = async (req,res) => {
   res.sendFile(`${__dirname}/index.html`);
+}
+
+
+exports.searchSuggestion = async (req, res) => {
+  const { orgId, memberId } = req.params 
+  let suggestionObj = {};
+  const response = await Folder.fetchByFilter({
+    orgId, 
+    "collaborators.memberId": memberId,
+  });
+  const result = response.map((suggest)=> suggest.folderName)
+  for (x of result){
+    if(!suggestionObj.hasOwnProperty(x)){
+        suggestionObj[x] = x
+    }
+  }
+  res.status(200).json({status:'OK',type: 'suggestions', data: suggestionObj})
 }
