@@ -6,7 +6,7 @@ const RealTime = require("../utils/realtime.helper");
 const DatabaseConnection = require("../utils/database.helper");
 // const Rooms = new DatabaseConnection('NewRooms');
 const Rooms = new DatabaseConnection("TheNewRooms");
-const PLUGIN_ID = process.env.PLUGIN_ID || '6169d79a4bfde011fe582e4a';
+const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
@@ -110,9 +110,10 @@ exports.sync = async (req, res) => {
   const queue = await axios.get(`${pluginInfoUrl}`);
   const userList = queue.data.queue;
 
-  if (!userList) {
+  if (userList.length === 0) {
     throw new BadRequestError("No queue to update");
   }
+
   const queueId = userList[userList.length - 1].id;
 
   for (let i = 0; i < userList.length; i++){
