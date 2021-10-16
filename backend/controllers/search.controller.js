@@ -66,8 +66,8 @@ const searchAndFilterFiles = async (req, res) => {
         current_page: page,
         first_page: 1,
         last_page,
-        next: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${next}`,
-        previous: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${previous}`,
+        next: `https://companyfiles.zuri.chat/api/v1/search/?category=files&fileName=t&page=${next}`,
+        previous: `https://companyfiles.zuri.chat/v1/search/?category=files&fileName=t&page=${previous}`,
       },
       search_parameters: {
         query: fileName, 
@@ -252,7 +252,7 @@ exports.searchSuggestion = async (req, res) => {
     createdBy: memberId,
   });
   const fileResult = responseFile.map((suggest)=> suggest.fileName)
-  
+
   const result = response.map((suggest)=> suggest.folderName)
   for (x of result){
     if(!suggestionObj.hasOwnProperty(x)){
