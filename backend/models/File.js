@@ -5,6 +5,7 @@ const FileSchema = Joi.object({
   fileId: Joi.string().guid({ version: 'uuidv4' }).required(),
   fileName: Joi.string().required(),
   url: Joi.string().uri().required(),
+  orgId: Joi.string(),
   type: Joi.string().required(),
   size: Joi.number().required(),
   folderId: Joi.string().guid({ version: 'uuidv4' }).allow(null),
