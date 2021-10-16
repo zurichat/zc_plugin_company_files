@@ -14,7 +14,6 @@ exports.folderCreate = async (req, res) => {
   const { body } = req;
   const { userObj } = req.headers;
   body.folderId = uuid();
-  body.memberId = uuid();
   const folder = await FolderSchema.validateAsync(body);
   await Folders.create(folder);
 
