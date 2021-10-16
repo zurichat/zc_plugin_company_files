@@ -39,6 +39,7 @@ class DatabaseOps {
     ;
   }
 
+  
   create = async (payload) => {
     this.data.filter = undefined;
     this.data.payload = payload;

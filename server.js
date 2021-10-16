@@ -75,10 +75,6 @@ app.get('/zuri-root-config.js', (req, res) => {
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 
-//FOR MARKETPLACE INSTALLATION OF COMPANY FILES
-// app.use('api/v1/install', pluginRoute);
-
-// Handle resource not found error on backend
 app.use('/api/*', (req,res,next) => {
   next(new NotFoundError);
 })

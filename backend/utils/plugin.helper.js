@@ -6,6 +6,7 @@ const pluginId = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 
 
 
+
 const VerifyMemberInOrganization = async (userId, userToken, organizationId ) =>{
 
     const ORG_URL = `https://api.zuri.chat/organizations`;
@@ -49,39 +50,44 @@ const VerifyMemberInOrganization = async (userId, userToken, organizationId ) =>
 const installPlugin = async (userId, userToken, organizationId) => {
 
     try{
+    //   const config = {
+    //     url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
+    //     method: 'post',
+    //     data: JSON.stringify({
+    //       plugin_id: pluginId,
+    //       user_id: userId
+    //     }),
+       
+    //     headers: {
+    //       'Authorization': userToken
+    //     }
+    // };
 
+    let data = {
+      plugin_id: pluginId,
+      user_id: userId
+    }
 
-      const config = {
-        payload: {
-          plugin_id: pluginId,
-          user_id: userId
-        },
-        url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
-        headers: {
-          Authorization: userToken,
-        }
-    };
+    const config = {
+      method: 'post',
+      url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
+      data: data,
+      Headers: {
+        Authorization: userToken
+      }
+    }
 
-        const queryInstallPlugin = await axios.post(config.url, config.payload, { headers: config.headers });
+    const queryInstallPlugin = await axios(config)
 
-        // const queryInstallPlugin = await axios({
-        //     method: 'post',
-        //     url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
-        //     data:  {
-        //       plugin_id: pluginId,
-        //       user_id: userId
-        //     },
-        //     headers: {
-        //       Authorization: userToken
-        //     }
-        // })
-        const response = queryInstallPlugin;
-        
+    console.log('waiting for query')
+
+   const response = queryInstallPlugin.data;
+        console.log(response);
         return response
     }
 
     catch(error){
-        console.log(error)
+       // console.log(error)
         return { error: 'Server Error, Unable to Install Plugin' };
     }
 
