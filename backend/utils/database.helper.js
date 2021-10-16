@@ -1,8 +1,10 @@
 const axios = require('../utils/axios.helper');
+const axiosOrigin = require('axios')
 
 const databaseReadUrl = 'https://api.zuri.chat/data/read';
 const databaseWriteUrl = 'https://api.zuri.chat/data/write';
 const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
+const organizationUrl = `https://api.zuri.chat/organizations`
 
 const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 const ORG_ID = process.env.ORG_ID || '616986c5fbc5b28d42170c64';
@@ -30,6 +32,8 @@ class DatabaseOps {
       bulk_delete: false,
       object_id: ''
     }
+
+    this.databaseUrl = ''
   }
 
   normalizeFilterQuery(paramsObject) {
@@ -41,13 +45,24 @@ class DatabaseOps {
     ;
   }
 
+
   create = async (payload) => {
     this.data.filter = undefined;
     this.data.payload = payload;
+    
 
     const { data } = await axios.post(databaseWriteUrl, this.data);
     return data;
     
+  }
+
+  createWithUrlAndHeaders = async (payload, orgId) =>{
+   // this.data.payload = payload;
+    const url = `${organizationUrl}/${orgId}/plugins`
+    console.log(payload, 'payload')
+    const {data} = await axiosOrigin.post(url, payload)
+
+    return data;
   }
 
   fetchAll = async () => {
