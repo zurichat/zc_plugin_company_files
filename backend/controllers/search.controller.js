@@ -8,6 +8,7 @@ const { BadRequestError } = require('../utils/appError');
 const formatSearchData = data => {
   return data.map(_ => {
     return {
+      id: _._id,
       title: _.fileName || _.folderName,
       description: _.type || _.description,
       imageUrl: _.url ? _.url : null,
@@ -21,6 +22,7 @@ const formatSearchData = data => {
 
 const searchAndFilterFiles = async (req, res) => {
   const { fileName, fileType } = req.query;
+  const {orgId, memberId} = req.params;
 
   if (fileName && fileName.trim()) {
     const page = parseInt(req.query.page, 10) || 1;
@@ -32,27 +34,50 @@ const searchAndFilterFiles = async (req, res) => {
 
     if (fileType && fileType.trim()) {
       response = await File.fetchByFilter({
-        fileName: { '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+        fileName: { orgId, createdBy: memberId,
+          '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       }, { skip: startIndex, limit });
+
+      response_total = await File.fetchByFilter({
+        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+      });
     } else {
       response = await File.fetchByFilter({
-        fileName: { '$regex': fileName, '$options': 'i' }
+        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
       }, { skip: startIndex, limit });
+
+      response_total = await File.fetchByFilter({
+        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
+      });
     }
 
     // Pagination
-    const total = response.length;
-    const next = (endIndex < total && limit <= total) ? { page: page + 1, limit } : {};
-    const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
+    const total_count = response.length;
+    const previous = 0 || page - 1;
+    const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
+    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
 
     return res.status(200).send(appResponse('File search result', undefined, true, {
-      count: total,
-      page,
-      next,
-      previous,
-      plugin: 'Company Files',
-      query: fileName,
-      result: formatSearchData(response)
+      title: `files search results for query '${fileName}'`,
+      description: `Showing search result for '${fileName}'`,
+      pagination: {
+        total_results: total_count,
+        page_size: limit,
+        current_page: page,
+        first_page: 1,
+        last_page,
+        next: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${next}`,
+        previous: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${previous}`,
+      },
+      search_parameters: {
+        query: fileName, 
+        filters: 'files',
+        plugin: 'Company Files',
+      },
+      results: {
+        entity: 'Files',
+        data: formatSearchData(response)
+        },
     }));
   } else {
     return res.status(400).send(appResponse('Invalid fileName provided!', null));
@@ -61,66 +86,99 @@ const searchAndFilterFiles = async (req, res) => {
 
 
 const searchAndFilterFolders = async (req, res) => {
+  const { orgId, memberId } = req.params;
   const { folderName, folderDate } = req.query;
 
   let response;
 
-  if (folderName) {
+  if (folderName && folderName.trim()) {
 
     const page = parseInt(req.query.page, 10) || 1;
-    const limit = parseInt(req.query.limit, 10) || 10;
+    const limit = 1;
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
     if (folderDate) {
       response = await Folder.fetchByFilter({
-        folderName: { $regex: folderName, $options: "i" },
-        dateAdded: { $regex: folderDate },
+        orgId, 
+        "collaborators.memberId": memberId,
+        folderName: { '$regex': folderName, '$options': "i" },
+        dateAdded:  { '$regex': folderDate},
       }, { skip: startIndex, limit });
+
+      response_total = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
+        folderName: { '$regex': folderName, '$options': "i" },
+        dateAdded:  { '$regex': folderDate},
+      });
     } else {
       response = await Folder.fetchByFilter({
-        folderName: { $regex: folderName, $options: "i" },
+        orgId, 
+        "collaborators.memberId": memberId,
+        folderName: { '$regex': folderName, '$options': "i" },
       }, { skip: startIndex, limit });
+
+      response_total = await Folder.fetchByFilter({
+        orgId, 
+        "collaborators.memberId": memberId,
+        folderName: { '$regex': folderName, '$options': "i" },
+      }); 
     }
 
     const total_count = response.length;
-    const next = (endIndex < total_count ) ? { page: page + 1, limit } : {};
-    const previous = (startIndex > 0) ? { page: page - 1, limit } : {};
-    // const last_page = ((total_count % limit) === 0) ? total_count/limit : Math.floor(total_count/limit) + 1
-    // console.log(total_count/limit)
+    const previous = 0 || page - 1;
+    const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
+    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
 
     if (total_count !== 0) {
       return res.status(200).send(
         appResponse("Folder search result", undefined, true, {
+          title: `folder search results for query '${folderName}'`,
+          description: `Showing search result for'${folderName}'`,
           pagination: {
-            total_count,
+            total_results: total_count,
+            page_size: limit,
             current_page: page,
-            next,
-            previous,
-            per_page: limit,
             first_page: 1,
-            last_page: null
+            last_page,
+            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
-          plugin: "Company Files",
-          query: { folderName, folderDate },
-          result: formatSearchData(response),
+          search_parameters: {
+            query: folderName, 
+            filters: 'folders',
+            plugin: 'Company Files',
+          },
+          results: {
+            entity: 'Folders',
+            data: formatSearchData(response)
+            },
         })
       );
     } else {
       return res.status(200).send(
         appResponse("Folder search queries wrong", undefined, true, {
+          title: `folder search results for query '${folderName}'`,
+          description: `result of search for folders that contains the query '${folderName}'`,
           pagination: {
-            total_count,
+            total_results: total_count,
+            page_size: limit,
             current_page: page,
-            next,
-            previous,
-            per_page: limit,
             first_page: 1,
             last_page,
+            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
-          plugin: "Company Files",
-          query: { folderName, folderDate },
-          result: formatSearchData(response),
+          search_parameters: {
+            query: folderName, 
+            filters: 'folders',
+            plugin: 'Company Files',
+          },
+          results: {
+            entity: 'Folders',
+            data: formatSearchData(response)
+            },
         })
       );
     }
@@ -133,11 +191,11 @@ const searchAndFilterFolders = async (req, res) => {
 
 
 exports.searchFilesAndFolders = async (req, res) => {
-  const { category } = req.query;
+  const { filter } = req.query;
 
-  if (!category) throw new BadRequestError('Category not provided! Valid categories are "files" & "folders"');
+  if (!filter) throw new BadRequestError('filters not provided! Valid filters are "files" & "folders"');
 
-  switch (category.toLowerCase()) {
+  switch (filter.toLowerCase()) {
     case 'files':
       searchAndFilterFiles(req, res);
       break;
@@ -145,7 +203,7 @@ exports.searchFilesAndFolders = async (req, res) => {
       searchAndFilterFolders(req, res);
       break;
     default:
-      throw new BadRequestError('Invalid category! Valid categories are "files" & "folders"');
+      throw new BadRequestError('Invalid filters! Valid filters are "files" & "folders"');
   }
 
 }
@@ -179,4 +237,32 @@ exports.searchFileAndFolder = async (req, res) => {
 
 exports.testSearch = async (req,res) => {
   res.sendFile(`${__dirname}/index.html`);
+}
+
+
+exports.searchSuggestion = async (req, res) => {
+  const { orgId, memberId } = req.params 
+  let suggestionObj = {};
+  const response = await Folder.fetchByFilter({
+    orgId, 
+    "collaborators.memberId": memberId,
+  });
+  const responseFile = await File.fetchByFilter({
+    orgId, 
+    createdBy: memberId,
+  });
+  const fileResult = responseFile.map((suggest)=> suggest.fileName)
+  
+  const result = response.map((suggest)=> suggest.folderName)
+  for (x of result){
+    if(!suggestionObj.hasOwnProperty(x)){
+        suggestionObj[x] = x
+    }
+  }
+  for (x of fileResult){
+    if(!suggestionObj.hasOwnProperty(x)){
+        suggestionObj[x] = x
+    }
+  }
+  res.status(200).json({status:'OK',type: 'suggestions', data: suggestionObj})
 }

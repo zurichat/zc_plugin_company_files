@@ -6,9 +6,10 @@ const FolderSchema = Joi.object({
   folderName: Joi.string().required(),
   parentId: Joi.string().guid({ version: 'uuidv4' }).default(null),
   description: Joi.string().default(null),
+  orgId: Joi.string(),
   collaborators: Joi.array().items(
     Joi.object({
-      memberId: Joi.string().required(),
+      memberId: Joi.string(),
       memberName: Joi.string().required(),
       memberPic: Joi.string().required(),
       role: Joi.string().default("owner"),
