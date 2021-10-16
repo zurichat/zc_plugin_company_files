@@ -15,7 +15,11 @@ const isMemberValid =  async (userId, userToken, organizationId )=>{
     const ORG_URL = `https://api.zuri.chat/organizations`;
     try {
         console.log('is memeber valid')
-        const verifyMemberID = await axios.get(`${ORG_URL}/${organizationId}/members`);
+        const verifyMemberID = await axios.get(`${ORG_URL}/${organizationId}/members`, {
+          headers: {
+            Authorization: userToken
+          }
+        });
         console.log(verifyMemberID.data);
         const result = verifyMemberID.data;
         const { _id: compareID } = result;
