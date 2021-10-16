@@ -1,7 +1,7 @@
 
 
 const router = require('express').Router()
-const { pluginInstallation } = require('./../controllers/plugin.app.controller')
+const { pluginInstallation , pluginUnInstallation} = require('./../controllers/plugin.app.controller')
 
 router.post('/', pluginInstallation)
 router.delete('/', )
