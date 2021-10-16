@@ -19,7 +19,7 @@ module.exports = router => {
   router.use('/files', fileRouter);
   router.use('/folders', folderRouter);
   router.use('/archived', archivedRouter);
-  router.use('/search', searchRouter);
+  router.use('/', searchRouter);
   router.use('/activities', activityRouter)
   router.use('/security', securityRouter)
   router.use('/docs', swagger.serve, swagger.setup(docs))
