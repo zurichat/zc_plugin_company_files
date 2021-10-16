@@ -260,12 +260,12 @@ exports.searchSuggestion = async (req, res) => {
   const result = response.map((suggest)=> suggest.folderName)
   for (x of result){
     if(!suggestionObj.hasOwnProperty(x)){
-        suggestionObj[x] = x 
+        suggestionObj[x] = "Folders" 
     }
   }
   for (x of fileResult){
     if(!suggestionObj.hasOwnProperty(x)){
-        suggestionObj[x] = x
+        suggestionObj[x] = "Files"
     }
   }
   res.status(200).json({status:'OK',type: 'suggestions', data: suggestionObj})
