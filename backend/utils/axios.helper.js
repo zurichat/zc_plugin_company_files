@@ -18,7 +18,7 @@ axios.interceptors.response.use(response => {
     throw new InternalServerError('An unexpected error occured. Please contact an admin.');
   }
 
-  if (response) {
+  if (Number(response)) {
     switch (response.status) {
       case 400:
         throw new BadRequestError();

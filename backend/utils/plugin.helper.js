@@ -1,7 +1,12 @@
-const axios = require('axios');
+const axiosOrigin = require('axios');
 //const pluginId = process.env.PLUGIN_ID || '6134c6a40366b6816a0b75cd';
 const pluginId = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 //const validator = require('./authcheck.helper');
+const DatabaseConnection= require('./database.helper');
+
+const organizations = new DatabaseConnection('organizations')
+
+
 
 
 
@@ -26,7 +31,7 @@ const VerifyMemberInOrganization = async (userId, userToken, organizationId ) =>
         }
       }
 
-      const result = await axios(config)
+      const result = await axiosOrigin(config)
       //console.log(result);
       const members = result.data
 
@@ -50,18 +55,7 @@ const VerifyMemberInOrganization = async (userId, userToken, organizationId ) =>
 const installPlugin = async (userId, userToken, organizationId) => {
 
     try{
-    //   const config = {
-    //     url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
-    //     method: 'post',
-    //     data: JSON.stringify({
-    //       plugin_id: pluginId,
-    //       user_id: userId
-    //     }),
-       
-    //     headers: {
-    //       'Authorization': userToken
-    //     }
-    // };
+ 
 
     let data = {
       plugin_id: pluginId,
@@ -77,17 +71,19 @@ const installPlugin = async (userId, userToken, organizationId) => {
       }
     }
 
-    const queryInstallPlugin = await axios(config)
+     //const queryInstallPlugin = await axiosOrigin.post(config.url, data)
 
-    console.log('waiting for query')
+    const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
 
-   const response = queryInstallPlugin.data;
+     console.log('waiting for query')
+
+    const response = queryInstallPlugin.data;
         console.log(response);
-        return response
+      return response
     }
 
     catch(error){
-       // console.log(error)
+        console.log(error)
         return { error: 'Server Error, Unable to Install Plugin' };
     }
 
@@ -108,8 +104,11 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
 
       try {
         const { headers, data } = config;
-        const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
-        const { data: response } = queryUnInstallPlugin;
+        // const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
+        // const { data: response } = queryUnInstallPlugin;
+
+       const queryUnInstallPlugin =  organizations.delete(organizationId)
+       const { data: response } = queryUnInstallPlugin;
         return response;
       } catch (error) {
         
