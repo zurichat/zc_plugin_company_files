@@ -6,8 +6,8 @@ const databaseWriteUrl = 'https://api.zuri.chat/data/write';
 const databaseDeleteUrl =  'https://api.zuri.chat/data/delete';
 const organizationUrl = `https://api.zuri.chat/organizations`
 
-const PLUGIN_ID = process.env.PLUGIN_ID || '6169d79a4bfde011fe582e4a';
-const ORG_ID = process.env.ORG_ID || '6169e016f5998a09e3bbbd11';
+const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
+const ORG_ID = process.env.ORG_ID || '616986c5fbc5b28d42170c64';
 // 61518d6c9d521e488c59745f 
 // const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 // const ORG_ID = process.env.ORG_ID || '6133c5a68006324323416896';

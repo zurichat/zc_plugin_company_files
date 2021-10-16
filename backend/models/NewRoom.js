@@ -4,7 +4,7 @@ const NewRoomSchema = Joi.object({
   room_name: Joi.string().required(),
   // room_url: Joi.string().required(),
   room_image: Joi.string().uri().default('https://zuri.chat/zurichatlogo.svg'),
-  // isDefault: Joi.boolean().default(false),
+  isDefault: Joi.boolean().default(false),
   private: Joi.boolean().default(false),
   org_id: Joi.string().required(),
   room_member_ids: Joi.array().default([]),
