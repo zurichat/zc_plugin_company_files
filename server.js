@@ -16,7 +16,7 @@ let cacheClient;
 const app = express();
 const router = express.Router();
 
-
+// const pluginRoute = require('./backend/routes/plugin.route')
 const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
     req.MemoryCache = cacheClient.createClient();
   }
 
-  const allowedOrigins = ['https://zuri.chat', 'https://www.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
+  const allowedOrigins = ['https://zuri.chat', 'https://api.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
@@ -75,7 +75,6 @@ app.get('/zuri-root-config.js', (req, res) => {
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
 
-// Handle resource not found error on backend
 app.use('/api/*', (req,res,next) => {
   next(new NotFoundError);
 })
