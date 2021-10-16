@@ -34,20 +34,24 @@ const searchAndFilterFiles = async (req, res) => {
 
     if (fileType && fileType.trim()) {
       response = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId,
+        orgId, createdBy: memberId,
+        fileName: {
           '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       }, { skip: startIndex, limit });
 
       response_total = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+        orgId, createdBy: memberId, 
+        fileName: { '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       });
     } else {
       response = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
+        orgId, createdBy: memberId,
+        fileName: { '$regex': fileName, '$options': 'i' }
       }, { skip: startIndex, limit });
 
       response_total = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
+        orgId, createdBy: memberId,
+        fileName: { '$regex': fileName, '$options': 'i' }
       });
     }
 
@@ -142,8 +146,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: `https://companyfiles.zuri.chat/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `https://companyfiles.zuri.chat/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
@@ -167,8 +171,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: `https://companyfiles.zuri.chat/api/v1/search/?category=folders&folderName=t&page=${next}`,
+            previous: `https://companyfiles.zuri.chat/v1/search/?category=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
@@ -256,7 +260,7 @@ exports.searchSuggestion = async (req, res) => {
   const result = response.map((suggest)=> suggest.folderName)
   for (x of result){
     if(!suggestionObj.hasOwnProperty(x)){
-        suggestionObj[x] = x
+        suggestionObj[x] = x 
     }
   }
   for (x of fileResult){
