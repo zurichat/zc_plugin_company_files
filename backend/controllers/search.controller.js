@@ -34,20 +34,24 @@ const searchAndFilterFiles = async (req, res) => {
 
     if (fileType && fileType.trim()) {
       response = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId,
+        orgId, createdBy: memberId,
+        fileName: {
           '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       }, { skip: startIndex, limit });
 
       response_total = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+        orgId, createdBy: memberId, 
+        fileName: { '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
       });
     } else {
       response = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
+        orgId, createdBy: memberId,
+        fileName: { '$regex': fileName, '$options': 'i' }
       }, { skip: startIndex, limit });
 
       response_total = await File.fetchByFilter({
-        fileName: { orgId, createdBy: memberId, '$regex': fileName, '$options': 'i' }
+        orgId, createdBy: memberId,
+        fileName: { '$regex': fileName, '$options': 'i' }
       });
     }
 
@@ -55,7 +59,7 @@ const searchAndFilterFiles = async (req, res) => {
     const total_count = response.length;
     const previous = 0 || page - 1;
     const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
+    // const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
 
     return res.status(200).send(appResponse('File search result', undefined, true, {
       title: `files search results for query '${fileName}'`,
@@ -66,8 +70,8 @@ const searchAndFilterFiles = async (req, res) => {
         current_page: page,
         first_page: 1,
         last_page,
-        next: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${next}`,
-        previous: `http://localhost:5500/api/v1/search/?category=files&fileName=t&page=${previous}`,
+        next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+        previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
       },
       search_parameters: {
         query: fileName, 
@@ -129,7 +133,7 @@ const searchAndFilterFolders = async (req, res) => {
     const total_count = response.length;
     const previous = 0 || page - 1;
     const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
+    // const next =  (endIndex < total_count ) ? page + 1 : last_page;
 
     if (total_count !== 0) {
       return res.status(200).send(
@@ -142,8 +146,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+            previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
@@ -167,8 +171,8 @@ const searchAndFilterFolders = async (req, res) => {
             current_page: page,
             first_page: 1,
             last_page,
-            next: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${next}`,
-            previous: `http://localhost:5500/api/v1/search/?category=folders&folderName=t&page=${previous}`,
+            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+            previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
             query: folderName, 
@@ -252,16 +256,16 @@ exports.searchSuggestion = async (req, res) => {
     createdBy: memberId,
   });
   const fileResult = responseFile.map((suggest)=> suggest.fileName)
-  
+
   const result = response.map((suggest)=> suggest.folderName)
   for (x of result){
     if(!suggestionObj.hasOwnProperty(x)){
-        suggestionObj[x] = x
+        suggestionObj[x] = "Folders" 
     }
   }
   for (x of fileResult){
     if(!suggestionObj.hasOwnProperty(x)){
-        suggestionObj[x] = x
+        suggestionObj[x] = "Files"
     }
   }
   res.status(200).json({status:'OK',type: 'suggestions', data: suggestionObj})
