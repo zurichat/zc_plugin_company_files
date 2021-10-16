@@ -6,6 +6,6 @@ router.get('/info', info);
 router.get('/sidebar', sidebar);
 router.post('/sync', sync);
 router.post('/install', install);
-router.get('/installs', getInstalled);
+// router.get('/installs', getInstalled);
 
 module.exports = router;
