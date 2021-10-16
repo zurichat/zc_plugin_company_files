@@ -16,7 +16,7 @@ let cacheClient;
 const app = express();
 const router = express.Router();
 
-
+const pluginRoute = require('./backend/routes/plugin.route')
 const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -74,6 +74,9 @@ app.get('/zuri-root-config.js', (req, res) => {
 
 app.use('/', pluginRouter); // For... nvm
 app.use('/api/v1', rootRouter); // For mounting the root router on the specified path
+
+//FOR MARKETPLACE INSTALLATION OF COMPANY FILES
+app.use('/api/v1/install', pluginRoute);
 
 // Handle resource not found error on backend
 app.use('/api/*', (req,res,next) => {
