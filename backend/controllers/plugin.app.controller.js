@@ -19,13 +19,13 @@ const pluginInstallation = async (req, res, next) => {
         if(isUserVerified == true){
         console.log("deploying .....")
             const deploy =  await installPlugin(userId, userToken, organizationId)
-
-            if(deploy.status == 200){
+            console.log(deploy.status, 'deploy from installation')
+            if(deploy.status == "200"){
                 return res.status(200).json({
                     message: `Plugin was added successfully to organization ID: ${organizationId}`,
                     success: 'true',
                     data: {
-                    redirect_url: `/companyfiles/room/${orgID}`,
+                    redirect_url: `/companyfiles/room/${organizationId}`,
                 }})
             }
 
@@ -61,16 +61,19 @@ const pluginUnInstallation = async (req, res, next) => {
         if(isUserVerified === true){
         console.log("deploying .....")
             const deploy =  await unInstallPlugin(userId, userToken, organizationId)
-
+            console.log(deploy.status, 'ddepoy info')
             if(deploy.status == 200){
                 return res.status(200).json({
                     message: `Plugin removed from organization ${organizationId} was successful`,
                     success: 'true',
                     data: {
-                    redirect_url: `/channels/message-board/${orgID}`,
+                    redirect_url: `/channels/message-board/${organizationId}`,
                 }})
             }
-             return res.status(404).json({message: deploy.message, success: 'false', data: null })    
+            else{
+                return res.status(404).json({message: deploy.message, success: 'false', data: null })
+            }
+                 
         }
 
 
