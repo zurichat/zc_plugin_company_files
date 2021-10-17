@@ -76,11 +76,11 @@ const installPlugin = async (userId, userToken, organizationId) => {
     //const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
 
      console.log('waiting for query')
-     console.log(queryInstallPlugin, 'query install')
+    // console.log(queryInstallPlugin, 'query install')
 
     const response = queryInstallPlugin;
-        console.log(response);
-      return response.data;
+        // console.log(response, 'resonse from install');
+      return response;
     }
 
     catch(error){
@@ -93,6 +93,7 @@ const installPlugin = async (userId, userToken, organizationId) => {
 
 const unInstallPlugin = async (userId, userToken, organizationId ) => {
 
+    let pluginId = '6169d79a4bfde011fe582e4a';
     const config = {
         data: {
           user_id: userId,
@@ -108,8 +109,8 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
         const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
         const  response = queryUnInstallPlugin;
 
-        console.log(response);
-        return response.data;
+        // console.log(response, 'response from uninstall');
+        return response;
       } catch (error) {  
          console.log(error);
          return { error: 'Server Error, Unable to Uninstall Plugin' };
