@@ -19,18 +19,21 @@ const pluginInstallation = async (req, res, next) => {
         if(isUserVerified == true){
         console.log("deploying .....")
             const deploy =  await installPlugin(userId, userToken, organizationId)
-            console.log(deploy.status, 'deploy from installation')
+             console.log(deploy, 'deploy from installation')
             if(deploy.status == "200"){
                 return res.status(200).json({
                     message: `Plugin was added successfully to organization ID: ${organizationId}`,
                     success: 'true',
                     data: {
-                    redirect_url: `/companyfiles/room/${organizationId}`,
+                    redirect_url: `/companyfiles`,
                 }})
+            }
+            else if(!deploy){
+                return res.status(400).json({status:'false', data: null, message: "plugin has already been installed"})
             }
 
             else{
-              return res.status(404).json({status:'false', data: null, message: deploy.message})
+              return res.status(404).json({status:'false', data: null, message: "failed to install plugin"})
             }
         }
 
@@ -61,7 +64,7 @@ const pluginUnInstallation = async (req, res, next) => {
         if(isUserVerified === true){
         console.log("deploying .....")
             const deploy =  await unInstallPlugin(userId, userToken, organizationId)
-            console.log(deploy.status, 'ddepoy info')
+            // console.log(deploy.status, 'ddepoy info')
             if(deploy.status == 200){
                 return res.status(200).json({
                     message: `Plugin removed from organization ${organizationId} was successful`,

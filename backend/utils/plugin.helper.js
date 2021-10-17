@@ -76,9 +76,12 @@ const installPlugin = async (userId, userToken, organizationId) => {
     //const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
 
      console.log('waiting for query')
-    // console.log(queryInstallPlugin, 'query install')
+    console.log(queryInstallPlugin, 'query install')
 
     const response = queryInstallPlugin;
+    if(!response){
+      return false;
+    }
         // console.log(response, 'resonse from install');
       return response;
     }
