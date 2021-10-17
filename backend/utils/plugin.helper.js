@@ -1,4 +1,4 @@
-const axiosOrigin = require('axios');
+const axios = require('axios');
 //const pluginId = process.env.PLUGIN_ID || '6134c6a40366b6816a0b75cd';
 const pluginId = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 //const validator = require('./authcheck.helper');
@@ -31,7 +31,7 @@ const VerifyMemberInOrganization = async (userId, userToken, organizationId ) =>
         }
       }
 
-      const result = await axiosOrigin(config)
+      const result = await axios(config)
       //console.log(result);
       const members = result.data
 
@@ -58,7 +58,7 @@ const installPlugin = async (userId, userToken, organizationId) => {
  
 
     let data = {
-      plugin_id: pluginId,
+      plugin_id: '6169d79a4bfde011fe582e4a',
       user_id: userId
     }
 
@@ -67,19 +67,20 @@ const installPlugin = async (userId, userToken, organizationId) => {
       url: `https://api.zuri.chat/organizations/${organizationId}/plugins`,
       data: data,
       Headers: {
-        Authorization: userToken
+        Authorization : userToken
       }
     }
 
-     //const queryInstallPlugin = await axiosOrigin.post(config.url, data)
+     const queryInstallPlugin = await axios.post(config.url, data, {headers: config.Headers})
 
-    const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
+    //const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
 
      console.log('waiting for query')
+     console.log(queryInstallPlugin, 'query install')
 
-    const response = queryInstallPlugin.data;
+    const response = queryInstallPlugin;
         console.log(response);
-      return response
+      return response.data;
     }
 
     catch(error){
@@ -104,15 +105,14 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
 
       try {
         const { headers, data } = config;
-        // const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
-        // const { data: response } = queryUnInstallPlugin;
+        const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
+        const  response = queryUnInstallPlugin;
 
-       const queryUnInstallPlugin =  organizations.delete(organizationId)
-       const { data: response } = queryUnInstallPlugin;
-        return response;
-      } catch (error) {
-        
-        return error;
+        console.log(response);
+        return response.data;
+      } catch (error) {  
+         console.log(error);
+         return { error: 'Server Error, Unable to Uninstall Plugin' };
       }
     
 }
