@@ -6,10 +6,13 @@ const RealTime = require("../utils/realtime.helper");
 const DatabaseConnection = require("../utils/database.helper");
 // const Rooms = new DatabaseConnection('NewRooms');
 const Rooms = new DatabaseConnection("TheNewRooms");
+const Installation = new DatabaseConnection("Installation");
+const InstallationSchema = require('../models/Installation');
 const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
 const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
+
 
 const databaseSyncUrl = `https://api.zuri.chat/plugins/${PLUGIN_ID}/sync`;
 const pluginInfoUrl = `https://api.zuri.chat/marketplace/plugins/${PLUGIN_ID}`;
@@ -31,6 +34,50 @@ exports.info = (req, res) => {
     version,
   });
 };
+
+exports.getInstalled = async (req, res) => {
+  const installed = await Installation.fetchAll();
+  res.status(200).send({ success: true, number_of_installs: installed.length, data: installed })
+}
+
+exports.install = async (req, res) => {
+
+  const installSuccess = {
+    message: "Files Plugin successfully installed!",
+    success: true,
+    data: {
+      redirect_url: "https://zuri.chat/companyfiles",
+    }
+  }
+  
+  const installRequest = await InstallationSchema.validateAsync(req.body);
+
+  if (installRequest.error)
+    return res.status(402).send({
+      message: installRequest.error,
+      success: false,
+      data: null
+    });
+  
+  // if (install.user_id === undefined || install.organisation_id === undefined) 
+  //   return res.send({ message: "Please provide the required data to install a plugin."})
+  
+  const organizations = await Installation.fetchAll();
+
+  const orgExists = organizations.filter(org => org.org_id === installRequest.organization_id && org.org_id !== undefined)
+
+  if (orgExists.length > 0) return res.send({
+    message: "Files Plugin has already been installed to the provided organization.",
+    success: false,
+    data: null
+  });
+
+  installRequest.org_id = installRequest.organization_id;
+  delete installRequest.organization_id;
+  const inst = await Installation.create(installRequest);
+  return res.status(201).send({ installSuccess })
+
+}
 
 // append roomId to room_url
 function handleRoomUrl(rooms) {
