@@ -109,13 +109,10 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
         const  response = queryUnInstallPlugin;
 
         console.log(response);
-
-      //  const queryUnInstallPlugin =  organizations.delete(organizationId)
-      //  const { data: response } = queryUnInstallPlugin;
         return response;
-      } catch (error) {
-        
-        return error;
+      } catch (error) {  
+         console.log(error);
+         return { error: 'Server Error, Unable to Uninstall Plugin' };
       }
     
 }

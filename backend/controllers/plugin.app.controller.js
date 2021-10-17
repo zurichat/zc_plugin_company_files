@@ -19,13 +19,18 @@ const pluginInstallation = async (req, res, next) => {
         if(isUserVerified == true){
         console.log("deploying .....")
             const deploy =  await installPlugin(userId, userToken, organizationId)
-            console.log(deploy);
+
             if(deploy.status == 200){
-                return res.status(200).json({status: 'success', data: deploy })
+                return res.status(200).json({
+                    message: `Plugin was added successfully to organization ID: ${organizationId}`,
+                    success: 'true',
+                    data: {
+                    redirect_url: `/companyfiles/room/${orgID}`,
+                }})
             }
 
             else{
-              return res.status(404).json({status:'failed', data: null, message: deploy.message})
+              return res.status(404).json({status:'false', data: null, message: deploy.message})
             }
         }
 
@@ -56,8 +61,18 @@ const pluginUnInstallation = async (req, res, next) => {
         if(isUserVerified === true){
         console.log("deploying .....")
             const deploy =  await unInstallPlugin(userId, userToken, organizationId)
-            return res.status(200).json({data: deploy})
+
+            if(deploy.status == 200){
+                return res.status(200).json({
+                    message: `Plugin removed from organization ${organizationId} was successful`,
+                    success: 'true',
+                    data: {
+                    redirect_url: `/channels/message-board/${orgID}`,
+                }})
+            }
+             return res.status(404).json({message: deploy.message, success: 'false', data: null })    
         }
+
 
         if(isUserVerified === false){
           return  res.status(404).json({status: 'failed', message: "User not a member"})
