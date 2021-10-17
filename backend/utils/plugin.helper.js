@@ -80,7 +80,7 @@ const installPlugin = async (userId, userToken, organizationId) => {
 
     const response = queryInstallPlugin;
         console.log(response);
-      return response
+      return response.data;
     }
 
     catch(error){
@@ -109,7 +109,7 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
         const  response = queryUnInstallPlugin;
 
         console.log(response);
-        return response;
+        return response.data;
       } catch (error) {  
          console.log(error);
          return { error: 'Server Error, Unable to Uninstall Plugin' };
