@@ -75,14 +75,11 @@ const installPlugin = async (userId, userToken, organizationId) => {
 
     //const queryInstallPlugin = await organizations.createWithUrlAndHeaders(config.data, organizationId)
 
-     console.log('waiting for query')
-    console.log(queryInstallPlugin, 'query install')
-
+    
     const response = queryInstallPlugin;
     if(!response){
       return false;
     }
-        // console.log(response, 'resonse from install');
       return response;
     }
 
@@ -111,8 +108,9 @@ const unInstallPlugin = async (userId, userToken, organizationId ) => {
         const { headers, data } = config;
         const queryUnInstallPlugin = await axios.delete(config.url, { headers, data });
         const  response = queryUnInstallPlugin;
-
-        // console.log(response, 'response from uninstall');
+        if(!response){
+          return false;
+        }
         return response;
       } catch (error) {  
          console.log(error);
