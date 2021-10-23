@@ -35,18 +35,18 @@
   -->
   <script type="systemjs-importmap">
     {
-        "imports": {
-          "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
-          "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
-          "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
-          "@zuri/control": "https://zuri.chat/zuri-control.js",
-          "@zuri/plugin-header": "https://zuri.chat/zuri-plugin-header.js",
-          "@zuri/root-config": "https://companyfiles.zuri.chat/zuri-root-config.js",
-          "@zuri/zuri-plugin-company-files": "https://companyfiles.zuri.chat/zuri-zuri-plugin-company-files.js",
-          "@zuri/manage-user-modal": https://zuri.chat/zuri-manageUser.js" 
-        }
+      "imports": {
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@16.13.1/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.1/umd/react-dom.production.min.js",
+        "@zuri/control": "https://zuri.chat/zuri-control.js",
+        "@zuri/plugin-header": "https://zuri.chat/zuri-plugin-header.js",
+        "@zuri/root-config": "https://companyfiles.zuri.chat/zuri-root-config.js",
+        "@zuri/zuri-plugin-company-files": "https://companyfiles.zuri.chat/zuri-zuri-plugin-company-files.js",
+        "@zuri/manage-user-modal": "https://zuri.chat/zuri-manageUser.js" 
       }
-    </script>
+    }
+  </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script" />
 
   <!-- Add your organization's prod import map URL to this script's src  -->
@@ -55,12 +55,12 @@
   <% if (isLocal) { %>
   <script type="systemjs-importmap">
     {
-        "imports": {
-          "@zuri/zuri-plugin-company-files": "//localhost:5500/zuri-zuri-plugin-company-files.js",
-          "@zuri/root-config": "//localhost:9000/zuri-root-config.js",
-          "@zuri/manage-user-modal": https://zuri.chat/zuri-manageUser.js" 
-        }
+      "imports": {
+        "@zuri/zuri-plugin-company-files": "//localhost:5500/zuri-zuri-plugin-company-files.js",
+        "@zuri/root-config": "//localhost:9000/zuri-root-config.js",
+        "@zuri/manage-user-modal": "https://zuri.chat/zuri-manageUser.js" 
       }
+    }
     </script>
   <!-- <script>
     System.import('@zuri/root-config');
