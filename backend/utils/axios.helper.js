@@ -1,12 +1,4 @@
 const axios = require("axios");
-const {
-  BadRequestError,
-  InternalServerError,
-  BadGatewayError,
-  UnAuthorizedError,
-  ForbiddenError,
-  NotFoundError,
-} = require("../utils/appError");
 
 axios.interceptors.response.use(
   (response) => {
