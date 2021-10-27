@@ -19,18 +19,20 @@ const pluginInstallation = async (req, res, next) => {
         if(isUserVerified == true){
         console.log("deploying .....")
             const deploy =  await installPlugin(userId, userToken, organizationId)
-
-            if(deploy.status == 200){
+            if(deploy.status == "200"){
                 return res.status(200).json({
                     message: `Plugin was added successfully to organization ID: ${organizationId}`,
                     success: 'true',
                     data: {
-                    redirect_url: `/companyfiles/room/${orgID}`,
+                    redirect_url: `/companyfiles`,
                 }})
+            }
+            else if(!deploy){
+                return res.status(400).json({success:'false', data: null, message: "plugin has already been installed"})
             }
 
             else{
-              return res.status(404).json({status:'false', data: null, message: deploy.message})
+              return res.status(404).json({status:'false', data: null, message: "failed to install plugin"})
             }
         }
 
@@ -39,7 +41,8 @@ const pluginInstallation = async (req, res, next) => {
         }
     }
 
-    catch{
+    catch(error){
+            console.log(error)
             res.status(500).json({message: 'server error, Coudnt deploy, try again'});
     }
 
@@ -67,10 +70,18 @@ const pluginUnInstallation = async (req, res, next) => {
                     message: `Plugin removed from organization ${organizationId} was successful`,
                     success: 'true',
                     data: {
-                    redirect_url: `/channels/message-board/${orgID}`,
+                    redirect_url: `/channels/message-board/${organizationId}`,
                 }})
             }
-             return res.status(404).json({message: deploy.message, success: 'false', data: null })    
+
+            else if(!deploy){
+                return res.status(400).json({success:'false', data: null, message: "plugin has already been installed"})
+            }
+
+            else{
+                return res.status(404).json({message: deploy.message, success: 'false', data: null })
+            }
+                 
         }
 
 

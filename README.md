@@ -9,9 +9,9 @@ Company Files Management Plugin for Zuri Chat.
 1. Ensure nodejs and git are installed in machine
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
-4. Run setup script to install all packages using `npm run install-setup` or `npm run install-setup:npm`
-5. Run build script to get bundled react file `npm run build:local` or `npm run build:local-npm`
-6. Now run server in development mode with `npm run dev`
+4. Run setup script to install all packages using `yarn run install-setup` or `npm run install-setup:npm`
+5. Run build script to get bundled react file `yarn run build:local` or `npm run build:local-npm`
+6. Now run server in development mode with `npm run dev` or `yarn dev`
 7.  Go to [local](http://localhost:5500/)
 
 ### **Project Structure**
@@ -62,4 +62,4 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 7. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
 8. To make sure there are no conflicts : `git pull upstream switch`
 9. Push changes to your new branch : `git push origin feat-import-file-from-url`
-10. Create a pull request to the `switch` branch.
+10. Create a pull request to the `dev` branch.
