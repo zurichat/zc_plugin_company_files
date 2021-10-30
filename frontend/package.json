@@ -1,18 +1,21 @@
 {
   "name": "@zuri/zuri-plugin-company-files",
   "scripts": {
-    "start": "webpack serve --port 8500",
+    "start": "ESLINT_NO_DEV_ERRORS='true' webpack serve --port 8500",
     "start:standalone": "webpack serve --env standalone",
-    "build": "concurrently yarn:build:*",
-    "build-npm": "concurrently npm:build:*",
+    "build": "DISABLE_ESLINT_PLUGIN='true' concurrently yarn:build:*",
+    "build-npm": "DISABLE_ESLINT_PLUGIN='true' concurrently npm:build:*",
     "build:webpack": "cross-env NODE_ENV=production webpack --mode=production",
     "analyze": "webpack --mode=production --env analyze",
-    "lint": "eslint src --ext js",
-    "format": "prettier --write .",
+    "_lint": "eslint --config ./.eslintrc.json --ext js --ext jsx --ext tsx --ext ts",
+    "lint": "npm run _lint -- ./src/",
+    "lint:fix": "npm run _lint -- --fix ./src/",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,scss,md,json}' --config ./.prettierrc",
     "check-format": "prettier --check .",
     "test": "cross-env BABEL_ENV=test jest",
     "watch-tests": "cross-env BABEL_ENV=test jest --watch",
-    "coverage": "cross-env BABEL_ENV=test jest --coverage"
+    "coverage": "cross-env BABEL_ENV=test jest --coverage",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
@@ -29,16 +32,19 @@
     "concurrently": "^6.2.1",
     "css-loader": "^6.3.0",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-important-stuff": "^3.0.0",
     "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-react": "^7.26.1",
     "husky": "^7.0.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
     "jest-cli": "^27.0.6",
+    "lint-staged": ">=10",
     "postcss": "^7.0.36",
     "postcss-loader": "^6.1.1",
-    "prettier": "^2.3.2",
+    "prettier": "^2.4.1",
     "pretty-quick": "^3.1.1",
     "style-loader": "^3.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.14",
@@ -104,5 +110,10 @@
     "sweetalert2": "^11.1.7",
     "swr": "^1.0.1",
     "web-vitals": "^1.0.1"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,jsx,tsx}": [
+      "eslint --config ./.eslintrc.json --ext js --ext ts --ext jsx --ext tsx"
+    ]
   }
 }
