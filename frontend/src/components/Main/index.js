@@ -36,7 +36,7 @@ import ScrollRestoration from "../Subcomponents/ScrollRestoration";
 import {
   getUserInfo,
   getWorkspaceUser,
-  getWorkspaceUsers,
+  getWorkspaceUsers
 } from "../../actions/workspaceInfo";
 
 const Main = () => {
@@ -56,7 +56,7 @@ const Main = () => {
     eventThumbnail: () => {
       // Block of code to be triggered on thumbnail click
     },
-    hasThumbnail: true,
+    hasThumbnail: true
   };
 
   const dispatch = useDispatch();
