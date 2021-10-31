@@ -33,9 +33,9 @@ The link to the endpoint documentation for conpany files plugin can be found at 
 1. Ensure nodejs and git are installed in machine
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
-4. Run setup script to install all packages using `npm run install-setup` or `npm run install-setup:npm`
-5. Run build script to get bundled react file `npm run build:local` or `npm run build:local-npm`
-6. Now run server in development mode with `npm run dev`
+4. Run setup script to install all packages using `yarn run install-setup` or `npm run install-setup:npm`
+5. Run build script to get bundled react file `yarn run build:local` or `npm run build:local-npm`
+6. Now run server in development mode with `npm run dev` or `yarn dev`
 7.  Go to [local](http://localhost:5500/)
 
 
@@ -94,6 +94,7 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 - [Hotels NG](https://hotels.ng/)
 - [Zuri Team](https://zuri.team/)
 - [I4G](https://ingressive.org/)
+
 
 ### **Copyright and Licensing**
 [License](LICENSE.md)
