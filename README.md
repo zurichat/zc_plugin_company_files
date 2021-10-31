@@ -97,4 +97,4 @@ This plugin uses Commitlint to ensure commits messages follow a particular conve
 
 
 ### **Copyright and Licensing**
-[License](LICENSE.md)
+[License](LICENSE)
