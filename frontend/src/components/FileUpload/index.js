@@ -6,7 +6,7 @@ const index = ({
   upload,
   hideUploadModal,
   showProgressModal,
-  hideProgressModal,
+  hideProgressModal
 }) => {
   const [files, setFiles] = useState();
   const [progress, setProgress] = useState(false);
@@ -19,7 +19,7 @@ const index = ({
 
   const handleDrop = (e) => {
     console.log("Dropped");
-    const files = e.dataTransfer.files;
+    const { files } = e.dataTransfer;
     console.log(files, "Drop");
     Object.entries(files).map((file) => {
       console.log(file[1].name);
@@ -39,9 +39,7 @@ const index = ({
   };
 
   return (
-
     <div className="">
-
       {upload && (
         <SelectFileModal
           upload={upload}

@@ -1,101 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
-.bg{
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.6);
-    width: 100%;
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap");
+.bg {
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
 }
 
 .videobar {
-    height: 10vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2%;
-    background: linear-gradient(180deg, #000000 0%, rgba(13, 13, 13, 0) 100%);
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2%;
+  background: linear-gradient(180deg, #000000 0%, rgba(13, 13, 13, 0) 100%);
 }
 
-.videobarleft{
-    display: flex;
-    align-items: center;
+.videobarleft {
+  display: flex;
+  align-items: center;
 }
 
 .videobarleft button {
-    outline: none;
-    border: none;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  outline: none;
+  border: none;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .topbarleft button:hover {
-    transform: translateX(-10px);
-    transition: transform 1s;
+  transform: translateX(-10px);
+  transition: transform 1s;
 }
 
 .videoIcon {
-    font-size: 0.8rem;
-    color: #fff;
-    margin-left: 15px;
+  font-size: 0.8rem;
+  color: #fff;
+  margin-left: 15px;
 }
 
 .arrow {
-    font-size: 0.8rem;
-    color: #fff;
+  font-size: 0.8rem;
+  color: #fff;
 }
 
-.name{
-    font-size: 0.8rem;
-    font-family: 'Lato', sans-serif;
-    color: #fff;
-    font-weight: 600;
-    margin-left: 15px;
-    text-transform: capitalize;
+.name {
+  font-size: 0.8rem;
+  font-family: "Lato", sans-serif;
+  color: #fff;
+  font-weight: 600;
+  margin-left: 15px;
+  text-transform: capitalize;
 }
 
 .videocon {
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .videocon video {
-    width: 60%;
-    height: 60%;
-    object-fit: contain;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
 }
 
-.videocon  button {
-    padding: 1%;
-    border-radius: 50%;
-    border: none;
-    outline: none;
-    position: absolute;
-    font-size: 2rem;
-    color: white;
-    background: #000;
-    width: 5%;
-    z-index: 99;
+.videocon button {
+  padding: 1%;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  position: absolute;
+  font-size: 2rem;
+  color: white;
+  background: #000;
+  width: 5%;
+  z-index: 99;
 }
 
-@media screen and (max-width:1024px) {
-    .videobar {
-        padding: 5%;
-    }
+@media screen and (max-width: 1024px) {
+  .videobar {
+    padding: 5%;
+  }
 
-    .videoIcon, .arrow, .name {
-        font-size: 0.6rem;
-    }
+  .videoIcon,
+  .arrow,
+  .name {
+    font-size: 0.6rem;
+  }
 
-    .videocon video {
-        width: 90%;
-        height: 50%;
-    }
+  .videocon video {
+    width: 90%;
+    height: 50%;
+  }
 
-    .videocon  button {
-        width: 10%;
-        font-size: 1rem;
-        padding: 2%;
-    }
+  .videocon button {
+    width: 10%;
+    font-size: 1rem;
+    padding: 2%;
+  }
 }

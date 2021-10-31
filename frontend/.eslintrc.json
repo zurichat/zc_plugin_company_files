@@ -22,7 +22,7 @@
     "rules": {
         "indent": [
             "error",
-            "tab"
+            2
         ],
         "linebreak-style": [
             "error",
@@ -35,6 +35,9 @@
         "semi": [
             "error",
             "always"
+        ],
+        "no-console": [
+            "error"
         ]
     }
 }

@@ -1,7 +1,7 @@
 import React from "react";
-import ActivitiesMenuButton from "./MenuButton";
 import { RiDeleteBinLine, RiPushpinLine } from "react-icons/ri/index";
 import { MdPlaylistAddCheck } from "react-icons/md/index";
+import ActivitiesMenuButton from "./MenuButton";
 
 function ActivitiesMenu() {
   function pin() {}

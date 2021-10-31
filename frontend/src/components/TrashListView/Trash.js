@@ -16,7 +16,7 @@ const Trash = () => {
     data = [],
     setData,
     isLoading,
-    error,
+    error
   } = useFetch(
     `${API_BASE_URL}/files/deletedFiles`,
     restore,

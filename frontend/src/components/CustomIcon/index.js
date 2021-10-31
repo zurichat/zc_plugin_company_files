@@ -10,7 +10,7 @@ const CustomIcon = ({
     <img
       {...{
         className: `${!customHeight ? "tw-h-8" : ""} tw-w-auto ${customClass}`,
-        ...restProps,
+        ...restProps
       }}
     />
   );
@@ -19,7 +19,7 @@ const CustomIcon = ({
 CustomIcon.propTypes = {
   customHeight: PropTypes.bool,
   className: PropTypes.string,
-  restProps: PropTypes.any,
+  restProps: PropTypes.any
 };
 
 export default CustomIcon;

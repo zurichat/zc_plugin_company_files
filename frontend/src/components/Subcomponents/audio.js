@@ -27,8 +27,8 @@ function audio({ file }) {
         <FileType
           file={file}
           IconName={Aud}
-          bgColor={"tw-bg-green-400"}
-          textColor={"tw-text-black"}
+          bgColor="tw-bg-green-400"
+          textColor="tw-text-black"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function audio({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"audio"}
+          type="audio"
         />
       )}
     </>

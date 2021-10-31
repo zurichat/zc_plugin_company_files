@@ -11,10 +11,10 @@ const index = () => {
     <div className="tw-w-full tw-py-6">
       <div className="tw-w-full tw-grid tw-grid-cols-auto tw-gap-4 md:tw-gap-9 lg:tw-gap-16">
         <Shortcuts
-          link={"all-files"}
+          link="all-files"
           image={AllFiles}
-          name={"All Files"}
-          altName={"all files"}
+          name="All Files"
+          altName="all files"
         />
         {/* <Shortcuts
           link={"shared"}
@@ -23,18 +23,13 @@ const index = () => {
           altName={"shared"}
         /> */}
         <Shortcuts
-          link={"starred"}
+          link="starred"
           image={Star}
-          name={"Starred"}
-          altName={"Starred"}
+          name="Starred"
+          altName="Starred"
         />
-        <Shortcuts
-          link={"trash"}
-          image={Trash}
-          name={"Trash"}
-          altName={"trash"}
-        />
-        <Shortcuts link={"help"} image={Help} name={"Help"} altName={"help"} />
+        <Shortcuts link="trash" image={Trash} name="Trash" altName="trash" />
+        <Shortcuts link="help" image={Help} name="Help" altName="help" />
       </div>
     </div>
   );

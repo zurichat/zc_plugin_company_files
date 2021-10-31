@@ -3,7 +3,7 @@ import React from "react";
 const Modal = (props) => {
   return (
     <div className="modal">
-      <label for="rename">Rename</label>
+      <label htmlFor="rename">Rename</label>
       <input className="rename_input" type="rename" name="rename" />
       <div className="modal-buttons">
         <button className="btn btn-cancel" onClick={props.onCancel}>

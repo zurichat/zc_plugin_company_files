@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PptImg from "../../../public/Icons/pp-cat.svg"
+import PptImg from "../../../public/Icons/pp-cat.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -27,8 +27,8 @@ function Powerpoint({ file }) {
         <FileType
           file={file}
           IconName={PptImg}
-          bgColor={"tw-bg-file-ppt"}
-          textColor={"tw-text-red-700"}
+          bgColor="tw-bg-file-ppt"
+          textColor="tw-text-red-700"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Powerpoint({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"powerpoint"}
+          type="powerpoint"
         />
       )}
     </>

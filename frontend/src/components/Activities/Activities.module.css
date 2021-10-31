@@ -30,7 +30,7 @@
   font-size: 18px;
   font-weight: 700;
   line-height: 15px;
-  color: #4A4A4A;
+  color: #4a4a4a;
   margin-left: 10px;
 }
 
@@ -55,11 +55,11 @@
   padding: 17px 43px;
   display: flex;
   align-items: center;
-  transition: all .4s;
+  transition: all 0.4s;
 }
 
 .activities__left .activitiesDescription .container:hover {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 }
 
 .activities__left .activitiesDescription .container .img img {
@@ -104,7 +104,7 @@
   top: 60px;
   width: 177.37px;
   height: 111.57px;
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 4px;
   display: flex;
   flex-direction: column;

@@ -8,7 +8,7 @@ module.exports = {
       gridTemplateColumns: {
         auto: "repeat(auto-fit, minmax(60px, 1fr))",
         "auto-1": "repeat(auto-fit, minmax(150px, 1fr))",
-        "auto-2": "repeat(auto-fit, minmax(220px, 1fr))",
+        "auto-2": "repeat(auto-fit, minmax(220px, 1fr))"
       },
       colors: {
         primary: "#00B87C",
@@ -22,7 +22,7 @@ module.exports = {
           lightGrey: "#F6F6F6",
           white: "#FFFFFF",
           lightGreen: "#f0fbf8",
-          trashRow: "#FAFAFA",
+          trashRow: "#FAFAFA"
         },
         success: "#008B5E",
         text: {
@@ -31,7 +31,7 @@ module.exports = {
           navbar: "#999999",
           grey: "#4A4A4A",
           time: "#C1C1C1",
-          lightIcon: "#BEBEBE",
+          lightIcon: "#BEBEBE"
         },
         file: {
           one: "#F7E0FF",
@@ -41,24 +41,24 @@ module.exports = {
           doc: "#E3EEFF",
           pdf: "#FED4D4",
           xls: "#D7FCEB",
-          ppt: "#FCE7DE",
+          ppt: "#FCE7DE"
         },
-        trashDur: "#616161",
+        trashDur: "#616161"
       },
       avatar: {
         one: "#F7E0FF",
         two: "#F8FFCD",
         three: "#FFF0F0",
         four: "#ACFFE6",
-        five: "#E3EEFF",
-      },
+        five: "#E3EEFF"
+      }
     },
     fontFamily: {
-      lato: ["Lato"],
-    },
+      lato: ["Lato"]
+    }
   },
   variants: {
-    extend: {},
+    extend: {}
   },
-  plugins: [],
+  plugins: []
 };

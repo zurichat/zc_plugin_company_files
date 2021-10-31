@@ -9,7 +9,7 @@ const SelectFileModal = ({
   handleFileSelection,
   handleDrop,
   files,
-  clearFiles,
+  clearFiles
 }) => {
   let modalStatus = useRef(upload.current);
   let dragArea = useRef(null);

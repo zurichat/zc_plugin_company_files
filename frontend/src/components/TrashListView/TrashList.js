@@ -15,7 +15,7 @@ const TrashList = ({
   setData,
   setFileDel,
   setRestore,
-  apiBase,
+  apiBase
 }) => {
   const [showModal, setShowModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
@@ -49,23 +49,23 @@ const TrashList = ({
     setSort(!sort);
   };
 
-  //Truncate the length of fetched file names
+  // Truncate the length of fetched file names
   const handleTruncateName = () => {
     let str = data.map((data) => data.fileName.trim());
 
     return str.map((text) => {
-      return text.length > 20 ? text.substring(0, 14) + "..." : text;
+      return text.length > 20 ? `${text.substring(0, 14)}...` : text;
     });
   };
 
-  //Reformat fetched file deleted dates.
+  // Reformat fetched file deleted dates.
   const handleNewDate = () => {
     return data
       .map((date) => date.dateAdded.split("T")[0])
       .map((e) => e.split("-").join("/"));
   };
 
-  //Reformat fetched file size
+  // Reformat fetched file size
   const handleFormatSize = (bytes, decimals = 2) => {
     if (bytes === 0) {
       return "0 Bytes";
@@ -85,7 +85,7 @@ const TrashList = ({
   // creates reference for array items
   const menu = useRef(data && Array(data.length).fill(createRef()));
 
-  //This displays the Menu button
+  // This displays the Menu button
   const handleClick = (index, id) => {
     setId(id);
 
@@ -94,7 +94,7 @@ const TrashList = ({
       menu.current[index].style.opacity = 1;
       menu.current[index].style.pointerEvents = "auto";
     } else {
-      //disables event
+      // disables event
       menu.current[index].style.opacity = 0;
       menu.current[index].style.pointerEvents = "none";
     }
@@ -166,17 +166,17 @@ const TrashList = ({
                     </svg>
                   </span>
                 </th>
-                <th className="tw-hidden md:tw-block"></th>
-                <th className="tw-hidden md:tw-block"></th>
-                <th></th>
-                <th></th>
-                <th className="tw-block md:tw-hidden"></th>
+                <th className="tw-hidden md:tw-block" />
+                <th className="tw-hidden md:tw-block" />
+                <th />
+                <th />
+                <th className="tw-block md:tw-hidden" />
                 <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap tw-hidden md:tw-inline-block">
                   Date Deleted
                 </th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th />
+                <th />
+                <th />
                 <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
                   <span className="tw-hidden sm:tw-inline">File </span>Size
                 </th>
@@ -200,17 +200,17 @@ const TrashList = ({
                     />{" "}
                     {handleTruncateName()[index]}
                   </td>
-                  <td className="tw-hidden md:tw-block"></td>
-                  <td className="tw-hidden md:tw-block"></td>
-                  <td></td>
-                  <td></td>
-                  <td className="tw-block md:tw-hidden"></td>
+                  <td className="tw-hidden md:tw-block" />
+                  <td className="tw-hidden md:tw-block" />
+                  <td />
+                  <td />
+                  <td className="tw-block md:tw-hidden" />
                   <td className="tw-text-xs tw-relative tw-hidden md:tw-block tw-pt-4">
                     {handleNewDate()[index]}
 
                     {/* Menu buttons for big screen */}
                     <div
-                      //assign the created reference to each array item
+                      // assign the created reference to each array item
 
                       ref={(el) => (menu.current[index] = el)}
                       className="tw-absolute tw-top-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
@@ -221,9 +221,9 @@ const TrashList = ({
                       />
                     </div>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td />
+                  <td />
+                  <td />
                   <td className="tw-text-xs tw-relative">
                     {handleFormatSize(data.size)}
 
@@ -232,7 +232,7 @@ const TrashList = ({
                     {/* If the viewport matches the breakpoint, display the menu buttons in this td */}
                     {width <= breakpoint ? (
                       <div
-                        //assign the created reference to each array item
+                        // assign the created reference to each array item
                         ref={(el) => (menu.current[index] = el)}
                         className="tw-absolute tw-top-0 tw-right-0 tw-z-10 tw-bg-white tw-rounded tw-shadow-md tw-opacity-0 tw-text-sm tw-pointer-events-none"
                       >

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import FileMenu from "./FileMenu";
-import Vid from "../../../public/Icons/video.svg"
+import Vid from "../../../public/Icons/video.svg";
 import FileType from "./FileType";
 
 function Video({ file }) {
@@ -27,8 +27,8 @@ function Video({ file }) {
         <FileType
           file={file}
           IconName={Vid}
-          bgColor={"tw-bg-green-300"}
-          textColor={"tw-text-red-300"}
+          bgColor="tw-bg-green-300"
+          textColor="tw-text-red-300"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Video({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"video"}
+          type="video"
         />
       )}
     </>

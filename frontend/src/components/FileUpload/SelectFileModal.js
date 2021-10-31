@@ -10,7 +10,7 @@ const SelectFileModal = ({
   handleFileSelection,
   handleDrop,
   files,
-  clearFiles,
+  clearFiles
 }) => {
   let modalStatus = useRef(upload.current);
   let dragArea = useRef(null);
@@ -69,7 +69,9 @@ const SelectFileModal = ({
     return (
       <div
         className={
-          (progress ? "tw-bg-transparent tw-w-auto " : "tw-bg-black tw-w-full ") +
+          (progress
+            ? "tw-bg-transparent tw-w-auto "
+            : "tw-bg-black tw-w-full ") +
           "tw-h-screen tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bg-opacity-75 tw-overflow-y-hidden"
         }
       >
@@ -111,8 +113,14 @@ const SelectFileModal = ({
                 className="tw-relative dragNdrop tw-w-full tw-h-3/5 tw-my-2 tw-border-2 tw-border-dashed tw-flex tw-overflow-y-auto"
               >
                 <div className="tw-m-auto">
-                  <img src={uploadImg} alt="" className="tw-mx-auto tw-w-1/2 tw-h-1/2" />
-                  <p className="tw-text-gray-400 tw-text-[25px]">Drop Files Here</p>
+                  <img
+                    src={uploadImg}
+                    alt=""
+                    className="tw-mx-auto tw-w-1/2 tw-h-1/2"
+                  />
+                  <p className="tw-text-gray-400 tw-text-[25px]">
+                    Drop Files Here
+                  </p>
                 </div>
               </div>
             ) : (

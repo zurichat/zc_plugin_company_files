@@ -1,163 +1,170 @@
 import React, { useEffect, useState } from "react";
 
-import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import { useDispatch, useSelector } from "react-redux";
 import searchIcon from "../CollabImages/search-svg.svg";
 import chainIcon from "../CollabImages/chain-green.svg.svg";
 
 import { getUserInfo } from "../../../actions/workspaceInfo";
-import { useDispatch, useSelector } from "react-redux";
 
 import GivePermission from "../GivePermission/GivePermission";
-import './collab.css';
+import "./collab.css";
 
 const CollaboratorCard = (props) => {
-  // avoid scrolling when modal is active
-  useEffect(() => {
-    document.body.style.overflowY = "hidden";
-    return () => {
-      document.body.style.overflowY = "auto";
-    };
-  }, []);
+	// avoid scrolling when modal is active
+	useEffect(() => {
+		document.body.style.overflowY = "hidden";
+		return () => {
+			document.body.style.overflowY = "auto";
+		};
+	}, []);
 
-  // states
-  // const [users, setUsers] = useState([]);
-  const [text, setText] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-  const [search, setSearch] = useState('')
+	// states
+	// const [users, setUsers] = useState([]);
+	const [text, setText] = useState("");
+	const [suggestions, setSuggestions] = useState([]);
+	const [search, setSearch] = useState("");
 
-  const dispatch = useDispatch();
-  const { loading, error, users, user, info } = useSelector(
-    (state) => state.rootReducer.workspaceReducer
-  );
-  console.log({ user, users });
+	const dispatch = useDispatch();
+	const { loading, error, users, user, info } = useSelector(
+		(state) => state.rootReducer.workspaceReducer
+	);
+	console.log({ user, users });
 
-  // Getting the user details
+	// Getting the user details
 
-  // useEffect(() => {
-  //   (async () => {
-  //     dispatch(getUserInfo());
-  //   })();
-  // }, []);
+	// useEffect(() => {
+	//   (async () => {
+	//     dispatch(getUserInfo());
+	//   })();
+	// }, []);
 
-  // useEffect(() => {
-  //   const showUsers = async () => {
-  //     const res = dispatch(getUserInfo());
-  //     console.log(res.Body.email);
-  //     setUsers(res.Body.email);
-  //   };
-  //   showUsers();
-  // }, []);
+	// useEffect(() => {
+	//   const showUsers = async () => {
+	//     const res = dispatch(getUserInfo());
+	//     console.log(res.Body.email);
+	//     setUsers(res.Body.email);
+	//   };
+	//   showUsers();
+	// }, []);
 
-  // the email suggestion
+	// the email suggestion
 
-  const handleSuggestions = (text) => {
-    setText(text);
-    setSuggestions({});
-  };
+	const handleSuggestions = (text) => {
+		setText(text);
+		setSuggestions({});
+	};
 
-  // const handleTextChange = (text) => {
-  //   let matches = [];
-  //   if (text.lenght > 0) {
-  //     matches = users.filter((user) => {
-  //       const regex = new RegExp(`${text}`, "gi");
-  //       return user.email.match(regex);
-  //     });
-  //   }
-  //   console.log("matches are", matches);
-  //   setSuggestions(matches);
-  //   setText(text);
-  // };
+	// const handleTextChange = (text) => {
+	//   let matches = [];
+	//   if (text.lenght > 0) {
+	//     matches = users.filter((user) => {
+	//       const regex = new RegExp(`${text}`, "gi");
+	//       return user.email.match(regex);
+	//     });
+	//   }
+	//   console.log("matches are", matches);
+	//   setSuggestions(matches);
+	//   setText(text);
+	// };
 
-  return (
-    <div className="collab_permission">
-      {/* Nav */}
-      <div className="collab_nav tw-flex tw-justify-between">
-        <div className="collab_search tw-p-2">
-          <form className="tw-flex tw-justify-between">
-            <input
-              type="text"
-              placeholder="Search for email address"
-              className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base tw-self-center"
-              required="required"
-              onChange={(e) => setSearch(e.target.value)
-                // handleTextChange(e.target.value)
-              }
-              value={search}
-              onBlur={() =>
-                setTimeout(() => {
-                  setSuggestions([]);
-                }, 100)
-              }
-            />
+	return (
+		<div className="collab_permission">
+			{/* Nav */}
+			<div className="collab_nav tw-flex tw-justify-between">
+				<div className="collab_search tw-p-2">
+					<form className="tw-flex tw-justify-between">
+						<input
+							type="text"
+							placeholder="Search for email address"
+							className="tw-bg-none tw-outline-none tw-w-11/12 tw-text-base tw-self-center"
+							required="required"
+							onChange={
+                (e) => setSearch(e.target.value)
+								// handleTextChange(e.target.value)
+							}
+							value={search}
+							onBlur={() =>
+								setTimeout(() => {
+									setSuggestions([]);
+								}, 100)
+							}
+						/>
 
-            {suggestions &&
+						{suggestions &&
               suggestions.map((suggestion, i) => (
-                <div
-                  key={i}
-                  className="suggestions tw-bg-black
+              	<div
+              		key={i}
+              		className="suggestions tw-bg-black
                  tw-text-white"
-                  onClick={() => handleSuggestions(suggestion.email)}
-                >
-                  {suggestion.email}
-                </div>
+              		onClick={() => handleSuggestions(suggestion.email)}
+              	>
+              		{suggestion.email}
+              	</div>
               ))}
 
-            <button type="submit">
-              <img
-                src={searchIcon}
-                alt="search"
-                className="tw-cursor-pointer tw-flex tw-self-center"
-              />
-            </button>
-          </form>
-        </div>
+						<button type="submit">
+							<img
+								src={searchIcon}
+								alt="search"
+								className="tw-cursor-pointer tw-flex tw-self-center"
+							/>
+						</button>
+					</form>
+				</div>
 
-        <div>
-          <button className="invite_btn" value={text}>
+				<div>
+					<button className="invite_btn" value={text}>
             Send Invite
-          </button>
-        </div>
-      </div>
+					</button>
+				</div>
+			</div>
 
-      <hr />
+			<hr />
 
-      {/* Body */}
-      {
-        users == undefined ? 
-        <div className="tw-flex tw-flex-col tw-items-center tw-p-4">
-          <p>Ooops! It seems you are not logged in</p>
-          <a className="tw-bg-green-500 tw-text-white tw-p-4 tw-rounded" href="https://zuri.chat" >Go to Zuri Chat</a>
-        </div> : 
-        <div className="collab_body">
-          <GivePermission search={search} />
-        </div>
-      }
+			{/* Body */}
+			{users == undefined ? (
+					<div className="tw-flex tw-flex-col tw-items-center tw-p-4">
+						<p>Ooops! It seems you are not logged in</p>
+						<a
+            className="tw-bg-green-500 tw-text-white tw-p-4 tw-rounded"
+            href="https://zuri.chat"
+          >
+            Go to Zuri Chat
+          </a>
+					</div>
+      ) : (
+					<div className="collab_body">
+						<GivePermission search={search} />
+					</div>
+			}
       
 
-      {/* Footer */}
-      <hr />
-      <div className="collab_footer tw-py-2 tw-px-2 tw-items-end tw-flex tw-justify-between">
-        <div className="fl_link">
-          <a href="#" className="copy-link tw-flex">
-            <span> Copy link</span>
-            <span className="imago tw-ml-1">
-              <img
-                src={chainIcon}
-                alt="copy link"
-                className="tw-w-[15px] tw-h-[15px]"
-              />
-            </span>
-          </a>
-        </div>
-        <div>
-          <button className="tw-flex tw-items-center tw-uppercase tw-text-base tw-border tw-rounded tw-py-1 tw-px-2 InviteModalCloseBtn"
-            onClick={props.onCancel}
-          >
-           <AiOutlineCloseCircle className="tw-mr-2" /> Close</button>
-        </div>
-      </div>
-      {/* <style jsx>
+			{/* Footer */}
+			<hr />
+			<div className="collab_footer tw-py-2 tw-px-2 tw-items-end tw-flex tw-justify-between">
+				<div className="fl_link">
+					<a href="#" className="copy-link tw-flex">
+						<span> Copy link</span>
+						<span className="imago tw-ml-1">
+							<img
+								src={chainIcon}
+								alt="copy link"
+								className="tw-w-[15px] tw-h-[15px]"
+							/>
+						</span>
+					</a>
+				</div>
+				<div>
+					<button
+            className="tw-flex tw-items-center tw-uppercase tw-text-base tw-border tw-rounded tw-py-1 tw-px-2 InviteModalCloseBtn"
+						onClick={props.onCancel}
+					>
+						<AiOutlineCloseCircle className="tw-mr-2" /> Close</button>
+				</div>
+			</div>
+			{/* <style jsx>
         {`
           .collab_permission {
             background: #ffffff;
@@ -301,8 +308,8 @@ const CollaboratorCard = (props) => {
           }
         `}
       </style> */}
-    </div>
-  );
+		</div>
+	);
 };
 
 export default CollaboratorCard;

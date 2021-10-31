@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "react-loader-spinner";
 import Image from "../../Subcomponents/Image";
 import Pdf from "../../Subcomponents/Pdf";
 import Zip from "../../Subcomponents/Zip";
@@ -8,7 +9,6 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents/audio";
-import Loader from "react-loader-spinner";
 import { fetchFiles, fetchFilesInFolder } from "../../../actions/fileAction";
 
 function FileGridView({ sortingMethod, folder }) {
@@ -20,7 +20,7 @@ function FileGridView({ sortingMethod, folder }) {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(fetchFilesInFolder({folderId: folder.folderId}));
+        dispatch(fetchFilesInFolder({ folderId: folder.folderId }));
       } catch (err) {
         console.log(err);
       }

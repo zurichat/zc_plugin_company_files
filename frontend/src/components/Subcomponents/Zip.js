@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ZipImg from "../../../public/Icons/zip.svg"
+import ZipImg from "../../../public/Icons/zip.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -27,8 +27,8 @@ function Zip({ file }) {
         <FileType
           file={file}
           IconName={ZipImg}
-          bgColor={"tw-bg-green-400"}
-          textColor={"text-bg-green-300"}
+          bgColor="tw-bg-green-400"
+          textColor="text-bg-green-300"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Zip({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"zip"}
+          type="zip"
         />
       )}
     </>

@@ -1,13 +1,13 @@
 import React from "react";
+import { useHistory } from "react-router";
 import active from "../../../public/Icons/arrow-left/active.svg";
 import imageIcon from "../../../public/Icons/image/active.svg";
 import downloadIcon from "../../../public/Icons/download/active.svg";
 import Vertical from "../../../public/Icons/more-vertical/active.svg";
 import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
-import ZoomIn from "../../../public/Icons/zoom-in/active.svg"
-import ZoomOut from "../../../public/Icons/zoom-out/active.svg"
-import { useHistory } from "react-router";
+import ZoomIn from "../../../public/Icons/zoom-in/active.svg";
+import ZoomOut from "../../../public/Icons/zoom-out/active.svg";
 
 function index({ file, setOpenStatus }) {
   const history = useHistory();
@@ -55,8 +55,12 @@ function index({ file, setOpenStatus }) {
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             /> */}
-            <video className="md:min-w-0 min-w-full w-60 md:w-10/12" src={file.url}  controls  autoPlay />
-            
+            <video
+              className="md:min-w-0 min-w-full w-60 md:w-10/12"
+              src={file.url}
+              controls
+              autoPlay
+            />
           </div>
           <div className="flex self-center">
             <img
@@ -67,16 +71,8 @@ function index({ file, setOpenStatus }) {
           </div>
         </div>
         <div className="bg-black py-3 px-7 flex justify-between mt-5">
-          <img
-            src={ZoomIn}
-            alt="zoom-in"
-            className="md:w-10 w-7 mr-4"
-          />
-          <img
-            src={ZoomOut}
-            alt="zoom-out"
-            className="md:w-10 w-7"
-          />
+          <img src={ZoomIn} alt="zoom-in" className="md:w-10 w-7 mr-4" />
+          <img src={ZoomOut} alt="zoom-out" className="md:w-10 w-7" />
         </div>
       </div>
     </div>

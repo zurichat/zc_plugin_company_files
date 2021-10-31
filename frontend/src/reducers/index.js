@@ -6,7 +6,7 @@ import folderReducer from "./folderReducer";
 const rootReducer = combineReducers({
   fileReducer: fileReducer,
   workspaceReducer: workspaceReducer,
-  folderReducer: folderReducer,
+  folderReducer: folderReducer
 });
 
 export default rootReducer;

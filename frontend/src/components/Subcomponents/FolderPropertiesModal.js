@@ -7,7 +7,7 @@ const FilePropertiesModal = ({
   modified,
   accessed,
   fileProperties,
-  setFileProperties,
+  setFileProperties
 }) => {
   const KB = 1024;
   const MB = KB * 1024;
@@ -18,15 +18,15 @@ const FilePropertiesModal = ({
       <>
         <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
           <div className="tw-relative tw-w-4/5 md:tw-w-3/6 tw-my-6 tw-mx-auto tw-max-w-3xl">
-            {/*content*/}
+            {/* content */}
             <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
-              {/*header*/}
+              {/* header */}
               <div className="tw-text-center sm:tw-text-left">
                 <h3 className="tw-text-xl tw-text-text-grey tw-font-semibold tw-text-center">
                   {name} properties
                 </h3>
               </div>
-              {/*body*/}
+              {/* body */}
               <div className="tw-relative tw-pt-3 tw-text-base tw-text-text-grey">
                 <div className="tw-flex tw-justify-between">
                   <span>File Name:</span>
@@ -34,9 +34,7 @@ const FilePropertiesModal = ({
                 </div>
                 <div className="tw-flex tw-justify-between">
                   <span>File Size:</span>
-                  <span>
-                    {size + " file(s)"}
-                  </span>
+                  <span>{`${size} file(s)`}</span>
                 </div>
                 <div className="tw-flex tw-justify-between">
                   <span>File Type:</span>
@@ -46,7 +44,7 @@ const FilePropertiesModal = ({
                   <span>Modified:</span>
                   <span>
                     {new Date(modified).toLocaleString("en-US", {
-                      hour12: true,
+                      hour12: true
                     })}
                   </span>
                 </div>
@@ -54,12 +52,12 @@ const FilePropertiesModal = ({
                   <span>Accessed:</span>
                   <span>
                     {new Date(accessed).toLocaleString("en-US", {
-                      hour12: true,
+                      hour12: true
                     })}
                   </span>
                 </div>
               </div>
-              {/*footer*/}
+              {/* footer */}
 
               <button
                 className=" tw-w-auto tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-px-6 tw-py-3 tw-mx-auto tw-mt-4  tw-text-sm tw-outline-none focus:tw-outline-none tw-ease-linear tw-transition-all tw-duration-150"
@@ -71,7 +69,7 @@ const FilePropertiesModal = ({
             </div>
           </div>
         </div>
-        <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black"></div>
+        <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black" />
       </>
     )
   );

@@ -7,15 +7,12 @@ const ComponentToTest = () => {
   const [newFile, setNewFile] = useState({});
 
   const fetchData = () => {
-    RealTime.subscribe('allFiles', 'files/all', 
-      (data) => setAllFiles(data)
-    )
+    RealTime.subscribe("allFiles", "files/all", (data) => setAllFiles(data));
   };
 
-  const fetchNewData = () =>{
-    RealTime.subscribe('newFile',"",(data) => setNewFile(data));
-  }
-
+  const fetchNewData = () => {
+    RealTime.subscribe("newFile", "", (data) => setNewFile(data));
+  };
 
   useEffect(() => {
     fetchData();

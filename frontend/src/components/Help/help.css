@@ -1,28 +1,28 @@
 @keyframes displayAnswer {
-    0% {
-        max-height: 0px;
-    }
-    100% {
-        max-height: fit-content;
-    }
+  0% {
+    max-height: 0px;
+  }
+  100% {
+    max-height: fit-content;
+  }
 }
 
 .accordion-answers {
-    max-height: 0px;
-    overflow: hidden;
-    transition: 0.2s;
+  max-height: 0px;
+  overflow: hidden;
+  transition: 0.2s;
 }
 
 .questionIcon {
-    background: #D7FCEB;
+  background: #d7fceb;
 }
 
 .hide {
-    max-height: fit-content;
-    animation: displayAnswer 0.2s;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+  max-height: fit-content;
+  animation: displayAnswer 0.2s;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 .chevronIcon {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }

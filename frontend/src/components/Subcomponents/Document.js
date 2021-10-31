@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DocImg from "../../../public/Icons/doc-cat.svg"
+import DocImg from "../../../public/Icons/doc-cat.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -27,8 +27,8 @@ function Document({ file }) {
         <FileType
           file={file}
           IconName={DocImg}
-          bgColor={"tw-bg-file-doc"}
-          textColor={"tw-text-blue-600"}
+          bgColor="tw-bg-file-doc"
+          textColor="tw-text-blue-600"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Document({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"word"}
+          type="word"
         />
       )}
     </>

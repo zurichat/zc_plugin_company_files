@@ -27,8 +27,8 @@ function Image({ file }) {
         <FileType
           file={file}
           IconName={ImgFile}
-          bgColor={"tw-bg-blue-300"}
-          textColor={"tw-text-blue-500"}
+          bgColor="tw-bg-blue-300"
+          textColor="tw-text-blue-500"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Image({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"image"}
+          type="image"
         />
       )}
     </>

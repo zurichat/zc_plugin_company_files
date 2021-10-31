@@ -21,7 +21,6 @@ function useFetch(url, del, res, empty) {
         if (isEmpty(data.data)) {
           setData([]);
           setisLoading(false);
-          return;
         } else {
           setData(data.data);
           setError(null);

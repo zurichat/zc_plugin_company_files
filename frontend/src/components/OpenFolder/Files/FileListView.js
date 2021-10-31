@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import ZipImg from "../../../../public/Icons/zip.svg"
-import Vid from "../../../../public/Icons/video.svg"
+import Loader from "react-loader-spinner";
+import dayjs from "dayjs";
+import ZipImg from "../../../../public/Icons/zip.svg";
+import Vid from "../../../../public/Icons/video.svg";
 import PdfImg from "../../../../public/Icons/pdffile.svg";
-import PptImg from "../../../../public/Icons/pp-cat.svg"
-import Xls from "../../../../public/Icons/excel-cat.svg"
-import DocImg from "../../../../public/Icons/doc-cat.svg"
+import PptImg from "../../../../public/Icons/pp-cat.svg";
+import Xls from "../../../../public/Icons/excel-cat.svg";
+import DocImg from "../../../../public/Icons/doc-cat.svg";
 import ImgFile from "../../../../public/Icons/imgfile.svg";
 import Aud from "../../../../public/Icons/music/active.svg";
 
-import Loader from "react-loader-spinner";
 import { fetchFiles } from "../../../actions/fileAction";
 import FileType from "./FileType";
-import dayjs from "dayjs";
 
 function FileListView({ sortingMethod }) {
   const dispatch = useDispatch();
@@ -58,7 +58,9 @@ function FileListView({ sortingMethod }) {
             <tr>
               <th className="tw-w-1/4 tw-py-[25px]">Name</th>
               <th className="tw-w-1/4 tw-py-[25px]">Owner</th>
-              <th className="tw-w-1/4 tw-py-[25px] tw-truncate">Date Modified</th>
+              <th className="tw-w-1/4 tw-py-[25px] tw-truncate">
+                Date Modified
+              </th>
               <th className="tw-w-1/4 tw-py-[25px]">File Size</th>
             </tr>
           </thead>
@@ -67,8 +69,10 @@ function FileListView({ sortingMethod }) {
               .sort(
                 sortingMethod == "name"
                   ? function (a, b) {
-                      if (a.fileName.toLowerCase() < b.fileName.toLowerCase()) return -1;
-                      if (a.fileName.toLowerCase() > b.fileName.toLowerCase()) return 1;
+                      if (a.fileName.toLowerCase() < b.fileName.toLowerCase())
+                        return -1;
+                      if (a.fileName.toLowerCase() > b.fileName.toLowerCase())
+                        return 1;
                       return 0;
                     }
                   : sortingMethod == "type"
@@ -89,14 +93,14 @@ function FileListView({ sortingMethod }) {
                     {new RegExp("\\b" + "image" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={ImgFile}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "pdf" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={PdfImg}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "ms-excel" + "\\b").test(
                         file.type
@@ -107,8 +111,8 @@ function FileListView({ sortingMethod }) {
                       new RegExp("\\b" + "csv" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={Xls}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "msword" + "\\b").test(file.type) ||
                       new RegExp("\\b" + "wordprocessingml" + "\\b").test(
@@ -117,8 +121,8 @@ function FileListView({ sortingMethod }) {
                       new RegExp("\\b" + "plain" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={DocImg}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "ms-powerpoint" + "\\b").test(
                         file.type
@@ -128,33 +132,37 @@ function FileListView({ sortingMethod }) {
                       ) ? (
                       <FileType
                         IconName={PptImg}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "audio" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={Aud}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : new RegExp("\\b" + "video" + "\\b").test(file.type) ? (
                       <FileType
                         IconName={Vid}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     ) : (
                       <FileType
                         IconName={ZipImg}
-                        bgColor={"tw-bg-blue-300"}
-                        textColor={"tw-text-blue-600"}
+                        bgColor="tw-bg-blue-300"
+                        textColor="tw-text-blue-600"
                       />
                     )}
-                    <span className="tw-truncate tw-w-3/5">{file.fileName.slice(0, file.fileName.lastIndexOf("."))}</span>
+                    <span className="tw-truncate tw-w-3/5">
+                      {file.fileName.slice(0, file.fileName.lastIndexOf("."))}
+                    </span>
                   </td>
                   <td className="tw-w-1/4">Me</td>
-                  <td className="tw-w-1/4">{dayjs(file.dateModified).format('DD MMM YYYY')}</td>
-                  <td className="tw-w-1/4">{convertSize(file.size)}{" "}MB</td>
+                  <td className="tw-w-1/4">
+                    {dayjs(file.dateModified).format("DD MMM YYYY")}
+                  </td>
+                  <td className="tw-w-1/4">{convertSize(file.size)} MB</td>
                 </tr>
               ))}
           </tbody>

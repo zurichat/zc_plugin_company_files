@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import UserAllow from "./UserAllow";
 
 import {
   getUserInfo,
   getWorkspaceUser,
-  getWorkspaceUsers,
+  getWorkspaceUsers
 } from "../../../actions/workspaceInfo";
-import { useDispatch, useSelector } from "react-redux";
 
 import img1 from "../CollabImages/damilola-1.png";
 import img2 from "../CollabImages/damilola-2.png";
@@ -48,7 +48,7 @@ const GivePermission = ({ search }) => {
   useEffect(() => {
     (async () => {
       dispatch(getUserInfo());
-      dispatch(getWorkspaceUser("eosabiya@gmail.com")); //takes email as parameter
+      dispatch(getWorkspaceUser("eosabiya@gmail.com")); // takes email as parameter
       dispatch(getWorkspaceUsers());
     })();
     if (users !== null && users !== undefined) {

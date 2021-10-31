@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import Nav from "../Subcomponents/nav";
 import {
   FaPlay,
   FaPause,
   FaForward,
   FaBackward,
-  FaUndo,
+  FaUndo
 } from "react-icons/fa/index";
 import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
+import Nav from "../Subcomponents/nav";
 import Minimize from "../../../public/Icons/minimize/active.svg";
 
 function index({ file, setOpenStatus }) {
@@ -58,17 +58,17 @@ function index({ file, setOpenStatus }) {
     const width = e.target.clientWidth;
     const clickX = e.nativeEvent.offsetX;
     console.log(width, clickX, e);
-    const duration = audio.duration;
+    const { duration } = audio;
     audio.currentTime = (clickX / width) * duration;
   }
 
   useLayoutEffect(() => {
     function formatTime(seconds) {
       let minutes = Math.floor(seconds / 60);
-      minutes = minutes >= 10 ? minutes : "0" + minutes;
+      minutes = minutes >= 10 ? minutes : `0${minutes}`;
       seconds = Math.floor(seconds % 60);
-      seconds = seconds >= 10 ? seconds : "0" + seconds;
-      return minutes + ":" + seconds;
+      seconds = seconds >= 10 ? seconds : `0${seconds}`;
+      return `${minutes}:${seconds}`;
     }
     audio.addEventListener("timeupdate", () => {
       setTime(formatTime(audio.currentTime));
@@ -147,7 +147,9 @@ function index({ file, setOpenStatus }) {
                     onClick={() => forward()}
                     title="Forward"
                   />
-                  <span className="tw-text-white tw-text-sm: md:tw-text-xl">{time}</span>
+                  <span className="tw-text-white tw-text-sm: md:tw-text-xl">
+                    {time}
+                  </span>
                 </div>
                 <div className="tw-flex tw-items-center">
                   <img src={Minimize} alt="minimize" title="minimize" />

@@ -1,5 +1,5 @@
 import React from "react";
-import Folder from "../FoldersGrid/Folder/Folder";
+import Folder from "./Folder/Folder";
 
 function FoldersGrid() {
   return (

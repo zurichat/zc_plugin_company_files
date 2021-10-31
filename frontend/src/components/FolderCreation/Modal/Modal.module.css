@@ -60,7 +60,7 @@
   height: 25px;
   border-radius: 50%;
   background-color: transparent;
-  border: 4px solid #FFF;
+  border: 4px solid #fff;
   border-top-color: #00b87c;
   animation: 1s spin linear infinite;
 }

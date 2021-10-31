@@ -8,17 +8,17 @@ export default function Modal({
   setFileDel,
   setRestore,
   apiBase,
-  data,
+  data
 }) {
   let fileName = data.map((data) =>
     data._id === clickedId ? data.fileName : null
   );
 
   const handleRestore = (id) => {
-    fetch(`${apiBase}/files/restoreFile/` + id, {
+    fetch(`${apiBase}/files/restoreFile/${id}`, {
       method: "Put",
       headers: { "Content-Type": "application/json" },
-      body: "",
+      body: ""
     }).then((res) => {
       res.status === 200 ? setRestore("") : null;
     });
@@ -26,8 +26,8 @@ export default function Modal({
   };
 
   const handleDelete = (id) => {
-    fetch(`${apiBase}/files/deleteFile/` + id, {
-      method: "DELETE",
+    fetch(`${apiBase}/files/deleteFile/${id}`, {
+      method: "DELETE"
     }).then((res) => {
       res.status === 200 ? setFileDel("") : null;
     });
@@ -41,21 +41,21 @@ export default function Modal({
         <>
           <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
             <div className="tw-relative tw-w-auto tw-my-6 tw-mx-auto tw-max-w-3xl">
-              {/*content*/}
+              {/* content */}
               <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
-                {/*header*/}
+                {/* header */}
                 <div className="tw-text-center sm:tw-text-left">
                   <h3 className="tw-text-2xl tw-text-text-grey tw-font-semibold">
                     Restore File
                   </h3>
                 </div>
-                {/*body*/}
+                {/* body */}
                 <div className="tw-relative tw-pt-3">
                   <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
                     Are you sure you want to restore ${fileName} File?
                   </p>
                 </div>
-                {/*footer*/}
+                {/* footer */}
                 <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-pt-4  tw-rounded-b">
                   <button
                     className="tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-px-6 tw-py-3 tw-text-sm tw-outline-none focus:tw-outline-none tw-mr-5 tw-mb-1 tw-ease-linear tw-transition-all tw-duration-150"
@@ -78,31 +78,31 @@ export default function Modal({
               </div>
             </div>
           </div>
-          <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black"></div>
+          <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black" />
         </>
       ) : null}
 
-      {/*Modal for Delete Button  */}
+      {/* Modal for Delete Button  */}
 
       {deleteModal ? (
         <>
           <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
             <div className="tw-relative tw-w-auto tw-my-6 tw-mx-auto tw-max-w-3xl">
-              {/*content*/}
+              {/* content */}
               <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
-                {/*header*/}
+                {/* header */}
                 <div className="tw-text-center sm:tw-text-left">
                   <h3 className="tw-text-2xl tw-text-text-grey tw-font-semibold">
                     Delete Permanently
                   </h3>
                 </div>
-                {/*body*/}
+                {/* body */}
                 <div className="tw-relative tw-pt-3">
                   <p className="tw-mt-3 tw-mb-4 tw-text-text-grey tw-text-sm tw-text-center sm:tw-text-left">
                     `Are you sure you want to Delete ${fileName} Permanently?`
                   </p>
                 </div>
-                {/*footer*/}
+                {/* footer */}
                 <div className="tw-flex tw-items-center tw-justify-center sm:tw-justify-end tw-pt-4 tw-rounded-b">
                   <button
                     className="tw-border tw-border-primary tw-text-primary tw-rounded tw-background-white tw-font-semibold tw-px-6 tw-py-3 tw-text-sm tw-outline-none focus:tw-outline-none tw-mr-5 tw-mb-1 tw-ease-linear tw-transition-all tw-duration-150"
@@ -125,7 +125,7 @@ export default function Modal({
               </div>
             </div>
           </div>
-          <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black"></div>
+          <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black" />
         </>
       ) : null}
     </>

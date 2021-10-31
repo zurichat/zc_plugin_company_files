@@ -1,4 +1,4 @@
-/*import React from 'react';
+/* import React from 'react';
 
 class RotateIMG extends React.Component{
     constructor(props){

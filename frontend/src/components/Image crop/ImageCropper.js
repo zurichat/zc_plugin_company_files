@@ -11,7 +11,7 @@
 //     <div>
 //     <button className={CroppingCSS.crop} onClick={() => setShowPreview(true) }>CROP</button>
 //     <Preview trigger={showPreview} setTrigger={setShowPreview}>
-      
+
 //        {['flow'].map((path) => {
 //         return(
 //         <div key={path}>
