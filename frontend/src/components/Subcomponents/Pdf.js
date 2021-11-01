@@ -27,8 +27,8 @@ function Pdf({ file }) {
         <FileType
           file={file}
           IconName={PdfImg}
-          bgColor={"tw-bg-file-pdf"}
-          textColor={"tw-text-red-800"}
+          bgColor="tw-bg-file-pdf"
+          textColor="tw-text-red-800"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Pdf({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"pdf"}
+          type="pdf"
         />
       )}
     </>

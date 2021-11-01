@@ -1,10 +1,9 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FileOptions from "../../FileUpload/FileOptions";
-import FileUpload from "../../FileUpload/index";
 import { FaArrowLeft } from "react-icons/fa/index";
-import { BsArrowUpDown, BsViewList } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
+import { BsArrowUpDown, BsViewList, BsGrid3X2 } from "react-icons/bs";
+import FileUpload from "../../FileUpload/index";
+import FileOptions from "../../FileUpload/FileOptions";
 import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import { HandleClickEvent } from "../../Subcomponents/HandleClickEvent";
 import SortMenuButton from "../../Subcomponents/MenuButton";
@@ -15,7 +14,7 @@ function FileHeader({
   sortByDate,
   sortByName,
   sortBySize,
-  sortByType,
+  sortByType
 }) {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -89,10 +88,10 @@ function FileHeader({
             }}
           >
             <div className="tw-bg-white tw-py-3 tw-w-44 tw-absolute tw--left-1/3 md:tw--left-3/4 tw-z-20 tw-rounded-sm">
-              <SortMenuButton name={"Sort By Name"} cmd={sortByName} />
-              <SortMenuButton name={"Sort By Date"} cmd={sortByDate} />
-              <SortMenuButton name={"Sort By Size"} cmd={sortBySize} />
-              <SortMenuButton name={"Sort By Type"} cmd={sortByType} />
+              <SortMenuButton name="Sort By Name" cmd={sortByName} />
+              <SortMenuButton name="Sort By Date" cmd={sortByDate} />
+              <SortMenuButton name="Sort By Size" cmd={sortBySize} />
+              <SortMenuButton name="Sort By Type" cmd={sortByType} />
             </div>
           </HandleClickEvent>
           {view == "grid" ? (

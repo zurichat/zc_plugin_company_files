@@ -2,7 +2,9 @@ import Centrifuge from "centrifuge";
 import axios from "axios";
 
 // const centrifuge = new Centrifuge("ws://localhost:8000/connection/websocket");
-const centrifuge = new Centrifuge("wss://realtime.zuri.chat/connection/websocket");
+const centrifuge = new Centrifuge(
+  "wss://realtime.zuri.chat/connection/websocket"
+);
 
 class RealTime {
   static subscribe = (channel, apiRoute, callback) => {
@@ -17,7 +19,7 @@ class RealTime {
 
     centrifuge.connect();
     centrifuge.subscribe(channel, callback);
-  }
+  };
 }
 
 export default RealTime;

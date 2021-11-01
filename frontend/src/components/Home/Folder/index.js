@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Loader from "react-loader-spinner";
 
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import FolderComponent from "./Folder";
 
 import RealTime from "../../../helpers/realtime.helper";
 
-import { useDispatch, useSelector } from "react-redux";
 import { fetchFolders } from "../../../actions/folderAction";
 
 const index = () => {
@@ -90,7 +90,7 @@ const index = () => {
               <FolderComponent
                 key={folder.folderId}
                 folder={folder}
-                view={"grid"}
+                view="grid"
               />
             ))
         ) : (

@@ -6,21 +6,21 @@ module.exports = (webpackConfigEnv, argv) => {
     orgName: "zuri",
     projectName: "zuri-plugin-company-files",
     webpackConfigEnv,
-    argv,
+    argv
   });
 
   const config = mergeWithRules({
     module: {
       rules: {
         test: "match",
-        use: "replace",
-      },
-    },
+        use: "replace"
+      }
+    }
   })(defaultConfig, {
     // customize the webpack config here
     // devtool: "inline-source-map",
     devServer: {
-      historyApiFallback: true,
+      historyApiFallback: true
       // https: true,
     },
     module: {
@@ -29,16 +29,16 @@ module.exports = (webpackConfigEnv, argv) => {
           test: /\.css$/i,
           use: [
             require.resolve("style-loader", {
-              paths: [require.resolve("webpack-config-single-spa")],
+              paths: [require.resolve("webpack-config-single-spa")]
             }),
             require.resolve("css-loader", {
-              paths: [require.resolve("webpack-config-single-spa")],
+              paths: [require.resolve("webpack-config-single-spa")]
             }),
-            "postcss-loader",
-          ],
-        },
-      ],
-    },
+            "postcss-loader"
+          ]
+        }
+      ]
+    }
   });
 
   return config;

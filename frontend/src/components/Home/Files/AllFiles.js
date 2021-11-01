@@ -5,11 +5,12 @@ import ReactPaginate from "react-paginate";
 import FileListView from "./FileListView";
 import FileGridView from "./FileGridView";
 import FileHeader from "./FileHeader";
+
 dayjs.extend(relativeTime);
 
 const AllFiles = () => {
   const [view, setView] = useState("grid");
-  const [sortingMethod, setSortingMethod] = useState("name")
+  const [sortingMethod, setSortingMethod] = useState("name");
 
   function sortByDate() {
     setSortingMethod("date");
@@ -51,7 +52,6 @@ const AllFiles = () => {
           containerClassName={'pagination'}
           activeClassName={'active'}
         /> */}
-      
     </div>
   );
 };

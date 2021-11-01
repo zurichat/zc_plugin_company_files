@@ -3,7 +3,7 @@ body {
   color: #3cefff;
   font-size: 16px;
   font-weight: 400;
-  font-family: 'Jetbrains Mono', 'Courier New', Courier, monospace;
+  font-family: "Jetbrains Mono", "Courier New", Courier, monospace;
   overflow-x: hidden;
 }
 
@@ -72,12 +72,12 @@ body {
 .progress-bar-container {
   height: 8px;
   border-radius: 4px;
-  background-color: #999;;
+  background-color: #999;
 }
 
 .file-actions {
   text-align: right;
-  margin-bottom: 12px
+  margin-bottom: 12px;
 }
 
 .file-actions button {

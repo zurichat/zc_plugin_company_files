@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import FolderComponent from "./Folder";
-import FileOptions from "../../FileUpload/FileOptions";
-import FileUpload from "../../FileUpload/index";
 import { FaArrowLeft } from "react-icons/fa/index";
-import { BsArrowUpDown, BsViewList } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
-import { HandleClickEvent } from "../../Subcomponents/HandleClickEvent";
-import SortMenuButton from "../../Subcomponents/MenuButton";
-import UploadProgressModal from "../../FileUpload/UploadProgressModal";
+import { BsArrowUpDown, BsViewList, BsGrid3X2 } from "react-icons/bs";
 import ReactPaginate from "react-paginate";
 import Loader from "react-loader-spinner";
 import { useSelector, useDispatch } from "react-redux";
+import FolderComponent from "./Folder";
+import FileOptions from "../../FileUpload/FileOptions";
+import FileUpload from "../../FileUpload/index";
+import { HandleClickEvent } from "../../Subcomponents/HandleClickEvent";
+import SortMenuButton from "../../Subcomponents/MenuButton";
+import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import { fetchFolders } from "../../../actions/folderAction";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
 
@@ -47,10 +46,10 @@ const AllFolders = () => {
       }
     })();
     RTCSubscription("allFolders", (allFolders) => {
-      //console.log({ allFolders });
+      // console.log({ allFolders });
       try {
         dispatch({
-          type: "FETCH_FOLDERS_FULFILLED",
+          type: "FETCH_FOLDERS_FULFILLED"
         });
       } catch (err) {
         throw new Error(err);
@@ -124,8 +123,8 @@ const AllFolders = () => {
             }}
           >
             <div className="tw-bg-white tw-py-3 tw-w-44 tw-absolute tw--left-1/3 md:tw--left-3/4 tw-z-20 tw-rounded-sm">
-              <SortMenuButton name={"Sort By Name"} cmd={sortByName} />
-              <SortMenuButton name={"Sort By Date"} cmd={sortByDate} />
+              <SortMenuButton name="Sort By Name" cmd={sortByName} />
+              <SortMenuButton name="Sort By Date" cmd={sortByDate} />
             </div>
           </HandleClickEvent>
           {/*

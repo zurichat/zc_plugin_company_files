@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import classes from "./Activities.module.css";
 import Loader from "react-loader-spinner";
+import classes from "./Activities.module.css";
 
 function Activities() {
   const [activities, setActivities] = useState([]);
@@ -33,7 +33,10 @@ function Activities() {
   };
 
   const convertMS = (milliseconds) => {
-    let month, day, hour, minute;
+    let month;
+    let day;
+    let hour;
+    let minute;
     const time = Date.now();
     minute = Math.floor((time - milliseconds) / 60000);
     hour = Math.floor(minute / 60);
@@ -42,34 +45,30 @@ function Activities() {
 
     if (minute < 60) {
       if (minute === 1) {
-        return minute + " minute ago";
-      } else {
-        return minute + " minutes ago";
+        return `${minute} minute ago`;
       }
+      return `${minute} minutes ago`;
     }
 
     if (hour < 24) {
       if (hour === 1) {
-        return hour + " hour ago";
-      } else {
-        return hour + " hours ago";
+        return `${hour} hour ago`;
       }
+      return `${hour} hours ago`;
     }
 
     if (hour >= 24) {
       if (day === 1) {
-        return day + " day ago";
-      } else {
-        return day + " days ago";
+        return `${day} day ago`;
       }
+      return `${day} days ago`;
     }
 
     if (day > 30) {
       if (month === 1) {
-        return month + " month ago";
-      } else {
-        return month + " months ago";
+        return `${month} month ago`;
       }
+      return `${month} months ago`;
     }
   };
 
@@ -260,7 +259,10 @@ function Activities() {
       <div className={classes.activities__left}>
         {activities.length > 0 &&
           activities.map((activity, idx) => (
-            <div key={activity._id} className={`tw-relative ${classes.activitiesDescription}`}>
+            <div
+              key={activity._id}
+              className={`tw-relative ${classes.activitiesDescription}`}
+            >
               <div className={classes.container}>
                 <div className={classes.img}>
                   <img src={activity?.userObj?.img_url} alt="user picture" />
@@ -271,9 +273,7 @@ function Activities() {
                   from
                   <span> Company files</span>
                 </div>
-                <div className={classes.time}>
-                  {convertMS(activity.time)}
-                </div>
+                <div className={classes.time}>{convertMS(activity.time)}</div>
                 <div
                   className={classes.options}
                   onClick={() => setDisplay(!display)}

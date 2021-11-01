@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import classes from './Addnew.module.css';
-import { BsFolder, BsFilesAlt, BsUpload } from 'react-icons/bs';
+import React, { useState } from "react";
+import { BsFolder, BsFilesAlt, BsUpload } from "react-icons/bs";
+import classes from "./Addnew.module.css";
+
 const Addnewbtn = ({ handleModal }) => {
   const [showbtncard, setShowbtncard] = useState(false);
 

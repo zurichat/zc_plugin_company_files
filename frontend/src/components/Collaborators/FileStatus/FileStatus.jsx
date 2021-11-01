@@ -32,7 +32,7 @@ function FileStatus(props) {
             align-self: center;
           }
 
-          @media screen and (min-width:320px) and (max-width:700px) {
+          @media screen and (min-width: 320px) and (max-width: 700px) {
             .file_image {
               padding: 10px;
             }

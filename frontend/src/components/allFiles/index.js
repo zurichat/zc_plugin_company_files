@@ -12,10 +12,10 @@ const AllFiles = () => {
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
-  const [newFile, setNewFiles] = useState({ data: { } });
+  const [newFile, setNewFiles] = useState({ data: {} });
   const [SnackBar] = useSnackbar({
     position: "bottom-center",
-    style: { backgroundColor: "#00B87C", color: "#fff" },
+    style: { backgroundColor: "#00B87C", color: "#fff" }
   });
 
   // let progress = useRef(false)

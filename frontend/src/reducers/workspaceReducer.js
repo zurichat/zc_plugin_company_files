@@ -3,7 +3,7 @@ const initialState = {
   error: null,
   users: {},
   user: {},
-  info: {},
+  info: {}
 };
 
 export default function workspaceReducer(state = initialState, action) {
@@ -13,26 +13,26 @@ export default function workspaceReducer(state = initialState, action) {
         ...state,
         loading: false,
         error: null,
-        users: action.payload,
+        users: action.payload
       };
     case "WORKSPACE_USER_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
-        user: action.payload,
+        user: action.payload
       };
     case "USER_INFO_FULFILLED":
       return {
         ...state,
         loading: false,
         error: null,
-        info: action.payload,
+        info: action.payload
       };
     case "WORKSPACE_INFO_LOADING":
       return {
         ...state,
-        loading: true,
+        loading: true
       };
     case "WORKSPACE_USERS_FAILED":
     case "WORKSPACE_USER_FAILED":
@@ -40,7 +40,7 @@ export default function workspaceReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload
       };
     default:
       return state;

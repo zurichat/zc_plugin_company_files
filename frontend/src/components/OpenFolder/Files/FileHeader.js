@@ -1,10 +1,9 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import FileOptions from "../../FileUpload/FileOptions";
-import FileUpload from "../../FileUpload/index";
 import { FaArrowLeft } from "react-icons/fa/index";
-import { BsArrowUpDown, BsViewList } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
+import { BsArrowUpDown, BsViewList, BsGrid3X2 } from "react-icons/bs";
+import FileUpload from "../../FileUpload/index";
+import FileOptions from "../../FileUpload/FileOptions";
 import UploadProgressModal from "../../FileUpload/UploadProgressModal";
 import { HandleClickEvent } from "../../Subcomponents/HandleClickEvent";
 import SortMenuButton from "../../Subcomponents/MenuButton";
@@ -16,7 +15,7 @@ function FileHeader({
   sortByName,
   sortBySize,
   sortByType,
-  folderTitle,
+  folderTitle
 }) {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
@@ -75,9 +74,7 @@ function FileHeader({
             className="tw-text-lg tw-text-black tw-mr-3 tw-self-center"
             onClick={() => goBack()}
           />
-          {
-            `${folderTitle}`
-          }
+          {`${folderTitle}`}
         </h2>
         {/*
         <div className="tw-flex tw-items-center tw-relative">

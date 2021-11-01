@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Xls from "../../../public/Icons/excel-cat.svg"
+import Xls from "../../../public/Icons/excel-cat.svg";
 import FileType from "./FileType";
 import FileMenu from "./FileMenu";
 
@@ -27,8 +27,8 @@ function Excel({ file }) {
         <FileType
           file={file}
           IconName={Xls}
-          bgColor={"tw-bg-file-xls"}
-          textColor={"tw-text-green-700"}
+          bgColor="tw-bg-file-xls"
+          textColor="tw-text-green-700"
         />
       </div>
       {openStatus && (
@@ -36,7 +36,7 @@ function Excel({ file }) {
           file={file}
           setOpenStatus={setOpenStatus}
           openStatus={openStatus}
-          type={"excel"}
+          type="excel"
         />
       )}
     </>

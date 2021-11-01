@@ -1,11 +1,12 @@
+/* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import Parcel from "single-spa-react/parcel";
+import { pluginHeader } from "@zuri/plugin-header";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBar from "../SearchBar";
 import Header from "../Help/Header";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 
 import FileUpload from "../Home/index";
 import Home from "../Home";
@@ -24,7 +25,6 @@ import Security from "../security/Security";
 
 import Test from "../ComponentToTest";
 
-import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../Error/ErrorFallback";
 
 import Help from "../Help/index";
@@ -33,14 +33,11 @@ import AllFolders from "../Home/Folder/AllFolders";
 import AllFiles from "../Home/Files/AllFiles";
 import AllTheFiles from "../OpenFolder/Files/AllFiles";
 import ScrollRestoration from "../Subcomponents/ScrollRestoration";
-import Parcel from "single-spa-react/parcel";
-import { pluginHeader } from "@zuri/plugin-header";
 import {
   getUserInfo,
   getWorkspaceUser,
-  getWorkspaceUsers,
+  getWorkspaceUsers
 } from "../../actions/workspaceInfo";
-import { useDispatch, useSelector } from "react-redux";
 
 const Main = () => {
   const headerConfig = {
@@ -49,17 +46,17 @@ const Main = () => {
     thumbnailUrl: [
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80",
       "https://upload.wikimedia.org/wikipedia/en/7/70/Shawn_Tok_Profile.jpg",
-      "https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png",
+      "https://www.kemhospitalpune.org/wp-content/uploads/2020/12/Profile_avatar_placeholder_large.png"
     ],
     userCount: 30,
     eventTitle: () => {
-      const currentState = history.state;
-      history.pushState(currentState, "", "/companyfiles");
+      const currentState = window.history.state;
+      window.history.pushState(currentState, "", "/companyfiles");
     },
     eventThumbnail: () => {
-      //Block of code to be triggered on thumbnail click
+      // Block of code to be triggered on thumbnail click
     },
-    hasThumbnail: true,
+    hasThumbnail: true
   };
 
   const dispatch = useDispatch();
@@ -71,7 +68,7 @@ const Main = () => {
   useEffect(() => {
     (async () => {
       dispatch(getUserInfo());
-      dispatch(getWorkspaceUser("billmal071@gmail.com")); //takes email as parameter
+      dispatch(getWorkspaceUser("billmal071@gmail.com")); // takes email as parameter
       dispatch(getWorkspaceUsers());
     })();
   }, []);

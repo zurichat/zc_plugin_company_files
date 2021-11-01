@@ -4,12 +4,13 @@ import Addnewbtn from "./Addnew/Addnewbtn";
 import Modal from "./Modal/Modal";
 import classes from "./Folder.module.css";
 
-
 function Folder() {
   const [showModal, setShowModal] = useState(false);
   const [folderArray, setFolderArray] = useState([]);
-  const [submitting, setIsSubmitting] = useState(false)
-  const API_BASE_URL = location.hostname.includes("zuri.chat") ? "https://companyfiles.zuri.chat/api/v1" : "http://localhost:5500/api/v1"
+  const [submitting, setIsSubmitting] = useState(false);
+  const API_BASE_URL = location.hostname.includes("zuri.chat")
+    ? "https://companyfiles.zuri.chat/api/v1"
+    : "http://localhost:5500/api/v1";
 
   useEffect(() => {
     async function fetchFolder() {
@@ -28,9 +29,9 @@ function Folder() {
   }, []);
 
   const handleFolder = (data) => {
-    setIsSubmitting(true)
+    setIsSubmitting(true);
     setFolderArray((prev) => [...prev, ...data]);
-    setIsSubmitting(false)
+    setIsSubmitting(false);
   };
 
   const handleModal = () => {

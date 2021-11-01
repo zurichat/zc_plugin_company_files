@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import { useSnackbar } from "react-simple-snackbar";
 import RecentlyViewed from "./RecentlyViewed";
 import Folder from "./Folder/index";
 import Files from "./Files/index";
@@ -8,7 +9,6 @@ import ShortCut from "./ShortCut";
 import UploadProgressModal from "../FileUpload/UploadProgressModal";
 import FileUpload from "../FileUpload/index";
 import Room from "./Room/index";
-import { useSnackbar } from 'react-simple-snackbar';
 
 const Index = () => {
   const [upload, setUpload] = useState(false);
@@ -16,8 +16,8 @@ const Index = () => {
   const [options, setOptions] = useState(false);
   const [demo, setDemo] = useState(false);
   const [SnackBar] = useSnackbar({
-    position: 'bottom-center',
-    style: { backgroundColor: '#00B87C', color: '#fff' }
+    position: "bottom-center",
+    style: { backgroundColor: "#00B87C", color: "#fff" }
   });
 
   // let progress = useRef(false)
@@ -55,9 +55,9 @@ const Index = () => {
 
   return (
     <div
-      className={
-        (upload ? " tw-overflow-y-hidden" : "") + " tw-w-full tw-mt-7 tw-py-4 tw-px-10 tw-z-auto"
-      }
+      className={`${
+        upload ? " tw-overflow-y-hidden" : ""
+      } tw-w-full tw-mt-7 tw-py-4 tw-px-10 tw-z-auto`}
     >
       <button
         onClick={showOptions}

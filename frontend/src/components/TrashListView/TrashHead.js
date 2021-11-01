@@ -8,7 +8,7 @@ const TrashHead = ({
   setFileDel,
   setRestore,
   setEmptyTrash,
-  apiBase,
+  apiBase
 }) => {
   let fileIds = data.map((data) => data._id);
 
@@ -16,7 +16,7 @@ const TrashHead = ({
     fetch(`${apiBase}/files/deleteMultipleFiles`, {
       method: "Post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ids: fileIds }),
+      body: JSON.stringify({ ids: fileIds })
     }).then((res) => (res.status === 200 ? setEmptyTrash("") : null));
     setData([]);
   };

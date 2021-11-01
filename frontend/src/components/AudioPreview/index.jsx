@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import Nav from "../Subcomponents/nav";
+import React, { useState, useLayoutEffect } from "react";
 import {
   FaPlay,
   FaPause,
   FaForward,
   FaBackward,
-  FaUndo,
+  FaUndo
 } from "react-icons/fa/index";
 import { GiSpeaker, GiSpeakerOff } from "react-icons/gi";
+import Nav from "../Subcomponents/nav";
 import Minimize from "../../../public/Icons/minimize/active.svg";
 
 function index({ file, setOpenStatus }) {
@@ -54,27 +54,26 @@ function index({ file, setOpenStatus }) {
   }
 
   function setPosition(e) {
-    console.log(this);
     const width = e.target.clientWidth;
     const clickX = e.nativeEvent.offsetX;
-    console.log(width, clickX, e);
-    const duration = audio.duration;
+    // console.log(width, clickX, e);
+    const { duration } = audio;
     audio.currentTime = (clickX / width) * duration;
   }
 
   useLayoutEffect(() => {
     function formatTime(seconds) {
       let minutes = Math.floor(seconds / 60);
-      minutes = minutes >= 10 ? minutes : "0" + minutes;
+      minutes = minutes >= 10 ? minutes : `0${minutes}`;
       seconds = Math.floor(seconds % 60);
-      seconds = seconds >= 10 ? seconds : "0" + seconds;
-      return minutes + ":" + seconds;
+      seconds = seconds >= 10 ? seconds : `0${seconds}`;
+      return `${minutes}:${seconds}`;
     }
     audio.addEventListener("timeupdate", () => {
       setTime(formatTime(audio.currentTime));
       setProgress((audio.currentTime / audio.duration) * 100);
     });
-    console.log(time, progress, audio.volume);
+    // console.log(time, progress, audio.volume);
     audio.addEventListener("ended", () => setIsPlaying(false));
     return () => {
       audio.removeEventListener("ended", () => setIsPlaying(false));
@@ -94,13 +93,14 @@ function index({ file, setOpenStatus }) {
             />
             <div className="tw-absolute tw-bottom-7 tw-w-full tw-px-3">
               <div
+                role="progressbar"
                 className="tw-bg-green-100 tw-min-w-max tw-h-1"
                 onClick={(e) => setPosition(e)}
               >
                 <div
                   className="tw-bg-green-400 tw-h-1"
                   style={{ width: `${progress}%` }}
-                ></div>
+                />
               </div>
               <div className="tw-flex tw-justify-between tw-mt-3">
                 <div className="tw-flex tw-items-center">
@@ -147,7 +147,9 @@ function index({ file, setOpenStatus }) {
                     onClick={() => forward()}
                     title="Forward"
                   />
-                  <span className="tw-text-white tw-text-sm: md:tw-text-xl">{time}</span>
+                  <span className="tw-text-white tw-text-sm: md:tw-text-xl">
+                    {time}
+                  </span>
                 </div>
                 <div className="tw-flex tw-items-center">
                   <img src={Minimize} alt="minimize" title="minimize" />

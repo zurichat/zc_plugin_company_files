@@ -10,29 +10,24 @@ const FileOptions = ({ options, showUploadModal }) => {
   return (
     options && (
       <div className="tw-bg-white tw-absolute tw-z-20 tw-w-52 tw--mt-3 tw-text-left tw-shadow-md tw-rounded-sm">
-        <FileOption
-          image={folder}
-          altText={"folder"}
-          name={"Folder"}
-          cmd={""}
-        />
+        <FileOption image={folder} altText="folder" name="Folder" cmd="" />
         <FileOption
           image={fileText}
-          altText={"document"}
-          name={"Document"}
-          cmd={""}
+          altText="document"
+          name="Document"
+          cmd=""
         />
         <FileOption
           image={filePlus}
-          altText={"file-plus"}
-          name={"File Upload"}
+          altText="file-plus"
+          name="File Upload"
           cmd={showUploadModal}
         />
         <FileOption
           image={folderPlus}
-          altText={"folder-plus"}
-          name={"Folder Upload"}
-          cmd={""}
+          altText="folder-plus"
+          name="Folder Upload"
+          cmd=""
         />
       </div>
     )

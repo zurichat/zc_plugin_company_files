@@ -5,11 +5,12 @@ import ReactPaginate from "react-paginate";
 import FileListView from "./FileListView";
 import FileGridView from "./FileGridView";
 import FileHeader from "./FileHeader";
+
 dayjs.extend(relativeTime);
 
 const AllFiles = () => {
   const [view, setView] = useState("grid");
-  const [sortingMethod, setSortingMethod] = useState("name")
+  const [sortingMethod, setSortingMethod] = useState("name");
 
   console.log("PAGE DATA::PAGEDATA: ", history.state.pageData);
 
@@ -38,7 +39,10 @@ const AllFiles = () => {
         folderTitle={history.state.pageData.folder.folderName}
       />
       {view == "grid" ? (
-        <FileGridView sortingMethod={sortingMethod} folder={history.state.pageData.folder}/>
+        <FileGridView
+          sortingMethod={sortingMethod}
+          folder={history.state.pageData.folder}
+        />
       ) : (
         <FileListView sortingMethod={sortingMethod} />
       )}
@@ -54,7 +58,6 @@ const AllFiles = () => {
           containerClassName={'pagination'}
           activeClassName={'active'}
         /> */}
-      
     </div>
   );
 };

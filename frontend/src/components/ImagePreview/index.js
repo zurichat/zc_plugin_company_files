@@ -1,10 +1,10 @@
+import React, { useState } from "react";
 import Nav from "../Subcomponents/nav";
 import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
 import ZoomIn from "../../../public/Icons/zoom-in/active.svg";
 import ZoomOut from "../../../public/Icons/zoom-out/active.svg";
 import ImageCropper from "../Image crop/ImageCropper";
-import React, { useState } from "react";
 
 import Preview from "../Image crop/reveal";
 import CroppingCSS from "../Image crop/Cropping.module.css";
@@ -39,11 +39,15 @@ function index({ file, setOpenStatus }) {
               alt="right-arrow"
               className="tw-bg-black tw-rounded-full md:tw-h-14 md:tw-w-14 tw-w-5 tw-h-5 tw-p-1 md:tw-p-3"
             />
-            <div></div>
+            <div />
           </div>
         </div>
         <div className="tw-bg-black tw-py-3 tw-px-7 tw-flex tw-justify-between tw-mt-5">
-          <img src={ZoomIn} alt="zoom-in" className="md:tw-w-10 tw-w-7 tw-mr-4" />
+          <img
+            src={ZoomIn}
+            alt="zoom-in"
+            className="md:tw-w-10 tw-w-7 tw-mr-4"
+          />
           <img src={ZoomOut} alt="zoom-out" className="md:tw-w-10 tw-w-7" />
           <div>
             <div>

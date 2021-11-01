@@ -3,6 +3,8 @@ import Loader from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useSelector, useDispatch } from "react-redux";
+import { useSnackbar } from "react-simple-snackbar";
 import Image from "../../Subcomponents/Image";
 import Pdf from "../../Subcomponents/Pdf";
 import Zip from "../../Subcomponents/Zip";
@@ -10,11 +12,10 @@ import Excel from "../../Subcomponents/Excel";
 import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
-import Audio from "../../Subcomponents//audio";
+import Audio from "../../Subcomponents/audio";
 import { RTCSubscription } from "../../../helpers/RTCSubscription";
-import { useSelector, useDispatch } from "react-redux";
 import { fetchFiles } from "../../../actions/fileAction";
-import { useSnackbar } from "react-simple-snackbar";
+
 dayjs.extend(relativeTime);
 
 const index = () => {
@@ -25,7 +26,7 @@ const index = () => {
   const [newFile, setNewFile] = useState();
   const [SnackBar] = useSnackbar({
     position: "bottom-center",
-    style: { backgroundColor: "#00B87C", color: "#fff" },
+    style: { backgroundColor: "#00B87C", color: "#fff" }
   });
 
   useEffect(() => {
@@ -41,7 +42,7 @@ const index = () => {
       try {
         dispatch({
           type: "FETCH_FILES_FULFILLED",
-          payload: {status: "success", data: [...allFiles.data]}
+          payload: { status: "success", data: [...allFiles.data] }
         });
       } catch (err) {
         throw new Error(err);

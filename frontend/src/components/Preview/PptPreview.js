@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function PptPreview() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div />;
 }
 
-export default PptPreview
+export default PptPreview;

@@ -24,14 +24,9 @@ export function HandleClickEvent(props) {
       document.removeEventListener("touchend", handleClickOutside, true);
       document.removeEventListener("touchcancel", handleClickOutside, true);
     };
-    
   });
 
   if (!props.show) return null;
 
-  return (
-    <div ref={ref}>
-      {props.children}
-    </div>
-  );
+  return <div ref={ref}>{props.children}</div>;
 }

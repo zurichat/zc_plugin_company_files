@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { HandleClickEvent } from "./HandleClickEvent";
-import FileMenuButton from "./MenuButton";
-import ModalComponent from "./ModalComponent";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
-  HiOutlineShare,
+  HiOutlineShare
 } from "react-icons/hi/index";
 import { BsDownload, BsCheckBox } from "react-icons/bs/index";
 import {
@@ -13,11 +10,17 @@ import {
   AiOutlineEye,
   AiOutlineStar,
   AiOutlineLock,
-  AiOutlineUnlock,
+  AiOutlineUnlock
 } from "react-icons/ai/index";
 import { RiDeleteBinLine, RiErrorWarningLine } from "react-icons/ri/index";
 import { GrCut } from "react-icons/gr/index";
 import { FiCopy } from "react-icons/fi/index";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import FileDownload from "js-file-download";
+import { HandleClickEvent } from "./HandleClickEvent";
+import FileMenuButton from "./MenuButton";
+import ModalComponent from "./ModalComponent";
 import AudioPreview from "../AudioPreview/index";
 import VideoPreview from "../VideoPreview/Index";
 import ImagePreview from "../ImagePreview/index";
@@ -28,12 +31,8 @@ import RenameFileModal from "./RenameFileModal";
 import LockFileModal from "./FileLock/LockFileModal";
 import UnlockFileModal from "./FileLock/UnlockFileModal";
 
-import { useDispatch } from "react-redux";
-import { checkRecentlyViewed } from "../../actions/fileAction";
-import { fileDetails } from "../../actions/fileAction";
+import { checkRecentlyViewed, fileDetails } from "../../actions/fileAction";
 
-import axios from "axios";
-import FileDownload from "js-file-download";
 import ResetPasswordModal from "./FileLock/ResetPasswordModal";
 
 function FileMenu({ file, openStatus, setOpenStatus, type }) {
@@ -81,7 +80,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
     axios({
       url: file.url,
       method: "GET",
-      responseType: "blob",
+      responseType: "blob"
     })
       .then((res) => FileDownload(res.data, file.fileName))
       .catch((err) =>
@@ -251,7 +250,7 @@ function FileMenu({ file, openStatus, setOpenStatus, type }) {
           </FileMenuButton>
         </div>
 
-        {/* conditon to check if file is locked*/}
+        {/* conditon to check if file is locked */}
         {openPreview ? (
           type === "audio" ? (
             <AudioPreview file={file} setOpenStatus={setOpenStatus} />

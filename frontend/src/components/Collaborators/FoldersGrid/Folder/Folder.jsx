@@ -5,7 +5,7 @@ import plusIcon from "../../CollabImages/plus-svg.svg";
 import profile from "../../CollabImages/tosin.PNG";
 import profile2 from "../../CollabImages/damilola-3.png";
 
-import CollaboratorCard from "../../../Collaborators/CollaboratorCard/CollaboratorCard";
+import CollaboratorCard from "../../CollaboratorCard/CollaboratorCard";
 import Backdrop from "../../../FolderRename/ModalDrop";
 
 const Folder = () => {
@@ -70,7 +70,6 @@ const Folder = () => {
             margin-top: 20px;
             height: 129px;
             width: 233px;
-            
           }
 
           .folder_card_title {

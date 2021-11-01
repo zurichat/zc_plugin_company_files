@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function PdfPreview() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div />;
 }
 
-export default PdfPreview
+export default PdfPreview;

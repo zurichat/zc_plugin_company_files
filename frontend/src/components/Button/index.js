@@ -4,14 +4,14 @@ import React from "react";
 const SIZES = {
   sm: "py-2 px-3 text-sm",
   md: "py-3 px-4",
-  lg: "py-4 px-5 text-lg",
+  lg: "py-4 px-5 text-lg"
 };
 const VARIANTS = {
   primary: "bg-primary text-white",
   success: "",
   "outline-primary":
     "border-2 border-primary border-opacity-80 text-primary bg-white",
-  "outline-success": "",
+  "outline-success": ""
 };
 const Button = ({
   variant = "primary",
@@ -41,7 +41,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  restProps: PropTypes.any,
+  restProps: PropTypes.any
 };
 
 export default Button;

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "react-loader-spinner";
 import Image from "../../Subcomponents/Image";
 import Pdf from "../../Subcomponents/Pdf";
 import Zip from "../../Subcomponents/Zip";
@@ -8,7 +9,6 @@ import Video from "../../Subcomponents/Video";
 import Powerpoint from "../../Subcomponents/Powerpoint";
 import Document from "../../Subcomponents/Document";
 import Audio from "../../Subcomponents/audio";
-import Loader from "react-loader-spinner";
 import { fetchFiles } from "../../../actions/fileAction";
 
 function FileGridView({ sortingMethod }) {

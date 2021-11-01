@@ -9,7 +9,7 @@ const ResetPasswordModal = ({ file, changePassword, setChangePassword }) => {
   const [newPassword, setNewPassword] = useState("");
 
   const togglePasswordVisibility = () => {
-    setPasswordShown(passwordShown ? false : true);
+    setPasswordShown(!passwordShown);
   };
 
   const changeFilePassword = (e) => {
@@ -29,15 +29,15 @@ const ResetPasswordModal = ({ file, changePassword, setChangePassword }) => {
     <>
       <div className="tw-justify-center tw-items-center tw-flex tw-overflow-x-hidden tw-overflow-y-auto tw-fixed tw-inset-0 tw-z-50 tw-outline-none focus:tw-outline-none">
         <div className="tw-relative tw-w-4/5 md:tw-w-3/6 tw-my-6 tw-mx-auto tw-max-w-3xl">
-          {/*content*/}
+          {/* content */}
           <div className="tw-tw-border-0 tw-rounded-lg tw-shadow-lg tw-relative tw-w-full tw-flex tw-flex-col tw-bg-white tw-outline-none focus:tw-outline-none tw-py-10 tw-px-5 sm:tw-p-10">
-            {/*header*/}
+            {/* header */}
             <div className="tw-text-center sm:tw-text-left">
               <h3 className="tw-text-xl tw-text-text-grey tw-font-semibold tw-text-center">
                 Reset Password
               </h3>
             </div>
-            {/*body*/}
+            {/* body */}
             <div className="tw-relative tw-pt-3 tw-text-base tw-text-text-grey">
               <input
                 type={passwordShown ? "text" : "password"}
@@ -58,7 +58,7 @@ const ResetPasswordModal = ({ file, changePassword, setChangePassword }) => {
                 {!passwordShown ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
               </div>
             </div>
-            {/*footer*/}
+            {/* footer */}
 
             <div className="tw-w-full tw-flex tw-justify-end">
               <button
@@ -79,7 +79,7 @@ const ResetPasswordModal = ({ file, changePassword, setChangePassword }) => {
           </div>
         </div>
       </div>
-      <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black"></div>
+      <div className="tw-opacity-30 tw-fixed tw-inset-0 tw-z-40 tw-bg-black" />
     </>
   );
 };

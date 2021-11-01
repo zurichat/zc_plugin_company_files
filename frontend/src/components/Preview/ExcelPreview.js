@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function ExcelPreview() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div />;
 }
 
-export default ExcelPreview
+export default ExcelPreview;

@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { folderDetails } from "../../actions/folderAction";
-import FolderMenuButton from "./MenuButton";
 import axios from "axios";
 import {
   HiOutlineFolderRemove,
   HiOutlineLink,
-  HiOutlineShare,
+  HiOutlineShare
 } from "react-icons/hi/index";
 import { BsDownload, BsCheckBox } from "react-icons/bs/index";
 import {
   AiOutlineEdit,
   AiOutlineEye,
-  AiOutlineStar,
+  AiOutlineStar
 } from "react-icons/ai/index";
 import { RiDeleteBinLine, RiErrorWarningLine } from "react-icons/ri/index";
 import { GrCut } from "react-icons/gr/index";
 import { FiCopy } from "react-icons/fi/index";
+import FolderMenuButton from "./MenuButton";
+import { folderDetails } from "../../actions/folderAction";
 import { HandleClickEvent } from "./HandleClickEvent";
 import StarFolder from "./StarPutFolder";
 import FolderPropertiesModal from "./FolderPropertiesModal";
-import RenameFolderModal from "./RenameFolderModal"
+import RenameFolderModal from "./RenameFolderModal";
 import Modal from "./DeleteFolderToBinModal";
 
 function FolderMenu({ folder, openStatus, setOpenStatus }) {
@@ -30,18 +30,24 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
   const [editName, setEditName] = useState(false);
   const [deleteToBin, setDeleteToBin] = useState(false);
 
-
   function openCmd() {
     setOpen(true);
     dispatch(folderDetails(folder._id));
   }
 
-  function openFolder(){
+  function openFolder() {
     const currentState = history.state;
     console.log("CURRENT STATE::: ", currentState);
-    history.pushState({...currentState, pageData: {
-      folder
-    }}, "", "/companyfiles/open-folder");
+    history.pushState(
+      {
+        ...currentState,
+        pageData: {
+          folder
+        }
+      },
+      "",
+      "/companyfiles/open-folder"
+    );
   }
 
   function getLink() {}
@@ -60,7 +66,7 @@ function FolderMenu({ folder, openStatus, setOpenStatus }) {
 
   async function addStar() {
     try {
-      const res = await axios.put("/folders/starFolder/" + folder._id);
+      const res = await axios.put(`/folders/starFolder/${folder._id}`);
       alert(res.data.message);
     } catch (err) {
       console.error(err);

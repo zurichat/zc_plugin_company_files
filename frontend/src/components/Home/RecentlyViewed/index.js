@@ -1,14 +1,13 @@
 import React from "react";
+import { BsArrowUpDown, BsGrid3X2 } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import ImgFile from "../../../../public/Icons/imgfile.svg";
 import Video from "../../../../public/Icons/video.svg";
 import DocumentFile from "../../../../public/Icons/documentfile.svg";
 import Zip from "../../../../public/Icons/zip.svg";
 import FolderIcon from "../../../../public/Icons/folderIcon.svg";
 import vector from "../../../../public/Icons/Vector.png";
-import { BsArrowUpDown } from "react-icons/bs";
-import { BsGrid3X2 } from "react-icons/bs";
 import Viewed from "./viewed";
-import {Link} from "react-router-dom";
 
 const RecentlyViewed = () => {
   return (
@@ -31,36 +30,36 @@ const RecentlyViewed = () => {
 
       <div className="tw-w-full tw-grid tw-grid-cols-auto-1 tw-gap-5 md:tw-gap-10 lg:tw-gap-14">
         <Viewed
-          name={"Images"}
+          name="Images"
           image={ImgFile}
-          altText={"images"}
-          dateViewed={"20 Jul 2020"}
-          bgColor={"tw-bg-blue-100"}
-          link={"recently-viewed-images"}
+          altText="images"
+          dateViewed="20 Jul 2020"
+          bgColor="tw-bg-blue-100"
+          link="recently-viewed-images"
         />
         <Viewed
-          name={"Videos"}
+          name="Videos"
           image={Video}
-          altText={"videos"}
-          dateViewed={"20 Jul 2020"}
-          bgColor={"tw-bg-pink-100"}
-          link={"recently-viewed-videos"}
+          altText="videos"
+          dateViewed="20 Jul 2020"
+          bgColor="tw-bg-pink-100"
+          link="recently-viewed-videos"
         />
         <Viewed
-          name={"Documents"}
+          name="Documents"
           image={DocumentFile}
-          altText={"document"}
-          dateViewed={"20 Jul 2020"}
-          bgColor={"tw-bg-green-200"}
-          link={"recently-viewed-docs"}
+          altText="document"
+          dateViewed="20 Jul 2020"
+          bgColor="tw-bg-green-200"
+          link="recently-viewed-docs"
         />
         <Viewed
-          name={"Compressed"}
+          name="Compressed"
           image={Zip}
-          altText={"zip"}
-          dateViewed={"20 Jul 2020"}
-          bgColor={"tw-bg-pink-200"}
-          link={"recently-viewed-zips"}
+          altText="zip"
+          dateViewed="20 Jul 2020"
+          bgColor="tw-bg-pink-200"
+          link="recently-viewed-zips"
         />
 
         {/* <Viewed
@@ -71,7 +70,6 @@ const RecentlyViewed = () => {
           bgColor={"tw-bg-yellow-100"}
           link={"recently-viewed-folders"}
         /> */}
-        
       </div>
     </div>
   );

@@ -16,14 +16,13 @@ const useFetch = (url) => {
         return res.json();
       })
       .then((data) => {
-          setData(data);
-          setisLoading(false);
-          setError(null);
-       
+        setData(data);
+        setisLoading(false);
+        setError(null);
       })
       .catch((err) => {
         if (err.name === "AbortError") {
-          console.log("fetch aborted")
+          console.log("fetch aborted");
         } else {
           setisLoading(false);
           setError(err.message);
@@ -33,6 +32,6 @@ const useFetch = (url) => {
   }, [url]);
 
   return { data, isLoading, setData, error };
-}
+};
 
 export default useFetch;
