@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import {
   FaPlay,
   FaPause,
@@ -54,10 +54,9 @@ function index({ file, setOpenStatus }) {
   }
 
   function setPosition(e) {
-    console.log(this);
     const width = e.target.clientWidth;
     const clickX = e.nativeEvent.offsetX;
-    console.log(width, clickX, e);
+    // console.log(width, clickX, e);
     const { duration } = audio;
     audio.currentTime = (clickX / width) * duration;
   }
@@ -74,7 +73,7 @@ function index({ file, setOpenStatus }) {
       setTime(formatTime(audio.currentTime));
       setProgress((audio.currentTime / audio.duration) * 100);
     });
-    console.log(time, progress, audio.volume);
+    // console.log(time, progress, audio.volume);
     audio.addEventListener("ended", () => setIsPlaying(false));
     return () => {
       audio.removeEventListener("ended", () => setIsPlaying(false));
@@ -94,13 +93,14 @@ function index({ file, setOpenStatus }) {
             />
             <div className="tw-absolute tw-bottom-7 tw-w-full tw-px-3">
               <div
+                role="progressbar"
                 className="tw-bg-green-100 tw-min-w-max tw-h-1"
                 onClick={(e) => setPosition(e)}
               >
                 <div
                   className="tw-bg-green-400 tw-h-1"
                   style={{ width: `${progress}%` }}
-                ></div>
+                />
               </div>
               <div className="tw-flex tw-justify-between tw-mt-3">
                 <div className="tw-flex tw-items-center">
