@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import SelectFileModal from "./SelectFileModal";
 import UploadProgressModal from "./UploadProgressModal";
 
