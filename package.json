@@ -85,7 +85,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "yarn lint:backend:fix",
-    "*.js, *.jsx": "cd frontend && yarn lint:fix"
+    "*.js, *.jsx": "yarn lint:backend:fix"
   }
 }
