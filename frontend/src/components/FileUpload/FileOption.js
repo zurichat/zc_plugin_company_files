@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 function FileOption({ image, altText, name, cmd }) {
   return (
@@ -11,5 +12,12 @@ function FileOption({ image, altText, name, cmd }) {
     </div>
   );
 }
+
+FileOption.propTypes = {
+  image: PropTypes.string.isRequired,
+  altText: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  cmd: PropTypes.func.isRequired
+};
 
 export default FileOption;
