@@ -22,7 +22,7 @@ const index = ({
     const { files } = e.dataTransfer;
     console.warn(files, "Drop");
     Object.entries(files).map((file) => {
-      // console.log(file[1].name);
+      console.log(file[1].name);
     });
     console.log(files);
     setFiles(files);
