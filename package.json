@@ -85,6 +85,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "cd frontend && npm run lint:fix"
+    "*.js": "yarn lint:backend:fix"
   }
 }
