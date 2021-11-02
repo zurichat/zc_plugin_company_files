@@ -6,7 +6,7 @@ const persistedState = loadState();
 
 const store = configureStore({
   reducer: {
-    rootReducer: rootReducer
+    rootReducer
   },
   preloadedState: persistedState
 });

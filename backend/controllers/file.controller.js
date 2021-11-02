@@ -294,8 +294,7 @@ exports.fileDetails = async (req, res) => {
         RealTime.publish("fileDetail", data)
       ]);
       res.status(200).json(data)
-    }
-      else throw new BadRequestError('wrong password');
+    } else throw new BadRequestError('wrong password');
   }
 }
 
@@ -701,7 +700,7 @@ exports.lockFile = async (req, res) => {
   const { creatorId, password } = req.body
   const fileId  = req.params.id
 
-  let file = await File.fetchOne({ _id: fileId });
+  const file = await File.fetchOne({ _id: fileId });
   if (!file) throw new NotFoundError();
 
   if(file.createdBy !== creatorId || !creatorId){
@@ -721,7 +720,7 @@ exports.lockFile = async (req, res) => {
       const filePassword = {password: newHash}
       await File.update(fileId, filePassword)
 
-      let newFile = await File.fetchOne({ _id: fileId });
+      const newFile = await File.fetchOne({ _id: fileId });
       res.status(200).json({success: true, message: "new password created", data: newFile})
     }
   }
@@ -732,7 +731,7 @@ exports.resetFilePassword = async (req, res) => {
   const { newPassword, oldPassword } = req.body
   const fileId  = req.params.id
 
-  let file = await File.fetchOne({ _id: fileId });
+  const file = await File.fetchOne({ _id: fileId });
   if (!file) throw new NotFoundError();
 
   if(!file.password){
@@ -759,18 +758,18 @@ exports.resetFilePassword = async (req, res) => {
     const filePassword = {password: newHash}
     await File.update(fileId, filePassword)
 
-    let newFile = await File.fetchOne({ _id: fileId });
+    const newFile = await File.fetchOne({ _id: fileId });
     res.status(200).json({success: true, data: newFile})
   }else{
     throw new BadRequestError('you must provide a correct password field');
   }
 }
 
-//add a creator to a file
+// add a creator to a file
 exports.test = async (req, res) => {
   const { fileId, userId, orgId } = req.params
   await File.update(fileId, {createdBy: userId, orgId })
-  let file = await File.fetchOne({ _id: fileId });
+  const file = await File.fetchOne({ _id: fileId });
   res.status(200).json(file)
 
 }

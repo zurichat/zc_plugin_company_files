@@ -4,14 +4,14 @@
 const { default: axios } = require('axios');
 const app = require('../../../server');
 const sinon = require('sinon');
-const { commons } = require('../config/globalSetup');
+// const { commons } = require('../config/globalSetup');
 const fileUploadReqResponse = require('../dummies/Files/fileUploadRequestResponse.json');
 const fileUploadRequest = require('../dummies/Files/fileUploadRequest.json');
 const chai = require('chai');
 const {expect} =  require('chai');
 const chaiHTTP = require('chai-http');
 const sinonChai = require('sinon-chai');
-const { response } = require('express');
+// const { response } = require('express');
 
 const sandbox = sinon.createSandbox();
 
@@ -20,7 +20,7 @@ chai.use(chaiHTTP);
 chai.use(sinonChai);
 
 // set axios stub 
-let axiosPostStub;
+// let axiosPostStub;
 
 // cache file info
 let fileId; let fileName;
@@ -29,7 +29,7 @@ describe('FILE UPLOAD TESTS', () => {
     // set hook before each unit test is run
     before(async () => {
         axiosPostStub = sandbox.stub(axios, 'post').returns(fileUploadReqResponse);
-       let res = await chai.request(app).post('/api/v1/files/uploadRequest')
+       const res = await chai.request(app).post('/api/v1/files/uploadRequest')
          .send(fileUploadRequest);    
         ({fileId, fileName} = res.body.data);
       

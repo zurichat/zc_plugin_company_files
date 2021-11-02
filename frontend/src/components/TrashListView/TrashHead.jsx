@@ -10,7 +10,7 @@ const TrashHead = ({
   setEmptyTrash,
   apiBase
 }) => {
-  let fileIds = data.map((data) => data._id);
+  const fileIds = data.map((data) => data._id);
 
   const handleEmptyTrash = () => {
     fetch(`${apiBase}/files/deleteMultipleFiles`, {

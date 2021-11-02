@@ -11,7 +11,7 @@ const index = ({
   const [files, setFiles] = useState();
   const [progress, setProgress] = useState(false);
 
-  let uploadInit = useRef(false);
+  const uploadInit = useRef(false);
 
   const uploadFiles = () => {
     setProgress(true);

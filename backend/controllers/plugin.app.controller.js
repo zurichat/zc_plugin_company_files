@@ -26,12 +26,9 @@ const pluginInstallation = async (req, res, next) => {
                     data: {
                     redirect_url: `/companyfiles`,
                 }})
-            }
-            else if(!deploy){
+            } else if(!deploy){
                 return res.status(400).json({success:'false', data: null, message: "plugin has already been installed"})
-            }
-
-            else{
+            } else{
               return res.status(404).json({status:'false', data: null, message: "failed to install plugin"})
             }
         }
@@ -39,9 +36,7 @@ const pluginInstallation = async (req, res, next) => {
         if(isUserVerified === false){
             res.status(404).json({status: 'failed', message: "User not a member", unverified: true})
         }
-    }
-
-    catch(error){
+    } catch(error){
             console.log(error)
             res.status(500).json({message: 'server error, Coudnt deploy, try again'});
     }
@@ -72,13 +67,9 @@ const pluginUnInstallation = async (req, res, next) => {
                     data: {
                     redirect_url: `/channels/message-board/${organizationId}`,
                 }})
-            }
-
-            else if(!deploy){
+            } else if(!deploy){
                 return res.status(400).json({success:'false', data: null, message: "plugin has already been installed"})
-            }
-
-            else{
+            } else{
                 return res.status(404).json({message: deploy.message, success: 'false', data: null })
             }
                  
@@ -88,9 +79,7 @@ const pluginUnInstallation = async (req, res, next) => {
         if(isUserVerified === false){
           return  res.status(404).json({status: 'failed', message: "User not a member"})
         }
-    }
-
-    catch{
+    } catch{
             res.status(500).json({message: 'server error, try again'});
     }
 

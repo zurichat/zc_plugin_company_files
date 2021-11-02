@@ -1,7 +1,11 @@
-import { useEffect, useRef } from "react";
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/prop-types */
+/* eslint-disable import/prefer-default-export */
+import React, { useEffect, useRef } from "react";
 
 export function HandleClickEvent(props) {
-  let ref = useRef(null);
+  const ref = useRef(null);
 
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {

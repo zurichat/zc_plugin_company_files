@@ -4,7 +4,7 @@ const appResponse = require("../utils/appResponse");
 const DatabaseOps = require("../utils/database.helper");
 const RealTime = require("../utils/realtime.helper");
 const { NotFoundError, BadRequestError } = require("../utils/appError");
-const { getCache, setCache } = require("../utils/cache.helper");
+const { getCache } = require("../utils/cache.helper");
 const addActivity = require("../utils/activities");
 
 const Files = new DatabaseOps("File");
@@ -108,7 +108,7 @@ exports.folderUpdate = async (req, res) => {
   const { body } = req;
   const { userObj } = req.headers;
 
-  const response = await Folders.update(req.params.id, body);
+  await Folders.update(req.params.id, body);
   const allFolders = await Folders.fetchAll();
 
   const updatedFolder = allFolders.data.filter((folder) => {
@@ -123,6 +123,7 @@ exports.giveFolderAccess = async (req, res) => {
   const { body } = req;
   body.memberId = uuid();
 
+  // eslint-disable-next-line camelcase
   const data_update = {
     plugin_id: "6134c6a40366b6816a0b75cd",
     organization_id: "6133c5a68006324323416896",
@@ -168,6 +169,7 @@ exports.giveFolderAccess = async (req, res) => {
 
 // Update member folder Access
 exports.updateFolderAccess = async (req, res) => {
+  // eslint-disable-next-line camelcase
   const data_update = {
     plugin_id: "6134c6a40366b6816a0b75cd",
     organization_id: "6133c5a68006324323416896",
@@ -228,6 +230,7 @@ exports.folderDelete = async (req, res) => {
 
 // Delete folder Access
 exports.deleteFolderAccess = async (req, res) => {
+  // eslint-disable-next-line camelcase
   const data_update = {
     plugin_id: "6134c6a40366b6816a0b75cd",
     organization_id: "6133c5a68006324323416896",
@@ -377,7 +380,7 @@ exports.folderDeleteWithFiles = async (req, res) => {
   // Delete all files contained in the folder by Id
   filesInFolder.forEach(async (file) => {
     if (file.isDeleted === false) {
-      const response = await Files.update(file.fileId, { isDeleted: true });
+      await Files.update(file.fileId, { isDeleted: true });
 
       // Save to list of activities
       // await addActivity('deleted', `${data.fileName}`);

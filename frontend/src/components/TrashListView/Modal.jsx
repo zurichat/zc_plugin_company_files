@@ -10,7 +10,7 @@ export default function Modal({
   apiBase,
   data
 }) {
-  let fileName = data.map((data) =>
+  const fileName = data.map((data) =>
     data._id === clickedId ? data.fileName : null
   );
 

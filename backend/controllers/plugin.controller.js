@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { version, author } = require("../../package.json");
 const pluginName = "Company Files Management Plug-In";
-const { BadRequestError, UnAuthorizedError } = require("../utils/appError");
+const { BadRequestError } = require("../utils/appError");
 const RealTime = require("../utils/realtime.helper");
 const DatabaseConnection = require("../utils/database.helper");
 // const Rooms = new DatabaseConnection('NewRooms');
@@ -9,7 +9,7 @@ const Rooms = new DatabaseConnection("TheNewRooms");
 const Installation = new DatabaseConnection("Installation");
 const InstallationSchema = require('../models/Installation');
 const PLUGIN_ID = process.env.PLUGIN_ID || '61696153b2cc8a9af4833d6a';
-const authCheck = require("../utils/authcheck.helper");
+// const authCheck = require("../utils/authcheck.helper");
 const appResponse = require("../utils/appResponse");
 const axios = require("../utils/axios.helper");
 
@@ -74,7 +74,7 @@ exports.install = async (req, res) => {
 
   installRequest.org_id = installRequest.organization_id;
   delete installRequest.organization_id;
-  const inst = await Installation.create(installRequest);
+  await Installation.create(installRequest);
   return res.status(201).send({ installSuccess })
 
 }

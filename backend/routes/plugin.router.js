@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { ping, info, sidebar, sync, install, getInstalled } = require('../controllers/plugin.controller');
+const { ping, info, sidebar, sync } = require('../controllers/plugin.controller');
 const {pluginInstallation, pluginUnInstallation} = require('../controllers/plugin.app.controller')
 
 router.get('/ping', ping);

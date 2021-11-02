@@ -1,4 +1,6 @@
-import { useState, useRef, createRef } from "react";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useState, useRef, createRef } from "react";
+import PropTypes from "prop-types";
 import useViewport from "./useViewport";
 import Buttons from "./MenuButtons";
 import fileIcon from "./file-icon.png";
@@ -51,7 +53,7 @@ const TrashList = ({
 
   // Truncate the length of fetched file names
   const handleTruncateName = () => {
-    let str = data.map((data) => data.fileName.trim());
+    const str = data.map((data) => data.fileName.trim());
 
     return str.map((text) => {
       return text.length > 20 ? `${text.substring(0, 14)}...` : text;
@@ -75,11 +77,9 @@ const TrashList = ({
     const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-    return (
-      Math.floor(parseFloat((bytes / Math.pow(k, i)).toFixed(dm))) +
-      " " +
+    return `${Math.floor(parseFloat((bytes / Math.pow(k, i)).toFixed(dm)))} ${
       sizes[i]
-    );
+    }`;
   };
 
   // creates reference for array items
@@ -139,6 +139,7 @@ const TrashList = ({
                 <th className="tw-font-semibold trashTheading pl-0 tw-whitespace-nowrap">
                   Name &nbsp;
                   <span
+                    role=""
                     className="tw-inline-block tw-align-middle tw-cursor-pointer"
                     onClick={handleSort}
                   >
@@ -152,16 +153,16 @@ const TrashList = ({
                       <path
                         d="M8.99991 3.00098V15.001"
                         stroke="#333333"
-                        stroke-width="1.22693"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.22693"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M13.4999 10.501L8.99991 15.001L4.49991 10.501"
                         stroke="#333333"
-                        stroke-width="1.22693"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.22693"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   </span>
@@ -263,6 +264,16 @@ const TrashList = ({
       />
     </>
   );
+};
+
+TrashList.propTypes = {
+  error: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  data: PropTypes.arrayOf(PropTypes.string).isRequired,
+  apiBase: PropTypes.string.isRequired,
+  setData: PropTypes.func.isRequired,
+  setFileDel: PropTypes.func.isRequired,
+  setRestore: PropTypes.func.isRequired
 };
 
 export default TrashList;

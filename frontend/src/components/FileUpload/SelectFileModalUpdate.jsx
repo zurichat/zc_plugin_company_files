@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import uploadImg from "../../../public/Icons/upload/upload.svg";
 
 const SelectFileModal = ({
   upload,
@@ -12,9 +11,9 @@ const SelectFileModal = ({
   files,
   clearFiles
 }) => {
-  let modalStatus = useRef(upload.current);
-  let dragArea = useRef(null);
-  let dragNdrop = useRef(null);
+  const modalStatus = useRef(upload.current);
+  const dragArea = useRef(null);
+  const dragNdrop = useRef(null);
 
   const initDragNDropEvents = () => {
     ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
@@ -68,39 +67,35 @@ const SelectFileModal = ({
   if (upload) {
     return (
       <div
-        className={
-          (progress
-            ? "tw-bg-transparent tw-w-auto "
-            : "tw-bg-black tw-w-full ") +
-          "tw-h-screen tw-fixed tw-z-30 tw-top-0 tw-left-0 tw-bg-opacity-75 tw-overflow-y-hidden"
-        }
+        className={`${
+          progress ? "bg-transparent w-auto " : "bg-black w-full "
+        }h-screen absolute top-0 left-0 bg-opacity-75 overflow-y-hidden`}
       >
         {!progress && (
           <div
             ref={dragArea}
-            className="tw-absolute tw-w-4/5 sm:tw-w-96 tw-h-4/5 tw-px-5 tw-py-6 tw-top-1/2 tw-left-1/2 tw-rounded-lg tw-bg-white tw-bg-opacity-100 tw-transform tw--translate-x-1/2 tw--translate-y-1/2 tw-shadow-lg tw-drop-shadow-lg tw-transition-all tw-duration-300"
+            className="absolute px-[18px] py-[22px] min-w-[400px] max-w-[650px] h-4/6 top-1/2 left-1/2 rounded-[12px] bg-white bg-opacity-100 transform -translate-x-1/2 -translate-y-1/2 shadow-lg drop-shadow-lg"
           >
-            <div className="modalHeader tw-my-2 tw-flex tw-justify-between tw-text-gray-400 tw-border-b">
-              <span className="tw-text-[20px]">Load File(s)</span>
+            <div className="modalHeader my-2 flex justify-between text-gray-400 border-b">
+              <span className="text-[20px]">Load File(s)</span>
               <span
                 onClick={hideUploadModal}
-                className="tw-capitalize tw-text-2xl hover:tw-text-red-600 tw-cursor-pointer "
+                className="capitalize text-2xl hover:text-red-600 cursor-pointer "
               >
                 &#10005;
               </span>
             </div>
-            <div id="uploadBtn tw-my-2">
-              <label className="tw-flex tw-justify-between tw-bg-white tw-text-gray-600 ">
+            <div id="uploadBtn my-2">
+              <label className=" flex justify-between bg-white text-gray-600 ">
                 <input
                   type="file"
                   name=""
                   id=""
                   multiple
-                  className="tw-hidden"
+                  className="hidden"
                   onChange={handleFileSelection}
                 />
-
-                <span className="tw-border tw-border-green-100 hover:tw-text-white tw-px-3 tw-py-2 hover:tw-bg-green-500 tw-rounded-md tw-text-center tw-cursor-pointer">
+                <span className="hover:text-white max-h-[200px] px-[14px] py-[8px] hover:bg-green-500 rounded-md text-center cursor-pointer">
                   Choose Files
                 </span>
                 {files && <span>{`${files.length} selected`}</span>}
@@ -110,42 +105,40 @@ const SelectFileModal = ({
             {!files ? (
               <div
                 ref={dragNdrop}
-                className="tw-relative dragNdrop tw-w-full tw-h-3/5 tw-my-2 tw-border-2 tw-border-dashed tw-flex tw-overflow-y-auto"
+                className="relative dragNdrop my-2 border-2 border-dashed  w-full h-1/2 flex overflow-y-auto"
               >
-                <div className="tw-m-auto">
+                <div className="m-auto">
                   <img
-                    src={uploadImg}
+                    src="/Icons/upload/upload.svg"
                     alt=""
-                    className="tw-mx-auto tw-w-1/2 tw-h-1/2"
+                    className="mx-auto"
                   />
-                  <p className="tw-text-gray-400 tw-text-[25px]">
-                    Drop Files Here
-                  </p>
+                  <p className="text-gray-400 text-[25px]">Drop Files Here</p>
                 </div>
               </div>
             ) : (
-              <div className="tw-w-auto tw-h-3/5 tw-relative tw-p-4 tw-flex tw-flex-col tw-shadow-inner tw-my-2 tw-overflow-y-auto">
-                {[...files].map((file) => (
+              <div className="w-auto max-h-[200px] relative  p-4 flex flex-col shadow-inner my-2 overflow-y-auto">
+                {Object.entries(files).map((file) => (
                   <div
-                    className="tw-flex tw-justify-between tw-items-center"
-                    key={file.name}
+                    className="flex justify-between items-center"
+                    key={file[1].name}
                   >
-                    <div className="tw-w-[350px] tw-truncate">{file.name}</div>
-                    <div>{(file.size / 1000000).toFixed(2)}MB</div>
+                    <div className="w-[350px] truncate">{file[1].name}</div>
+                    <div>{(file[1].size / 1000000).toFixed(3)}MB</div>
                   </div>
                 ))}
               </div>
             )}
-            <div className="uploadActions tw-h-auto tw-flex tw-justify-end tw-border-t tw-mt-6 tw-pt-6 tw-text-sm">
+            <div className="uploadActions flex justify-end border-t mt-6 pt-6 text-[12px]">
               <button
                 onClick={uploadFiles}
-                className="tw-mx-4 tw-px-4 tw-py-2 tw-bg-green-500 tw-text-white tw-rounded-sm"
+                className="mx-4 px-[14px] py-[8px] bg-green-500 text-white rounded-sm"
               >
                 Upload
               </button>
               <button
                 onClick={clearFiles}
-                className="tw-px-4 tw-py-2  tw-border tw-border-green-100 tw-text-green-500 tw-text-sm hover:tw-bg-green-500 hover:tw-text-white tw-transition-colors tw-duration-300"
+                className=" px-[14px] py-[8px]  border border-green-100 text-green-500 text-[12px]"
               >
                 Clear
               </button>

@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
+// eslint-disable-next-line import/no-unresolved
 import Parcel from "single-spa-react/parcel";
+// eslint-disable-next-line import/no-unresolved
 import { pluginHeader } from "@zuri/plugin-header";
-import { useDispatch, useSelector } from "react-redux";
-import SearchBar from "../SearchBar";
-import Header from "../Help/Header";
-
-import FileUpload from "../Home/index";
+import { useDispatch } from "react-redux";
+// import SearchBar from "../SearchBar";
+// import Header from "../Help/Header";
 import Home from "../Home";
 
 import NewFolder from "../FolderCreation/Folder";
@@ -20,7 +20,7 @@ import RecentlyViewedImg from "../RecentlyViewed/RecentlyViewedImg/RecentlyViewe
 import RecentlyViewedVid from "../RecentlyViewed/RecentlyViewedVid/RecentlyViewedVid";
 import RecentlyViewedZip from "../RecentlyViewed/RecentlyViewedZip/RecentlyViewedZip";
 import RecentlyViewedFolders from "../RecentlyViewed/RecentlyViewedFolders/RecentlyViewedFolders";
-import AddNewDoc from "../AddNewDoc/AddNewDoc";
+// import AddNewDoc from "../AddNewDoc/AddNewDoc";
 import Security from "../security/Security";
 
 import Test from "../ComponentToTest";
@@ -60,10 +60,10 @@ const Main = () => {
   };
 
   const dispatch = useDispatch();
-  const { loading, error, users, user, info } = useSelector(
-    (state) => state.rootReducer.workspaceReducer
-  );
-  console.log({ loading, error, users, user, info });
+  // const { loading, error, users, user, info } = useSelector(
+  //   (state) => state.rootReducer.workspaceReducer
+  // );
+  // console.log({ loading, error, users, user, info });
 
   useEffect(() => {
     (async () => {
@@ -98,7 +98,7 @@ const Main = () => {
               <Home />
             </Route>
             <Route path="/addNew" exact>
-              <AddNewDoc />
+              {/* <AddNewDoc /> */}
             </Route>
             <Route path="/activities" exact>
               <Activities />
@@ -116,7 +116,7 @@ const Main = () => {
               <Starred />
             </Route>
             <Route path="/upload" exact>
-              <FileUpload />
+              <Home />
             </Route>
             <Route path="/newfolder" exact>
               <NewFolder />
