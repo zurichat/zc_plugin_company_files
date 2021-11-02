@@ -18,9 +18,9 @@ const index = ({
   };
 
   const handleDrop = (e) => {
-    // console.log("Dropped");
+    console.log("Dropped");
     const { files } = e.dataTransfer;
-    console.log(files, "Drop");
+    console.warn(files, "Drop");
     Object.entries(files).map((file) => {
       console.log(file[1].name);
     });
