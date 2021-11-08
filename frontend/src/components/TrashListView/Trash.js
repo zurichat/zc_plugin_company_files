@@ -6,7 +6,7 @@ import useFetch from "./useFetch";
 const Trash = () => {
   const API_BASE_URL = location.hostname.includes("zuri.chat")
     ? "https://companyfiles.zuri.chat/api/v1"
-    : "http://localhost:5500/api/v1";
+    : "http://localhost:22666/api/v1";
 
   const [fileDel, setFileDel] = useState(null);
   const [restore, setRestore] = useState(null);

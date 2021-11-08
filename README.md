@@ -26,17 +26,17 @@ The link to the endpoint documentation for conpany files plugin can be found at 
 ### **Technologies Used**
 - NodeJS
 - ReactJS
-- Websockets(Centrifugo)
+- Websockets (Centrifugo)
 
 
-### **Setting up the Project**
-1. Ensure nodejs and git are installed in machine
+### **Setting Up The Project**
+1. Ensure **NodeJS** and **Git** are installed in machine
 2. Clone this repo using `git clone https://github.com/zurichat/zc_plugin_company_files.git`
 3. Change directory into the new clone `cd zc_plugin_company_files`
 4. Run setup script to install all packages using `yarn run install-setup` or `npm run install-setup:npm`
 5. Run build script to get bundled react file `yarn run build:local` or `npm run build:local-npm`
-6. Now run server in development mode with `npm run dev` or `yarn dev`
-7.  Go to [local](http://localhost:5500/)
+6. Now run server in `development` mode with `npm run dev` or `yarn dev`
+7. Go to [http://127.0.0.1:22666/](http://127.0.0.1:22666/) or [http://localhost:22666/](http://localhost:22666/)
 
 
 ### **Project Structure**
@@ -51,8 +51,8 @@ For the BackEnd structure of this project, please refer to this [document](CONTR
 5. Create a new branch for the user story you're working on eg : `git checkout -b feat-import-file-from-url`
 6. After making changes, do `git add .`
 7. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
-8. To make sure there are no conflicts : `git pull upstream dev`
-9. Push changes to your new branch : `git push origin feat-import-file-from-url`
+8. To make sure there are no conflicts, run `git pull upstream dev`
+9. Push changes to your new branch, run `git push origin feat-import-file-from-url`
 10. Create a pull request to the `dev` branch.
 
 

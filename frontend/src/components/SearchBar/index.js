@@ -502,7 +502,7 @@ const SearchInput = ({ className: customClass, ...restProps }) => {
   const API_URL =
     window.location.hostname.includes("localhost") ||
     window.location.hostname.includes("127.0.0.1")
-      ? "http://127.0.0.1:5500/api/v1"
+      ? "http://127.0.0.1:22666/api/v1"
       : "https://companyfiles.zuri.chat/api/v1";
 
   const fetchUrl = `${API_URL}/search?fileName=${searchInputValue}&fileType=${

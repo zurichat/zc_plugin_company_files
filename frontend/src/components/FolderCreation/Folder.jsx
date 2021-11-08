@@ -11,7 +11,7 @@ function Folder() {
   const [, setIsSubmitting] = useState(false);
   const API_BASE_URL = window.location.hostname.includes("zuri.chat")
     ? "https://companyfiles.zuri.chat/api/v1"
-    : "http://localhost:5500/api/v1";
+    : "http://localhost:22666/api/v1";
 
   useEffect(() => {
     async function fetchFolder() {

@@ -41,7 +41,7 @@ const ProgressContainer = ({
   return (
     <div ref={thisElement} style={{ width: "100%" }}>
       <div
-        className="file-name justify-between px-3 my-2"
+        className="justify-between px-3 my-2 file-name"
         key={file.name}
         style={{ boxSizing: "border-box", alignItems: "center", color: "grey" }}
       >
@@ -50,7 +50,7 @@ const ProgressContainer = ({
           style={{ display: "flex", alignItems: "center" }}
         >
           <div
-            className="file-status-container w-full flex"
+            className="flex w-full file-status-container"
             style={{ alignItems: "center", maxWidth: "86%" }}
           >
             <span
@@ -60,7 +60,7 @@ const ProgressContainer = ({
                 backgroundColor: "purple",
                 padding: ".2rem"
               }}
-              className="file-status mr-2 inline-block text-center rounded-full text-white"
+              className="inline-block mr-2 text-center text-white rounded-full file-status"
             >
               <FaRegHourglass style={{ fontSize: ".75rem" }} />
             </span>
@@ -72,7 +72,7 @@ const ProgressContainer = ({
             </p>
           </div>
           <div
-            className="file-actions w-2/12 text-right"
+            className="w-2/12 text-right file-actions"
             style={{
               display: "none",
               marginLeft: "auto",
@@ -90,21 +90,21 @@ const ProgressContainer = ({
             </span>
             <span
               style={{ cursor: "pointer", padding: ".1rem" }}
-              className="resume-button ml-2"
+              className="ml-2 resume-button"
               onClick={() => uploader.resumeFileUpload(file)}
             >
               <BsPlay />
             </span>
             <span
               style={{ cursor: "pointer", padding: ".1rem" }}
-              className="retry-button ml-2"
+              className="ml-2 retry-button"
               onClick={() => uploader.retryFileUpload(file)}
             >
               <BsArrowRepeat />
             </span>
             <span
               style={{ cursor: "pointer", padding: ".1rem" }}
-              className="clear-button ml-2"
+              className="ml-2 clear-button"
               onClick={() => {
                 uploader.clearFileUpload(file);
                 deleteCurrentFile(file);
@@ -278,34 +278,34 @@ const ProgressWrapper = ({
 
     fileObject.status =
       e.loaded >= e.total ? FILE_STATUS.PROCESSING : FILE_STATUS.UPLOADING;
-    fileObject.percentage = e.percentage;
-    fileObject.uploadedChunkSize = e.loaded;
+		fileObject.percentage = e.percentage;
+		fileObject.uploadedChunkSize = e.loaded;
 
-    updateFileProgessElement(fileObject);
-  };
+		updateFileProgessElement(fileObject);
+	};
 
-  const onComplete = (e, file) => {
-    const fileObject = allFiles.get(file);
+	const onComplete = (e, file) => {
+		const fileObject = allFiles.get(file);
 
-    fileObject.status = FILE_STATUS.COMPLETED;
-    fileObject.percentage = 100;
+		fileObject.status = FILE_STATUS.COMPLETED;
+		fileObject.percentage = 100;
 
-    updateFileProgessElement(fileObject);
-  };
+		updateFileProgessElement(fileObject);
+	};
 
-  // url: 'http://127.0.0.1:5500/api/v1/files/upload'
-  if (progress) {
-    uploader = new UploadFiles(files, {
-      onAbort,
-      onError,
-      onProgress,
-      onComplete,
-      folderId: null
-    });
-  }
+	// url: 'http://127.0.0.1:22666/api/v1/files/upload'
+	if (progress) {
+		uploader = new UploadFiles(files, {
+			onAbort,
+			onError,
+			onProgress,
+			onComplete,
+			folderId: null
+		});
+	}
 
-  const ListFiles = () => {
-    return [...files].map((file, index) => {
+	const ListFiles = () => {
+		return [...files].map((file, index) => {
       return (
         <ProgressContainer
           key={index}

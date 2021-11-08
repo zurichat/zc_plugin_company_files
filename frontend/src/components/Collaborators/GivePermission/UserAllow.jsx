@@ -76,13 +76,13 @@ const UserAllow = ({ user }) => {
   // const onSaveHandler = () => {
   //   const data = {
 
-  //   }
-  //   axios.post('http://localhost:5500/api/v1/access/give', {
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-  // }
+	//   }
+	//   axios.post('http://localhost:22666/api/v1/access/give', {
+	//     headers: {
+	//       'Content-Type': 'application/json'
+	//     }
+	//   })
+	// }
 
   return (
     <div className="tw-flex tw-w-full tw-items-center tw-my-2 tw-px-4 tw-space-x-4 tw-h-14 tw-hover:bg-gray-100">

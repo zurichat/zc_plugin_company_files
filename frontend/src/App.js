@@ -13,7 +13,7 @@ import store from "./store/store";
 const API_URL =
   window.location.hostname.includes("localhost") ||
   window.location.hostname.includes("127.0.0.1")
-    ? "http://localhost:5500/api/v1"
+    ? "http://localhost:22666/api/v1"
     : "https://companyfiles.zuri.chat/api/v1";
 axios.defaults.baseURL = API_URL;
 const { info } = store.getState().rootReducer.workspaceReducer;

@@ -47,7 +47,7 @@
     "fs": "0.0.1-security",
     "joi": "^17.4.2",
     "joi-objectid": "^3.0.1",
-    "mime-types": "^2.1.32",
+    "mime-types": "^2.1.33",
     "node-crontab": "^0.0.8",
     "slugify": "^1.6.0",
     "swagger-ui-express": "^4.1.6",
@@ -61,11 +61,14 @@
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
+    "eslint-config-eslint": "^7.0.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
-    "eslint-plugin-prettier": "^3.4.1",
-    "husky": "^7.0.2",
+    "eslint-plugin-jsdoc": "^22.1.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "husky": "^7.0.4",
     "jest": "^27.2.0",
     "lint-staged": "^11.1.2",
     "mocha": "^9.1.2",
@@ -81,6 +84,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
+      "pre-push": "git pull upstream dev",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },

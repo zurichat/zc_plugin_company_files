@@ -47,9 +47,9 @@ class ExpectationFailedError extends AppError {
 }
 
 class NotFoundError extends AppError {
-  constructor(message = 'Requested resource not found', statusCode = 404) {
-    super(message, statusCode);
-  }
+	constructor(message = 'Requested resource not found', statusCode = 404) {
+		super(message, statusCode);
+	}
 }
 
 class InvalidError extends AppError {
@@ -67,7 +67,7 @@ class DuplicateError extends AppError {
 module.exports = {
 	BadRequestError,
 	InternalServerError,
-  BadGatewayError,
+	BadGatewayError,
 	UnAuthorizedError,
 	ForbiddenError,
 	ExpectationFailedError,
