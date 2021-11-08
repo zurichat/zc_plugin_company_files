@@ -272,7 +272,7 @@ const ProgressWrapper = ({
 		updateFileProgessElement(fileObject);
 	};
 
-	// url: 'http://127.0.0.1:5500/api/v1/files/upload'
+	// url: 'http://127.0.0.1:22666/api/v1/files/upload'
 	if (progress) {
 		uploader = new UploadFiles(files, {
 			onAbort,

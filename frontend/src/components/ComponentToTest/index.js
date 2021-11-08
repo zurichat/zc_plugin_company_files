@@ -25,7 +25,7 @@ const ComponentToTest = () => {
   }, [newFile]);
 
   // const deleteFile = async (fileId) => {
-  //   const deleted = await axios.delete(`http://localhost:5500/api/v1/files/deleteFile/${fileId}`);
+  //   const deleted = await axios.delete(`http://localhost:22666/api/v1/files/deleteFile/${fileId}`);
   // }
 
   return (
@@ -46,9 +46,9 @@ export default ComponentToTest;
 //   constructor (files, options) {
 //     this.fileRequests = new WeakMap()
 //     this.endpoints = {
-//       UPLOAD: 'http://127.0.0.1:5500/api/v1/files/upload',
-//       UPLOAD_STATUS: 'http://127.0.0.1:5500/api/v1/files/uploadStatus',
-//       UPLOAD_REQUEST: 'http://127.0.0.1:5500/api/v1/files/uploadRequest'
+//       UPLOAD: 'http://127.0.0.1:22666/api/v1/files/upload',
+//       UPLOAD_STATUS: 'http://127.0.0.1:22666/api/v1/files/uploadStatus',
+//       UPLOAD_REQUEST: 'http://127.0.0.1:22666/api/v1/files/uploadRequest'
 //     }
 
 //     this.defaultOptions = {
@@ -115,7 +115,7 @@ export default ComponentToTest;
 //   }
 
 //   uploadFile = (file, options) => {
-//     const fileInfoRequest = new Request('http://127.0.0.1:5500/api/v1/files/uploadRequest', {
+//     const fileInfoRequest = new Request('http://127.0.0.1:22666/api/v1/files/uploadRequest', {
 //       method: 'POST',
 //       body: JSON.stringify({ fileName: file.name }),
 //       headers: new Headers({ 'Content-Type': 'application/json' })
@@ -353,7 +353,7 @@ export default ComponentToTest;
 //   }
 
 //   const uploader = new UploadFiles(files, {
-//     url: 'http://127.0.0.1:5500/api/v1/files/upload',
+//     url: 'http://127.0.0.1:22666/api/v1/files/upload',
 //     onAbort,
 //     onError,
 //     onProgress,
@@ -456,7 +456,7 @@ export default ComponentToTest;
 
 // const upload = (file, onUploadProgress) => {
 
-//   const url = "http://localhost:5500/api/v1/files/uploadRequest";
+//   const url = "http://localhost:22666/api/v1/files/uploadRequest";
 //   const formData = new FormData();
 
 //   // formData.append(`file`, file)
@@ -473,7 +473,7 @@ export default ComponentToTest;
 //   )
 //   .then((data) => {
 //     return axios
-//     .get(`http://localhost:5500/api/v1/files/uploadStatus?fileName=${data.fileName}&fileId=${data.fileId}`)
+//     .get(`http://localhost:22666/api/v1/files/uploadStatus?fileName=${data.fileName}&fileId=${data.fileId}`)
 //   })
 //   .then(data => console.log({ status: data }))
 //   .catch(error => {
@@ -511,7 +511,7 @@ export default ComponentToTest;
 //   const uploadPromises = files.map((file, i) => uploader(i, file))
 
 //   Promise.all(uploadPromises)
-//   .then(() => axios.get("http://localhost:5500/api/v1/file/read"))
+//   .then(() => axios.get("http://localhost:22666/api/v1/file/read"))
 //   .then(data => setFileInfos(data))
 
 //   setMessage([])

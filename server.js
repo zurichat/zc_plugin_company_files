@@ -1,3 +1,4 @@
+/* eslint-disable */
 require('colors');
 require('dotenv').config();
 require('express-async-errors');
@@ -16,7 +17,6 @@ let cacheClient;
 const app = express();
 const router = express.Router();
 
-// const pluginRoute = require('./backend/routes/plugin.route')
 const pluginRouter = require('./backend/routes/plugin.router');
 const rootRouter = require('./backend/routes/index')(router);
 const isProduction = process.env.NODE_ENV === 'production';
@@ -43,7 +43,7 @@ app.use((req, res, next) => {
     req.MemoryCache = cacheClient.createClient();
   }
 
-  const allowedOrigins = ['https://zuri.chat', 'https://api.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:5500'];
+  const allowedOrigins = ['https://zuri.chat', 'https://api.zuri.chat', 'https://companyfiles.zuri.chat', 'http://localhost:9000', 'http://localhost:22666'];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
@@ -97,7 +97,7 @@ if (cluster.isMaster) {
 } else {
   // Workers can share any TCP connection
   // In this case, it is an HTTP server
-  const port = process.env.PORT || 5500;
+  const port = process.env.PORT || 22666;
   const server = app.listen(port, () => {
     console.log(':>>'.green.bold, 'Server running in'.yellow.bold, process.env.NODE_ENV.toUpperCase().blue.bold, 'mode, on port'.yellow.bold, `${port}`.blue.bold);
   });
@@ -109,5 +109,3 @@ if (cluster.isMaster) {
     server.close(() => process.exit(1));
   });
 }
-
-module.exports = app;

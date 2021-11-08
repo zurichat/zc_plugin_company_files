@@ -75,7 +75,7 @@ const UserAllow = ({ user }) => {
 	//   const data = {
 
 	//   }
-	//   axios.post('http://localhost:5500/api/v1/access/give', {
+	//   axios.post('http://localhost:22666/api/v1/access/give', {
 	//     headers: {
 	//       'Content-Type': 'application/json'
 	//     }
