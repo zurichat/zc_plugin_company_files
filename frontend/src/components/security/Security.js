@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,12 +11,12 @@ function Security() {
       try {
         setLoading(true);
         const response = await axios.get("/security");
-        console.log(response.data);
+        // console.log(response.data);
         setResult(response.data);
         setLoading(false);
       } catch (err) {
         setLoading(true);
-        console.log(err.response.data);
+        // console.log(err.response.data);
         setResult(err.response.data);
         setLoading(false);
       }

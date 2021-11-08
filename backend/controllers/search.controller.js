@@ -19,7 +19,6 @@ const formatSearchData = data => {
 }
 
 
-
 const searchAndFilterFiles = async (req, res) => {
   const { fileName, fileType } = req.query;
   const {orgId, memberId} = req.params;
@@ -28,7 +27,7 @@ const searchAndFilterFiles = async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 10;
     const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
+    // const endIndex = page * limit;
     
     let response;
 
@@ -36,41 +35,41 @@ const searchAndFilterFiles = async (req, res) => {
       response = await File.fetchByFilter({
         orgId, createdBy: memberId,
         fileName: {
-          '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+          $regex: fileName, $options: 'i' }, type: { $in: fileType.split(',') }
       }, { skip: startIndex, limit });
 
-      response_total = await File.fetchByFilter({
+      responseTotal = await File.fetchByFilter({
         orgId, createdBy: memberId, 
-        fileName: { '$regex': fileName, '$options': 'i' }, type: { '$in': fileType.split(',') }
+        fileName: { $regex: fileName, $options: 'i' }, type: { $in: fileType.split(',') }
       });
     } else {
       response = await File.fetchByFilter({
         orgId, createdBy: memberId,
-        fileName: { '$regex': fileName, '$options': 'i' }
+        fileName: { $regex: fileName, $options: 'i' }
       }, { skip: startIndex, limit });
 
-      response_total = await File.fetchByFilter({
+      responseTotal = await File.fetchByFilter({
         orgId, createdBy: memberId,
-        fileName: { '$regex': fileName, '$options': 'i' }
+        fileName: { $regex: fileName, $options: 'i' }
       });
     }
 
     // Pagination
-    const total_count = response.length;
+    const totalCount = response.length;
     const previous = 0 || page - 1;
-    const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    // const next =  (endIndex < total_count && limit <= total_count) ? page + 1 : last_page;
+    const lastPage = ((responseTotal.length % limit) === 0) ? responseTotal.length/limit : Math.floor(responseTotal.length/limit) + 1
+    // const next =  (endIndex < totalCount && limit <= totalCount) ? page + 1 : lastPage;
 
     return res.status(200).send(appResponse('File search result', undefined, true, {
       title: `files search results for query '${fileName}'`,
       description: `Showing search result for '${fileName}'`,
       pagination: {
-        total_results: total_count,
+        total_results: totalCount,
         page_size: limit,
         current_page: page,
         first_page: 1,
-        last_page,
-        next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
+        lastPage,
+        next: (page === lastPage) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
         previous: `https://companyfiles.zuri.chat/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${previous}`,
       },
       search_parameters: {
@@ -100,53 +99,52 @@ const searchAndFilterFolders = async (req, res) => {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = 1;
     const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
+    // const endIndex = page * limit;
 
     if (folderDate) {
       response = await Folder.fetchByFilter({
         orgId, 
         "collaborators.memberId": memberId,
-        folderName: { '$regex': folderName, '$options': "i" },
-        dateAdded:  { '$regex': folderDate},
+        folderName: { $regex: folderName, $options: "i" },
+        dateAdded:  { $regex: folderDate},
       }, { skip: startIndex, limit });
 
-      response_total = await Folder.fetchByFilter({
+      responseTotal = await Folder.fetchByFilter({
         orgId, 
         "collaborators.memberId": memberId,
-        folderName: { '$regex': folderName, '$options': "i" },
-        dateAdded:  { '$regex': folderDate},
+        folderName: { $regex: folderName, $options: "i" },
+        dateAdded:  { $regex: folderDate},
       });
     } else {
       response = await Folder.fetchByFilter({
         orgId, 
         "collaborators.memberId": memberId,
-        folderName: { '$regex': folderName, '$options': "i" },
+        folderName: { $regex: folderName, $options: "i" },
       }, { skip: startIndex, limit });
 
-      response_total = await Folder.fetchByFilter({
+      responseTotal = await Folder.fetchByFilter({
         orgId, 
         "collaborators.memberId": memberId,
-        folderName: { '$regex': folderName, '$options': "i" },
+        folderName: { $regex: folderName, $options: "i" },
       }); 
     }
 
-    const total_count = response.length;
+    const totalCount = response.length;
     const previous = 0 || page - 1;
-    const last_page = ((response_total.length % limit) === 0) ? response_total.length/limit : Math.floor(response_total.length/limit) + 1
-    // const next =  (endIndex < total_count ) ? page + 1 : last_page;
+    const lastPage = ((responseTotal.length % limit) === 0) ? responseTotal.length/limit : Math.floor(responseTotal.length/limit) + 1
+    // const next =  (endIndex < totalCount ) ? page + 1 : lastPage;
 
-    if (total_count !== 0) {
-      return res.status(200).send(
-        appResponse("Folder search result", undefined, true, {
+    if (totalCount !== 0) {
+      return res.status(200).send(appResponse("Folder search result", undefined, true, {
           title: `folder search results for query '${folderName}'`,
           description: `Showing search result for'${folderName}'`,
           pagination: {
-            total_results: total_count,
+            total_results: totalCount,
             page_size: limit,
             current_page: page,
             first_page: 1,
-            last_page,
-            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
+            lastPage,
+            next: (page === lastPage) ? `` : `https://companyfiles.zuri.chat/api/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${page + 1}` ,
             previous: `https://companyfiles.zuri.chat/v1/search/${orgId}/${memberId}?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
@@ -158,20 +156,18 @@ const searchAndFilterFolders = async (req, res) => {
             entity: 'Folders',
             data: formatSearchData(response)
             },
-        })
-      );
+        }));
     } else {
-      return res.status(200).send(
-        appResponse("Folder search queries wrong", undefined, true, {
+      return res.status(200).send(appResponse("Folder search queries wrong", undefined, true, {
           title: `folder search results for query '${folderName}'`,
           description: `result of search for folders that contains the query '${folderName}'`,
           pagination: {
-            total_results: total_count,
+            total_results: totalCount,
             page_size: limit,
             current_page: page,
             first_page: 1,
-            last_page,
-            next: (page === last_page) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
+            lastPage,
+            next: (page === lastPage) ? `` : `https://companyfiles.zuri.chat/api/v1/search/?filter=folders&folderName=t&page=${page + 1}` ,
             previous: `https://companyfiles.zuri.chat/v1/search/?filter=folders&folderName=t&page=${previous}`,
           },
           search_parameters: {
@@ -183,8 +179,7 @@ const searchAndFilterFolders = async (req, res) => {
             entity: 'Folders',
             data: formatSearchData(response)
             },
-        })
-      );
+        }));
     }
   } else {
     return res
@@ -214,7 +209,7 @@ exports.searchFilesAndFolders = async (req, res) => {
 
 
 exports.searchFileAndFolder = async (req, res) => {
-  let { searchQuery } = req.query;
+  const { searchQuery } = req.query;
   const fileData = await File.fetchAll();
   const folderData = await Folder.fetchAll();
   
@@ -246,7 +241,7 @@ exports.testSearch = async (req,res) => {
 
 exports.searchSuggestion = async (req, res) => {
   const { orgId, memberId } = req.params 
-  let suggestionObj = {};
+  const suggestionObj = {};
   const response = await Folder.fetchByFilter({
     orgId, 
     "collaborators.memberId": memberId,

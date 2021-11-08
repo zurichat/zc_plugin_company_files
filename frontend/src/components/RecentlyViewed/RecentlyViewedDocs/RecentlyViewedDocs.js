@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Loader from "react-loader-spinner";
@@ -29,8 +32,8 @@ function RecentlyViewedDocs() {
   };
 
   const goBack = () => {
-    const currentState = history.state;
-    history.pushState(currentState, "", "/companyfiles");
+    const currentState = window.history.state;
+    window.history.pushState(currentState, "", "/companyfiles");
   };
 
   if (docs.length === 0) {
@@ -76,7 +79,7 @@ function RecentlyViewedDocs() {
         </div>
       </div>
       <div className={classes.body}>
-        {docs.map((doc, idx) => (
+        {docs.map((doc) => (
           <div key={doc._id} className={classes.container}>
             <div className={classes.icon} style={{ background: "#D7FCEB" }}>
               <DocsIcon />

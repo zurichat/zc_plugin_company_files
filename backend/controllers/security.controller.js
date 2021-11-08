@@ -41,7 +41,7 @@ exports.callAll = async (req, res) => {
       'https://companyfiles.zuri.chat/api/v1/plugin/sidebar',
     ]
 
-    let allResponse = []
+    const allResponse = []
     for (let i = 0 ; i < all.length ; i++) {
       try {
         const response = await axios.get(all[i])

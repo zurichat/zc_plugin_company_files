@@ -10,8 +10,6 @@ const slackRouter = require('./slack.route');
 const pluginRoute = require('./plugin.route')
 
 
-
-
 // Import Swagger for documentation
 const swagger = require('swagger-ui-express');
 const docs = require('../docs');

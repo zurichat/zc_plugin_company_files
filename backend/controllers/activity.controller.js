@@ -8,6 +8,8 @@ exports.getAllActivities = async (req, res) => {
   res.status(200).send(appResponse('Activities successfully retrieved!', activities, true))
 }
 
+console.log("go")
+
 // This function is solely for testing purposes
 // exports.createNewActivity = async (req, res) => {
 //   const {userName, userId, imageUrl} = req.headers.userObj;

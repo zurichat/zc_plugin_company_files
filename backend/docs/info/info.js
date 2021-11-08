@@ -42,7 +42,6 @@ exports.getSidebar = {
 }
 
 
-
 exports.getPing = {
     get: {
         tags: ["Info"],

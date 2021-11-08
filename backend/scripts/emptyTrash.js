@@ -14,7 +14,10 @@ const emptyTrash = async (FILE_DURATION = 30) => {
   const allFiles = await File.fetchAll();
   const filesToDelete = allFiles.filter(file => {
     return file.isDeleted && differenceInDays(file.lastAccessed, Date.now()) >= FILE_DURATION;
-  }).map(({ _id, cloudinaryId }) => { _id, cloudinaryId });
+  // eslint-disable-next-line array-callback-return
+  }).map(({ _id, cloudinaryId }) => {
+ _id, cloudinaryId 
+});
 
 
   const [response] = await Promise.all([

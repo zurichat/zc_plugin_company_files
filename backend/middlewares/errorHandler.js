@@ -1,4 +1,4 @@
-const { NotFoundError, BadRequestError } = require('../utils/appError');
+const { BadRequestError } = require('../utils/appError');
 
 const sendErrorInDev = (errorObject, res) => {
   console.log('✖ | Error:'.red.bold, errorObject);

@@ -5,8 +5,8 @@ const RealTime = require("../utils/realtime.helper");
 const appResponse = require("../utils/appResponse");
 // const RoomSchema = require('../models/Room');
 const RoomSchema = require("../models/NewRoom");
-const slugify = require("slugify");
-const uuid = require("uuid").v4;
+// const slugify = require("slugify");
+// const uuid = require("uuid").v4;
 const axios = require("axios").default;
 
 const {
@@ -192,9 +192,7 @@ exports.addToRoom = async (req, res) => {
 
   if (room.private) throw new ForbiddenError(`You can't join a private room!`);
 
-  const isMemberInRoom = room.room_member_ids.filter(
-    (id) => id === userId
-  ).length;
+  const isMemberInRoom = room.room_member_ids.filter((id) => id === userId).length;
 
   if (isMemberInRoom) throw new BadRequestError("user is already in room!");
 
@@ -217,7 +215,7 @@ exports.addToRoom = async (req, res) => {
   return res.status(200).send(appResponse(null, updatedRoom, true));
 };
 
-//::: ENDPOINT FOR ADDING MULTIPLE USERS TO A ROOM
+// ::: ENDPOINT FOR ADDING MULTIPLE USERS TO A ROOM
 exports.addMultiUsersToRoom = async (req, res) => {
   console.log("ADD MULTI ENDPOINT HIT");
   // the info of the user to be added to a room
@@ -236,10 +234,10 @@ exports.addMultiUsersToRoom = async (req, res) => {
   // const isMemberInRoom = room.room_member_ids.filter(
   //   (id) => id === userId
   // ).length;
-  let isIn = [];
-  let isValid = []
+  const isIn = [];
+  const isValid = []
   members_id.forEach(member => {
-    let checkIn = room.room_member_ids.filter((id) => id === member);
+    const checkIn = room.room_member_ids.filter((id) => id === member);
     if(checkIn.length > 0){
       isIn.push(member)
     }else{
@@ -303,7 +301,7 @@ exports.addMultiUsersToRoom = async (req, res) => {
 };
 
 
-//::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
+// ::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
 exports.removeMultiUsersFromRoom = async (req, res) => {
   console.log("REMOVE MULTI ENDPOINT HIT");
   // the info of the users to be removed from a room
@@ -370,13 +368,11 @@ exports.removeMultiUsersFromRoom = async (req, res) => {
 
   res
     .status(200)
-    .send(
-      appResponse(
+    .send(appResponse(
         "User has been successfully removed from the room",
         updatedRoom,
         true
-      )
-    );
+      ));
 };
 
 
@@ -417,13 +413,11 @@ exports.removeFromRoom = async (req, res) => {
 
   res
     .status(200)
-    .send(
-      appResponse(
+    .send(appResponse(
         "User has been successfully removed from the room",
         updatedRoom,
         true
-      )
-    );
+      ));
 };
 
 // not tested yet
@@ -436,9 +430,7 @@ exports.setRoomPrivate = async (req, res) => {
   const isUserOwner = room.ownerId === userId;
 
   if (!isUserOwner) {
-    throw new ForbiddenError(
-      `Access forbidden! You don't have access to make this room private!`
-    );
+    throw new ForbiddenError(`Access forbidden! You don't have access to make this room private!`);
   }
 
   await Rooms.update(req.params.roomId, { isPrivate: false });
@@ -453,9 +445,7 @@ exports.getUserRooms = async (req, res) => {
   const rooms = await Rooms.fetchAll();
   const { userId } = req.params;
 
-  const roomFound = rooms.filter(
-    (room) => room.room_member_ids && room.room_member_ids.includes(userId)
-  );
+  const roomFound = rooms.filter((room) => room.room_member_ids && room.room_member_ids.includes(userId));
   if (roomFound.length === 0) {
     throw new NotFoundError("User is not in any room");
   } else {
@@ -486,9 +476,7 @@ exports.getRoomMembers = async (req, res) => {
     { config }
   );
   // check if the id in room matches the id in the org member list
-  const roomMembers = orgMembers.data.filter((member) =>
-    room.room_member_ids.includes(member._id)
-  );
+  const roomMembers = orgMembers.data.filter((member) => room.room_member_ids.includes(member._id));
   const data = {
     ...room,
     members_count: room.room_member_ids.length,
@@ -530,13 +518,11 @@ exports.getOrgDefaultRoomOnDomain = async (req, res) => {
 
   return res
     .status(200)
-    .send(
-      appResponse(
+    .send(appResponse(
         `Organization default ${domain} room returned successfully`,
         data,
         true
-      )
-    );
+      ));
 };
 
 // tested - works

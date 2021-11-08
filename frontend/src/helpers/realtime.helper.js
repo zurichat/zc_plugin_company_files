@@ -7,19 +7,19 @@ const centrifuge = new Centrifuge(
 );
 
 class RealTime {
-  static subscribe = (channel, apiRoute, callback) => {
-    centrifuge.on("connect", async (data) => {
+  static subscribe(channel, apiRoute, callback) {
+    centrifuge.on("connect", async () => {
       await axios.get(`https://companyfiles.zuri.chat/api/v1/${apiRoute}`);
-      console.log(data);
+      // console.log(data);
     });
 
-    centrifuge.on("disconnect", (data) => {
-      console.log(data);
+    centrifuge.on("disconnect", () => {
+      // console.log(data);
     });
 
     centrifuge.connect();
     centrifuge.subscribe(channel, callback);
-  };
+  }
 }
 
 export default RealTime;
