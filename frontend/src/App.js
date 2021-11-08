@@ -35,7 +35,7 @@ axios.defaults.headers.userObject = {
   userEmail:
     typeof info === "object" && info !== null && info !== {} && info[0]?.email,
   userOrgId:
-    typeof info === "object" && info !== null && info !== {} && info[0]?.org_id,
+    typeof info === "object" && info !== null && info !== {} && info[0]?.org_id
 };
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

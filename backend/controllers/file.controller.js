@@ -701,7 +701,7 @@ exports.resetFilePassword = async (req, res) => {
 	}
 
 	const check = await checkPassword(oldPassword, file.password)
-	if(check === true){
+	if (check === true) {
 
 		async function hashPassword(passwordParams){
 			const salt = await bcrypt.genSalt(10);
@@ -717,7 +717,7 @@ exports.resetFilePassword = async (req, res) => {
 
 		const newFile = await File.fetchOne({ _id: fileId });
 		res.status(200).json({success: true, data: newFile})
-	}else{
+	} else {
 		throw new BadRequestError('you must provide a correct password field');
 	}
 }

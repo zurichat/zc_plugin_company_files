@@ -15,7 +15,7 @@
     "install-setup": "yarn install && cd frontend && yarn install && cd ../root-config && yarn install",
     "install-setup:npm": "npm install && cd frontend && npm install && cd ../root-config && npm install",
     "lint:backend": "eslint -c backend/.eslintrc.js backend/** --ext .js",
-    "lint:backend:fix": "yarn lint:backend -- --fix",
+    "lint:backend:fix": "yarn lint:backend --fix && cd frontend && yarn lint:fix",
     "prepare": "husky install",
     "start": "node server.js",
     "test": "cross-env NODE_ENV=test mocha --timeout=10000 --recursive  --exit",
@@ -89,6 +89,6 @@
     }
   },
   "lint-staged": {
-    "*.js": "yarn lint:backend:fix"
+    "*.{js,jsx}": ["eslint --fix", "prettier --ignore-unknown --write"]
   }
 }

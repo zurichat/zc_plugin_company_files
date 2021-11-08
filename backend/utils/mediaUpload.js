@@ -1,6 +1,6 @@
-const cloudinary = require('cloudinary').v2;
-const { CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
-
+const cloudinary = require("cloudinary").v2;
+const { CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } =
+  process.env;
 
 class MediaUpload {
 	static config() {

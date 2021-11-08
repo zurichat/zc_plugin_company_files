@@ -7,7 +7,7 @@ import Accordion from "./Accordion";
 import { popData, moData } from "./accordionData";
 
 const Help = () => {
-  let joinData = popData.concat(moData);
+  const joinData = popData.concat(moData);
   const [searchResult, setSearchResult] = useState([]);
 
   const searchData = (input) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import SelectFileModal from "./SelectFileModal";
 import UploadProgressModal from "./UploadProgressModal";
 
@@ -11,16 +11,16 @@ const index = ({
   const [files, setFiles] = useState();
   const [progress, setProgress] = useState(false);
 
-  let uploadInit = useRef(false);
+  const uploadInit = useRef(false);
 
   const uploadFiles = () => {
     setProgress(true);
   };
 
   const handleDrop = (e) => {
-    console.log("Dropped");
+    // console.log("Dropped");
     const { files } = e.dataTransfer;
-    console.log(files, "Drop");
+    console.warn(files, "Drop");
     Object.entries(files).map((file) => {
       console.log(file[1].name);
     });

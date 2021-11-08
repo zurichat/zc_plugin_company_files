@@ -1,17 +1,17 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
-import Files from "./AllFiles";
-// import SelectFileModal from "../FileUpload/SelectFileModal";
-import { RTCSubscription } from "../../../helpers/RTCSubscription";
-
-import UploadProgressModal from "../FileUpload/UploadProgressModal";
-import FileUpload from "../FileUpload/index";
+import React, { useState, useLayoutEffect } from "react";
 import { useSnackbar } from "react-simple-snackbar";
+import Files from "./allFiles";
+// import SelectFileModal from "../FileUpload/SelectFileModal";
+import { RTCSubscription } from "../../helpers/RTCSubscription";
+
+// import UploadProgressModal from "../FileUpload/UploadProgressModal";
+import FileUpload from "../FileUpload/index";
 
 const AllFiles = () => {
   const [upload, setUpload] = useState(false);
   const [progress, setProgress] = useState(false);
   const [options, setOptions] = useState(false);
-  const [demo, setDemo] = useState(false);
+  const [, setDemo] = useState(false);
   const [newFile, setNewFiles] = useState({ data: {} });
   const [SnackBar] = useSnackbar({
     position: "bottom-center",
@@ -20,21 +20,11 @@ const AllFiles = () => {
 
   // let progress = useRef(false)
 
-  const [newFiles, setNewFiles] = useState({ data: {} });
-
   useLayoutEffect(() => {
     RTCSubscription("newFile", (stuff) => {
-      console.log({ stuff });
-      //setNewFiles(stuff.data);
-      console.log({ newFiles });
+      setNewFiles(stuff.data);
     });
   }, []);
-
-  const showOptions = (e) => {
-    setOptions(!options);
-    e.stopPropagation();
-    document.addEventListener("click", hideOptions);
-  };
 
   const hideOptions = (event) => {
     setOptions(false);
@@ -42,6 +32,13 @@ const AllFiles = () => {
     document.removeEventListener("click", hideOptions);
   };
 
+  const showOptions = (e) => {
+    setOptions(!options);
+    e.stopPropagation();
+    document.addEventListener("click", hideOptions);
+  };
+
+  // eslint-disable-next-line no-unused-vars
   const showUploadModal = () => {
     setUpload(!upload);
   };
@@ -54,7 +51,7 @@ const AllFiles = () => {
     hideUploadModal();
     setProgress(true);
     setDemo(true);
-    console.log({ Progress: progress, Demo: demo });
+    // console.log({ Progress: progress, Demo: demo });
   };
 
   const hideProgressModal = () => {
@@ -63,11 +60,10 @@ const AllFiles = () => {
 
   return (
     <div
-      className={
-        (upload ? " overflow-y-hidden" : "") + " w-full py-4 px-10 z-auto"
-      }
+      className={`${upload && "overflow-y-hidden"} w-full py-4 px-10 z-auto`}
     >
       <button
+        type="button"
         onClick={showOptions}
         className="mt-4 px-3 py-2 text-sm text-green-500 border rounded border-green-500 hover:text-white hover:bg-green-500 outline-none"
       >
@@ -84,10 +80,7 @@ const AllFiles = () => {
         />
       )}
       {Object.keys(newFile.data).length > 0 &&
-        SnackBar(
-          `"${newFile.data.fileName}"` + " uploaded successfully 🎉!",
-          10e3
-        )}
+        SnackBar(`${newFile.data.fileName} uploaded successfully 🎉!`, 10e3)}
     </div>
   );
 };

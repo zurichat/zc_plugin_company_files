@@ -1,8 +1,4 @@
 import React from "react";
-import active from "../../../public/Icons/arrow-left/active.svg";
-import imageIcon from "../../../public/Icons/image/active.svg";
-import downloadIcon from "../../../public/Icons/download/active.svg";
-import Vertical from "../../../public/Icons/more-vertical/active.svg";
 import LeftArrow from "../../../public/Icons/arrow-left/active.svg";
 import RightArrow from "../../../public/Icons/arrow-right/active.svg";
 import ZoomIn from "../../../public/Icons/zoom-in/active.svg";
@@ -28,12 +24,15 @@ function index({ file, setOpenStatus }) {
               alt="image"
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
             /> */}
+            {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
               className="md:min-w-0 min-w-full w-60 md:w-10/12"
               src={file.url}
               controls
               autoPlay
-            />
+            >
+              <track />
+            </video>
           </div>
           <div className="flex self-center">
             <img

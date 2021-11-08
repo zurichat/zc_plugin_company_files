@@ -1,5 +1,5 @@
-const axios = require('axios');
-const { config } = require('../utils/slack.helper');
+const axios = require("axios");
+const { config } = require("../utils/slack.helper");
 
 class Slack {
 	static approximate(number) {

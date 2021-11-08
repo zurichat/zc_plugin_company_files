@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from "react";
 import FolderCard from "./FolderCard/FolderCard";
 import Addnewbtn from "./Addnew/Addnewbtn";
@@ -7,22 +8,23 @@ import classes from "./Folder.module.css";
 function Folder() {
   const [showModal, setShowModal] = useState(false);
   const [folderArray, setFolderArray] = useState([]);
-  const [submitting, setIsSubmitting] = useState(false);
-  const API_BASE_URL = location.hostname.includes("zuri.chat")
+  const [, setIsSubmitting] = useState(false);
+  const API_BASE_URL = window.location.hostname.includes("zuri.chat")
     ? "https://companyfiles.zuri.chat/api/v1"
     : "http://localhost:22666/api/v1";
 
   useEffect(() => {
     async function fetchFolder() {
       try {
-        let response = await fetch(`${API_BASE_URL}/folders/all`);
-        let { data } = await response.json();
+        const response = await fetch(`${API_BASE_URL}/folders/all`);
+        const { data } = await response.json();
 
         // data = data.slice(data.length - 4, data.length);
         // console.log(data);
+        // eslint-disable-next-line no-use-before-define
         handleFolder(data);
       } catch (error) {
-        console.log(error);
+        throw new Error(error);
       }
     }
     fetchFolder();

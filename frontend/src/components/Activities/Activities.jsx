@@ -13,35 +13,31 @@ function Activities() {
         const res = await axios.get("/activities");
         setActivities(res.data.data);
       } catch (error) {
-        console.log(error);
+        throw new Error(error);
       }
     })();
   }, []);
 
-  async function deleteActivity(id) {
-    try {
-      await axios.delete(`/activities/${id}`);
-      setActivities(activities.filter((activity) => activity.id !== id));
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async function deleteActivity(id) {
+  //   try {
+  //     await axios.delete(`/activities/${id}`);
+  //     setActivities(activities.filter((activity) => activity.id !== id));
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
+  // }
 
   const goBack = () => {
-    const currentState = history.state;
-    history.pushState(currentState, "", "/companyfiles");
+    const currentState = window.history.state;
+    window.history.pushState(currentState, "", "/companyfiles");
   };
 
   const convertMS = (milliseconds) => {
-    let month;
-    let day;
-    let hour;
-    let minute;
     const time = Date.now();
-    minute = Math.floor((time - milliseconds) / 60000);
-    hour = Math.floor(minute / 60);
-    day = Math.floor(hour / 24);
-    month = Math.floor(day / 30);
+    const minute = Math.floor((time - milliseconds) / 60000);
+    const hour = Math.floor(minute / 60);
+    const day = Math.floor(hour / 24);
+    const month = Math.floor(day / 30);
 
     if (minute < 60) {
       if (minute === 1) {
@@ -286,7 +282,7 @@ function Activities() {
                   <div
                     className={`tw-shadow-md ${classes.overlay}`}
                     onClick={() => setDisplay(!display)}
-                  ></div>
+                  />
                   <div className={classes.dropdown}>
                     <div className={`hover:tw-bg-green-400 ${classes.pin}`}>
                       {pushPin}

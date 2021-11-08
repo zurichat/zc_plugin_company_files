@@ -351,9 +351,6 @@ exports.folderRename = async (req, res) => {
 	const folder = await Folders.fetchOne({ _id: folderId });
 	if (!folder) throw new NotFoundError('Folder not found');
 
-	console.log('FOLDER::: ', folder);
-	console.log('OLD NAME:: ', oldFolderName);
-	console.log('NEW NAME:: ', newFolderName);
 	if (newFolderName != folder.folderName) {
 		await Folders.update(folderId, { folderName: newFolderName });
 
@@ -372,8 +369,7 @@ exports.folderRename = async (req, res) => {
 // DELETE FOLDER AND FILES IN IT
 exports.folderDeleteWithFiles = async (req, res) => {
 	const { folderId } = req.params;
-	if (!folderId)
-		throw new BadRequestError('Please provide the "folderId" of folder to delete');
+	if (!folderId) throw new BadRequestError('Please provide the "folderId" of folder to delete');
 
 	// fetch the folder
 	const folder = await Folders.fetchOne({ _id: folderId });

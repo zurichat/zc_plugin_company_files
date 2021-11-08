@@ -11,24 +11,25 @@ function useFetch(url, del, res, empty) {
     const abortCont = new AbortController();
 
     fetch(url, { signal: abortCont.signal })
-      .then((res) => {
-        if (!res.ok) {
+      .then((response) => {
+        if (!response.ok) {
           throw Error("Unable to fetch trash files");
         }
-        return res.json();
+        return response.json();
       })
-      .then((data) => {
-        if (isEmpty(data.data)) {
+      .then((file) => {
+        if (isEmpty(file.data)) {
           setData([]);
           setisLoading(false);
         } else {
-          setData(data.data);
+          setData(file.data);
           setError(null);
           setisLoading(false);
         }
       })
       .catch((err) => {
         if (err.name === "AbortError") {
+          setError("error");
         } else {
           setisLoading(false);
           setError(err.message);

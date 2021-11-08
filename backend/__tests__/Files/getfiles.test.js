@@ -5,7 +5,7 @@
 const { default: axios } = require('axios');
 const app = require('../../../server');
 const sinon = require('sinon');
-const { commons } = require('../config/globalSetup');
+// const { commons } = require('../config/globalSetup');
 const sampleFileList = require('../dummies/Files/getAllFiles.json');
 const chai = require('chai');
 const {expect} =  require('chai');

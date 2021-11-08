@@ -29,12 +29,12 @@ class UploadFiles {
     this.options = options;
 
     // console.log({ ...this.defaultOptions, ...options })
-    [...this.files].map((file, index) => {
-      this.uploadFile(file, { ...this.defaultOptions, ...this.options });
+    [...this.files].map((file) => {
+      return this.uploadFile(file, { ...this.defaultOptions, ...this.options });
     });
   }
 
-  uploadChunks = (file, options) => {
+  uploadChunks(file, options) {
     const payload = new FormData();
     const request = new XMLHttpRequest();
     const chunk = file.slice(options.startingByte);
@@ -55,14 +55,14 @@ class UploadFiles {
     );
 
     request.onload = (event) => {
-      request.status === 200 || request.status === 201
+      return request.status === 200 || request.status === 201
         ? options.onComplete(event, file)
         : options.onError(event, file);
     };
 
-    console.log(file);
+    // console.log(file);
     request.onerror = (event) => options.onError(event, file);
-    request.ontimeout = (event) => options.onError(event, tile);
+    request.ontimeout = (event) => options.onError(event, file);
 
     request.upload.onprogress = (event) => {
       const loaded = options.startingByte + event.loaded;
@@ -82,9 +82,9 @@ class UploadFiles {
     this.fileRequests.get(file).request = request;
 
     request.send(payload);
-  };
+  }
 
-  uploadFile = (file, options) => {
+  uploadFile(file, options) {
     const fileInfoRequest = new Request(this.endpoints.UPLOAD_REQUEST, {
       method: "POST",
       body: JSON.stringify({ fileName: file.name }),
@@ -94,6 +94,7 @@ class UploadFiles {
     fetch(fileInfoRequest)
       .then((res) => res.json())
       .then(({ data: { fileId } }) => {
+        // eslint-disable-next-line no-param-reassign
         options = { ...options, fileId };
         this.fileRequests.set(file, { request: null, options });
 
@@ -102,66 +103,66 @@ class UploadFiles {
       .catch((e) => {
         options.onError({ ...e, file });
       });
-  };
+  }
 
-  abortFileUpload = (file) => {
+  abortFileUpload(file) {
     const fileRequest = this.fileRequests.get(file);
 
     if (fileRequest && fileRequest.request) {
       fileRequest.request.abort();
       return true;
-    } else return false;
-  };
-
-  retryFileUpload = (file) => {
-    const fileRequest = this.fileRequests.get(file);
-
-    if (fileRequest) {
-      return fetch(
-        `${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          this.uploadChunks(file, {
-            ...fileRequest.options,
-            startingByte: Number(response.totalChunkUploaded)
-          });
-        })
-        .catch(() => {
-          this.uploadChunks(file, fileRequest.options);
-        });
     }
-  };
+    return false;
+  }
 
-  clearFileUpload = async (file) => {
+  async retryFileUpload(file) {
     const fileRequest = this.fileRequests.get(file);
 
     if (fileRequest) {
-      await this.abortFileUpload(file);
+      try {
+        const res = await fetch(
+          `${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`
+        );
+        const response = await res.json();
+        this.uploadChunks(file, {
+          ...fileRequest.options,
+          startingByte: Number(response.totalChunkUploaded)
+        });
+      } catch (e) {
+        this.uploadChunks(file, fileRequest.options);
+      }
+    }
+  }
+
+  async clearFileUpload(file) {
+    const fileRequest = this.fileRequests.get(file);
+
+    if (fileRequest) {
+      this.abortFileUpload(file);
       fileRequest.delete(file);
       return true;
-    } else return false;
-  };
+    }
+    return false;
+  }
 
-  resumeFileUpload = (file) => {
+  async resumeFileUpload(file) {
     const fileRequest = this.fileRequests.get(file);
 
     if (fileRequest) {
-      return fetch(
-        `${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`
-      )
-        .then((res) => res.json())
-        .then((response) => {
-          this.uploadChunks(file, {
-            ...fileRequest.options,
-            startingByte: Number(response.totalChunkUploaded)
-          });
-        })
-        .catch((error) => {
-          fileRequest.options.onError({ ...error, file });
+      try {
+        const res = await fetch(
+          `${this.endpoints.UPLOAD_STATUS}?fileName=${file.name}&fileId=${fileRequest.options.fileId}`
+        );
+        const response = await res.json();
+        this.uploadChunks(file, {
+          ...fileRequest.options,
+          startingByte: Number(response.totalChunkUploaded)
         });
+      } catch (error) {
+        fileRequest.options.onError({ ...error, file });
+      }
     }
-  };
+  }
 }
 
 export default UploadFiles;

@@ -111,7 +111,8 @@ exports.addUserToRoom = async (req, res) => {
 	// });
 
 	return res.status(200).send(appResponse(null, `${user_name} recieved`, true));
-};
+}
+
 
 // tested - works
 exports.editRoom = async (req, res) => {
@@ -142,7 +143,8 @@ exports.getAllRooms = async (req, res) => {
 	// response = await RealTime.publish('allRooms', response);
 
 	res.status(200).send(appResponse('All rooms', allRooms, true));
-};
+}
+
 
 // tested - works
 exports.getOneRoom = async (req, res) => {
@@ -151,7 +153,8 @@ exports.getOneRoom = async (req, res) => {
 	if (!room) throw new NotFoundError();
 
 	res.status(200).send(appResponse('Room found!', room, true));
-};
+}
+
 
 // tested - works
 exports.deleteRoom = async (req, res) => {
@@ -166,7 +169,8 @@ exports.deleteRoom = async (req, res) => {
 	res
 		.status(200)
 		.send(appResponse('Room has been deleted successfully!', response, true));
-};
+}
+
 
 // tested - works
 exports.addToRoom = async (req, res) => {
@@ -209,7 +213,8 @@ exports.addToRoom = async (req, res) => {
 	});
 
 	return res.status(200).send(appResponse(null, updatedRoom, true));
-};
+}
+
 
 // ::: ENDPOINT FOR ADDING MULTIPLE USERS TO A ROOM
 exports.addMultiUsersToRoom = async (req, res) => {
@@ -294,7 +299,7 @@ exports.addMultiUsersToRoom = async (req, res) => {
 	// );
 
 	return res.status(200).send(appResponse(null, updatedRoom, true));
-};
+}
 
 
 // ::: ENDPOINT FOR REMOVING MULTIPLE USERS FROM A ROOM
@@ -364,14 +369,8 @@ exports.removeMultiUsersFromRoom = async (req, res) => {
 
 	res
 		.status(200)
-		.send(
-			appResponse(
-				'User has been successfully removed from the room',
-				updatedRoom,
-				true
-			)
-		);
-};
+		.send(appResponse('User has been successfully removed from the room', updatedRoom, true));
+}
 
 
 // not tested yet
@@ -430,9 +429,7 @@ exports.setRoomPrivate = async (req, res) => {
 	const isUserOwner = room.ownerId === userId;
 
 	if (!isUserOwner) {
-		throw new ForbiddenError(
-			`Access forbidden! You don't have access to make this room private!`
-		);
+		throw new ForbiddenError(`Access forbidden! You don't have access to make this room private!`);
 	}
 
 	await Rooms.update(req.params.roomId, { isPrivate: false });
@@ -457,7 +454,8 @@ exports.getUserRooms = async (req, res) => {
 	}
 	// 6138cb6e99bd9e223a37d8ea
 	// 6139fe2859842c7444fb0218
-};
+}
+
 
 // tested - works need to get the token from req.headers
 exports.getRoomMembers = async (req, res) => {
@@ -495,10 +493,9 @@ exports.getRoomMembers = async (req, res) => {
 		}),
 	};
 
-	return res
-		.status(200)
-		.send(appResponse('Room Members Returned Successfully', data, true));
-};
+	return res.status(200).send(appResponse('Room Members Returned Successfully', data, true));
+}
+
 
 // tested - works
 exports.getOrgDefaultRoomOnDomain = async (req, res) => {
@@ -523,14 +520,9 @@ exports.getOrgDefaultRoomOnDomain = async (req, res) => {
 
 	return res
 		.status(200)
-		.send(
-			appResponse(
-				`Organization default ${domain} room returned successfully`,
-				data,
-				true
-			)
-		);
-};
+		.send(appResponse(`Organization default ${domain} room returned successfully`, data, true));
+}
+
 
 // tested - works
 exports.checkMemberInRoom = async (req, res) => {
@@ -557,4 +549,4 @@ exports.checkMemberInRoom = async (req, res) => {
 	return res
 		.status(200)
 		.send(appResponse('room member check returned successfully', data, true));
-};
+}
