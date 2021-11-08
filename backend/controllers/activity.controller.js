@@ -3,9 +3,9 @@ const DatabaseConnection = require('./../utils/database.helper')
 const Activity = new DatabaseConnection('Activity')
 
 exports.getAllActivities = async (req, res) => {
-  const activities = await Activity.fetchAll()
+	const activities = await Activity.fetchAll()
 
-  res.status(200).send(appResponse('Activities successfully retrieved!', activities, true))
+	res.status(200).send(appResponse('Activities successfully retrieved!', activities, true))
 }
 
 // This function is solely for testing purposes
@@ -31,8 +31,8 @@ exports.getAllActivities = async (req, res) => {
 // }
 
 exports.deleteActivity = async (req, res) => {
-  const activity = await Activity.delete(req.params.id)
-  if (activity) return res.status(200).send(appResponse('Activity successfully deleted!', null, true))
+	const activity = await Activity.delete(req.params.id)
+	if (activity) return res.status(200).send(appResponse('Activity successfully deleted!', null, true))
 
-  res.status(404).send(appResponse('Activity not found!', null, true))
+	res.status(404).send(appResponse('Activity not found!', null, true))
 }

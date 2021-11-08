@@ -1,20 +1,20 @@
 const router = require('express').Router();
 const {
-  createRoom,
-  getAllRooms,
-  getOneRoom,
-  deleteRoom,
-  addToRoom,
-  addUserToRoom,
-  removeFromRoom,
-  editRoom,
-  setRoomPrivate,
-  getUserRooms,
-  getRoomMembers,
-  checkMemberInRoom,
-  getOrgDefaultRoomOnDomain,
-  addMultiUsersToRoom,
-  removeMultiUsersFromRoom
+	createRoom,
+	getAllRooms,
+	getOneRoom,
+	deleteRoom,
+	addToRoom,
+	addUserToRoom,
+	removeFromRoom,
+	editRoom,
+	setRoomPrivate,
+	getUserRooms,
+	getRoomMembers,
+	checkMemberInRoom,
+	getOrgDefaultRoomOnDomain,
+	addMultiUsersToRoom,
+	removeMultiUsersFromRoom
 } = require('../controllers/rooms.controller');
 
 // GET ALL AVAILABLE ROOMS

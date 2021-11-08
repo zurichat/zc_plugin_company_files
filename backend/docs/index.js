@@ -5,9 +5,9 @@ const components = require('./components');
 const paths = require('./paths')
 
 module.exports = {
-    ...basicInfo,
-    ...servers,
-    ...tags,
-    ...components,
-    ...paths
+	...basicInfo,
+	...servers,
+	...tags,
+	...components,
+	...paths
 };

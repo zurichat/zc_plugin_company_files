@@ -1,40 +1,33 @@
 const router = require('express').Router();
 
-const { Router } = require('express');
 const {
-  fileUpload,
-  fileUploadRequest,
-  fileUploadStatus,
-  cutOrMoveFile,
-  starFile,
-  unStarFile,
-  fileRename,
-  fileDetails,
-  fileDelete,
-  deleteMultipleFiles,
-  deleteTemporarily,
-  restoreFile,
-  getAllFiles,
-  getFileByType,
-  searchByDate,
-  searchStarredFiles,
-  getAllDeletedFiles,
-  isDuplicate,
-  setEditPermission,
-  // searchBySize,
-  // searchByType,
-  // getFilesWithSameFolderId,
-  cropImage,
-  sortFiles,
-  recentlyViewedImages,
-  recentlyViewedAudio,
-  recentlyViewedVideos,
-  recentlyViewedDocs,
-  recentlyViewedCompressed,
-  detectPreview,
-  test,
-  lockFile,
-  resetFilePassword,
+	fileUpload,
+	fileUploadRequest,
+	fileUploadStatus,
+	cutOrMoveFile,
+	starFile,
+	unStarFile,
+	fileRename,
+	fileDetails,
+	fileDelete,
+	deleteMultipleFiles,
+	deleteTemporarily,
+	restoreFile,
+	getAllFiles,
+	getFileByType,
+	getAllDeletedFiles,
+	isDuplicate,
+	setEditPermission,
+	cropImage,
+	sortFiles,
+	recentlyViewedImages,
+	recentlyViewedAudio,
+	recentlyViewedVideos,
+	recentlyViewedDocs,
+	recentlyViewedCompressed,
+	detectPreview,
+	lockFile,
+	resetFilePassword,
 
 } = require('../controllers/file.controller');
 
@@ -57,25 +50,16 @@ router.put('/crop', cropImage);
 router.get('/all', getAllFiles);
 
 // GET ALL FILES SORTED BY THE FILE PROPERTIES
-router.get("/sort", sortFiles);
+router.get('/sort', sortFiles);
 
 // GET A SPECIFIC FILE TYPE
 router.get('/type/:type', getFileByType);
-
-// SEARCH FOR ALL DELETED FILES - DELETED
-// router.get("/searchByisDeleted", searchFileByIsDeleted);
 
 // GET A SINGLE FILE DETAILS
 router.get('/read/:fileId', fileDetails);
 
 // Renames file
 router.put('/rename/:fileId', fileRename);
-
-// SEARCH FILES BY DATE ADDED
-router.get('/searchByDate', searchByDate);
-
-// SEARCH STARRED FILES
-router.get('/searchStarredFiles', searchStarredFiles);
 
 // GET DELETED FILES
 router.get('/deletedFiles', getAllDeletedFiles);
@@ -115,14 +99,10 @@ router.put('/unStarFile/:id', unStarFile);
 // DETECT WHEN A FILE IS PREVIEWED
 router.get('/preview/:id', detectPreview);
 
-//LOCK FILE ENDPOINT
-router.put("/lockFile/:id", lockFile);
+// LOCK FILE ENDPOINT
+router.put('/lockFile/:id', lockFile);
 
-//RESET FILE PASSWORD
-router.put("/reset/:id", resetFilePassword)
-
-
-// test
-router.put('/test/:fileId/:userId/:orgId', test);
+// RESET FILE PASSWORD
+router.put('/reset/:id', resetFilePassword);
 
 module.exports = router;

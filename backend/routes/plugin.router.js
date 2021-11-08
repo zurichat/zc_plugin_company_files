@@ -1,13 +1,11 @@
 const router = require('express').Router();
-const { ping, info, sidebar, sync, install, getInstalled } = require('../controllers/plugin.controller');
-const {pluginInstallation, pluginUnInstallation} = require('../controllers/plugin.app.controller')
+const { ping, info, sidebar, sync, install, uninstall } = require('../controllers/plugin.controller');
 
 router.get('/ping', ping);
 router.get('/info', info);
 router.get('/sidebar', sidebar);
 router.post('/sync', sync);
-router.post('/install', pluginInstallation);
-router.delete('/install', pluginUnInstallation);
-// router.get('/installs', getInstalled);
+router.post('/install', install);
+router.delete('/install', uninstall);
 
 module.exports = router;
