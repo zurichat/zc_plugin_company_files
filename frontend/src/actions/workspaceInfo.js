@@ -1,9 +1,10 @@
+/* eslint-disable func-names */
+/* eslint-disable import/no-unresolved */
 import {
-  SubscribeToChannel,
   GetWorkspaceUsers,
   GetWorkspaceUser,
   GetUserInfo
-} from "@zuri/control";
+} from "@zuri/utilities";
 
 export function getUserInfo() {
   return async function (dispatch) {
