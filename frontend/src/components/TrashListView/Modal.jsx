@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/react-in-jsx-scope */
 export default function Modal({
   showModal,
   setShowModal,
@@ -10,8 +13,8 @@ export default function Modal({
   apiBase,
   data
 }) {
-  const fileName = data.map((data) =>
-    data._id === clickedId ? data.fileName : null
+  const fileName = data.map((fileData) =>
+    fileData._id === clickedId ? fileData.fileName : null
   );
 
   const handleRestore = (id) => {
@@ -20,9 +23,9 @@ export default function Modal({
       headers: { "Content-Type": "application/json" },
       body: ""
     }).then((res) => {
-      res.status === 200 ? setRestore("") : null;
+      res.status === 200 && setRestore("");
     });
-    setData((prev) => prev.filter((data) => data.id !== id));
+    setData((prev) => prev.filter((prevData) => prevData.id !== id));
   };
 
   const handleDelete = (id) => {
@@ -31,7 +34,7 @@ export default function Modal({
     }).then((res) => {
       res.status === 200 ? setFileDel("") : null;
     });
-    setData((prev) => prev.filter((data) => data.id !== id));
+    setData((prev) => prev.filter((prevData) => prevData.id !== id));
   };
 
   return (
