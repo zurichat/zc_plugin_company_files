@@ -1,3 +1,6 @@
+/* eslint-disable no-useless-concat */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-nested-ternary */
 import React from "react";
 import Loader from "react-loader-spinner";
 import axios from "axios";

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import logger from "redux-logger";
 import { loadState, saveState } from "./localStorage";
 import rootReducer from "../reducers";
 
@@ -8,6 +9,7 @@ const store = configureStore({
   reducer: {
     rootReducer
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   preloadedState: persistedState
 });
 
